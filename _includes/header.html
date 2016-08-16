@@ -1,0 +1,16 @@
+<aside class="logo">
+
+	{% if page.url == '/index.html' or page.url == '/' %}
+		{% assign link = '/about' %}
+		{% assign prompt = 'About the Author' %}
+	{% else %}
+		{% assign link = '/' %}
+		{% assign prompt = 'Back to Home' %}
+	{% endif %}
+
+	<a href="{{ link | prepend: site.baseurl }}">
+		<img src="https://avatars2.githubusercontent.com/u/9194247?v=3&s=460" class="gravatar">
+	</a>
+	<span class="logo-prompt">{{ prompt }}</span>
+
+</aside>
