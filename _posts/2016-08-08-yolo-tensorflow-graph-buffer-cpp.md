@@ -14,6 +14,7 @@ This is understandable since building the loss op of YOLO in Tensorflow is not a
 Also note that the checkpoint method in Python API is not supported in C++ API, workarounds I found online give .pb files that is 2x larger than necessary, while this script produces exactly what is needed.
 
 ## 2. How to use it
+
 ### 2.1 Parsing the annotations
 Skip this if you are not training or fine-tuning anything.
 
@@ -164,6 +165,7 @@ class YOLO(object):
         for i in range(self.layer_number):
             ...
 ```
+
 ### 3.3 `Data_helpers.py`
 
 Since Tensorflow does not support member assignment, calculating the loss is very difficult. One must first figure out what exactly is the tensorized operations that carry out the loss calculation. Then decide which among these tensorized operations should be implemented as `numpy tensors` (allow member assignment) and which as `tensorflow tensors`. This script accounts for the `numpy` part, while the next section introduces the `tensorflow` part.
