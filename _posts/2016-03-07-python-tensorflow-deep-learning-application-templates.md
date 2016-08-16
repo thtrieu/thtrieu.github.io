@@ -20,7 +20,7 @@ Again I would throw a terrible generalised statement here about the workflow of 
 
 So, this is the first code template of the two, it will look something like this: 
 
-```{python}
+```python
 import tensorflow as tf
 import data_manipulator # you build this yourself
 
@@ -112,7 +112,7 @@ Is this particular looping need _frequent and universal_? I'll say yes, as I and
 
 Here it comes,
 
-```{python}
+```python
 import tensorflow as tf
 import data_manipulator # you build this yourself
 
