@@ -1,6 +1,6 @@
 ---
 published: true
-title: Scopes and Environments, avoid locked bindings, modify series of functions
+title: Scopes, environments, locked bindings, modify list of functions
 ---
 
 ### Intro
