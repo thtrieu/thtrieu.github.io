@@ -85,7 +85,9 @@ print(test_acc)
 The second template comes later on in this post, which I initially consider being completely lack of good taste, but it solves problems. Go on reading if you are curious :D
 
 ### Okay, So where is the fun/interesting/troublesome part?
+
 #### The troublesome `batch_size` placeholder
+
 The hidden thing in the above code snippet is that, there are other placeholders besides `m.x` and `m.y` to be fed into `feed_dict`. Most likely they are `m.drop_out_probability` (yeah, very powerful regularisation technique - definitely recommended in every deep model) and `m.batch_size`. Why are they being placeholders? Because in the evaluation steps (`2a` and `2b`), they have a different value to step `1`. Namely, `model.drop_out_probability` must be \\( 1.0 \\) in both `2a` and `2b`, while  `model.batch_size` must be `hold_out.size` in `2a` and `test.size` in `2b`.
 
 The good __taste__ here is that: the viewpoint above about `batch_size` generalizes very well from training set to both hold-out set and test set. It is brilliant to view hold-out and test sets to be two big fat batches, because who evaluates models _in small batches_ anyway (slower execution for the same output)? (well, I can imagine people do this in specific situations, like when hold-out and test sets are too big to fit in memory, but this is rare for my daily experiments). When there is a generalization, there is less branching statements in your code, and when the code is cleaner, people will just love it. 
