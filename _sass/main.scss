@@ -1,9 +1,11 @@
 body {
-  font-family: 'Fira Sans', sans-serif;
-  font-size: 15px;
+  font-family: Georgia,Times,"Times New Roman",serif;
+  font-size: 14.5px;
+  color: #333;
   padding: 20px;
   margin: 0;
-  font-weight: 300;
+  font-weight: 100;
+  line-height: 1.9em;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   @media (min-width: 992px) {
@@ -208,7 +210,7 @@ pre {
   font-family: Consolas, monospace, x;
 }
 code {
-  color: #666;
+  color: #555;
   background: transparent;
   padding: 2px 6px;
   font-size: 13px;
@@ -276,6 +278,7 @@ article {
   }
   p {
     font-size: 15px;
+    color: #333;
     line-height: 1.9em;
     word-wrap: break-word;
   }
@@ -324,7 +327,7 @@ section {
       a {
         text-decoration: none;
         border: 0;
-        color: #000;
+        color: #222;
         box-sizing: border-box;
       }
       .post-date {
