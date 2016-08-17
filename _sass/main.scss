@@ -1,8 +1,9 @@
 body {
   font-family: 'Fira Sans', sans-serif;
+  font-size: 15px;
   padding: 20px;
   margin: 0;
-  font-weight: 400;
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   @media (min-width: 992px) {
@@ -298,7 +299,7 @@ article {
     padding: 10px;
     border: 0;
     &:before {
-      content: "<<";
+      content: "::";
       margin-right: 5px;
       color: #000;
     }
