@@ -129,6 +129,7 @@ This script essentially collects all options into object `FLAGS` and pass it on 
 ### 3.2 `Yolo.py`
 This script contains the class definition of `Yolo`, which calls `./configs/process.py` upon its initialization to parse the required `.cfg` config, so that it knows the structure of the corresponding `.weights` file. After that, it dissects this `.weights` file accordingly and store all the parameters into the `layer` attribute.
 
+The resulting object will then be used as initial variables/constants values to build the corresponding `tensorflow` graph. Read more about this in section 3.4
 
 ```python
 ...
@@ -225,7 +226,8 @@ def shuffle(train_path, file, expectC, S, batch, epoch):
 ```
 
 ### 3.4 `TFnet.py`
-This script contains a class definition of the class `SimpleNet`, it stores the tensorflow graph and methods operate on this graph, including the L2-loss evaluation.
+
+This script contains a class definition of class `SimpleNet`, it stores the tensorflow graph and methods operate on this graph. This includes YOLO's L2-loss evaluation, defined in `decode()` method. After receiving 11 placeholders yielded from `Data_helpers.py` as stated above, `decode()` will then continue the loss evaluation process by applying `tensorflow` operations (as oppose to `numpy` operations in `Data_helpers.py`) on these 11 placeholders and the net's output tensor `self.out`.
 
 ```python
 class SimpleNet(object):
