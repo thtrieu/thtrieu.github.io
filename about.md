@@ -43,6 +43,6 @@ title: About
 
 ### Monologue
 
-I am a junior undergrad, doing maths, physics and lately computer - every day. Did a couple of internships: Data mining, Natural Language Processing, Computer Vision and gradually specializing myself into [this](https://en.wikipedia.org/wiki/Deep_learning). The prime concern, however, is intelligence in general. Can we define and engineer such a thing? How? 
+I am a junior undergrad, doing maths, physics and lately computer - every day. Did a couple of internships: _Data mining_, _Natural Language Processing_, _Computer Vision_ and gradually specializing myself into _Deep Learning_. Never mind the buzzwords - the prime interest, however, is intelligence in general. Can we define and engineer (solve) such a thing? How?
 
 The universe fascinates me! so I'd love to learn from anyone who has anything to share, be it chemistry, biology, philosophy (or how stupid I am - yes, seriously). 
