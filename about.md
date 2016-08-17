@@ -47,6 +47,6 @@ I am a junior undergrad. I do maths, physics, and computer -recently. Did a coup
 
 Never mind those buzzwords - the interest is intelligence in general. Can we define and engineer such a thing? How? What are the social/philosophical implications if human are capable of creating one?
 
-I concern about the way people teach and inspire younger ones. So wrong, so harmful. See a brighter future with technology, not sure about the details though.
+I worry about the way people teach and inspire younger ones to learn. So wrong, so harmful. See a brighter future with technology, not sure about the details though.
 
 The universe fascinates me! I'd love to learn from anyone who has anything to share, be it chemistry, biology, philosophy (or how stupid I am - yes, seriously). 
