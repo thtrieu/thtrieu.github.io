@@ -45,4 +45,6 @@ title: About
 
 I am a twenty-something, doing maths, physics and lately computer - every day. Will these ever become obsolete tools for human to explore the universe? I don't know, we are mortal and to answer this question is probably not worth the time.
 
-Did a couple of internships, gradually specializing myself into Deep Learning. The prime concern, however, is intelligence in general. Can we define and engineer such a thing? How? I'd love to learn from anyone who has anything to share, be it physics, math, computer, biology or philosophy. The world fascinates me that much :)
+Did a couple of internships, gradually specializing myself into Deep Learning. The prime concern, however, is intelligence in general. Can we define and engineer such a thing? How? 
+
+I'd love to learn from anyone who has anything to share, be it physics, math, computer, biology or philosophy. The world fascinates me that much :)
