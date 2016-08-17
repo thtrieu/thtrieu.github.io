@@ -45,4 +45,4 @@ title: About
 
 I am a junior undergrad, doing maths, physics and lately computer - every day. Did a couple of internships: Data mining, Natural Language Processing, Computer Vision and gradually specializing myself into [this](https://en.wikipedia.org/wiki/Deep_learning). The prime concern, however, is intelligence in general. Can we define and engineer such a thing? How? 
 
-The world fascinates me ;) so I'd love to learn from anyone who has anything to share, be it chemistry, biology, philosophy (or how stupid I am - yes seriously). 
+This whole universe thing fascinates me! so I'd love to learn from anyone who has anything to share, be it chemistry, biology, philosophy (or how stupid I am - yes, seriously!). 
