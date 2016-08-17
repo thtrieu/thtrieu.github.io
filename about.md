@@ -43,8 +43,6 @@ title: About
 
 ### Monologue
 
-I am a twenty-something, doing maths, physics and lately computer - every day. Will these ever become obsolete tools for human to explore the universe? I don't know, we are mortal and to answer this question is probably not worth the time.
-
-Did a couple of internships, gradually specializing myself into [this](https://en.wikipedia.org/wiki/Deep_learning). The prime concern, however, is intelligence in general. Can we define and engineer such a thing? How? 
+I am a junior undergrad, doing maths, physics and lately computer - every day. Did a couple of internships: Data mining, Natural Language Processing, Computer Vision and gradually specializing myself into [this](https://en.wikipedia.org/wiki/Deep_learning). The prime concern, however, is intelligence in general. Can we define and engineer such a thing? How? 
 
 I'd love to learn from anyone who has anything to share, be it physics, math, computer, biology or philosophy. The world fascinates me that much :)
