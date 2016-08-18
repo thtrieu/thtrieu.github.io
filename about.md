@@ -43,8 +43,10 @@ title: About
 
 ### Monologue
 
-I am a junior undergrad. I do maths, physics, and computer -recently. Did a couple of AI-related internships: _Data mining_, _Natural Language Processing_, _Computer Vision_ and used _Deep Learning_ as the main research tool. 
+I am a junior undergrad. I solve maths, read physics and do computer stuff -recently.
 
-Never mind those buzzwords - the interest is intelligence in general. Can we define and engineer such a thing? How? What are the social/philosophical implications if human are capable of creating one?
+Did a couple of AI-related research internships, in different labs around the world. Projects are as diverse as _Data mining_, _Natural Language Processing_, and _Computer Vision_ (see the previous section). Used _Deep Learning_ as the main tool.
 
-The universe fascinates me! I'd love to learn from anyone who has anything to share, be it chemistry, biology, philosophy (or how stupid I am - yes, seriously). 
+Never mind those buzzwords - the main interest is **intelligence** in general. I seek answers to questions like: Can we define and engineer such a thing? How? What are the social/philosophical implications if human are capable of creating one?
+
+Again, I solve maths and read physics - cuz the universe fascinates me! I'd love to learn from anyone who has anything to share, be it chemistry, biology, philosophy, unicorn magic (or how stupid I am - yes, seriously). 
