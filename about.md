@@ -19,7 +19,7 @@ Did a couple of AI-related internships in different labs as far apart as Eastern
 
 Never mind the buzzwords - my interest is as innocent as the next guy: _what is intelligence?_. Can we build such a thing? How? What does it mean if human are capable of creating one? These actually belong to a much broader theme _Why universe?_ that I'd love to know the answer to - besides \\( 42 \\).
 
-So yes, this universe thing fascinates me! I will learn from anyone who has anything to share, be it chemistry, biology, philosophy, unicorn magic, or how stupid I am. Yes seriously, tell me about it: &nbsp; [![alt text][1.1]][1].
+So yes, this universe thing fascinates me! I will learn from anyone who has anything to share, be it chemistry, biology, philosophy, unicorn magic, or how stupid I am. Yes seriously, do tell me about it.
 
 <!-- links to social media icons -->
 <!-- no need to change these -->
