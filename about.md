@@ -8,7 +8,18 @@ title: About
 
 
 
-### Pay a visit: &nbsp; &nbsp; &nbsp; &nbsp; [![alt text][1.1]][1] &nbsp; [![alt text][2.1]][2] &nbsp; [![alt text][3.1]][3] &nbsp; [![alt text][4.1]][4]
+### Pay a visit: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [![alt text][1.1]][1] &nbsp; &nbsp; [![alt text][2.1]][2] &nbsp; &nbsp; [![alt text][3.1]][3] &nbsp; &nbsp; [![alt text][4.1]][4]
+
+
+### Monologue
+
+I am an engineer from heart, which means I solve maths, read physics and do computer stuff. Fortunately, my outdoor activities is not that dull. I traveled as far as the Scandinavies and Singapore for student leadership conferences (side note, my social awkwardness is incurable).
+
+Did a couple of AI-related internships in different labs as far apart as Eastern Canada and Western Japan. Still counting. Projects are as diverse as _Data mining_, _Natural Language Processing_, and _Computer Vision_. _Deep Learning_ is the tool of use (still improving on it though).
+
+Never mind the buzzwords - my interest is as innocent as the next guy: _what is intelligence?_. Can we build such a thing? How? What does it mean if human are capable of creating one? These actually belong to a much broader theme _Why universe?_ that I'd love to know the answer to - besides \\( 42 \\).
+
+So yes, this universe thing fascinates me! I will learn from anyone who has anything to share, be it chemistry, biology, philosophy, unicorn magic, or how stupid I am. Yes seriously, tell me about it: &nbsp; [![alt text][1.1]][1].
 
 <!-- links to social media icons -->
 <!-- no need to change these -->
@@ -37,16 +48,3 @@ title: About
 [4]: http://thtrieu.github.io/resume.pdf
 
 <!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
-
-
-
-
-### Monologue
-
-I am a junior undergrad. I solve maths, read physics and do computer stuff -recently.
-
-Did a couple of AI-related research internships, in different labs around the world. Projects are as diverse as _Data mining_, _Natural Language Processing_, and _Computer Vision_ (see the previous section). Used _Deep Learning_ as the main tool.
-
-Never mind those buzzwords - the main interest is **intelligence** in general. I seek answers to questions like: Can we define and engineer such a thing? How? What are the social/philosophical implications if human are capable of creating one?
-
-Again, I solve maths and read physics - cuz the universe fascinates me! I'd love to learn from anyone who has anything to share, be it chemistry, biology, philosophy, unicorn magic (or how stupid I am - yes, seriously). 
