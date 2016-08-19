@@ -13,7 +13,7 @@ title: About
 
 ### Monologue
 
-I am an engineer from heart, which means I solve maths, read physics and do computer stuff. Fortunately, my outdoor activities is not that dull. I traveled as far as the Scandinavies and Singapore for student leadership conferences (side note, my social awkwardness is incurable).
+I'm an engineer from heart, which means I solve maths, read physics and do computer stuff. Fortunately, my outdoor activities is not that dull. I traveled as far as the Scandinavies and Southeast Asia for leadership conferences (side note, my social awkwardness is still incurable).
 
 Did a couple of AI-related internships in different labs as far apart as Eastern Canada and Western Japan. Still counting. Projects are as diverse as _Data mining_, _Natural Language Processing_, and _Computer Vision_. _Deep Learning_ is the tool of use (still improving on it though).
 
