@@ -11,15 +11,13 @@ title: About
 ### Pay a visit: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [![alt text][1.1]][1] &nbsp; &nbsp; [![alt text][2.1]][2] &nbsp; &nbsp; [![alt text][3.1]][3] &nbsp; &nbsp; [![alt text][4.1]][4]
 
 
-### Monologue
+### Short intro
 
-I'm an engineer from heart, which means I solve maths, read physics and do computer stuff. Fortunately, my outdoor activities is not that dull. I traveled as far as the Scandinavies and Southeast Asia for leadership conferences (side note, my social awkwardness is still incurable).
+Junior undergrad, engineer from heart. Which means I solve maths, read physics and do computer stuff. Did a couple of AI-related internships in labs as far apart as crossing the Pacific Ocean. Three and still counting. Projects are as diverse as _Data Mining_, _Natural Language Processing_, and _Computer Vision_. The recently-fashionable _Deep Learning_ is my main tool.
 
-Did a couple of AI-related internships in different labs as far apart as crossing the Pacific Ocean. Three and still counting. Projects are as diverse as _Data Mining_, _Natural Language Processing_, and _Computer Vision_. The currently-fashionable _Deep Learning_ is my main tool (still improving on it though).
+_Bottom line: All that and I'm still figuring how to be somewhat worthy to this world._
 
-Never mind the buzzwords - my interest is as innocent as the next guy: _what is intelligence?_ Can we build such a thing? How? What does it mean if human are indeed capable of creating one? These actually belong to a much broader theme _How come universe?_ that I'd love to know an answer to,  besides \\( 42 \\).
-
-So yes, this universe thing fascinates me. I mean, curved space-time and undetermined past? Com'on! I am more than open to learn from anyone who has anything to share, be it philosophy, alchemy, unicorn rainbow magic, or how stupid I am. Yes seriously, do tell me about it.
+#### Unnecessarily lengthier monologue [here](more)
 
 <!-- links to social media icons -->
 <!-- no need to change these -->
