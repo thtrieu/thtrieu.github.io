@@ -15,7 +15,7 @@ title: About
 
 I'm an engineer from heart, which means I solve maths, read physics and do computer stuff. Fortunately, my outdoor activities is not that dull. I traveled as far as the Scandinavies and Southeast Asia for leadership conferences (side note, my social awkwardness is still incurable).
 
-Did a couple of AI-related internships in different labs as far apart as crossing the Pacific Ocean plus North America's breadth. Three and still counting. Projects are as diverse as _Data mining_, _Natural Language Processing_, and _Computer Vision_. _Deep Learning_ is the tool of use (still improving on it though).
+Did a couple of AI-related internships in different labs as far apart as crossing the Pacific Ocean's breadth. Three and still counting. Projects are as diverse as _Data mining_, _Natural Language Processing_, and _Computer Vision_. _Deep Learning_ is the tool of use (still improving on it though).
 
 Never mind the buzzwords - my interest is as innocent as the next guy: _what is intelligence?_ Can we build such a thing? How? What does it mean if human are indeed capable of creating one? These actually belong to a much broader theme _How come universe?_ that I'd love to know an answer to,  besides \\( 42 \\).
 
