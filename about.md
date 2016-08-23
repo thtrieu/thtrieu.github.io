@@ -13,11 +13,9 @@ title: About
 
 ### Short intro
 
-Junior undergrad, engineer from heart. Which means I solve maths, read physics and do computer stuff. Did a couple of AI-related internships in labs as far apart as crossing the Pacific Ocean. Three and still counting. Projects are as diverse as _Data Mining_, _Natural Language Processing_, and _Computer Vision_. The recently-fashionable _Deep Learning_ is my main tool.
+Junior undergrad, engineer from heart. Which means I solve maths, read physics and do computer stuff.
 
-_Bottom line: All that and I'm still figuring how to be somewhat worthy to this world._
-
-#### Unnecessarily lengthier monologue [here](more)
+_Bottom line: All that and I'm still figuring how to be less useless to the world_
 
 <!-- links to social media icons -->
 <!-- no need to change these -->
