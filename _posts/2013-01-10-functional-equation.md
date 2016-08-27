@@ -25,7 +25,7 @@ This means function \\(f\\) achieves its minimum on \\(D_1\\) at a single point 
 
 Move on to \\(n_2\\). Similarly the case is either \\(n_2-1\notin\mathbb{Z^+}\\) or \\(f(n_2-1)\notin D_2\\). This time the first case cannot be satisfied, so \\(f(n_2-1)\notin D_2\\) \\(\(*\)\\).
 
-If \\(n_2 > 2\\), it follows that \\(n_2-1>n_1\\). From the fact that \\(f\\) has a single minimum at \\(n_1\\), we conclude \\(f(n_2-1) > f(n_1)\geq 1\\). This implies \\(f(n_2-1)\in D_2\\), directed contradict with \\(\(*\)\\). So \\(n_2 = 2\\).
+If \\(n_2 > 2\\), it follows that \\(n_2-1>n_1\\). From the fact that \\(f\\) has a single minimum at \\(n_1\\), we conclude \\(f(n_2-1) > f(n_1)\geq 1\\). This implies \\(f(n_2-1)\in D_2\\), directly contradict with \\(\(*\)\\). So \\(n_2 = 2\\).
 
 From this point, induction in a similar fashion gives \\(n_i=i\\). From \\(D_1 \subseteq D_2 \subseteq D_3 \subseteq ... \\), we know \\(f(1)<f(2)<f(3)<...\\). 
 
