@@ -13,7 +13,7 @@ title: About
 
 ### Short intro
 
-Junior undergrad, engineer from heart. Which means I solve maths, read physics and do computer stuff.
+Junior undergrad, engineer from heart. Which means I solve maths (cute little ones you find in highschool maths olympiad), read physics and do computer stuff.
 
 _Bottom line: All that and I'm still figuring how to be less useless to the world_
 
