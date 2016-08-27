@@ -34,6 +34,6 @@ Two things follow:
 1. \\(f(n)\geq n \ \forall n\\)
 2. \\(f\\) strictly increases
 
-From **2.** and the what gives in the problem statement we have \\(f(n)< n+1\\). This and **1.** give 
+From **2.** and the what gives in the problem statement we have \\(f(n)< n+1 \ \forall n\\). This and **1.** give 
 
-$$f(n)=n$$
+$$f(n)=n \ \forall n$$
