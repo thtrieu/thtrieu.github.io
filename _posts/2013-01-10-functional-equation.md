@@ -34,8 +34,8 @@ Two things follow:
 1. \\(f(n)\geq n \ \forall n\\)
 2. \\(f\\) strictly increases
 
-From **2.** and the what gives in the problem statement we have \\(f(n)< n+1 \ \forall n\\). 
+From **2.** and the what gives in the problem statement we have \\(f(n)< n+1 \ \forall n\in\mathbb{Z^+}\\). 
 
 This and **1.** give 
 
-$$f(n)=n \ \forall n$$
+$$f(n)=n \ \forall n\in\mathbb{Z^+}$$
