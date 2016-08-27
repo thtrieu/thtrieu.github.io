@@ -15,13 +15,13 @@ I came up with an interesting puzzle. Look, it is normal to have myopia being a 
 
 But that guy at the optic shop made a wrong one: the left piece is of -1.25 diopters and the right one is -2 diopters (and hence the complaints). That night, God sit down besides the sobbing poor guy suffering from shortsightedness, comforted him by handing out this magical ring. Linh was asked to drop the glasses through and he did. The glasses came through mirrored and thus, fixed.
 
-_"But, this is not mine?"_ - Linh uttered. _"Son, this is your glasses, I mean by each and every atoms - except each and every one of them is now mirrored :)"_ - God answered. _"Besides, it simply fell through, no other forces exerted on it"_ - God added with a witty wink and disappeared.
+_"But, this is not mine?"_ - Linh uttered. _"Son, this is your glasses, I mean by each and every atoms - except each and every one of them is now mirrored :)"_ God answered with a witty wink and disappeared.
 
 # How?
 
-To understand a mirrored object, simply place any object in front of your mirror and observe its image in the mirror, the mirrored one is that thing seemingly exists the other side of your mirror. Except that it is simply an optical image, not a physical object. In principle, you can't create such a perfectly mirrored object of every day. How did god do that?
+To understand a mirrored object, simply place any object in front of your mirror and observe its image in the mirror, the mirrored one is that thing seemingly exists on the other side of your mirror. Except that it is simply an optical image, not a physical object. In principle, you can't create such a perfectly mirrored object of any ordinary object. How did God do that?
 
-Let's exclude answers like _"Man is the f*king god, he does what he does!"_, and try to look for a feasible answer as close to what we know to be logical as possible. Remember there is no force whatsoever exerted on the glasses.
+Let's exclude answers like _"Man is the f*king god, he does whatever he f*king want!"_, and try to look for a feasible answer as close to what we know to be logical as possible.
 
 # Start simple
 
