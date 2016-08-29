@@ -157,3 +157,19 @@ for i in range(1, len(outputs)):
 ```
 
 There you have it!
+
+# Update 28th Aug
+
+There is [this](https://gist.github.com/rockt/f4f9df5674f3da6a32786bcf9fbb6a88) much simpler way to do exactly the same thing
+
+```python
+def gather_by_lengths(outputs, seq_lengths):
+    """
+    :param outputs: [batch_size x max_seq_length x hidden_size] tensor of dynamic_rnn outputs
+    :param seq_lengths: [batch_size] tensor of sequence lengths
+    :return: [batch_size x hidden_size] tensor of last outputs
+    """
+    batch_size, max_seq_length, hidden_size = tf.unpack(tf.shape(outputs))
+    index = tf.range(0, batch_size) * max_seq_length + (seq_lengths - 1)
+return tf.gather(tf.reshape(outputs, [-1, hidden_size]), index)
+```
