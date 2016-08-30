@@ -45,7 +45,7 @@ At this point, it'll be useful to introduce a few new terms: let's call the poin
 
 Is there a point in time $$\hat{t}$$ such that $$f(P_{\hat{t}})_i = f(P_0)_i \ ( = X_i)$$ and $$(V_{\hat{t}})_i = (V_0)_i$$ for all $$i = 1, 2, ..., N$$?
 
-In other words, if we denote the configuration at time $$t$$ to be $$C_t = \{f(P_t), V_t\}$$, we are finding $$\hat{t}$$ such that $$C_{\hat{t}} = C_0$$. Let's assign such configurations (that are identical to the original one) the name *original*.
+In other words, if we define the configuration at time $$t$$ to be $$C_t = \{f(P_t), V_t\}$$, we are finding $$\hat{t}$$ such that $$C_{\hat{t}} = C_0$$. Let's assign such configurations (that are identical to the original one) the name *original*.
 
 # Weak, original configurations
 
