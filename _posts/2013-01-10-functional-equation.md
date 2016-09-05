@@ -1,7 +1,6 @@
 ---
 published: true
 title: Functional equation with positive integers
-layout: post
 comments: true
 ---
 
