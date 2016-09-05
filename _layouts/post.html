@@ -29,9 +29,8 @@ layout: default
 	<a href="{{site.baseurl}}/">back</a>
 </div>
 
-
 {% if page.comments %}
-comments {{page.url}} {{site.title}}
+comments {{site.baseurl}}{{page.url}}
 <div id="disqus_thread"></div>
 <script type="text/javascript">
 
@@ -41,11 +40,8 @@ comments {{page.url}} {{site.title}}
 
 var disqus_config = function () {
      // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = {{ page.url }}; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    this.page.shortname = {{ site.url }};
-    this.page.title = {{page.title}};
-    this.page.url = {{site.url}}{{page.url}};
- .
+    this.page.identifier = '{{ page.url }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    this.page.url = '{{site.baseurl}}{{page.url}}';
 };
 
 //var disqus_developer = 1;
