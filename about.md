@@ -13,13 +13,11 @@ title: About
 
 ### Short intro
 
-Junior undergrad, engineer from heart. Which means I solve maths (cute little ones you find in highschool maths olympiad), read physics and do computer stuff.
-
-_Bottom line: All that and I'm still figuring how to be less useless to the world_
+Junior undergrad, research engineer from heart. I solve maths (cute little ones from high school olympiad), read physics and do computer stuff.
 
 <!-- links to social media icons -->
 <!-- no need to change these -->
-
+ 
 <!-- icons with padding -->
 
 [1.1]: http://i.imgur.com/CKLpgcs.png (email icon with padding)
