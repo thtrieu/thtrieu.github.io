@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: post
 title: About
 ---
 <!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
