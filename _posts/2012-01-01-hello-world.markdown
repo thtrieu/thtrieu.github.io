@@ -1,10 +1,5 @@
 ---
-published: true
 title: Hello world
-layout: post
-tags: r python helloworld
-comments: true
-analytics: true
 ---
 Hello world in-line math \\( e^{i\pi} + 1 = 0 \\)
 

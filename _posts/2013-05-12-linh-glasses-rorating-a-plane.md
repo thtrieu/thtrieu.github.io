@@ -1,5 +1,4 @@
 ---
-published: true
 title: Linh's ill-designed glasses need a hyper-roration treatment
 ---
 
