@@ -1,6 +1,6 @@
 ---
 title: Functional equation with positive integers
-comments: true
+comments: false
 ---
 
 # Intro
