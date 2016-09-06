@@ -1,15 +1,35 @@
+<!-- butterfly 
+https://66.media.tumblr.com/930616c2fd9cc8988c342248bb2bff8d/tumblr_nagpdgM8Rj1rdfgw4o1_500.gif-->
+
+<!-- fight club
+http://s8.favim.com/orig/72/fight-club-tyler-durden-philosophy-society-life-amazing-Favim.com-695004.gif
+-->
+
+<!-- 
+-->
+
 <aside class="logo">
 
-	{% if page.url == '/index.html' or page.url == '/' %}
-		{% assign link = '/about' %}
-		{% assign prompt = 'About the Author' %}
+	{% assign link = '/' %}
+	{% assign prompt = 'back home' %}
+		
+	{% if page.url == '/about.html' or page.url == '/about' %}
+		{% assign that = 'http://i.imgur.com/iS5cgJC.gif' %}
+		{% assign this = 'http://i.imgur.com/1pNRQjQ.gif' %}
 	{% else %}
-		{% assign link = '/' %}
-		{% assign prompt = 'Back to Home' %}
+		{% assign this = 'http://i.imgur.com/iS5cgJC.gif' %}
+		{% assign that = 'http://i.imgur.com/1pNRQjQ.gif' %}
+		{% if page.url == '/index.html' or page.url == '/' %}
+			{% assign link = '/about' %}
+			{% assign prompt = 'about me' %}
+		{% endif %}
 	{% endif %}
 
 	<a href="{{ link | prepend: site.baseurl }}">
-		<img src="https://avatars2.githubusercontent.com/u/9194247?v=3&s=460" class="gravatar">
+		<img src="{{ this }}"
+		onmouseover = "this.src='{{ that }}'"
+		onmouseout = "this.src='{{ this }}'"
+		class="gravatar">
 	</a>
 	<span class="logo-prompt">{{ prompt }}</span>
 
