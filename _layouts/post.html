@@ -23,13 +23,11 @@ layout: default
 
 	{{ content }}
 
-<p>&nbsp;</p>
-<p></p>    <p>&nbsp;</p>
-    <p></p>
+<p>&nbsp;</p><p></p><p>&nbsp;</p><p></p>
 <aside class="home">
 	<a href="{{ site.baseurl }}/"> :: :: :: </a>
 </aside>
-<p></p>
+
 {% if page.previous.url %}
 <aside class="back">
 	<a href="{{ page.previous.url }}">&laquo; {{page.previous.title}}</a>
@@ -41,7 +39,7 @@ layout: default
 </aside>
 {% endif %}
 
-	<div class="divider"></div>
+<p>&nbsp;</p><p></p><p>&nbsp;</p><p></p>
 
 <div id="disqus_thread"></div>
 <script>
