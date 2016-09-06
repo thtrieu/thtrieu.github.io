@@ -293,21 +293,52 @@ article {
     }
   }
 }
-.back {
+.home {
   text-align: center;
   a {
     text-decoration: none;
-    margin: 40px auto 0;
-    display: inline-block;
-    padding: 10px;
+    color: #888;
+    margin: 0px auto 0;
+    display: inline-block !important;
+    padding: 0px;
     border: 0;
     &:before {
-      content: "<<";
       margin-right: 5px;
       color: #000;
     }
   }
 }
+.back {
+  text-align: left;
+  a {
+    text-decoration: none;
+    margin: 0px auto 0;
+    display: inline-block !important;
+    padding: 0px;
+    color: #888;
+    border: 0;
+    &:before {
+      margin-right: 5px;
+      color: #000;
+    }
+  }
+}
+.next {
+  text-align: right;
+  a {
+    text-decoration: none;
+    color: #888;
+    margin: 0px auto 0;
+    display: inline-block !important;
+    padding: 0px;
+    border: 0;
+    &:before {
+      margin-right: 5px;
+      color: #000;
+    }
+  }
+}
+
 section {
   max-width: 630px;
   margin: 0 auto;
