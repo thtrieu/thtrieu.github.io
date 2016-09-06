@@ -5,9 +5,9 @@ title: YOLO, tensorflow and constant graph buffer for C++
 
 
 ## 1. Intro
-This is a friendly documentation of [_this work_](http://github.com/thtrieu/yolotf). It basically bridges Darknet, Tensorflow and iOS dev. 
+This is a friendly documentation of [this work](http://github.com/thtrieu/yolotf). It basically bridges Darknet, Tensorflow and iOS dev. 
 
-Regarding bridging Darknet and Tensorflow, there are currently some available repos online such as [_this_](https://github.com/sunshineatnoon/Darknet.keras) and [_this_](https://github.com/gliese581gg/YOLO_tensorflow). Unfortunately, they only provide hard-coded routines that allows translating full/small/tiny configurations from Darknet to Tensorflow, and only for testing (forward pass). The awaited training part is still not committed.
+Regarding bridging Darknet and Tensorflow, there are currently some available repos online such as [this](https://github.com/sunshineatnoon/Darknet.keras) and [this](https://github.com/gliese581gg/YOLO_tensorflow). Unfortunately, they only provide hard-coded routines that allows translating full/small/tiny configurations from Darknet to Tensorflow, and only for testing (forward pass). The awaited training part is still not committed.
 
 This is understandable since building the loss op of YOLO in Tensorflow is not a trivial task. Fortunately, the scripts provided in this work completed the training part and some more. Namely, we are now able to translate any configuration (old and new) specified in a Darknet-styled config file (very much alike the prototxt in Caffe) into Tensorflow graph. We are also able to train the graph in GPU/CPU mode and save the trained weights to a protobuf object that can be used in C++ interface.
 
@@ -89,7 +89,7 @@ python tensor.py --train --model tiny --noload
 
 ### 2.4 Migrating the model to C++ and Objective-C++
 
-Now this is the tricky part since there is no official support for loading variables in C++ API. Some suggest assigning the trained weights as constants into the graph and save it down as a `.pb` (protobuf) file [_like this_](https://alexjoz.gitbooks.io/code-life/content/chapter7.html). However this will double the necessary size of this file, which is very undesirable in, say, building mobile applications. 
+Now this is the tricky part since there is no official support for loading variables in C++ API. Some suggest assigning the trained weights as constants into the graph and save it down as a `.pb` (protobuf) file [like this](https://alexjoz.gitbooks.io/code-life/content/chapter7.html). However this will double the necessary size of this file, which is very undesirable in, say, building mobile applications. 
 
 To avoid this, one would have to build the graph all over again with all Variables replaced by Constants (we wouldn't train any Deep Learning model on mobile device any time soon). Unfortunately, since there is no Variable in this new graph, Tensorflow does not allow the convenient checkpointing, so one would need to resort to `./binaries/` while building this constant graph.
 
@@ -100,7 +100,7 @@ In short, in order to produce a protobuf graph with optimal size for use in C++ 
 python tensor.py --model 3c --load --savepb
 ```
 
-For further usage of this protobuf file, please refer to the official documentation of Tensorflow on C++ API [_here_](https://www.tensorflow.org/versions/r0.9/api_docs/cc/index.html). To run it on the iOS application, simply add the file to Bundle Resources and update the path to this file inside source code.
+For further usage of this protobuf file, please refer to the official documentation of Tensorflow on C++ API [here](https://www.tensorflow.org/versions/r0.9/api_docs/cc/index.html). To run it on the iOS application, simply add the file to Bundle Resources and update the path to this file inside source code.
 
 That's all!
 
