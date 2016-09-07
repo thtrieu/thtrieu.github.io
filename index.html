@@ -9,7 +9,7 @@ layout: default
 
 		<li>
 			<div class="post-date">
-				<span>{{ post.date | date: "%b %-d, %Y" }}</span>
+				<time>{{ post.date | date: "%B %-d, %Y" }}</time>
 			</div>
 			<div class="title">
 				<a href="{{ post.url | prepend: site.baseurl }}"> {{ post.title }} </a>

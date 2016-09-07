@@ -1,6 +1,7 @@
 ---
 layout: about
-title: About
+title: my relevants
+date: grap a coffee | finish the book | build something
 ---
 <!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
 
@@ -8,12 +9,9 @@ title: About
 
 
 
-### Pay a visit: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [![alt text][1.1]][1] &nbsp; &nbsp; [![alt text][2.1]][2] &nbsp; &nbsp; [![alt text][3.1]][3] &nbsp; &nbsp; [![alt text][4.1]][4]
+[![alt text][1.1]][1] &nbsp; &nbsp; [![alt text][2.1]][2] &nbsp; &nbsp; [![alt text][3.1]][3] &nbsp; &nbsp; [![alt text][4.1]][4]
 
-
-### Short intro
-
-Junior undergrad, research engineer from heart. I solve maths (cute little ones from high school olympiad), read physics and do computer stuff.
+I solve olympiad maths, read physics and do computer stuff.
 
 <!-- links to social media icons -->
 <!-- no need to change these -->
