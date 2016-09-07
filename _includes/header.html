@@ -1,32 +1,23 @@
-<!-- butterfly 
-https://66.media.tumblr.com/930616c2fd9cc8988c342248bb2bff8d/tumblr_nagpdgM8Rj1rdfgw4o1_500.gif-->
-
-<!-- fight club
-http://s8.favim.com/orig/72/fight-club-tyler-durden-philosophy-society-life-amazing-Favim.com-695004.gif
--->
-
-<!-- 
--->
-
 <aside class="logo">
 
-	{% assign flower = 'http://i.imgur.com/1pNRQjQ.gif' %}
-	{% assign merrys = 'http://i.imgur.com/iS5cgJC.gif' %}
-	{% assign merryf = 'http://i.imgur.com/gM0Iez5.gif'%}
+	{% assign about = 'http://i.imgur.com/idubpLD.gif' %}
+	{% assign home = 'http://i.imgur.com/OsZzGqC.gif' %}
+	{% assign post = 'http://i.imgur.com/XIwWOor.gif'%}
 	{% assign link = '/' %}
 	{% assign prompt = 'back home' %}
 		
 	{% if page.url == '/about.html' or page.url == '/about' %}
-		{% assign that = merrys %}
-		{% assign this = flower %}
+		{% assign that = home %}
+		{% assign this = about %}
 	{% else %}
-		{% assign this = merrys %}
 		{% if page.url == '/index.html' or page.url == '/' %}
-			{% assign that = flower %}
+			{% assign that = about %}
+			{% assign this = home %}
 			{% assign link = '/about' %}
 			{% assign prompt = 'about me' %}
 		{% else %}
-			{% assign that = merryf %}
+			{% assign that = home %}
+			{% assign this = post %}
 		{% endif %}
 	{% endif %}
 
