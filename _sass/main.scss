@@ -148,33 +148,6 @@ span[data-note] {
       }
     }
   }
-  .logo-prompt {
-    position: absolute;
-    display: none;
-    vertical-align: middle;
-    padding: 5px;
-    border-radius: 3px;
-    background: #666;
-    background: rgba(0,0,0,.5);
-    margin-left: 15px;
-    color: #fff;
-    font-size: 0.8235em;
-    text-align: center;
-    line-height: 1.2;
-    top: 50%;
-    margin-top: -250px;
-    &:before {
-      content: "";
-      border-width: 5px 5px 5px 0;
-      border-style: solid;
-      border-color: transparent #666;
-      border-color: transparent rgba(0,0,0,.5);
-      position: absolute;
-      top: 50%;
-      left: -5px;
-      margin-top: -5px;
-    }
-  }
 }
 iframe {
   margin: 45px 0 !important;

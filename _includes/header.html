@@ -11,7 +11,6 @@
 	{% assign pressing = 'http://i.imgur.com/rTnQRyw.gif' %}
 	{% assign composing = 'http://i.imgur.com/5pKDFn8.gif' %}
 	{% assign link = '/' %}
-	{% assign prompt = 'back home' %}
 
 	{% assign home = daisy %}
 	{% assign about = coffee %}
@@ -25,7 +24,6 @@
 			{% assign that = about %}
 			{% assign this = home %}
 			{% assign link = '/about' %}
-			{% assign prompt = 'about me' %}
 		{% else %}
 			{% assign that = home %}
 			{% assign this = post %}
@@ -38,6 +36,5 @@
 		onmouseout = "this.src='{{ this }}'"
 		class="gravatar">
 	</a>
-	<span class="logo-prompt">{{ prompt }}</span>
 
 </aside>
