@@ -1,7 +1,7 @@
 ---
 layout: about
-title: my relevants
-date: grap a coffee, finish the book, build something
+title: about me
+date: grab a coffee, finish the book, craft things
 ---
 <!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
 
@@ -11,7 +11,7 @@ date: grap a coffee, finish the book, build something
 
 [![alt text][1.1]][1] &nbsp; &nbsp; [![alt text][2.1]][2] &nbsp; &nbsp; [![alt text][3.1]][3] &nbsp; &nbsp; [![alt text][4.1]][4]
 
-I solve math problems, read physics and do computer stuff. I'd love to figure out _intelligence_ and _us_; our creator and [hir](https://en.wikipedia.org/wiki/Hir_(disambiguation)).
+I solve math problems, read physics and do computer stuff. I'd love to figure out _intelligence_ and _us_; our creators and theirs.
 
 <!-- links to social media icons -->
 <!-- no need to change these -->

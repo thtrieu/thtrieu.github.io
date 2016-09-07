@@ -1,26 +1,29 @@
 <aside class="logo">
 
-	{% assign about = 'http://i.imgur.com/OsZzGqC.gif' %}
-	{% assign home_t = 'http://i.imgur.com/FwuFo0w.gif' %}
-	{% assign post = 'http://i.imgur.com/bGFJgrh.gif'%}
-	{% assign post_t = 'http://i.imgur.com/mVCHrAb.gif'%}
-	{% assign home = 'http://i.imgur.com/ZQPALru.gif'%}
-	{% assign about_t = 'http://i.imgur.com/ZPFQbWM.gif'%}
+	{% assign coffee = 'http://i.imgur.com/OsZzGqC.gif' %}
+	{% assign lake = 'http://i.imgur.com/FwuFo0w.gif' %}
+	{% assign daisy = 'http://i.imgur.com/bGFJgrh.gif'%}
+	{% assign wind = 'http://i.imgur.com/mVCHrAb.gif'%}
+	{% assign rock = 'http://i.imgur.com/Gy59gNQ.gif'%}
+	{% assign noting = 'http://i.imgur.com/ZPFQbWM.gif'%}
+	{% assign writing = 'http://i.imgur.com/iWhw7SG.gif' %}
+	{% assign drafting = 'http://i.imgur.com/lkIS1Ir.gif' %}
+	{% assign pressing = 'http://i.imgur.com/rTnQRyw.gif' %}
 	{% assign link = '/' %}
 	{% assign prompt = 'back home' %}
 		
 	{% if page.url == '/about.html' or page.url == '/about' %}
-		{% assign that = about_t %}
-		{% assign this = about %}
+		{% assign that = daisy %}
+		{% assign this = coffee %}
 	{% else %}
 		{% if page.url == '/index.html' or page.url == '/' %}
-			{% assign that = home_t %}
-			{% assign this = home %}
+			{% assign that = coffee %}
+			{% assign this = daisy %}
 			{% assign link = '/about' %}
 			{% assign prompt = 'about me' %}
 		{% else %}
-			{% assign that = post_t %}
-			{% assign this = post %}
+			{% assign that = daisy %}
+			{% assign this = pressing %}
 		{% endif %}
 	{% endif %}
 
