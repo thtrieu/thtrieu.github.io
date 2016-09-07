@@ -10,18 +10,23 @@ http://s8.favim.com/orig/72/fight-club-tyler-durden-philosophy-society-life-amaz
 
 <aside class="logo">
 
+	{% assign flower = 'http://i.imgur.com/1pNRQjQ.gif' %}
+	{% assign merrys = 'http://i.imgur.com/iS5cgJC.gif' %}
+	{% assign merryf = 'http://i.imgur.com/gM0Iez5.gif'%}
 	{% assign link = '/' %}
 	{% assign prompt = 'back home' %}
 		
 	{% if page.url == '/about.html' or page.url == '/about' %}
-		{% assign that = 'http://i.imgur.com/iS5cgJC.gif' %}
-		{% assign this = 'http://i.imgur.com/1pNRQjQ.gif' %}
+		{% assign that = merrys %}
+		{% assign this = flower %}
 	{% else %}
-		{% assign this = 'http://i.imgur.com/iS5cgJC.gif' %}
-		{% assign that = 'http://i.imgur.com/1pNRQjQ.gif' %}
+		{% assign this = merrys %}
 		{% if page.url == '/index.html' or page.url == '/' %}
+			{% assign that = flower %}
 			{% assign link = '/about' %}
 			{% assign prompt = 'about me' %}
+		{% else %}
+			{% assign that = merryf %}
 		{% endif %}
 	{% endif %}
 
