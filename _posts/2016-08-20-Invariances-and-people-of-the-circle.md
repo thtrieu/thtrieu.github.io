@@ -11,14 +11,14 @@ A fun problem, someone told me that there is a physics explanation for this but 
 
 After a signal, every one starts running around the circle with arbitrary direction (either clockwise or counter clockwise) and with the same velocity $$v$$. Whenever two of them bump into each other like this `><`, they immediately change direction like this `<>` and continue running. Is there any possiblity that, after a while, the configuration of these $$N$$ people (the ordered sets of positions and velocity vectors) return to its initial state?
 
-# The key is to find a pattern inside this mess
+# Find the pattern
 
-Notice that `><` changing to `<>` can be seen as either
+And by pattern, I mean _invariance_. Notice that `><` changing to `<>` can be seen as either
 
 - The two changes their directions, or
 - The two pass through each other and keep moving in their own direction
 
-The second case provides more invariance compare to the first (namely, direction). But yeah, the second case is not provided in the problem statement, so we should introduce some additional entities to add this perspective into argument.
+The second case provides more invariance compare to the first (namely, direction invariance). But yeah, the second case is not provided in the problem statement, so we should introduce some additional entities to add this perspective into argument.
 
 # A new variable
 
