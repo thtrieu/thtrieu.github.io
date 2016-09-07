@@ -1,22 +1,25 @@
 <aside class="logo">
 
-	{% assign about = 'http://i.imgur.com/idubpLD.gif' %}
-	{% assign home = 'http://i.imgur.com/OsZzGqC.gif' %}
-	{% assign post = 'http://i.imgur.com/FwuFo0w.gif'%}
+	{% assign about = 'http://i.imgur.com/OsZzGqC.gif' %}
+	{% assign home_t = 'http://i.imgur.com/FwuFo0w.gif' %}
+	{% assign post = 'http://i.imgur.com/bGFJgrh.gif'%}
+	{% assign post_t = 'http://i.imgur.com/mVCHrAb.gif'%}
+	{% assign home = 'http://i.imgur.com/ZQPALru.gif'%}
+	{% assign about_t = 'http://i.imgur.com/ZPFQbWM.gif'%}
 	{% assign link = '/' %}
 	{% assign prompt = 'back home' %}
 		
 	{% if page.url == '/about.html' or page.url == '/about' %}
-		{% assign that = home %}
+		{% assign that = about_t %}
 		{% assign this = about %}
 	{% else %}
 		{% if page.url == '/index.html' or page.url == '/' %}
-			{% assign that = about %}
+			{% assign that = home_t %}
 			{% assign this = home %}
 			{% assign link = '/about' %}
 			{% assign prompt = 'about me' %}
 		{% else %}
-			{% assign that = home %}
+			{% assign that = post_t %}
 			{% assign this = post %}
 		{% endif %}
 	{% endif %}

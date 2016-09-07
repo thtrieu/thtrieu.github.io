@@ -18,7 +18,7 @@ Here is a relevant quote from the formal documentation:
 
 Yes, at the end of the day, all attempts are made for the package to become more practically useful to users. Being more flexible and change-welcoming is probably the number one principle.
 
-### Gimme a break can we now just go on messing the hell out of whatever inside this thing shall we now dude please?
+### Can we just now do something already?
 
 Alright of course that is what we are going to do now. But everything takes time, you first need to get a refresh with the __actual__ syntax of `edmsyn` before going any further, what I introduced in the debut is not exactly the one built in the package. In fact, what was actually built is not that different except for some function/variable names. See below
 
