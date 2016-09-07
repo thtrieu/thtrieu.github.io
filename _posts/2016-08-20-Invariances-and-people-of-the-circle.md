@@ -32,7 +32,7 @@ Before giving out observations, let's name some of the entities in this problem:
 - Denote the running people $$A_1, A_2, ..., A_n$$, in a specific direction along the circle
 - Denote the their corresponding balls at the beginning $$B_1, B_2, ..., B_n$$
 - Mark the initial positions $$X = \{X_1, X_2, ..., X_n\}$$
-- Let the unordered set of positions at time $$t$$ be $$P_t$$. Note that since the set is unordered, $$(P_t)_i$$ is not necessarily the postion of $$A_i$$ at time $$t$$.
+- Let the set of positions at time $$t$$ be $$P_t$$. 
 - Let $$f$$ be a function such that $$f(P)$$ is an ordered permutation of $$P$$ where $$f(P)_i$$ is the position of $$A_i$$. In other words, $$f$$ corrects $$P$$ so that it matches $$A$$. Note that this implies $$f(P_0)_i = X_i$$
 
 # The very first observation
