@@ -9,21 +9,26 @@
 	{% assign writing = 'http://i.imgur.com/iWhw7SG.gif' %}
 	{% assign drafting = 'http://i.imgur.com/lkIS1Ir.gif' %}
 	{% assign pressing = 'http://i.imgur.com/rTnQRyw.gif' %}
+	{% assign composing = 'http://i.imgur.com/5pKDFn8.gif' %}
 	{% assign link = '/' %}
 	{% assign prompt = 'back home' %}
+
+	{% assign home = daisy %}
+	{% assign about = coffee %}
+	{% assign post = rock %}
 		
 	{% if page.url == '/about.html' or page.url == '/about' %}
-		{% assign that = daisy %}
-		{% assign this = coffee %}
+		{% assign that = home %}
+		{% assign this = about %}
 	{% else %}
 		{% if page.url == '/index.html' or page.url == '/' %}
-			{% assign that = coffee %}
-			{% assign this = daisy %}
+			{% assign that = about %}
+			{% assign this = home %}
 			{% assign link = '/about' %}
 			{% assign prompt = 'about me' %}
 		{% else %}
-			{% assign that = daisy %}
-			{% assign this = pressing %}
+			{% assign that = home %}
+			{% assign this = post %}
 		{% endif %}
 	{% endif %}
 

@@ -13,6 +13,7 @@ date: grab a coffee, finish the book, craft things
 
 I solve math problems, read physics and do computer stuff. I'd love to figure out _intelligence_ and _us_; our creators and theirs.
 
+
 <!-- links to social media icons -->
 <!-- no need to change these -->
  
