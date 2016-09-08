@@ -31,5 +31,28 @@ layout: compress
 		{% endif %}
 
 	</body>
-
+	<script>
+		var post = '{{ site.post }}';
+		var home = '{{ site.home }}';
+		function postLogo() {
+			document.getElementById("logo").src = post;
+		}
+		function homeLogo() {
+			document.getElementById("logo").src = home;
+		}
+		function postClicked() {
+			home = post;
+		}
+		var that = '{{ that }}';
+		var this_ = '{{ this }}';
+		function thatLogo() {
+			document.getElementById("logo").src = that;
+		}
+		function thisLogo() {
+			document.getElementById("logo").src = this_;
+		}
+		function clicked() {
+			this_ = that
+		}
+	</script>
 </html>

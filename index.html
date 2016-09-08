@@ -4,9 +4,8 @@ layout: default
 
 <section>
 	<ul>
-
 		{% for post in site.posts %}
-
+		
 		<li>
 			<div class="post-date">
 				<time>{{ post.date | date: "%B %-d, %Y" }}</time>
@@ -15,7 +14,7 @@ layout: default
 				<a href="{{ post.url | prepend: site.baseurl }}"
 				onmouseover = "postLogo()"
 				onmouseout = "homeLogo()"
-				onmouseup = "clicked()"> {{ post.title }} </a>
+				onmouseup = "postClicked()"> {{ post.title }} </a>
 			</div>
 		</li>
 
@@ -23,19 +22,5 @@ layout: default
 
 	</ul>
 </section>
-
-<script>
-var post = '{{ site.post }}';
-var home = '{{ site.home }}';
-function postLogo() {
-	document.getElementById("logo").src = post;
-}
-function homeLogo() {
-	document.getElementById("logo").src = home;
-}
-function clicked() {
-	home = post;
-}
-</script>
-
 <script id="dsq-count-scr" src="//thtrieu.disqus.com/count.js" async></script>
+

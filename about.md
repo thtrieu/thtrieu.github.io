@@ -7,8 +7,6 @@ date: grab a coffee, finish the book, build something
 
 <!-- display the social media buttons in your README -->
 
-I solve math problems, read physics and do computer stuff. I'm interested in _intelligence_ and _us_; our creators and their other inventions.
-
 
 <!-- links to social media icons -->
 <!-- no need to change these -->
