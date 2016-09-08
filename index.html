@@ -15,7 +15,7 @@ layout: default
 				<a href="{{ post.url | prepend: site.baseurl }}"
 				onmouseover = "postLogo()"
 				onmouseout = "homeLogo()"
-				onmouseup = > {{ post.title }} </a>
+				onmouseup = "clicked()"> {{ post.title }} </a>
 			</div>
 		</li>
 
@@ -25,11 +25,17 @@ layout: default
 </section>
 
 <script>
+var click = 0;
 function postLogo() {
-	document.getElementById("logo").src = '{{ site.post }}';
+	if (click < 1) {
+		document.getElementById("logo").src = '{{ site.post }}';
+	}
 }
 function homeLogo() {
 	document.getElementById("logo").src = '{{ site.home }}';
+}
+function clicked() {
+	click = 1;
 }
 </script>
 

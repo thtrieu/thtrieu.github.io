@@ -23,9 +23,24 @@
 	<a href="{{ link | prepend: site.baseurl }}">
 		<img src="{{ this }}"
 		id = "logo"
-		onmouseover = "this.src='{{ that }}'"
-		onmouseout = "this.src='{{ this }}'"
+		onmouseover = "thatLogo()"
+		onmouseout = "thisLogo()"
 		class= "gravatar">
 	</a>
+
+<script>
+var click = 0;
+function thatLogo() {
+	if (click < 1) {
+		document.getElementById("logo").src = '{{ that }}';
+	}
+}
+function thisLogo() {
+	document.getElementById("logo").src = '{{ this }}';
+}
+function clicked() {
+	click = 1;
+}
+</script>
 
 </aside>
