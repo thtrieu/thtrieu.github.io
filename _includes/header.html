@@ -1,8 +1,8 @@
 <aside class="logo">
 
-	{% assign coffee = 'http://i.imgur.com/OsZzGqC.gif' %}
+	{% assign coffee = 'http://i.imgur.com/rmXD2ay.gif' %}
 	{% assign lake = 'http://i.imgur.com/FwuFo0w.gif' %}
-	{% assign daisy = 'http://i.imgur.com/bGFJgrh.gif'%}
+	{% assign daisy = 'http://i.imgur.com/tejvnIK.gif'%}
 	{% assign wind = 'http://i.imgur.com/mVCHrAb.gif'%}
 	{% assign rock = 'http://i.imgur.com/Gy59gNQ.gif'%}
 	{% assign noting = 'http://i.imgur.com/ZPFQbWM.gif'%}
@@ -10,11 +10,12 @@
 	{% assign drafting = 'http://i.imgur.com/lkIS1Ir.gif' %}
 	{% assign pressing = 'http://i.imgur.com/rTnQRyw.gif' %}
 	{% assign composing = 'http://i.imgur.com/5pKDFn8.gif' %}
+	{% assign ripple = 'http://i.imgur.com/CVBp6Yp.gif' %}
 	{% assign link = '/' %}
 
 	{% assign home = daisy %}
 	{% assign about = coffee %}
-	{% assign post = noting %}
+	{% assign post = ripple %}
 		
 	{% if page.url == '/about.html' or page.url == '/about' %}
 		{% assign that = home %}
@@ -36,7 +37,6 @@
 		<img src="{{ this }}"
 		onmouseover = "this.src='{{ that }}'"
 		onmouseout = "this.src='{{ out }}'"
-		onmouseup = "out = that"
 		class= "gravatar">
 	</a>
 

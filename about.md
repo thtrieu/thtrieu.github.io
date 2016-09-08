@@ -1,7 +1,7 @@
 ---
 layout: about
 title: about me
-date: grab a coffee, finish the book, craft things
+date: grab a coffee, finish the book, build something
 ---
 <!-- Please don't remove this: Grab your social icons from https://github.com/carlsednaoui/gitsocial -->
 

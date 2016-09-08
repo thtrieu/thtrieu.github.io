@@ -130,10 +130,6 @@ span[data-note] {
     &:focus {
       background: #f14e32;
     }
-    &:hover + .logo-prompt,
-    &:focus + .logo-prompt {
-      display: inline-block !important;
-    }
     .gravatar {
       margin-top: 3px;
       height: 100px;
@@ -141,11 +137,7 @@ span[data-note] {
       -webkit-border-radius: 50%;
       -moz-border-radius: 50%;
       border-radius: 50%;
-    }
-    @media (max-width : 480px) {&:hover + .logo-prompt,
-      &:focus + .logo-prompt {
-        display: none !important;
-      }
+
     }
   }
 }
