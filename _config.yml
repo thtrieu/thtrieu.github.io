@@ -6,7 +6,6 @@ google_analytics:   UA-XXXXXXX-X # Put your Google Analytics code
 post: "http://i.imgur.com/CVBp6Yp.gif"
 home: "http://i.imgur.com/tejvnIK.gif"
 about: "http://i.imgur.com/d3GJwO1.gif"
-spoon: "http://i.imgur.com/6UaSYA9.gif"
 
 # spoon about: "http://i.imgur.com/6UaSYA9.gif"
 # pooring about: "http://i.imgur.com/0TNlsRx.gif"
@@ -15,6 +14,7 @@ spoon: "http://i.imgur.com/6UaSYA9.gif"
 # step2 about: "http://i.imgur.com/FCePkA4.gif"
 # christ about: "http://i.imgur.com/iqDJCdf.gif"
 # cookie about: "http://i.imgur.com/d3GJwO1.gif"
+# touch home: "http://i.imgur.com/f19wdua.gif"
 
 # Author Info
 author_name:        "thtrieu"
