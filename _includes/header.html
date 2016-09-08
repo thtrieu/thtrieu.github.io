@@ -30,11 +30,14 @@
 		{% endif %}
 	{% endif %}
 
+	{% assign out = this %}
+
 	<a href="{{ link | prepend: site.baseurl }}">
 		<img src="{{ this }}"
 		onmouseover = "this.src='{{ that }}'"
-		onmouseout = "this.src='{{ this }}'"
-		class="gravatar">
+		onmouseout = "this.src='{{ out }}'"
+		onmouseup = "out = that"
+		class= "gravatar">
 	</a>
 
 </aside>
