@@ -25,17 +25,16 @@ layout: default
 </section>
 
 <script>
-var click = 0;
+var post = '{{ site.post }}';
+var home = '{{ site.home }}';
 function postLogo() {
-	if (click < 1) {
-		document.getElementById("logo").src = '{{ site.post }}';
-	}
+	document.getElementById("logo").src = post;
 }
 function homeLogo() {
-	document.getElementById("logo").src = '{{ site.home }}';
+	document.getElementById("logo").src = home;
 }
 function clicked() {
-	click = 1;
+	home = post;
 }
 </script>
 

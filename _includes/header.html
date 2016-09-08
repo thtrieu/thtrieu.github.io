@@ -25,21 +25,21 @@
 		id = "logo"
 		onmouseover = "thatLogo()"
 		onmouseout = "thisLogo()"
+		onmouseup = "clicked()"
 		class= "gravatar">
 	</a>
 
 <script>
-var click = 0;
+var that = '{{ that }}';
+var this_ = '{{ this }}';
 function thatLogo() {
-	if (click < 1) {
-		document.getElementById("logo").src = '{{ that }}';
-	}
+	document.getElementById("logo").src = that;
 }
 function thisLogo() {
-	document.getElementById("logo").src = '{{ this }}';
+	document.getElementById("logo").src = this_;
 }
 function clicked() {
-	click = 1;
+	this_ = that
 }
 </script>
 
