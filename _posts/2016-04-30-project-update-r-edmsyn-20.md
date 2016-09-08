@@ -46,17 +46,25 @@ That's all! Of course there are much more to the capacity of this package but fo
 ### A toy model
 
 For the purpose of illustration, `toy` will operates on some of the built-in parameter of `edmsyn`, so I will now briefly go through each of them so that you can follow on to later sections.
+
 - `concepts` and `students` are positive integer parameters. Never mind what they really are.
+
 - `min.it.per.tree` is also a positive integer parameter, it has a default value of 1
+
 - `M` is a binary matrix of size `concepts` \\( \times \\) `students`
+
 - `default.vals` is where the package store all default values, for example: `default.vals$min.it.per.tree` has the value of 1. Note that not all parameters have a default value.
 
 Okay, so now here is an outline of what is added to `edmsyn` by this new model (named `toy`):
 
 - a root integer parameter named `foo`
+
 - an integer parameter named `lower.foo` being the strict lower bound of `foo` (i.e. `foo` must be greater than `lower.foo`), `lower.foo` have the default value of 1.
+
 - an integer parameter named `upper.foo` being the upper bound of `foo` (i.e. `foo` must be less than or equal to `upper.foo`), `upper.foo` have the default value equal to the sum of default value for `min.it.per.tree` and `concepts`.
+
 - `bar`, a matrix with dimension (`foo`,`concepts`), its entries being real numbers between 0 and 1.
+
 - data node of this model (named `toy`) is a list with two components: the first one is a matrix obtained from the rounded multiplication of `foo` and `M`, the second is the number of concepts
 
 Now we are going to add all these parameters and relationships between them into the structure. I call this internal structure a `tree` and thus, functions that allow you to do so will have names starting with `edmtree`. Base on the specific task that each of them are trying to achieve, these functions will have different name extensions, like `edmtree.add`, `edmtree.replace`, `edmtree.remove`.

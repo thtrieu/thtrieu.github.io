@@ -1,21 +1,10 @@
 <aside class="logo">
 
-	{% assign coffee = 'http://i.imgur.com/rmXD2ay.gif' %}
-	{% assign lake = 'http://i.imgur.com/FwuFo0w.gif' %}
-	{% assign daisy = 'http://i.imgur.com/tejvnIK.gif'%}
-	{% assign wind = 'http://i.imgur.com/mVCHrAb.gif'%}
-	{% assign rock = 'http://i.imgur.com/Gy59gNQ.gif'%}
-	{% assign noting = 'http://i.imgur.com/ZPFQbWM.gif'%}
-	{% assign writing = 'http://i.imgur.com/iWhw7SG.gif' %}
-	{% assign drafting = 'http://i.imgur.com/lkIS1Ir.gif' %}
-	{% assign pressing = 'http://i.imgur.com/rTnQRyw.gif' %}
-	{% assign composing = 'http://i.imgur.com/5pKDFn8.gif' %}
-	{% assign ripple = 'http://i.imgur.com/CVBp6Yp.gif' %}
-	{% assign link = '/' %}
 
-	{% assign home = daisy %}
-	{% assign about = coffee %}
-	{% assign post = ripple %}
+	{% assign link = '/' %}
+	{% assign home = site.home %}
+	{% assign about = site.about %}
+	{% assign post = site.post %}
 		
 	{% if page.url == '/about.html' or page.url == '/about' %}
 		{% assign that = home %}
@@ -31,12 +20,11 @@
 		{% endif %}
 	{% endif %}
 
-	{% assign out = this %}
-
 	<a href="{{ link | prepend: site.baseurl }}">
 		<img src="{{ this }}"
+		id = "logo"
 		onmouseover = "this.src='{{ that }}'"
-		onmouseout = "this.src='{{ out }}'"
+		onmouseout = "this.src='{{ this }}'"
 		class= "gravatar">
 	</a>
 

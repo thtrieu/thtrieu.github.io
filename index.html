@@ -12,7 +12,9 @@ layout: default
 				<time>{{ post.date | date: "%B %-d, %Y" }}</time>
 			</div>
 			<div class="title">
-				<a href="{{ post.url | prepend: site.baseurl }}"> {{ post.title }} </a>
+				<a href="{{ post.url | prepend: site.baseurl }}"
+				onmouseover = "changeLogo()"
+				onmouseout = "resetLogo()"> {{ post.title }} </a>
 			</div>
 		</li>
 
@@ -20,5 +22,14 @@ layout: default
 
 	</ul>
 </section>
+
+<script>
+function changeLogo() {
+	document.getElementById("logo").src = '{{ site.post }}';
+}
+function resetLogo() {
+	document.getElementById("logo").src = '{{ site.home }}';
+}
+</script>
 
 <script id="dsq-count-scr" src="//thtrieu.disqus.com/count.js" async></script>
