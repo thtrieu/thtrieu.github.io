@@ -13,8 +13,8 @@ layout: default
 			</div>
 			<div class="title">
 				<a href="{{ post.url | prepend: site.baseurl }}"
-				onmouseover = "changeLogo()"
-				onmouseout = "resetLogo()"> {{ post.title }} </a>
+				onmouseover = "postLogo()"
+				onmouseout = "homeLogo()"> {{ post.title }} </a>
 			</div>
 		</li>
 
@@ -24,10 +24,10 @@ layout: default
 </section>
 
 <script>
-function changeLogo() {
+function postLogo() {
 	document.getElementById("logo").src = '{{ site.post }}';
 }
-function resetLogo() {
+function homeLogo() {
 	document.getElementById("logo").src = '{{ site.home }}';
 }
 </script>
