@@ -6,16 +6,18 @@ google_analytics:   UA-XXXXXXX-X # Put your Google Analytics code
 
 # Logos
 logos: 
-  rock:     "http://i.imgur.com/CVBp6Yp.gif" # rock
-  daisy:    "http://i.imgur.com/tejvnIK.gif" # daisy
-  coffee:   "http://i.imgur.com/d3GJwO1.gif" # coffee
-  spoon:    "http://i.imgur.com/6UaSYA9.gif" # spoon
-  pooring:  "http://i.imgur.com/0TNlsRx.gif" # pooring
-  smoke:    "http://i.imgur.com/wUl8kal.gif" # smoke
-  step1:    "http://i.imgur.com/LVF0HOR.gif" # step1
-  step2:    "http://i.imgur.com/FCePkA4.gif" # step2
-  christ:   "http://i.imgur.com/iqDJCdf.gif" # christ
-  touch:    "http://i.imgur.com/f19wdua.gif" # touch
+  rock:     "http://i.imgur.com/CVBp6Yp.gif"
+  daisy:    "http://i.imgur.com/tejvnIK.gif"
+  coffee:   "http://i.imgur.com/d3GJwO1.gif"
+  spoon:    "http://i.imgur.com/6UaSYA9.gif"
+  pooring:  "http://i.imgur.com/0TNlsRx.gif"
+  smoke:    "http://i.imgur.com/wUl8kal.gif"
+  step1:    "http://i.imgur.com/LVF0HOR.gif"
+  step2:    "http://i.imgur.com/FCePkA4.gif"
+  christ:   "http://i.imgur.com/iqDJCdf.gif"
+  touch:    "http://i.imgur.com/f19wdua.gif"
+  pure:     "http://i.imgur.com/RDbvdeg.gif"
+  bookafe:  "http://i.imgur.com/1NngOKZ.gif"
 
 # Author Info
 author_name:        "thtrieu"
