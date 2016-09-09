@@ -35,17 +35,22 @@ layout: compress
 		var post = '{{ site.post }}';
 		var that = '{{ that }}';
 		var this_ = '{{ this }}';
+		var wait = 0;
 		function postLogo() {
-			document.getElementById("logo").src = post;
-		}
-		function postClicked() {
-			this_ = post;
+			setTimeout(function() {
+				document.getElementById("logo").src = post;
+			}, wait)
 		}
 		function thatLogo() {
-			document.getElementById("logo").src = that;
+			setTimeout(function(){
+				document.getElementById("logo").src = that;
+			}, wait)
 		}
 		function thisLogo() {
 			document.getElementById("logo").src = this_;
+		}
+		function postClicked() {
+			this_ = post;
 		}
 		function clicked() {
 			this_ = that
