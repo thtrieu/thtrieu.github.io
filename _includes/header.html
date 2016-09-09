@@ -1,25 +1,5 @@
 <aside class="logo">
 
-
-	{% assign link = '/' %}
-	{% assign home = site.home %}
-	{% assign about = site.about %}
-	{% assign post = site.post %}
-		
-	{% if page.url == '/about.html' or page.url == '/about' %}
-		{% assign that = home %}
-		{% assign this = about %}
-	{% else %}
-		{% if page.url == '/index.html' or page.url == '/' %}
-			{% assign that = about %}
-			{% assign this = home %}
-			{% assign link = '/about' %}
-		{% else %}
-			{% assign that = home %}
-			{% assign this = post %}
-		{% endif %}
-	{% endif %}
-
 	<a href="{{ link | prepend: site.baseurl }}">
 		<img src="{{ this }}"
 		id = "logo"

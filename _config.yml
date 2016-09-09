@@ -3,18 +3,19 @@ title:              "thtrieu"
 description:        "minimum"
 google_verify:      epFgX0s_0RM3CdjwFcsewfXzPov2g8s9ZBOLyaIUH-o # Put your Google Verification here
 google_analytics:   UA-XXXXXXX-X # Put your Google Analytics code
-post: "http://i.imgur.com/CVBp6Yp.gif"
-home: "http://i.imgur.com/tejvnIK.gif"
-about: "http://i.imgur.com/d3GJwO1.gif"
 
-# spoon about: "http://i.imgur.com/6UaSYA9.gif"
-# pooring about: "http://i.imgur.com/0TNlsRx.gif"
-# smoke about: "http://i.imgur.com/wUl8kal.gif"
-# step1 about: "http://i.imgur.com/LVF0HOR.gif"
-# step2 about: "http://i.imgur.com/FCePkA4.gif"
-# christ about: "http://i.imgur.com/iqDJCdf.gif"
-# cookie about: "http://i.imgur.com/d3GJwO1.gif"
-# touch home: "http://i.imgur.com/f19wdua.gif"
+# Logos
+logos: 
+  rock:     "http://i.imgur.com/CVBp6Yp.gif" # rock
+  daisy:    "http://i.imgur.com/tejvnIK.gif" # daisy
+  coffee:   "http://i.imgur.com/d3GJwO1.gif" # coffee
+  spoon:    "http://i.imgur.com/6UaSYA9.gif" # spoon
+  pooring:  "http://i.imgur.com/0TNlsRx.gif" # pooring
+  smoke:    "http://i.imgur.com/wUl8kal.gif" # smoke
+  step1:    "http://i.imgur.com/LVF0HOR.gif" # step1
+  step2:    "http://i.imgur.com/FCePkA4.gif" # step2
+  christ:   "http://i.imgur.com/iqDJCdf.gif" # christ
+  touch:    "http://i.imgur.com/f19wdua.gif" # touch
 
 # Author Info
 author_name:        "thtrieu"

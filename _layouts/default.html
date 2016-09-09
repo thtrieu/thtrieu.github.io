@@ -8,7 +8,25 @@ layout: compress
 
 <!DOCTYPE html>
 <html lang="en">
+	{% assign link = '/' %}
+	{% assign post = site.logos.christ %}
+	{% assign home = site.logos.daisy %}
+	{% assign lost = site.logos.rock %}
 
+	{% if page.title == site.title %}
+		{% assign this = home %}
+		{% assign that = lost %}
+		{% assign link = 'about' %}
+	{% else %}
+		{% if page.title == 'about' %}
+			{% assign this = lost %}
+			{% assign that = home %}
+		{% else %}
+			{% assign this = post %}
+			{% assign that = home %}
+		{% endif %}
+	{% endif %}
+	
 	<head>
 		{% include head.html %}
 	</head>
@@ -32,28 +50,22 @@ layout: compress
 
 	</body>
 	<script>
-		var post = '{{ site.post }}';
 		var that = '{{ that }}';
-		var this_ = '{{ this }}';
-		var wait = 0;
+		var thiS = '{{ this }}';
 		function postLogo() {
-			setTimeout(function() {
-				document.getElementById("logo").src = post;
-			}, wait)
+			document.getElementById("logo").src = '{{ post }}';
 		}
 		function thatLogo() {
-			setTimeout(function(){
-				document.getElementById("logo").src = that;
-			}, wait)
+			document.getElementById("logo").src = that;
 		}
 		function thisLogo() {
-			document.getElementById("logo").src = this_;
+			document.getElementById("logo").src = thiS;
 		}
 		function postClicked() {
-			this_ = post;
+			thiS = '{{ post }}';
 		}
 		function clicked() {
-			this_ = that
+			thiS = that;
 		}
 	</script>
 </html>
