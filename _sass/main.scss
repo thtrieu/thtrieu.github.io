@@ -223,6 +223,7 @@ article {
         color: #555;
         &:hover{
           font-style: italic;
+          color: #f14e32;
         }
       }
     }
@@ -339,6 +340,7 @@ section {
           box-sizing: border-box;
           &:hover{
             font-style: italic;
+            color: #f14e32;
           }
         }
         a:hover {
