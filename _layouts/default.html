@@ -9,20 +9,32 @@ layout: compress
 <!DOCTYPE html>
 <html lang="en">
 	{% assign link = '/' %}
-	{% assign post = site.logos.drip %}
-	{% assign home = site.logos.surface %}
+	{% assign post = site.logos.wood %}
+	{% assign postsub = site.logos.pooring %}
+	{% assign postbut = site.logos.daisy %}
+	{% assign home = site.logos.fly %}
+	{% assign homesub = site.logos.spike %}
+	{% assign homebut = site.logos.spike %}
 	{% assign lost = site.logos.rock %}
+	{% assign lostsub = site.logos.drip %}
+	{% assign lostbut = site.logos.drip %}
 
 	{% if page.title == site.title %}
 		{% assign this = home %}
 		{% assign that = lost %}
+		{% assign sub = homesub %}
+		{% assign but = homebut %}
 		{% assign link = 'about' %}
 	{% else %}
 		{% if page.title == 'about' %}
 			{% assign this = lost %}
+			{% assign sub = lostsub %}
+			{% assign but = lostbut %}
 			{% assign that = home %}
 		{% else %}
 			{% assign this = post %}
+			{% assign sub = postsub %}
+			{% assign but = postbut %}
 			{% assign that = home %}
 		{% endif %}
 	{% endif %}
@@ -52,6 +64,8 @@ layout: compress
 	<script>
 		var that = '{{ that }}';
 		var thiS = '{{ this }}';
+		var sub = '{{ sub }}';
+		var but = '{{ but }}';
 		function postLogo() {
 			document.getElementById("logo").src = '{{ post }}';
 		}
@@ -60,6 +74,12 @@ layout: compress
 		}
 		function thisLogo() {
 			document.getElementById("logo").src = thiS;
+		}
+		function subLogo() {
+			document.getElementById("logo").src = sub;
+		}
+		function buttonLogo() {
+			document.getElementById("logo").src = but;
 		}
 		function postClicked() {
 			thiS = '{{ post }}';

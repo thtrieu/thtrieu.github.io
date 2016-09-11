@@ -8,6 +8,7 @@ google_analytics:   UA-XXXXXXX-X # Put your Google Analytics code
 logos: 
   rock:     "http://i.imgur.com/CVBp6Yp.gif"
   daisy:    "http://i.imgur.com/tejvnIK.gif"
+  flower:   "http://i.imgur.com/JX9gCsP.gif"
   coffee:   "http://i.imgur.com/d3GJwO1.gif"
   spoon:    "http://i.imgur.com/6UaSYA9.gif"
   pooring:  "http://i.imgur.com/0TNlsRx.gif"
@@ -19,12 +20,13 @@ logos:
   pure:     "http://i.imgur.com/RDbvdeg.gif"
   bookafe:  "http://i.imgur.com/1NngOKZ.gif"
   purer:    "http://i.imgur.com/l1tA8nA.gif"
-  spike:    "http://i.imgur.com/HBKq5gq.gif"
+  spike:    "http://i.imgur.com/P5Ifo0E.gif"
   moss:     "http://i.imgur.com/JNoDa9E.gif"
   drip:     "http://i.imgur.com/hbaEn2i.gif"
   surface:  "http://i.imgur.com/2zsgYDR.gif"
   fly:      "http://i.imgur.com/tU08Pu4.gif"
-  
+  wood:     "http://i.imgur.com/w6NOJp2.gif"
+
 # Author Info
 author_name:        "thtrieu"
 author_email:       thtrieu@apcs.vn
