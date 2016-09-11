@@ -239,17 +239,21 @@ article {
     background: -webkit-linear-gradient(left,rgba(255,255,255,0),#ccc,rgba(255,255,255,0));
     background: linear-gradient(to right,rgba(255,255,255,0),#ccc,rgba(255,255,255,0));
     height: 1px;
-    margin: 2em 0;
-  }
-  .divider-short {
-    background: #ddd;
-    background: -webkit-gradient(linear,left top,right top,from(rgba(255,255,255,0)),color-stop(#ccc),to(rgba(255,255,255,0)));
-    background: -webkit-linear-gradient(left,rgba(255,255,255,0),#ccc,rgba(255,255,255,0));
-    background: linear-gradient(to right,rgba(255,255,255,0),#ccc,rgba(255,255,255,0));
-    height: 3px;
-    margin: 2em 0;
+    margin: 5px 0;
   }
   .center {
+    text-align: center;
+    margin: 0 auto;
+    h1 {
+      font-size: 14px;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      text-decoration: none;
+      font-weight: 300;
+      font-style: none;
+      color: #888;
+    }
+  }
+  .center-foot {
     text-align: center;
     margin: 0 auto;
   }

@@ -236,7 +236,7 @@ This is the necessary condition for $$x$$ to be a local minimum, to guarantee vi
 
 2. For $$K = 2$$, $$N$$ being odd also guarantees equivalence between $$L_1$$ and SVM. This can be done simply by choosing an odd batch size for training, that make sure whenever $$x$$ violates $$g(x) \leq 0$$, it won't get stuck.
 
-So that is all there is I have to offer. Let's move on to the implementation.
+*So that is all there is I have to offer, do you think I'm a good match? - The interviewee asked. - Let's move on to your work now shall we?*
 
 ## DeepSVM at work: a Tensorflow implementation
 
