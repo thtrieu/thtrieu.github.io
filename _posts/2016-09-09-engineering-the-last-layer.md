@@ -216,7 +216,7 @@ So let's assume $$K = 2$$. Note that this does not means $$(8)$$ automatically b
 
 ### Failed Batch Normalization: a final attempt
 
-Now let's say we don't do that and let the rare case $$(8)$$ happens when $$K = 2$$. The place to look to now is (9), which is false if and only if $$C \not = \lambda$$ **and** $$\nu_{kn} \not = 0 \ \forall k, n$$. It is tougher to accomplish this, say we generally set $$C \not = \lambda$$, so $$(9)$$ is true if and only if $$\nu_{kn} = 0 \ \forall n, k$$. This and the fact that $$\exists k', n'$$ such that $$g_{n'k'} > 0$$ gives $$1 > t_{k'n'}W_{k'}^T\phi_n + B_{k'}$$. Subtitute $$(7)$$ into this inequality and we have:
+Let's see how far we can push this. Say we don't do that and let the rare case $$(8)$$ happens when $$K = 2$$. The place to look to now is (9), which is false if and only if $$C \not = \lambda$$ **and** $$\nu_{kn} \not = 0 \ \forall k, n$$. It is tougher to accomplish this, say we generally set $$C \not = \lambda$$, so $$(9)$$ is true if and only if $$\nu_{kn} = 0 \ \forall n, k$$. This and the fact that $$\exists k', n'$$ such that $$g_{n'k'} > 0$$ gives $$1 > t_{k'n'}W_{k'}^T\phi_n + B_{k'}$$. Subtitute $$(7)$$ into this inequality and we have:
 
 $$1 > \lambda t_{k'n'} \left ( \sum_m^N t_{k'm} \kappa_{mn'} + B_{k'}\right)$$
 
