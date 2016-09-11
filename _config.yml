@@ -30,6 +30,7 @@ logos:
 # Author Info
 author_name:        "thtrieu"
 author_email:       thtrieu@apcs.vn
+author_host:        ".github.io/"
 
 # Site Settings
 baseurl:            "" # Base URL must end WITHOUT a slash, default: ""

@@ -190,7 +190,7 @@ While so far,
 
 - $$L_1(x)$$ finite elsewhere, but hopefully not a local minimum.
 
-### Deriving the equivalence sufficient conditions 
+### Deriving sufficient conditions for equivalence
 
 If $$L_1$$ is not what we are expecting, we'll have to assume it is a good enough approximation of $$L_2$$ and implement both of them to compare the performances, where adversarial training is needed to work with $$L_2$$. Fortunately this turns out not to be the case. Look at $$L_1$$ when $$x$$ violates the constraint, $$\varphi$$ is now an identity:
 
@@ -212,11 +212,11 @@ From this point, you will quickly see that arguments supporting $$L_3$$ overpowe
 
 Let's consider cases where at least one of the above conditions is immediately wrong. $$(8)$$ is clearly not true if $$K > 2$$ since by definition, the construction of $$t_{kn}$$ requires $$\sum_k^K\sum_n^Nt_{kn} = N(2 - K)$$, which cannot be zero as $$(8)$$ suggests if $$K > 2$$. To prove this, consider the aggregated matrix $$T$$ with $$t_{kn}$$ entries: it has a single $$1$$ entry for each column and $$-1$$ for all the remainings, and the summation is taking over all of its entries, thus the equality.
 
-So let's assume $$K = 2$$. Note that this does not means $$(8)$$ automatically becomes true, this would require another assumption: an equal number of positive and negative training data points. Assume this assumption is satisfied, it can easily be broken by augmenting data points to produce unbalanced size of training examples, or simply make sure that **N is odd**. 
+Some will close the case at this point and conclude victory for $$L_1$$, but let's just assume $$K = 2$$ to see how far we can go. Note that $$K = 2$$ does not means $$(8)$$ automatically becomes true, this would require another assumption: an equal number of positive and negative training data points. Assume this assumption is satisfied, it can easily be broken by augmenting data points to produce unbalanced size of training examples, or simply make sure that **N is odd**. 
 
 ### Failed Batch Normalization: a final attempt
 
-Let's see how far we can push this. Say we don't do that and let the rare case $$(8)$$ happens when $$K = 2$$. The place to look to now is (9), which is false if and only if $$C \not = \lambda$$ **and** $$\nu_{kn} \not = 0 \ \forall k, n$$. It is tougher to accomplish this, say we generally set $$C \not = \lambda$$, so $$(9)$$ is true if and only if $$\nu_{kn} = 0 \ \forall n, k$$. This and the fact that $$\exists k', n'$$ such that $$g_{n'k'} > 0$$ gives $$1 > t_{k'n'}W_{k'}^T\phi_n + B_{k'}$$. Subtitute $$(7)$$ into this inequality and we have:
+Again, let's see how far we can push this. Allow the rare case $$(8)$$ to actually happen. Then the place to look at now is (9), which is false if and only if $$C \not = \lambda$$ **and** $$\nu_{kn} \not = 0 \ \forall k, n$$. It is tougher to accomplish this, assume we generally set $$C \not = \lambda$$, so $$(9)$$ is true if and only if $$\nu_{kn} = 0 \ \forall n, k$$. This and the fact that $$\exists k', n'$$ such that $$g_{n'k'} > 0$$ gives $$1 > $$ $$t_{k'n'}W_{k'}^T\phi_n + B_{k'}$$. Subtitute $$(7)$$ into this inequality and we have:
 
 $$1 > \lambda t_{k'n'} \left ( \sum_m^N t_{k'm} \kappa_{mn'} + B_{k'}\right)$$
 
@@ -224,15 +224,15 @@ Now since we are assuming the rare case $$(8)$$ - which implies $$K = 2$$ as wel
 
 $$\lambda^{-1} > \sum_{i}^{h} \kappa_{in'} - \kappa_{(h+i)n'} + B_{k'}$$
 
-Where $$h = N/2$$. This is essentially a constraint established on the deep extractor $$\phi$$ and thus, its weight parameters $$\alpha$$. Say we are applying [batch normalization](http://arxiv.org/abs/1502.03167) without shift and scale to produce the $$\phi$$ layer, this makes the sum $$\sum_n^N \kappa_{nn'} = \left (\sum_n^N \phi_n^T \right) \phi_{n'}$$ becomes zero. Add $$\left(-\sum_i^h\kappa_{in'}\right)$$ to $$-\sum_i^h\kappa_{(h+i)n'}$$ to make a zero, and we simplified the inequality even further:
+Where $$h = N/2$$. This is essentially a constraint established on the deep extractor $$\phi$$ and thus, its weight parameters $$\alpha$$. Say we are applying [batch normalization](http://arxiv.org/abs/1502.03167) without shift and scale to produce the $$\phi$$ layer, this makes the sum $$\sum_n^N \kappa_{nn'} = \left (\sum_n^N \phi_n^T \right) \phi_{n'}$$ zero. Add $$\left(-\sum_i^h\kappa_{in'}\right)$$ to $$-\sum_i^h\kappa_{(h+i)n'}$$ in order to derive this zero, and we simplified the inequality even further:
 
 $$ \lambda^{-1} > 2\sum_i^h\kappa_{in'} + B_{k'}$$
 
-This is the necessary condition for $$x$$ to be a local minimum, to guarantee violation of this inequality, we make sure that the chosen value for hyper parameter $$\lambda^{-1}$$ is smaller than the lower bound of RHS, which unfortunately, can be arbitrary negative during training, mainly because of $$B_{k'}$$. I believe there are some clever way to crack this using careful initialization, but man, does that worth the time? $$L_1$$ is already a damn good approximation! The reason why can be summarised by the following rules of thumb:
+This is the necessary condition for $$x$$ to be a local minimum. To guarantee violation of this inequality, we make sure that the chosen value for hyper parameter $$\lambda^{-1}$$ is smaller than the lower bound of RHS. Unfortunately, this quantity can be arbitrary negative during training, mainly because of $$B_{k'}$$. I believe there are some clever way to crack this using careful initialization, but man, does that worth the time? $$L_1$$ is already a damn good approximation! The reason why can be summarised as follow:
 
 1. $$K > 2$$ guarantees equivalence between $$L_1$$ and SVM.
 
-2. For $$K = 2$$, $$N$$ being odd also guarantees equivalence between $$L_1$$ and SVM. This can be done simply by choosing an odd batch size for training, that make sure whenever $$x$$ violates $$g(x) \leq 0$$, it won't get stuck.
+2. For $$K = 2$$, $$N$$ being odd also guarantees equivalence between $$L_1$$ and SVM. This can be done simply by choosing an odd batch size for training, that makes sure whenever $$x$$ violates $$g(x) \leq 0$$, it won't get stuck.
 
 *"So that is all there is I have to offer, do you think I'm a good match?" - The interviewee asked. - "Let's move on to your work now shall we?"*
 
