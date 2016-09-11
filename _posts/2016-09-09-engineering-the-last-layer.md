@@ -224,7 +224,7 @@ Now since we are assuming the rare case $$(8)$$ - which implies $$K = 2$$ as wel
 
 $$\lambda^{-1} > \sum_{i}^{h} \kappa_{in'} - \kappa_{(h+i)n'} + B_{k'}$$
 
-Where $$h = N/2$$. This is essentially a constraint established on the deep extractor $$\phi$$ and thus, its weight parameters $$\alpha$$. Say we are applying [batch normalization](http://arxiv.org/abs/1502.03167) without shift and scale to produce the $$\phi$$ layer, this makes the sum $$\sum_n^N \kappa_{nn'} = \left (\sum_n^N \phi_n^T \right) \phi_{n'}$$ become zero. Add $$\left(-\sum_i^h\kappa_{in'}\right)$$ to $$-\sum_i^h\kappa_{(h+i)n'}$$ to make a zero, and we simplified the inequality even further:
+Where $$h = N/2$$. This is essentially a constraint established on the deep extractor $$\phi$$ and thus, its weight parameters $$\alpha$$. Say we are applying [batch normalization](http://arxiv.org/abs/1502.03167) without shift and scale to produce the $$\phi$$ layer, this makes the sum $$\sum_n^N \kappa_{nn'} = \left (\sum_n^N \phi_n^T \right) \phi_{n'}$$ becomes zero. Add $$\left(-\sum_i^h\kappa_{in'}\right)$$ to $$-\sum_i^h\kappa_{(h+i)n'}$$ to make a zero, and we simplified the inequality even further:
 
 $$ \lambda^{-1} > 2\sum_i^h\kappa_{in'} + B_{k'}$$
 

@@ -3,6 +3,8 @@ published: true
 title: YOLO, tensorflow and constant graph buffer for C++
 ---
 
+* table of content
+{:toc}
 
 ## 1. Intro
 This is a friendly documentation of [this work](http://github.com/thtrieu/yolotf). It basically bridges Darknet, Tensorflow and iOS dev. 
