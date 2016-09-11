@@ -1,6 +1,6 @@
 ---
 published: true
-title: Invariances of N people running around in circle
+title: Invariances of N people (with balls) running around in circle
 ---
 
 # Intro

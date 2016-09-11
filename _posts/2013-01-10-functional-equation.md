@@ -1,5 +1,5 @@
 ---
-title: Functional equation with positive integers
+title: Functional equation solved by introducing local minima
 ---
 
 # Intro

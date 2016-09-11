@@ -1,6 +1,6 @@
 ---
 published: true
-title: Educational Data Synthesizer
+title: EDMsyn - an R package that synthesizes educational data
 ---
 ### Intro
 

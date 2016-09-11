@@ -1,6 +1,6 @@
 ---
 published: true
-title: Declutter a Geometry problem
+title: Declutter a geometry problem - deminishing bad variables
 ---
 
 This is translated from my old blog post [here](https://bluesday.wordpress.com/category/highschool-notes/)

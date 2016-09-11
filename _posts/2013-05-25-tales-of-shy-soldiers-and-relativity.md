@@ -1,6 +1,6 @@
 ---
 published: true
-title: Shy soldiers and a space-time inspired solution
+title: A tale of shy soldiers and a space-time inspired solution
 ---
 
 This is translated from my old blog post [here](https://bluesday.wordpress.com/category/highschool-notes/)

@@ -1,6 +1,6 @@
 ---
 published: true
-title: Two tensorflow templates that I use
+title: Should we define batch size during graph construction?
 ---
 
 ### Intro

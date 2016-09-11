@@ -213,6 +213,20 @@ iframe {
   width: 100%;
 }
 article {
+  
+  ul#markdown-toc {
+    ul {
+      margin: 0;
+    }
+    li { 
+      a {
+        color: #555;
+        &:hover{
+          font-style: italic;
+        }
+      }
+    }
+  }
   max-width: 630px;
   margin: 0 auto;
   .title {
@@ -314,17 +328,17 @@ section {
         text-overflow: ellipsis !important;
         white-space: nowrap !important;
         word-wrap: normal !important;
+        a {
+          text-decoration: none;
+          border: 0;
+          color: #333;
+          box-sizing: border-box;
+          &:hover{
+            font-style: italic;
+          }
+        }
         a:hover {
           font-style: underline;
-        }
-      }
-      a {
-        text-decoration: none;
-        border: 0;
-        color: #333;
-        box-sizing: border-box;
-        &:hover{
-          font-style: italic;
         }
       }
       .post-date {

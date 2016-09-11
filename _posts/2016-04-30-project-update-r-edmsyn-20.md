@@ -1,6 +1,6 @@
 ---
 published: true
-title: Educational Data Synthesizer (edmsyn 2.0)
+title: Educational Data Synthesizer - edmsyn the second part
 ---
 
 ### Intro
