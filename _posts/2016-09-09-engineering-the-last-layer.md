@@ -7,9 +7,7 @@ title: Support Vector Machines got offered a Deep Learning job
 
 ## Intro
 
-Deep discriminator is a supervised discriminative deep neural network. I deliberately came up with this name as an attempt to blend in with the _term-coining culture_ arising amongst comtemporary researchers. Kidding, this is actually quite an exciting thing as the appearance of new terms indicates that this research field is young and smoking hot. 
-
-Assume we are familiar with the fact that any deep discriminator has two parts: feature extractor and linear classifier. Innovations usually comes from engineering the former. It is therefore natural to wonder what if we rewire the later instead? A first experience to do is replacing the usual softmax with some other well-known linear classifiers. Namely in this post I explore the soft-margined Support Vector Machine option, trained in One-Vs-Rest fashion. 
+Assume we are familiar with the fact that any deep discriminator has two parts: feature extractor and linear classifier. Innovations usually comes from engineering the former. It is therefore natural to wonder what if we rewire the later instead? A first experiment to do is replacing the usual softmax with some other well-known linear classifiers. Namely in this post I explore the soft-margined Support Vector Machine option, trained in One-Vs-Rest fashion. 
 
 Notice that since the classifier and feature extractor is co-trained, replacing the classifer will change the kind of features learnt by the feature extractor. So the impact is network-wide and thus, do worth some time to consider.
 
@@ -236,7 +234,7 @@ This is the necessary condition for $$x$$ to be a local minimum, to guarantee vi
 
 2. For $$K = 2$$, $$N$$ being odd also guarantees equivalence between $$L_1$$ and SVM. This can be done simply by choosing an odd batch size for training, that make sure whenever $$x$$ violates $$g(x) \leq 0$$, it won't get stuck.
 
-*So that is all there is I have to offer, do you think I'm a good match? - The interviewee asked. - Let's move on to your work now shall we?*
+*"So that is all there is I have to offer, do you think I'm a good match?" - The interviewee asked. - "Let's move on to your work now shall we?"*
 
 ## DeepSVM at work: a Tensorflow implementation
 
