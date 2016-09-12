@@ -6,8 +6,8 @@ google_analytics:   UA-XXXXXXX-X # Put your Google Analytics code
 
 # Logos
 logos: 
-  rock:     "http://i.imgur.com/CVBp6Yp.gif"
-  daisy:    "http://i.imgur.com/ygEHnz5.gif"
+  rock:     "http://i.imgur.com/f7b0EjX.gif" #
+  daisy:    "http://i.imgur.com/ygEHnz5.gif" #
   flower:   "http://i.imgur.com/JX9gCsP.gif"
   coffee:   "http://i.imgur.com/d3GJwO1.gif"
   spoon:    "http://i.imgur.com/6UaSYA9.gif"
@@ -20,12 +20,12 @@ logos:
   pure:     "http://i.imgur.com/RDbvdeg.gif"
   bookafe:  "http://i.imgur.com/1NngOKZ.gif"
   purer:    "http://i.imgur.com/l1tA8nA.gif"
-  spike:    "http://i.imgur.com/P5Ifo0E.gif"
+  spike:    "http://i.imgur.com/P5Ifo0E.gif" #
   moss:     "http://i.imgur.com/JNoDa9E.gif"
-  drip:     "http://i.imgur.com/hbaEn2i.gif"
+  drip:     "http://i.imgur.com/hbaEn2i.gif" #
   surface:  "http://i.imgur.com/2zsgYDR.gif"
-  fly:      "http://i.imgur.com/tU08Pu4.gif"
-  wood:     "http://i.imgur.com/w6NOJp2.gif"
+  fly:      "http://i.imgur.com/tU08Pu4.gif" #
+  wood:     "http://i.imgur.com/w6NOJp2.gif" #
 
 # Author Info
 author_name:        "thtrieu"
