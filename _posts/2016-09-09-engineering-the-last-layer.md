@@ -86,7 +86,7 @@ We can actually derive such conditions intuitively. Check [here](http://www.onmy
 
 On the left: the solution $$\hat{x}$$ of the unconstrained problem satifies $$g$$, thus it is also solution $$x^*$$ to the whole problem. To obtain $$x^*$$, we can optimize $$f$$ regardless of $$g$$, i.e. minimizing $$L(x)$$ with $$\mu_n = a_n = 0 \ \forall n$$ solves an equivalent problem. On the right: solution to the unconstrained problem does not satify $$g$$, thus $$x^*$$ lies on the boundary of $$g$$-satified region, where $$g(x^*) = 0$$. Again, minimizing $$L(x)$$ along $$g(x) = 0$$ solves an equivalent problem.
 
-In fact, these two cases are analogous to the two checks we did with the Primal problem. This two checks will be visited again in later parts. Either case, $$\mu_ng_{1n}(x^*) = a_ng_{2n}(x^*) = 0$$. I.e. our first two KKT conditions are:
+In fact, these two cases are analogous to the two checks we did with the Primal problem. They will be visited again in later parts. Either case, $$\mu_ng_{1n}(x^*) = a_ng_{2n}(x^*) = 0$$. I.e. our first two KKT conditions are:
 
 $$ \mu_n \xi_n^* = 0 \ \forall n \ \ (1)$$
 
