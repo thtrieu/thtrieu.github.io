@@ -7,7 +7,7 @@ title: Invariances of N people (with balls) running around in circle
 
 A fun problem, someone told me that there is a physics explanation for this but still lookin for it though
 
-# There is $$N$$ people standing around a circle
+# There are $$N$$ people standing around a circle
 
 After a signal, every one starts running around the circle with arbitrary direction (either clockwise or counter clockwise) and with the same velocity $$v$$. Whenever two of them bump into each other like this `><`, they immediately change direction like this `<>` and continue running. Is there any possiblity that, after a while, the configuration of these $$N$$ people (the ordered sets of positions and velocity vectors) return to its initial state?
 
