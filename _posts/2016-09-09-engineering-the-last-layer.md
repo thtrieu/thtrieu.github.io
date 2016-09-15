@@ -157,7 +157,7 @@ $$L(x) = \sum_k^K \frac{1}{2} \left \| W_k \right \|^2 + \sum_n^N C \xi_{kn}+ \l
 
 We know that the above objectives are not mathematically equivalent to the original one, so plugging such a thing on top of $$\phi$$ is not exactly doing SVM. Here we try to refine the soft-margin objective presented above to get it as close to the original as possible. Observe that the first constraint simply establish a domain restriction on $$\xi$$, but we know that auto differentiation will produce gradients that push $$\xi$$ below $$0$$ whenever needed. So an obvious thing to do is to clip the gradient whenever it makes $$\xi$$ falls below zero.
 
-But there is a clever mathematical trick to this that accomplishes both: a function that allows optimization over whole-axis domain *and* produce stationary gradient at zero, thus get rid of the need of gradient clipping *as long as* the variable is initialised to be non-negative. This is the function $$x^2$$, whose derivative $$2x$$ becomes zero if and only if $$x^2 = 0$$. By replacing $$\xi = \nu^2$$, we are now able to optimise over $$\nu$$ freely and obtain a better approximation to our original Loss function - also get clear of the $$g_{1n}$$ penalty:
+But there is a clever mathematical trick to this that accomplishes both: a function that allows optimization over whole-axis domain *and* produce stationary gradient at zero, thus get rid of the need of gradient clipping *as long as* the variable is initialised to be non-negative. This is the function $$x^2$$, whose derivative $$2x$$ becomes zero if and only if $$x^2 = 0$$. By replacing $$\xi = \nu^2$$, we are now able to optimise over $$\nu$$ freely and obtain a better approximation to our original Loss function, i.e. get clear of the $$g_{1n}$$ penalty:
 
 $$L_1(x) = \sum_k^K \frac{1}{2} \left \| W_k \right \|^2 + \sum_n^N C \nu_{kn}^2 + \lambda \varphi(1 - t_{kn}y(s_n; W_k, B_k, \alpha) - \nu_{kn}^2)$$
 
@@ -190,9 +190,9 @@ While so far,
 
 - $$L_1(x)$$ finite elsewhere, but hopefully not a local minimum.
 
-### Deriving sufficient conditions for equivalence
+### Deriving sufficient conditions for equivalence: The first case
 
-If $$L_1$$ is not what we are expecting, we'll have to assume it is a good enough approximation of $$L_2$$ and implement both of them to compare the performances, where adversarial training is needed to work with $$L_2$$. Fortunately this turns out not to be the case. Look at $$L_1$$ when $$x$$ violates the constraint, $$\varphi$$ is now an identity:
+Again, we look at the simpler case: Suppose $$x$$ violates **all** constraints. Now have a look at $$L_1$$, where $$\varphi$$ becomes identity:
 
 $$L_1(x) = \sum_k^K \frac{1}{2} \left \| W_k \right \|^2 + \sum_n^N C \nu_{kn}^2 + \lambda (1 - t_{kn}y(s_n; W_k, B_k, \alpha) - \nu_{kn}^2)$$
 
@@ -214,27 +214,19 @@ Let's consider cases where at least one of the above conditions is immediately w
 
 Some will close the case at this point and conclude victory for $$L_1$$, but let's just assume $$K = 2$$ to see how far we can go. Note that $$K = 2$$ does not means $$(8)$$ automatically becomes true, this would require another assumption: an equal number of positive and negative training data points. Assume this assumption is satisfied, it can easily be broken by augmenting data points to produce unbalanced size of training examples, or simply make sure that **N is odd**. 
 
-### Failed Batch Normalization: a final attempt
+### The second case:
 
-Again, let's see how far we can push this. Allow the rare case $$(8)$$ to actually happen. Then the place to look at now is (9), which is false if and only if $$C \not = \lambda$$ **and** $$\nu_{kn} \not = 0 \ \forall k, n$$. It is tougher to accomplish this, assume we generally set $$C \not = \lambda$$, so $$(9)$$ is true if and only if $$\nu_{kn} = 0 \ \forall n, k$$. This and the fact that $$\exists k', n'$$ such that $$g_{n'k'} > 0$$ gives $$1 > $$ $$t_{k'n'}W_{k'}^T\phi_n + B_{k'}$$. Subtitute $$(7)$$ into this inequality and we have:
+We are left with the harder situation, when there exists some $$g_{kn}$$ that are satisfied and thus, contribute nothing to the loss $$L_1$$. Denote $$S = \{ (k, n) \mid g_{kn} \ violated \}$$. We'll prove that $$L_1$$ cannot be a minimum by proving that it is not a local minimum with respect to $$\nu$$. Assume the other variables are constant and exclude the constant terms out of $$L_1$$, the objective is now
 
-$$1 > \lambda t_{k'n'} \left ( \sum_m^N t_{k'm} \kappa_{mn'} + B_{k'}\right)$$
+$$L_4(\nu) = \sum_{s\in S} (C - \lambda) \nu_s^2 + \sum_{s' \not \in S} C \nu_{s'}^2$$
 
-Now since we are assuming the rare case $$(8)$$ - which implies $$K = 2$$ as well as $$N$$ being even, there is an equal number of positive and negative training examples. Without any loss of generality, assume further that the training samples that are in the same category with $$s_{n'}$$ are the first $$N/2$$ training points, this turns the above inequality into a tidier one:
+Taking the derivative with respect to $$\nu$$ and set it to zero:
 
-$$\lambda^{-1} > \sum_{i}^{h} \kappa_{in'} - \kappa_{(h+i)n'} + B_{k'}$$
+$$(C - \lambda) \nu_s  = 0 \ \forall s \in S$$
 
-Where $$h = N/2$$. This is essentially a constraint established on the deep extractor $$\phi$$ and thus, its weight parameters $$\alpha$$. Say we are applying [batch normalization](http://arxiv.org/abs/1502.03167) without shift and scale to produce the $$\phi$$ layer, this makes the sum $$\sum_n^N \kappa_{nn'} = \left (\sum_n^N \phi_n^T \right) \phi_{n'}$$ zero. Add $$\left(-\sum_i^h\kappa_{in'}\right)$$ to $$-\sum_i^h\kappa_{(h+i)n'}$$ in order to derive this zero, and we simplified the inequality even further:
+$$ \nu_s = 0 \ \forall s \not \in S $$
 
-$$ \lambda^{-1} > 2\sum_i^h\kappa_{in'} + B_{k'}$$
 
-This is the necessary condition for $$x$$ to be a local minimum. To guarantee violation of this inequality, we make sure that the chosen value for hyper parameter $$\lambda^{-1}$$ is smaller than the lower bound of RHS. Unfortunately, this quantity can be arbitrary negative during training, mainly because of $$B_{k'}$$. I believe there are some clever way to crack this using careful initialization, but man, does that worth the time? $$L_1$$ is already a damn good approximation! The reason why can be summarised as follow:
-
-1. $$K > 2$$ guarantees equivalence between $$L_1$$ and SVM.
-
-2. For $$K = 2$$, $$N$$ being odd also guarantees equivalence between $$L_1$$ and SVM. This can be done simply by choosing an odd batch size for training, that makes sure whenever $$x$$ violates $$g(x) \leq 0$$, it won't get stuck.
-
-*"So that is all there is I have to offer, do you think I'm a good match?" - The interviewee asked. - "Let's move on to your work now shall we?"*
 
 ## DeepSVM at work: a Tensorflow implementation
 
