@@ -4,7 +4,7 @@ title: music
 sub: my playlists
 ---
 
-[morning wood](https://www.noisli.com/get_combo_by_link/eUfDi30QtaPqBfG)
+[morning wood](https://www.noisli.com/get_combo_by_link/g6gnG1RLmaqk56j)
 or [cafeteria](https://www.noisli.com/get_combo_by_link/2PFXl5B3cwFZFvk)
 ?
 
