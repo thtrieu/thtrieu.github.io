@@ -142,7 +142,11 @@ span[data-note] {
   }
 }
 iframe {
-  margin: 45px 0 !important;
+    align-content: center;
+    width: 100;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin: 0px 0 !important;
 }
 ul,
 ol {
@@ -213,7 +217,6 @@ iframe {
   width: 100%;
 }
 article {
-  
   ul#markdown-toc {
     ul {
       margin: 0;
