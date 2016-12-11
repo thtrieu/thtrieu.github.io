@@ -171,13 +171,16 @@ time {
 }
 code,
 pre {
-  font-family: Consolas, monospace, x;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;font-size: 12px !important;
+  word-wrap: normal;
+  white-space: pre;
 }
 code {
-  color: #555;
-  background: transparent;
+  color: #333;
+  background: rgba(0,0,0,0.04);
   padding: 2px 6px;
   font-size: 13px;
+  border-radius: 3px;
 }
 pre {
   display: block;
@@ -187,12 +190,12 @@ pre {
   line-height: 1.4;
   white-space: pre;
   overflow-x: auto;
-  background-color:  #49483e;
+  background-color:  transparent;
   border: 1px solid #ddd;
   padding: 1rem;
   code {
     font-size: 100%;
-    color: #ccc;
+    color: #333;
     background-color: transparent;
     padding: 0;
   }
