@@ -76,7 +76,7 @@ grad(op, inp[n]) := op.grad * op.partial(inp[n])
 
 Where `op.partial(inp[n])` is just the partial derivative $$ \frac{ \partial a}{\partial inp_n}$$. From this rule, we can infer that in the case `inp[n]` is fed to no one else but only `op`, `grad(op, inp[n])` is exactly `inp[n].grad`.
 
-Basically, each computational unit in a computational graph has two major methods, one carries information flowing forward and one carries backward. The gradflow series elaborates on this idea in the context of Deep Learning. Pay a visit if you are interested :)
+Basically, each computational unit in a computational graph has two major methods, one carries information flowing forward and one carries backward. The gradflow series elaborates on this idea in the context of Deep Learning. [Pay a visit](https://thtrieu.github.io/notes/opening#an-accompany-writing) if you are interested :)
 
 #### Computational graph example 1: edmsyn
 
