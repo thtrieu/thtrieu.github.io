@@ -1,5 +1,5 @@
 ---
-title: Gradflow 1. The golden rule of backprop - a start with matmul
+title: Golden rule of backprop, gradflow through matmul and dropout
 ---
 
 * #table of content
@@ -41,9 +41,9 @@ Well, the name *golden rule of backpropagation* that I made up is just a fancy n
 Now let's apply the golden rule to the context of Deep Learning, a deep neural net takes some form of a deeply nested function. Each layer that information has to pass through loosely follows a same 4-step template:
 
 ```python
-# deeply nested function 
 class Network(object):
     def forward(self, input):
+    """deeply nested function""" 
         self.output = \ 
         layer[n-1].forward(
             layer[n-1].forward(
@@ -55,7 +55,7 @@ class Network(object):
 # where each component function layer[i]() follows the template
 class Layer(object):
     def forward(self = layer[i], input = layer[i-1].output):
-        # 4 steps, performed by 4 ops
+        """ 4 steps, performed by 4 ops"""
         self.signature_out = self.signature(input)
         self.batch_normed  = self.batch_norm(self.signature_out)
         self.biases_added  = self.add_biases(self.batch_normed)
@@ -69,7 +69,7 @@ We first solve one and for all the gradflow through common modules `activate`, `
 
 ### A few design choice
 
-We'll first agree on the representation of tensors of high dimension in our implementation. Let's loosely follow the `tensorflow` convention: the `batch` dimension go first, then the volume's dimensions with feature map go last. Specifically we'll flatten the volume into 2D array so that information flows through the net in batch will be a 3D matrix with dimensions `[batch, spatial, feature]`. For later convenience, denote this shape as `[n, s, f]`
+We'll first agree on the representation of tensors of high dimension in our implementation. Let's loosely follow the `tensorflow` convention: the `batch` dimension go first, then the volume's dimensions with feature map go last. Specifically we'll flatten the volume into 2D array so that information flows through the net in batch will be a 3D matrix with dimensions `[batch * spatial, feature]`. For later convenience, denote this shape as `[ns, f]`
 
 Let's review the indexing of such flattened high-dimensional volume. Say our volume of information has shape `[size1, size2, size3, ..., sizeN]`, then in the flatten version, index of the entry at position `[p1, p2, p3, ..., pN]` will be 
 
@@ -192,13 +192,15 @@ class add_biases(module):
         return bnorm_grad
 ```
 
-Again, let's solve for `partial()`. We know the operation essentially performs a broadcasted addition between input `x` and biases `b`. Recall that `x` is three dimensional `[n, s, f]` and `b` is a vector of length `f`. We will perform this bias-adding by first flatten `x` into a 2D matrix `x2d` with shape `[n * s, f]` and add the broadcasted `b`:
+Again, let's solve for `partial()`. We know the operation essentially performs a broadcasted addition between input `x` and biases `b`. Recall that `x`'s shape is `[ns, f]`:
 
-$$O_{bias} = x2d + \mathbf{1}_{n*s} \cdot b^T $$
+$$O_{bias} = x + \mathbf{1}_{ns} \cdot b^T $$
 
-$$\frac{\partial O_{bias}^T}{\partial b} = \mathbf{1}_{n*s}$$
+$$\frac{\partial O_{bias}^T}{\partial b} = \mathbf{1}_{ns}$$
 
-Notice the transpose sign on the numerator, this tells `add_biases.grad` need to be transposed before multiplying with this partial derivative.
+Partial derivative with respect to `x` is an identity matrix, so gradient flows right through as if it was not multiplying with anything.
+
+Notice the transpose sign on the numerator, this tells `add_biases.grad` need to be transposed before multiplying with this partial derivative. Notice as well, multiplication by a column vector of `1.0` amounts to taking the sum along your rows. So here is the code:
 
 ```python
 class add_biases(module):
@@ -207,38 +209,28 @@ class add_biases(module):
         self.grad = {'b': None}
 
     def __call__(self, x):
-        self.shape = x.shape # n, s, f
+        self.shape = x.shape # ns, f
         return x + self.vars['b']
 
     def backward(self, grad):
         """modified version"""
-        _, _, f = self.shape
-        grad2d = grad.reshape([-1, f]) # [n*s, f]
-        
-        partial = self.partial_OTb()
-        self.grad['b'] = grad.transpose() * partial
-
-        gradx = grad
-        return gradx
-
-    def partial_OTb(self):
-        n, s, _ = self.shape
-        return ones([n * s])
+        self.grad['b'] = grad.transpose().sum(axis = 1, keepdims = True)
+        return grad # grad * partial_Ox = grad * identity
 ```
 
 And we're done with `add_biases` module. Let's move on to the first signature `fully_connected`.
 
 ### gradflow through fully_connected
 
-Now assume we have module `fully_connected` with `fully_connected.grad` already populated. The forward pass is a simple matrix multiplication, for the case of `fully_connected`, input `x` is of shape `[n, 1, f]` where spatial dimension is reduced to 1. For the forward pass we also flatten `x` to `x2d` of shape `[n * s, f] = [n, f]` before multiplying with weight matrix `w` of shape `[n, s]`
+Now assume we have module `fully_connected` with `fully_connected.grad` already populated. The forward pass is a simple matrix multiplication, for the case of `fully_connected`, input `x` is of shape `[ns, f] = [b, f]` where spatial dimension is reduced to 1. For the forward pass we multiply `x` with weight matrix `w` of shape `[f, f_out]`
 
-$$O_{matmul} = x2d \cdot w$$
+$$O_{matmul} = x \cdot w$$
 
-$$\frac{\partial O_{matmul}^T}{\partial w^T} = x2d$$
+$$\frac{\partial O_{matmul}^T}{\partial w^T} = x$$
 
-$$\frac{\partial O_{matmul}}{\partial x2d} = w^T$$
+$$\frac{\partial O_{matmul}}{\partial x} = w^T$$
 
-The connectivity of this case is also very simple as in the previous two modules, so I will leave it self-explained.
+The connectivity of this case is also very similar to previous two modules, so I will leave it self-explained.
 
 ```python
 class fully_connected(module):
@@ -247,27 +239,112 @@ class fully_connected(module):
         self.grad = {'w': None}
     
     def __call__(self, x):
-        self.shape = x.shape
-        _, _, f = x.shape
-        self.x2d = x.reshape([-1, f])
-        out2d = self.x2d * self.vars['w']
-        return out2d.reshape(x.shape)
+        self.x = x
+        out = self.x * self.vars['w']
+        return out
     
     def backward(self, grad):
-        _, _, f = self.shape
-        grad2d = grad.reshape([-1, f])
-        gradwT = grad2d.transpose() * self.partial_OTwT()
+        gradwT = grad.transpose() * self.partial_OTwT()
         self.grad['w'] = gradwT.transpose()
-
-        gradx2d = grad2d * self.partial_Ox2d()
-        gradx3d = gradx2d.reshape(self.shape)
-        return gradx3d
+        gradx = grad * self.partial_Ox()
+        return gradx
     
     def partial_OTwT(self):
-        return self.x2d
+        return self.x
     
     def partial_Ox2d(self):
         return self.vars['w'].transpose()
 ```
 
 And we're finally done with `fully_connected` :)
+
+### Dropout
+
+Dropout is a special layer that does not follow the basic 4-step template. It basically does two steps: mask `p = 1 - keep_prob` percent of `x` columns to zero, then scale the volume's signal up by a factor of `1./p`. We can cast these two operations as two modules with their own partial derivatives too.
+
+```python
+class Dropout(Layer):
+    def forward(self, input):
+        self.masked = self.mask(input)
+        self.output = self.amplify(self.masked)
+```
+
+#### Masking module
+
+Implementation wise, the forward pass can be done using a broadcasted multiplication between input `x` and `r = numpy.random.binomial(1, keep_prob, shape = (1,f))`. For this to work with backward pass, define the broadcasted multiplication `w = identity(f) * r` and see how this would look mathematically:
+
+$$O_{drop} = x \cdot w$$
+
+This is basically the matmul that we did in previous section, where 
+
+$$\frac{\partial O_{drop}}{\partial x} = \frac{\partial O_{matmul}}{\partial x} = w^T = w$$
+
+Notice the last inequality holds because `w` is symmetric. So for the forward pass we are multiplying `x` with `w` and for the backward pass, the same thing happen for `grad`. This means our backward signal sent to `x` is dropped exactly the way `x` is dropped in its forward pass, this can be done efficiently by directly multiplying `grad` with `r` as in the forward pass.
+
+```python
+class mask(module):
+    def __init__(self, keep_prob = .5):
+        self.drop = 1. - keep_prob
+        self.r = None
+    
+    def __call__(self, x):
+        _, f = x.shape
+        self.r = np.random.binomial(1, self.drop, [1, f])
+        return x * self.r
+    
+    def backward(self, grad):
+        return grad * self.r
+```
+
+Stunningly simple isn't it?
+
+#### Amplifying module
+
+This is very straightforward, `numpy` implementation is simply do an elementwise division `x / (1 - keep_prob)`. For mathematical formulation, define an amplifying matrix `w = identity(f) / (1 - keep_prob)` and we are back to the matmul case:
+
+$$O_{amp} = x * w$$
+
+$$\frac{\partial O_{amp}}{\partial x} = \frac{\partial O_{matmul}}{\partial x} = w^T = w$$
+
+The implementation would proceed in a similar fashion:
+
+```python
+class amplify(module):
+    def __init__(self, keep_prob = .5):
+        self.drop = 1. - keep_prob
+
+    def __call__(self, x):
+        return self.x / self.drop
+    
+    def backward(self, grad):
+        return grad / self.drop
+
+```
+
+#### Joining the two
+
+Since both of the previous volume is so simple and their is no variation in any of them, let's join them into a single module `drop`:
+
+```python
+class Dropout(Layer):
+    def forward(self, input):
+        self.output = self.drop(input)
+        return self.output
+
+
+class drop(module):
+    def __init__(self, keep_prob = .5):
+        self.drop = 1. - keep_prob
+        self.r = None
+    
+    def __call__(self, x):
+        _, f = x.shape
+        self.r = np.random.binomial(1, self.drop, [1, f])
+        return self.x * self.r / self.drop
+    
+    def backward(self, grad):
+        grad_mask = grad / self.drop
+        return grad_mask * self.r
+```
+
+And I conclude the post here.
