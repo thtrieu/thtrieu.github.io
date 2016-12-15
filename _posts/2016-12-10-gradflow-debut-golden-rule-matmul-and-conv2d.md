@@ -222,7 +222,7 @@ And we're done with `add_biases` module. Let's move on to the first signature `f
 
 ### gradflow through fully_connected
 
-Now assume we have module `fully_connected` with `fully_connected.grad` already populated. The forward pass is a simple matrix multiplication, for the case of `fully_connected`, input `x` is of shape `[ns, f] = [b, f]` where spatial dimension is reduced to 1. For the forward pass we multiply `x` with weight matrix `w` of shape `[f, f_out]`
+Now assume we have module `fully_connected` with `fully_connected.grad` already populated. The forward pass is a simple matrix multiplication, for the case of `fully_connected`, input `x` is of shape `[ns, f] = [n, f]` where spatial dimension is reduced to 1. For the forward pass we multiply `x` with weight matrix `w` of shape `[f, f_out]`
 
 $$O_{matmul} = x \cdot w$$
 
@@ -323,7 +323,7 @@ class amplify(module):
 
 #### Joining the two
 
-Since both of the previous volume is so simple and their is no variation in any of them, let's join them into a single module `drop`:
+Since both of the previous volume is so simple and there is no variation in any of them, let's join the two into a single module `drop`:
 
 ```python
 class Dropout(Layer):
