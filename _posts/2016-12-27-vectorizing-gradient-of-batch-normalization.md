@@ -50,15 +50,13 @@ $$v = \frac{1}{n}\sum_{i=1}^n\overline{x_i}^2$$
 
 $$x^*_{ij} = \frac{\overline{x_{ij}}}{\sqrt{v_j}}$$
 
-$$x^{BN} = \beta x^*$$
+$$x^{BN} = \gamma x^*$$
 
 In our setting $$\delta x^{BN}$$ is available. Gradients flows backwards, so we first consider $$\delta x^*$$. Each entry $$x^*_{ij}$$ contribute to the loss only through $$x^{BN}_{ij}$$, so according to chain rule:
 
-$$\delta x^*_{ij} = \delta x^{BN}_{ij} * \partial x^{BN}_{ij} / \partial x^*_{ij} = \beta \delta x^{BN}_{ij}$$
+$$\delta x^*_{ij} = \delta x^{BN}_{ij} * \partial x^{BN}_{ij} / \partial x^*_{ij} = \gamma \delta x^{BN}_{ij}$$
 
-$$\Rightarrow \delta x^* = \beta x^{BN}$$
-
-The situation is 
+$$\Rightarrow \delta x^* = \gamma x^{BN}$$
 
 Next, we can do either $$v$$ or $$\overline{x}$$, $$v$$ is simpler since it contributes to the loss only through $$x^*$$ as shown in the graph (while $$\overline{x}$$ also contributes to the loss through $$v$$). Consider a single entry $$v_j$$, it contributes to the loss through $$x^*_{ij}$$ for all $$i$$, so according to chain rule:
 
@@ -92,7 +90,7 @@ Now for $$m$$, each entry in $$m_j$$ contributes to the loss through the whole $
 
 $$\delta m_j = \sum_i \delta \overline{x}_{ij} \partial \overline{x}_{ij} / \partial {m_j} = \sum_i \delta \overline{x}_{ij} \partial (x_{ij} - m_j) / \partial {m_j} = - \sum_i \delta \overline{x}_{ij}$$
 
-$$\Rightarrow \delta m = \sum_i \delta \overline{x}_i$$
+$$\Rightarrow \delta m = - \sum_i \delta \overline{x}_i$$
 
 $$x$$ contributes to the loss through $$m$$ and $$\overline{x}$$, so its gradient is the sum of two parts. The part corresponds to $$m$$ is analogous to that of $$\overline{x}^2$$ and $$v$$ in the sense that one is the row mean of the other. Therefore we can quickly derive that part to be $$\delta_{m} x = \frac{1}{n} \delta{m}$$. 
 
@@ -102,7 +100,7 @@ The other part is also simple, as $$\overline{x} = x - m$$, there is no interact
 
 Remember that the goal is to derive $$\delta x$$, we'll do it now using the results derived above:
 
-$$\delta x =  \delta \overline{x} + \delta m +$$
+$$\delta x =  \delta \overline{x} + \frac{1}{n} \delta m$$
 
 $$ = \delta \overline{x} -1/n \sum_i \delta \overline{x}$$
 
@@ -127,42 +125,32 @@ We are done here. For efficient computation, in the forward pass we will save th
 #### Forward pass
 
 ```python
-def forward(self, x, is_training):
-    """
-    Calculate the batch-normed from x
-    If is_training, record the moving averages
-    of first and second order momentums.
-    """
-    self._fd = range(len(x.shape)-1)
-    
+def forward(self, x, gamma, is_training):
     if is_training:
         mean = x.mean(self._fd)
         var = x.var(self._fd)
-        self._mv_mean.apply_update(
-            self._update_mv_ave, mean)
-        self._mv_var.apply_update(
-            self._update_mv_ave, var)
+        self._mv_mean.apply_update(mean)
+        self._mv_var.apply_update(var)
     else:
-        mean = self._mv_mean
-        var  = self._mv_var
+        mean = self._mv_mean.val
+        var  = self._mv_var.val
 
-    # Save v^{-1/2} into self._rstd
     self._rstd = 1. / np.sqrt(var + 1e-8)
-    # Save x^* into self._normed
     self._normed = (x - mean) * self._rstd
-    return self._normed * self._gamma.val
+    self._gamma = gamma
+    return self._normed * gamma
 ```
 
 #### Backward pass
 
 ```python
 def backward(self, grad):
-    tmp = np.multiply(grad, self._normed).sum(self._fd)
-    self._gamma.set_grad(tmp.sum) # gradient for gamma
-    x_ = grad - self._normed * tmp * 1. / n
-    x_ = self._rstd * self._gamma.val * x_
-
-    return x_.mean(self._fd)/x_.std(self._fd)
+    N = np.prod(grad.shape[:-1])
+    g_gamma = np.multiply(grad, self._normed)
+    g_gamma = g_gamma.sum(self._fd)
+    x_ = grad - self._normed * g_gamma * 1. / N
+    x_ = self._rstd * self._gamma * x_
+    return x_ - x_.mean(self._fd), g_gamma
 ```
 
 The code is taken from a Github repo of mine where I am building something similar to an audo-diff DAG graph. [Visit](https://github.com/thtrieu/numpyflow) if you are interested. I conclude the post here. 
