@@ -40,7 +40,7 @@ Before you know it, your feet was slowly tapping too. Cold fuzzy carpet undernea
 
 **
 
-An instictive question echoed: *Who cares?* - Nobody. You gladly notice.
+An instinctive question echoed: *Who cares?* - Nobody. You gladly notice.
 
 Nobody cares that you are having the time of your life. That this, and last night's joyful reunion in the shelter are more real than anything they ever know about you. Pic or didnt hppn. You are to them, essentially, just another mediocre spark of life whose existence is shorter than one moment of their universe getting distracted. 
 
