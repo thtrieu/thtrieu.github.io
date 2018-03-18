@@ -44,15 +44,16 @@ Who cares? Nobody. I'm glad you notice.
 
 Nobody cares that you are having the time of your life. That this, and last night's mediocre joyful moments are more real than anything they ever know about you. You are to them, essentially, just another boring spark of life whose existence is shorter than one moment of their universe getting distracted. 
 
-The world is too crowded of such dim sparks. Everyone squeeze themselves in an allocated tiny little space, on that fast scrolling electronic newsfeed, screaming for attention by the catchiest visual cues. Algorithms jump into the help. Highlight that *congrats*, play the notification tune, red must be on blue, send out reminders that your friend happiest birth-day is just one mechanical click away, join you to the sympathetic community of three shades colored avatars. People feel important, loved, and not alone for a short moment.
+The world is too crowded of such dim sparks. Everyone squeeze themselves in an allocated tiny little space, on that fast scrolling electronic newsfeed, screaming for attention by the catchiest visual cues. Algorithms jump into the help. Highlight that *congrats*, play the notification tune, red must be on blue, send out reminders that your friend happiest birth-day is just one mechanical click away, join you to the sympathetic community of three shades colored avatars. 
 
-Then Algorithms say it is time for the next one, go craft it or you lose.
+Algorithms know people are scared of reaching out, touching, making an effort to do conversations, smile, hug, sending letters. So they do it for them. Automated human interaction, why not? the thing is profitable. People signed a contract to lend out their vague emotions and presence to an artificial space, which got manifested to the extent that actually make some other people feel important, loved, and not alone for a short moment.
+
 
 **
 
 Too dramatic and pessimistic, you thought. But connecting people is an overcooked mission now anyway, you added. But also, you don't care about the other people as well. Upon this realization, you leave your phone on the desk, black mirror faced down. You stand up next to the window, look beyond the silent construction site, where a pretty sakura tree is blooming its violet little flowers, blending in and out to the early sky's color. 
 
-A tree cannot move, it cannot scream for attention. People like you who are indifferent about trees closed the window shades and drifted their mind away, leaving it alone. But then there are always people who love sakura that gather around and admire. The tree keeps on sprouting nevertheless, because it's spring, not because of the admirers. You sit down, understand that it is time to walk out of the crowded, noisy and monotone forest, find a construction site, and plant your own sakura instead.
+A tree cannot move, it cannot scream for attention. People like you who are indifferent about trees closed the window shades and drifted their mind away. Both leaving each other alone. But then there are always people who love sakura that gather around and admire. The tree keeps on sprouting nevertheless, because it's spring, not because of the admirers. You sit down, understand that it is time to walk out of the crowded, noisy and monotone forest, find a construction site, and plant your own sakura instead.
 
 
 
