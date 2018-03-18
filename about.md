@@ -36,13 +36,13 @@ You invite the person in, who then light up the fireplace and throw in some wood
 
 You remember that the acquaintance, a firekeeper, told you the wisest things in the whole wide world, all the while tapping feet to your soulful jazzy music as the youtube playlist rolls on. *♪ I have seen the sparrow get high, but he ain't freer than you. Dont let space and time confuse ya, don't let names and forms abuse ya!♫*.
 
-Before you know it, your feet was slowly tapping too. Cold fuzzy carpet underneath. Darkness retreat to the corner of the room. Sunday morning light slowly creeping through the aluminium shades, sitting shy on the windowsill. You hear your peaceful breath, clear, in and out, stretching air pressure vibrates in accordance. You smell the delicious spice lingering from last night kitchenwork. There are probably birds tweeting somewhere. Water drops from the roof become miraculously melodic. The silhouette of your small plant pot seems to be singing something. You are euphoric, sipping and savouring the sweet moment down to the bottom of your soul.
+Before you know it, your feet was slowly tapping too. Cold fuzzy carpet underneath. Darkness retreat to the corner of the room. Sunday morning light slowly creeping through the aluminium shades, sitting shy on the windowsill. You hear your peaceful breath, clear, in and out, stretching air pressure vibrates in accordance. You smell the delicious spice lingering from last night kitchenwork. There are probably birds tweeting somewhere. Water drops from the roof become miraculously melodic. The silhouette of your small plant pot seems to be singing something. You are attuned to every minute details of this beauty. You are euphoric, sipping and savouring the sweet moment down to the bottom of your soul.
 
 **
 
-Who cares? Nobody. I'm glad you notice.
+An instictive question echoed: *Who cares?* - Nobody. You gladly notice.
 
-Nobody cares that you are having the time of your life. That this, and last night's mediocre joyful reunion in the shelter are more real than anything they ever know about you. Pic or didnt happen. You are to them, essentially, just another boring spark of life whose existence is shorter than one moment of their universe getting distracted. 
+Nobody cares that you are having the time of your life. That this, and last night's joyful reunion in the shelter are more real than anything they ever know about you. Pic or didnt hppn. You are to them, essentially, just another mediocre spark of life whose existence is shorter than one moment of their universe getting distracted. 
 
 The world is too crowded of such dim sparks. Everyone squeeze themselves in an allocated tiny little space, on that fast scrolling electronic newsfeed, screaming for attention by the catchiest visual cues. Algorithms jump into the help. Highlight that *congrats*, play the notification tune, red must be on blue, send out reminders that your friend happiest birthday is just one mechanical click away, join you to the sympathetic community of three shades colored avatars. 
 
