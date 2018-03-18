@@ -4,9 +4,7 @@ title: about
 sub: yet another human roaming the earth
 ---
 
-I wrote something long, and lazily hide it here. It is intimate about me myself, and you yourself. 
-
-Yes, *you* who is pointing to the tip of your nose. Why you? Because whoever is reading this with a bit of care is relevant.
+I wrote something long, and lazily hide it here. It is intimate about me myself, and you yourself. Yes, *you* who is pointing to the tip of your nose. Why you? Because whoever is reading this with a bit of care is relevant.
 
 Whatever happen next, please pardon my engrish.
 
