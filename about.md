@@ -34,8 +34,6 @@ You remember the firekeeper told you the wisest things in the whole wide world, 
 
 Before you know it, your feet was slowly tapping too. Cold carpet underground. Darkness retreat to the corner of the room. Sunday morning light slowly creeping through the aluminium shades, sitting shy on the window sill. You hear yourself breath peacefully, air pressure vibrates in accordance. You smell the delicious spice lingering from last night kitchen work. There is probably birds tweeting somewhere. Water drops from the roof become miraculously melodic. Your small plant pot seems to be singing something. You are euphoric, sipping the sweet moment down to the bottom of your soul.
 
-![img1]({{site.url}}/assets/windowsill.png)
-
 Who cares? Nobody.
 
 Nobody cares that you are having the time of your life. That this, and last night's mediocre joyful moments are more real than anything they ever know about you. You are to them, essentially, just another boring spark of life whose existence is shorter than one moment of their universe getting distracted. 
