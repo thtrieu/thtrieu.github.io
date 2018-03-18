@@ -24,6 +24,8 @@ Everything onto plate, something missing? *Vibrant colors*. There is some bright
 
 And you sit down, feeling happy. 
 
+***
+
 *What is this feeling?* - you asked yourself, noticing the sudden presence of a second person.
 
 Someone who is completely wrapped up in warm clothes, coming from afar, amidst the heavy snow, has finally arrived, standing on the porch outside of your tiny, lonely cot. The person know this is the right address, confidently calling your name and knocking on the door, of the deepest and coldest corner of your heart.
@@ -35,6 +37,8 @@ You open the door and invite the person in, who then light up the fireplace and 
 You remember the firekeeper told you the wisest things in the whole wide world, all the while tapping feet to your soulful jazzy music as the youtube playlist rolls on. *♪ I have seen the sparrow get high, but he ain't freer than you. Dont let space and time confuse ya, don't let name and form abuse ya!♫*.
 
 Before you know it, your feet was slowly tapping too. Cold carpet underground. Darkness retreat to the corner of the room. Sunday morning light slowly creeping through the aluminium shades, sitting shy on the window sill. You hear yourself breath peacefully, air pressure vibrates in accordance. You smell the delicious spice lingering from last night kitchen work. There is probably birds tweeting somewhere. Water drops from the roof become miraculously melodic. Your small plant pot seems to be singing something. You are euphoric, sipping the sweet moment down to the bottom of your soul.
+
+***
 
 Who cares? Nobody.
 
