@@ -8,6 +8,8 @@ I wrote something long, and lazily hide it here. It is intimate about me myself,
 
 Whatever happen next, please pardon my engrish.
 
+***
+
 Sunday morning. You wake up early, it's only 6:00AM. 
 
 Such a delightfully odd hour to wake up, but the whispers of your mind is clear: sleep is done now, take a deep breath of fresh morning air, accept the truth. After all those years seeking for a better sleep schedule and promising yourself to start doing it, you finally did it, for the first time - by accident.
@@ -30,7 +32,7 @@ You open the door and invite the person in, who then light up the fireplace and 
 
 *That's right!*, the kind of happiness that simmers effortlessly, lowkey but is here to stay. Not that kind of fleeting pleasures, no rushed release of hormones stimulated by skills you have mastered since puberty. Not the taste of sugary food. Definitely not that time when you score better than your friends in class or in life. Not the likes and congrats Facebook people send obligatorily on your shiny new job, clothes, relationship, millionth picture carefully crafted artsy - not any new token on the validation rat race.
 
-You remember the firekeeper told you the wisest things in the whole wide world, all the while tapping feet to your soulful jazzy music as the youtube playlist rolls on. *♪ I have seen the sparrow get high, but he ain't freer than you *. *Dont let space and time confuse ya, don't let name and form abuse ya!♫*.
+You remember the firekeeper told you the wisest things in the whole wide world, all the while tapping feet to your soulful jazzy music as the youtube playlist rolls on. *♪ I have seen the sparrow get high, but he ain't freer than you. Dont let space and time confuse ya, don't let name and form abuse ya!♫*.
 
 Before you know it, your feet was slowly tapping too. Cold carpet underground. Darkness retreat to the corner of the room. Sunday morning light slowly creeping through the aluminium shades, sitting shy on the window sill. You hear yourself breath peacefully, air pressure vibrates in accordance. You smell the delicious spice lingering from last night kitchen work. There is probably birds tweeting somewhere. Water drops from the roof become miraculously melodic. Your small plant pot seems to be singing something. You are euphoric, sipping the sweet moment down to the bottom of your soul.
 
