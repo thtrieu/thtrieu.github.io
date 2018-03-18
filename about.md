@@ -28,7 +28,7 @@ And you sit down, feeling happy.
 
 *What is this feeling?* - you asked yourself, noticing the sudden presence of a second person.
 
-Someone who is completely wrapped up in warm clothes, coming from afar, amidst the heavy snow, has finally arrived, standing outside on the porch of your tiny, lonely cot. The person know this is the right address, calling your name and knocking on the door. The door of the deepest and coldest corner of your heart.
+Someone who is completely wrapped up in warm clothes, coming from afar, amidst the heavy snow, has finally arrived. The person is standing outside on the porch of your tiny, lonely shelter. An acquaintance, who know the right address, calling your name and knocking on the door. The door of the deepest and coldest corner of your heart.
 
 You invite the person in, who then light up the fireplace and throw in some wood to help the fire. You two sit down smelling the good food, humming to the good beat, grining silently as warmth and light kept radiating from the simmering new fire.
 
@@ -42,7 +42,7 @@ Before you know it, your feet was slowly tapping too. Cold fuzzy carpet undernea
 
 Who cares? Nobody. I'm glad you notice.
 
-Nobody cares that you are having the time of your life. That this, and last night's mediocre joyful reunion in the cot are more real than anything they ever know about you. Pic or didnt happen. You are to them, essentially, just another boring spark of life whose existence is shorter than one moment of their universe getting distracted. 
+Nobody cares that you are having the time of your life. That this, and last night's mediocre joyful reunion in the shelter are more real than anything they ever know about you. Pic or didnt happen. You are to them, essentially, just another boring spark of life whose existence is shorter than one moment of their universe getting distracted. 
 
 The world is too crowded of such dim sparks. Everyone squeeze themselves in an allocated tiny little space, on that fast scrolling electronic newsfeed, screaming for attention by the catchiest visual cues. Algorithms jump into the help. Highlight that *congrats*, play the notification tune, red must be on blue, send out reminders that your friend happiest birthday is just one mechanical click away, join you to the sympathetic community of three shades colored avatars. 
 
