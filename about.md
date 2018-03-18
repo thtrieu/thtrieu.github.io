@@ -36,7 +36,7 @@ You invite the person in, who then light up the fireplace and throw in some wood
 
 You remember the firekeeper told you the wisest things in the whole wide world, all the while tapping feet to your soulful jazzy music as the youtube playlist rolls on. *♪ I have seen the sparrow get high, but he ain't freer than you. Dont let space and time confuse ya, don't let name and form abuse ya!♫*.
 
-Before you know it, your feet was slowly tapping too. Cold carpet underground. Darkness retreat to the corner of the room. Sunday morning light slowly creeping through the aluminium shades, sitting shy on the window sill. You hear your peaceful breath, clear, in and out, stretching air pressure vibrates in accordance. You smell the delicious spice lingering from last night kitchenwork. There are probably birds tweeting somewhere. Water drops from the roof become miraculously melodic. The silhouette of your small plant pot seems to be singing something. You are euphoric, sipping the sweet moment down to the bottom of your soul.
+Before you know it, your feet was slowly tapping too. Cold fuzzy carpet underneath. Darkness retreat to the corner of the room. Sunday morning light slowly creeping through the aluminium shades, sitting shy on the window sill. You hear your peaceful breath, clear, in and out, stretching air pressure vibrates in accordance. You smell the delicious spice lingering from last night kitchenwork. There are probably birds tweeting somewhere. Water drops from the roof become miraculously melodic. The silhouette of your small plant pot seems to be singing something. You are euphoric, sipping the sweet moment down to the bottom of your soul.
 
 **
 
