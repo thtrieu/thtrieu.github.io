@@ -44,18 +44,18 @@ An instinctive question echoed: *Who cares?* - Nobody. You gladly noticed.
 
 Nobody cares that you are having the time of your life. That this, and last night's joyful reunion in the shelter are more real than anything they ever know about you. Pic or didnt hppn. You are to them, essentially, just another mediocre spark of life whose existence is shorter than one moment of their universe getting distracted. 
 
-The world is too crowded of such dim sparks. Everyone squeeze themselves in an allocated tiny little space, on that fast scrolling electronic newsfeed, screaming for attention by the catchiest visual cues. Algorithms jump into the help. Highlight that *congrats*, play the notification tune, red must be on blue, send out reminders that your friend happiest birthday is just one mechanical click away, join you to the sympathetic community of three shades colored avatars. 
+The world is too crowded of such dim sparks. Everyone squeeze themselves in an allocated tiny little space, on that fast scrolling electronic newsfeed, screaming for attention by the catchiest visual cues. Algorithms jump to the help. Highlight that *congrats*, play the notification tune, red must be on blue, send out reminders that your friend happiest birthday is just one mechanical click away, join you to the sympathetic community of three or several shades colored avatars. 
 
-Algorithms know people are scared of reaching out, touching, making an effort to do conversations, smile, hug, sending letters. So they do it for them. Automated human interaction, why not? the thing is profitable. People signed a contract to lend out their vague emotions and presence to an artificial space, which got manifested to the extent that actually make some other people feel important, loved, and not alone for a short moment.
+Algorithms know people are scared of reaching out, touching, making an effort to do conversations, smile, hug, sending letters. So they do it for them. Automated human interaction, why not? the thing is profitable. People signed a contract to lend out their presence to a giant number-crunching machine, whole by-product is vague signals dressed up as human interation, manifested to the extent that actually make some other people feel important, loved, and not alone for a short moment.
 
 
 **
 
-Too dramatic and pessimistic, you thought. But connecting people is an overcooked mission now anyway, you added. Also, you don't care about the other people as much. Upon this realization, you leave your phone on the desk, black mirror faced down. Torn from your morning routine of facebook, quora, twitter sessions on the toilet, you stand up next to the window, look beyond the silent construction site.
+lol. Too dramatic and pessimistic, you thought. But connecting people is an overcooked mission now anyway, you added. Also, you don't care about the other people as much. Upon this realization, you leave your phone on the desk, black mirror faced down. Torn from your morning routine of facebook, quora, twitter sessions on the toilet, you stood up next to the window, looked beyond the silent construction site.
 
-There is a pretty sakura tree, blooming its violet little flowers, blending in and out to the early sky's color. 
+There is a pretty sakura tree, blooming its violet little flowers, blending in and out to the early sky's color. Whether it is screaming for attention or not, therefore, is up to the beholder.
 
-A tree cannot move, it cannot scream for attention. People like you who are indifferent about trees closed the window shades and drifted their mind away. Both leaving each other alone. But then there are always people who love sakura that gather around and admire. The tree keeps on sprouting nevertheless, because it's spring, not because of the admirers. 
+People like you who are indifferent about trees closed the window shades and drifted their mind away. Both leaving each other alone. But then there are always people who love sakura that gather around and admire. The tree keeps on sprouting nevertheless, because it's spring, not because of the admirers. 
 
 You sit down, understand that it is time to walk out of the crowded, noisy and monotone forest, find a construction site, and plant your own sakura thingy.
 
