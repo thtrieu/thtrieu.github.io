@@ -5,13 +5,6 @@ sub: yet another human roaming the earth
 ---
 
 
----
-layout: index
-title: about
-sub: yet another human roaming the earth
----
-
-
 Sunday morning. You wake up early, it's only 6:00 AM. 
 
 Such a delightfully odd hour to wake up, but the whispers of your mind are clear: sleep is done now, take a deep breath, accept the truth. After all those years seeking for a better sleep schedule and promising yourself to start doing it, you finally did it by accident.
@@ -38,7 +31,7 @@ You remember that the acquaintance, a firekeeper themselves, told you the wisest
 
 Before you know it, your feet were slowly tapping too. Your mind sprung back to reality where all become silent. Cold fuzzy carpet underneath. Darkness retreat to the corner of the room. Air is chilling. Sunday morning light slowly creeping through the aluminum shades, sitting shy on the windowsill. You hear your breath, clear, in and out, air pressure vibrates in accordance. You smell the delicious spice lingering from last night kitchenwork. There are probably birds tweeting somewhere. Water drops on the roof become miraculously melodic. The silhouette of your small plant pot seems to be singing something. You are attuned to every minute details of this beauty. 
 
-It has been a long time since you last observed the world this untainted, with the absolute innocence of a child. You are euphoric, sipping and savouring every sweet moment down to the bottom of your soul. Going to work tomorrow will never be the same.
+It has been a long time since you observe the world this untainted, with the absolute innocence of a child. You are euphoric, sipping and savouring every sweet moment down to the bottom of your soul. Going to work tomorrow will never be the same.
 
 **
 
