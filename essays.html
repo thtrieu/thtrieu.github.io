@@ -8,7 +8,7 @@ sub: grab a coffee, finish the book, build something
 	<ul>
 		{% for post in site.posts %}
 
-		{% if post.visible != false %}
+		{% if post.tag == "essay" %}
 		
 		<li>
 			<div class="post-date">
