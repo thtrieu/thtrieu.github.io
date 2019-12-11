@@ -2,7 +2,7 @@
 title: Deep Neural Networks that Prove Geometry Theorem
 ---
 
-Jump to:
+Jump to links:
 * # table of content
 {:toc}
 
@@ -24,7 +24,7 @@ Prove that $$N$$ is the mid point of $$AC$$.
 
 <center> <img src ="https://imgur.com/vqjmuzE.png" style="width:50%;height:50%;"> </center>
 
-### Proof from models trained to reason up to 20 steps:
+### Proof from model trained to reason up to 20 steps:
 
 GIF proof:
 
@@ -35,7 +35,7 @@ Static proof:
 <center> <img src ="https://i.imgur.com/TZNZodj.png" > </center>
 
 
-### Proof from models trained to reason up to 12 steps:
+### Proof from model trained to reason up to 12 steps:
 
 GIF proof:
 
@@ -46,7 +46,7 @@ Static proof:
 <center> <img src ="https://imgur.com/nsEFlWS.jpg"> </center>
 
 
-### Proof from models trained to reason up to 5 steps, with hint:
+### Proof from model trained to reason up to 5 steps, with hint:
 
 
 GIF proof:
