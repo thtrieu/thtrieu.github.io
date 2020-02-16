@@ -4,9 +4,9 @@ title: about
 sub: yet another human roaming the earth
 ---
 
-Hi, my name is Trieu.
+Hi, my name is Trieu. 
 
-I enjoy building things using code, math, and human language.
+I enjoy writing. I use math and code to build cool stuff.
 
 * [Writings](/essays.html)
 
