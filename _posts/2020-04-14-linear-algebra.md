@@ -7,21 +7,30 @@ Here is a vector.
 
 
 <center>
-<svg width="960" height="500"></svg>
+<button>update</button>
+<svg width="300" height="300"></svg>
 </center>
-
+<!-- 
 <style type="text/css">
 button {
     position: absolute;
     right: 10px;
     top: 10px;
 }
-</style>
+</style> -->
 
-<button>update</button>
 
 <script>
-var origin = [480, 300], j = 10, scale = 20, scatter = [], yLine = [], xGrid = [], beta = 0, alpha = 0, key = function(d){ return d.id; }, startAngle = Math.PI/4;
+var origin = [150, 150], 
+    j = 10, 
+    scale = 10, 
+    scatter = [], 
+    yLine = [], xGrid = [], 
+    beta = 0, 
+    alpha = 0, 
+    key = function(d){ return d.id; }, 
+    startAngle = Math.PI/4;
+
 var svg    = d3.select('svg').call(d3.drag().on('drag', dragged).on('start', dragStart).on('end', dragEnd)).append('g');
 var color  = d3.scaleOrdinal(d3.schemeCategory20);
 var mx, my, mouseX, mouseY;
@@ -63,8 +72,9 @@ function processData(data, tt){
         .attr('stroke', 'black')
         .attr('stroke-width', 0.3)
         .attr('fill', function(d){ return d.ccw ? 'lightgrey' : '#717171'; })
-        .attr('fill-opacity', 0.9)
-        .attr('d', grid3d.draw);
+        .attr('d', grid3d.draw)
+        .attr('fill-opacity', 0.9);
+        
 
     xGrid.exit().remove();
 
@@ -108,7 +118,6 @@ function processData(data, tt){
      /* ----------- y-Scale Text ----------- */
 
     var yText = svg.selectAll('text.yText').data(data[2][0]);
-
     yText
         .enter()
         .append('text')
@@ -116,12 +125,13 @@ function processData(data, tt){
         .attr('dx', '.3em')
         .merge(yText)
         .each(function(d){
-            d.centroid = {x: d.rotated.x, y: d.rotated.y, z: d.rotated.z};
+            d.centroid = {x: d.rotated.x, 
+                          y: d.rotated.y, 
+                          z: d.rotated.z};
         })
         .attr('x', function(d){ return d.projected.x; })
         .attr('y', function(d){ return d.projected.y; })
-        .text(function(d){ return d[1] <= 0 ? d[1] : ''; });
-
+        .text(function(d){ return d[1] <= 0 ? -d[1] : ''; });
     yText.exit().remove();
 
     d3.selectAll('._3d').sort(d3._3d().sort);
@@ -137,15 +147,26 @@ function posPointY(d){
 
 function init(){
     var cnt = 0;
-    xGrid = [], scatter = [], yLine = [];
+    xGrid = [], 
+    scatter = [], yLine = [];
+
     for(var z = -j; z < j; z++){
         for(var x = -j; x < j; x++){
             xGrid.push([x, 1, z]);
-            scatter.push({x: x, y: d3.randomUniform(0, -10)(), z: z, id: 'point_' + cnt++});
+            scatter.push({
+                x: x, 
+                y: d3.randomUniform(0, -10)(), 
+                z: z, 
+                id: 'point_' + cnt++
+            });
         }
     }
 
-    d3.range(-1, 11, 1).forEach(function(d){ yLine.push([-j, -d, -j]); });
+    d3.range(-1, 11, 1).forEach(
+        function(d){ 
+          yLine.push([-j, -d, -j]); 
+        }
+    );
 
     var data = [
         grid3d(xGrid),
@@ -166,7 +187,7 @@ function dragged(){
     beta   = (d3.event.x - mx + mouseX) * Math.PI / 230 ;
     alpha  = (d3.event.y - my + mouseY) * Math.PI / 230  * (-1);
     var data = [
-         grid3d.rotateY(beta + startAngle).rotateX(alpha - startAngle)(xGrid),
+        grid3d.rotateY(beta + startAngle).rotateX(alpha - startAngle)(xGrid),
         point3d.rotateY(beta + startAngle).rotateX(alpha - startAngle)(scatter),
         yScale3d.rotateY(beta + startAngle).rotateX(alpha - startAngle)([yLine]),
     ];
@@ -183,7 +204,6 @@ d3.selectAll('button').on('click', init);
 init();
 </script>
 
-> [a point]
 
 *OK, so a vector is a point?*
 
