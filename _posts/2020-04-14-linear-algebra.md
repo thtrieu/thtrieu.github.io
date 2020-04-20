@@ -2,19 +2,20 @@
 title: A simple take on Linear Algebra
 ---
 
-<style>
 
+Here is a vector.
+
+<!-- <style>
 label {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   position: absolute;
   left: 10px;
   top: 10px;
 }
-
 </style>
-<canvas width="960" height="600"></canvas>
+ -->
+<canvas width="480" height="480"></canvas>
 <label><input style="width:240px;" type="range" min="0" max="1" step="any" value="0.5"> Link Strength</label>
-<script src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
 var canvas = document.querySelector("canvas"),
@@ -26,12 +27,12 @@ var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.id; }).strength(0.5))
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2))
-    // .alphaDecay(0);
+    .alphaDecay(0);
 
 d3.select("input[type=range]")
     .on("input", inputted);
 
-d3.json("miserables.json", function(error, graph) {
+d3.json("/assets/miserables.json", function(error, graph) {
   if (error) throw error;
 
   simulation
@@ -72,9 +73,6 @@ function drawNode(d) {
   context.arc(d.x, d.y, 3, 0, 2 * Math.PI);
 }
 </script>
-
-
-Here is a vector.
 
 > [a point]
 
