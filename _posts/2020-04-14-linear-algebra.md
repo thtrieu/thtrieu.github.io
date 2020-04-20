@@ -14,7 +14,10 @@ label {
 }
 </style>
  -->
+ <center>
 <canvas width="480" height="480"></canvas>
+
+ </center>
 <label><input style="width:240px;" type="range" min="0" max="1" step="any" value="0.5"> Link Strength</label>
 
 <script>

@@ -6,26 +6,26 @@ google_analytics:   UA-XXXXXXX-X # Put your Google Analytics code
 
 # Logos
 logos: 
-  rock:     "http://i.imgur.com/f7b0EjX.gif" #
-  daisy:    "http://i.imgur.com/ygEHnz5.gif" #
-  flower:   "http://i.imgur.com/JX9gCsP.gif"
-  coffee:   "http://i.imgur.com/d3GJwO1.gif"
-  spoon:    "http://i.imgur.com/6UaSYA9.gif"
-  pooring:  "http://i.imgur.com/0TNlsRx.gif"
-  smoke:    "http://i.imgur.com/wUl8kal.gif"
-  step1:    "http://i.imgur.com/LVF0HOR.gif"
-  step2:    "http://i.imgur.com/FCePkA4.gif"
-  christ:   "http://i.imgur.com/iqDJCdf.gif"
-  touch:    "http://i.imgur.com/f19wdua.gif"
-  pure:     "http://i.imgur.com/RDbvdeg.gif"
-  bookafe:  "http://i.imgur.com/1NngOKZ.gif"
-  purer:    "http://i.imgur.com/l1tA8nA.gif"
-  spike:    "http://i.imgur.com/P5Ifo0E.gif" #
-  moss:     "http://i.imgur.com/JNoDa9E.gif"
-  drip:     "http://i.imgur.com/hbaEn2i.gif" #
-  surface:  "http://i.imgur.com/2zsgYDR.gif"
-  fly:      "http://i.imgur.com/tU08Pu4.gif" #
-  wood:     "http://i.imgur.com/w6NOJp2.gif" #
+  rock:     "https://i.imgur.com/f7b0EjX.gif" #
+  daisy:    "https://i.imgur.com/ygEHnz5.gif" #
+  flower:   "https://i.imgur.com/JX9gCsP.gif"
+  coffee:   "https://i.imgur.com/d3GJwO1.gif"
+  spoon:    "https://i.imgur.com/6UaSYA9.gif"
+  pooring:  "https://i.imgur.com/0TNlsRx.gif"
+  smoke:    "https://i.imgur.com/wUl8kal.gif"
+  step1:    "https://i.imgur.com/LVF0HOR.gif"
+  step2:    "https://i.imgur.com/FCePkA4.gif"
+  christ:   "https://i.imgur.com/iqDJCdf.gif"
+  touch:    "https://i.imgur.com/f19wdua.gif"
+  pure:     "https://i.imgur.com/RDbvdeg.gif"
+  bookafe:  "https://i.imgur.com/1NngOKZ.gif"
+  purer:    "https://i.imgur.com/l1tA8nA.gif"
+  spike:    "https://i.imgur.com/P5Ifo0E.gif" #
+  moss:     "https://i.imgur.com/JNoDa9E.gif"
+  drip:     "https://i.imgur.com/hbaEn2i.gif" #
+  surface:  "https://i.imgur.com/2zsgYDR.gif"
+  fly:      "https://i.imgur.com/tU08Pu4.gif" #
+  wood:     "https://i.imgur.com/w6NOJp2.gif" #
 
 # Author Info
 author_name:        "thtrieu"
