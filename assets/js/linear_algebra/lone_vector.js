@@ -1,4 +1,4 @@
-(function() {
+var point_cloud = (function() {
 
 var origin = [150, 120], 
   j = 10, 
@@ -46,7 +46,7 @@ function processData(scatter, tt){
 
   points.exit().remove();
 
-  // d3.selectAll('._3d').sort(d3._3d().sort);
+  svg.selectAll('._3d').sort(d3._3d().sort);
 }
 
 function posPointX(d){
@@ -93,8 +93,8 @@ function dragEnd(){
   mouseY = d3.event.y - my + mouseY;
 }
 
-d3.selectAll('#but_lone_vector').on('click', init);
-
 init();
+
+return {init: function(){init();}};
 
 })();

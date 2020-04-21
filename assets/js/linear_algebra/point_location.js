@@ -1,21 +1,20 @@
-var point_coord_lines2d = (function() {
+var point_location = (function() {
 
-var origin = [150, 120], 
+var origin = [150, 130], 
   j = 10, 
   scale = 10, 
   scatter = [], 
-  xLine = [], 
+  xLine = [],
   yLine = [], 
-  beta = 0,
-  dx = 0, 
-  dy = 0,
+  zLine = [], 
+  beta = 0, 
   alpha = 0, 
   key = function(d){ return d.id; }, 
-  startAngleX = Math.PI;
-  startAngleZ = 0.;
+  startAngleX = -Math.PI/8. * 3;
+  startAngleZ = Math.PI/8. * 2;
   startAngleY = 0.;
 
-var svg    = d3.select("#svg_point_coord_lines2d")
+var svg    = d3.select("#svg_point_location")
                .call(d3.drag()
                        .on('drag', dragged)
                        .on('start', dragStart)
@@ -51,6 +50,13 @@ var yScale3d = d3._3d()
     .rotateY(startAngleY)
     .rotateZ(startAngleZ);
 
+var zScale3d = d3._3d()
+    .shape('LINE_STRIP')
+    .origin(origin)
+    .scale(scale)
+    .rotateX(-startAngleX)
+    .rotateY(startAngleY)
+    .rotateZ(startAngleZ);
 
 function plotaxis(data, axis, name, dim){
   var scale = svg
@@ -84,14 +90,19 @@ function plotaxis(data, axis, name, dim){
                         z: d.rotated.z};
       })
       .attr('x', function(d){ return d.projected.x; })
-      .attr('y', function(d){ return d.projected.y+10; })
+      .attr('y', function(d){ return d.projected.y+3; })
       .attr('z', function(d){ return d.projected.z; })
       .text(function(d){ 
-          return d[dim] % 5 == 0 ? d[dim] : ''; 
+          if (d[dim] % 5 == 0) {
+            return d[dim];
+          } else if (d[dim] == 12) {
+            return name;
+          } else {
+            return '';
+          }
       });
   text.exit().remove();
 }
-
 
 function processData(data, tt){
 
@@ -100,7 +111,7 @@ function processData(data, tt){
   points
     .enter()
     .append('circle')
-    .attr('class', '_3d')
+    .attr('class', '_3d point')
     .attr('opacity', 0)
     .attr('cx', posPointX)
     .attr('cy', posPointY)
@@ -115,8 +126,6 @@ function processData(data, tt){
 
   points.exit().remove();
 
-  plotaxis(data[1], xScale3d, 'x', 0)
-  plotaxis(data[2], yScale3d, 'y', 1)
   svg.selectAll('._3d').sort(d3._3d().sort);
 }
 
@@ -132,25 +141,31 @@ function init(){
   var cnt = 0;
   scatter = [],
   xLine = [],
-  yLine = [];
+  yLine = [],
+  zLine = [];
 
-  for (var z=0; z < 5; z++){
+  for (var z=0; z < 3; z++){
     scatter.push({
         x: d3.randomUniform(-j+1, j-2)(),
         y: d3.randomUniform(-9, 9)(), 
-        z: 0,
+        z: d3.randomUniform(-j+1, j-2)(),
         id: 'point_' + cnt++
     })
   }
 
-  d3.range(0, 11, 1).forEach(
+  d3.range(0, 13, 1).forEach(
       function(d){ 
         xLine.push([d, 0, 0]); 
       }
   );
-  d3.range(0, 11, 1).forEach(
+  d3.range(0, 13, 1).forEach(
       function(d){ 
         yLine.push([0, d, 0]); 
+      }
+  );
+  d3.range(0, 13, 1).forEach(
+      function(d){ 
+        zLine.push([0, 0, d]); 
       }
   );
 
@@ -158,30 +173,38 @@ function init(){
       point3d(scatter),
       xScale3d([xLine]),
       yScale3d([yLine]),
+      zScale3d([zLine]),
   ];
+
+  plotaxis(data[1], xScale3d, 'x', 0)
+  plotaxis(data[2], yScale3d, 'y', 1)
+  plotaxis(data[3], zScale3d, 'z', 2)
+
   processData(data, 1000);
 }
 
 function dragStart(){
-  mx = d3.event.x - origin[0];
-  my = d3.event.y - origin[1];
+  mx = d3.event.x;
+  my = d3.event.y;
 }
 
 function dragged(){
-  dx = d3.event.x - origin[0];
-  dy = d3.event.y - origin[1];
+  mouseX = mouseX || 0;
+  mouseY = mouseY || 0;
 
-  beta = Math.atan2(dy, dx) - Math.atan2(my, mx);
+  dx = d3.event.x - mx;
+  dy = d3.event.y - my;
+  beta   = (mouseX + dx) * Math.PI / 230 ;
+  alpha  = (mouseY + dy) * Math.PI / 230  * (-1);
   var data = [
-      point3d.rotateZ(startAngleZ - beta)(scatter),
-      xScale3d.rotateZ(startAngleZ - beta)([xLine]),
-      yScale3d.rotateZ(startAngleZ - beta)([yLine]),
+      point3d.rotateY(beta + startAngleY).rotateX(alpha - startAngleX)(scatter),
   ];
   processData(data, 0);
 }
 
 function dragEnd(){
-  startAngleZ -= beta;
+  mouseX += dx;
+  mouseY += dy;
 }
 
 init();

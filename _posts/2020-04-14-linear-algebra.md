@@ -5,7 +5,7 @@ title: A simple take on Linear Algebra
 
 <style type="text/css">
 .js {
-  font-size: 12;
+  font-size: 12.5;
   color: #696969;
 }
 </style>
@@ -18,25 +18,55 @@ Here is a bunch of vectors.
 Drag or <button id='but_lone_vector'>shuffle</button>
 </center>
 
-<script src="/assets/js/linear_algebra/lone_vector.js"></script>
+<script src="/assets/js/linear_algebra/lone_vector.js">
+</script>
+
+<script>
+d3.selectAll('#but_lone_vector')
+  .on('click', point_cloud.init)
+</script>
 
 
 *OK, so each vector is a point?*
 
-Yeah, more precisely, each vector is a point living in *space*. The space here is defined by a coordinate system. It can be 2-dimensional, 3-dimensional, or N-dimensional.
+Yeah, more precisely, each vector is a point living in *space*. To locate the vectors, we should impose a coordinate system. Here are examples of coordinate systems in 2 dimensions and 3 dimensions:
 
 <center class='js'>
 <svg width="300" height="250" id="svg_point_coord_lines2d"></svg> <svg width="300" height="250" id="svg_point_coord_lines"></svg>
+<br/> 
+Drag or <button id='but_point_coord_lines'>shuffle</button>
 </center>
 
-<script src="/assets/js/linear_algebra/point_coord_lines2d.js"></script>
-<script src="/assets/js/linear_algebra/point_coord_lines.js"></script>
+<script src="/assets/js/linear_algebra/point_coord_lines2d.js">
+</script>
+<script src="/assets/js/linear_algebra/point_coord_lines.js">
+</script>
 
-*That's complicated. I thought vector is the only foundational building block, now there is a coordinate system?*
+<script>
+d3.selectAll('#but_point_coord_lines')
+  .on('click', function(){
+      point_coord_lines.init();
+      point_coord_lines2d.init();
+  })
+</script>
 
-Soon we'll see the coordinate system here is really just a bunch of vectors, but more on that later. Now because there is a coordinate system, each vector will have a list of numbers indicating its location in the space.
+In general, space can be N-dimensional with N as large as you want. Soon we'll see the coordinate system here is really just a bunch of other vectors, but more on that later. Now because there is a coordinate system, each vector will have a list of numbers indicating its location in the space:
 
-> [a point in 2D annotated with its location] [similar in 3D]
+
+<center class='js'>
+<svg width="300" height="250" id="svg_point_location"></svg> 
+<br/>
+The coordinate system is now fixed. Drag or <button id='but_point_location'>shuffle</button> to change location of the vectors.
+</center>
+
+<script src="/assets/js/linear_algebra/point_location.js">
+</script>
+<script>
+d3.selectAll('#but_point_location')
+  .on('click', function(){
+      point_location.init();
+  })
+</script>
 
 *Is this why sometimes people refer to a list of numbers as a "vector"?*
 

@@ -1,4 +1,4 @@
-(function() {
+var point_coord_lines = (function() {
 
 var origin = [150, 125], 
   j = 10, 
@@ -105,7 +105,7 @@ function processData(data, tt){
   points
     .enter()
     .append('circle')
-    .attr('class', '_3d')
+    .attr('class', '_3d point')
     .attr('opacity', 0)
     .attr('cx', posPointX)
     .attr('cy', posPointY)
@@ -124,7 +124,7 @@ function processData(data, tt){
   plotaxis(data[2], yScale3d, 'y', 1)
   plotaxis(data[3], zScale3d, 'z', 2)
 
-  // d3.selectAll('._3d').sort(d3._3d().sort);
+  svg.selectAll('._3d').sort(d3._3d().sort);
 }
 
 function posPointX(d){
@@ -142,11 +142,11 @@ function init(){
   yLine = [],
   zLine = [];
 
-  for (var z=0; z < 10; z++){
+  for (var z=0; z < 5; z++){
     scatter.push({
-        x: d3.randomUniform(-j, j-1)(),
-        y: d3.randomUniform(-10, 10)(), 
-        z: d3.randomUniform(-j, j-1)(),
+        x: d3.randomUniform(-j+1, j-2)(),
+        y: d3.randomUniform(-9, 9)(), 
+        z: d3.randomUniform(-j+1, j-2)(),
         id: 'point_' + cnt++
     })
   }
@@ -204,5 +204,9 @@ function dragEnd(){
 }
 
 init();
+
+return {
+  init: function(){init();}
+};
 
 })();
