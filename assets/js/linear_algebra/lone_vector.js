@@ -1,6 +1,6 @@
 (function() {
 
-var origin = [150, 100], 
+var origin = [150, 120], 
   j = 10, 
   scale = 10, 
   scatter = [], 

@@ -13,7 +13,7 @@ title: A simple take on Linear Algebra
 Here is a bunch of vectors.
 
 <center class='js'>
-<svg width="300" height="200" id="svg_lone_vector"></svg>
+<svg width="300" height="250" id="svg_lone_vector"></svg>
 <br/> 
 Drag or <button id='but_lone_vector'>shuffle</button>
 </center>
@@ -26,7 +26,7 @@ Drag or <button id='but_lone_vector'>shuffle</button>
 Yeah, more precisely, each vector is a point living in *space*. The space here is defined by a coordinate system. It can be 2-dimensional, 3-dimensional, or N-dimensional.
 
 <center class='js'>
-<svg width="300" height="200" id="svg_point_coord_lines2d"></svg> <svg width="300" height="200" id="svg_point_coord_lines"></svg>
+<svg width="300" height="250" id="svg_point_coord_lines2d"></svg> <svg width="300" height="250" id="svg_point_coord_lines"></svg>
 </center>
 
 <script src="/assets/js/linear_algebra/point_coord_lines2d.js"></script>

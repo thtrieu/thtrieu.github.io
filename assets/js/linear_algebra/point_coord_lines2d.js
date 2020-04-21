@@ -1,6 +1,6 @@
 (function() {
 
-var origin = [150, 100], 
+var origin = [150, 120], 
   j = 10, 
   scale = 10, 
   scatter = [], 
@@ -187,8 +187,7 @@ function dragged(){
   mouseY = mouseY || 0;
   dx = d3.event.x - mx;
   dy = d3.event.y - my;
-  beta = Math.atan((mouseX + dy - origin[0])/
-                   (mouseY + dx - origin[1]))
+  beta   = (mouseX + dx) * Math.PI / 230 ;
   // beta = (mouseX + dx) * Math.PI / 230 ;
   var data = [
       point3d.rotateZ(startAngleZ - beta)(scatter),
