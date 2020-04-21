@@ -63,7 +63,7 @@ function plotaxis(data, axis, name, dim){
       .attr('class', '_3d '.concat(name, 'Scale'))
       .merge(scale)
       .attr('stroke', 'black')
-      .attr('stroke-width', .5)
+      .attr('stroke-width', 1.)
       .attr('d', axis.draw);
 
   scale.exit().remove();  
@@ -106,7 +106,7 @@ function processData(data, tt){
     .attr('cy', posPointY)
     .merge(points)
     .transition().duration(tt)
-    .attr('r', 3)
+    .attr('r', 4)
     // .attr('stroke', function(d){ return d3.color(color(d.id)).darker(1.5); })
     .attr('fill', function(d){ return color(d.id); })
     .attr('opacity', 1)

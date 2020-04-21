@@ -11,7 +11,7 @@ var origin = [150, 130],
   alpha = 0, 
   key = function(d){ return d.id; }, 
   startAngleX = -Math.PI/8. * 3;
-  startAngleZ = Math.PI/8. * 2;
+  startAngleZ = Math.PI/8. * 1.5;
   startAngleY = 0.;
 
 var svg    = d3.select("#svg_point_location")
@@ -69,7 +69,7 @@ function plotaxis(data, axis, name, dim){
       .attr('class', '_3d '.concat(name, 'Scale'))
       .merge(scale)
       .attr('stroke', 'black')
-      .attr('stroke-width', .5)
+      .attr('stroke-width', 1.)
       .attr('d', axis.draw);
 
   scale.exit().remove();  
@@ -90,7 +90,7 @@ function plotaxis(data, axis, name, dim){
                         z: d.rotated.z};
       })
       .attr('x', function(d){ return d.projected.x; })
-      .attr('y', function(d){ return d.projected.y+3; })
+      .attr('y', function(d){ return d.projected.y+10; })
       .attr('z', function(d){ return d.projected.z; })
       .text(function(d){ 
           if (d[dim] % 5 == 0) {
@@ -117,7 +117,7 @@ function processData(data, tt){
     .attr('cy', posPointY)
     .merge(points)
     .transition().duration(tt)
-    .attr('r', 3)
+    .attr('r', 4)
     // .attr('stroke', function(d){ return d3.color(color(d.id)).darker(1.5); })
     .attr('fill', function(d){ return color(d.id); })
     .attr('opacity', 1)

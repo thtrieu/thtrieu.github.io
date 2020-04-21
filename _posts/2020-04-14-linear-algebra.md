@@ -15,21 +15,21 @@ Here is a bunch of vectors.
 <center class='js'>
 <svg width="300" height="250" id="svg_lone_vector"></svg>
 <br/> 
-Drag or <button id='but_lone_vector'>shuffle</button>
+Drag or <button id='but_point_cloud'>shuffle</button>
 </center>
 
-<script src="/assets/js/linear_algebra/lone_vector.js">
+<script src="/assets/js/linear_algebra/point_cloud.js">
 </script>
 
 <script>
-d3.selectAll('#but_lone_vector')
+d3.selectAll('#but_point_cloud')
   .on('click', point_cloud.init)
 </script>
 
 
 *OK, so each vector is a point?*
 
-Yeah, more precisely, each vector is a point living in *space*. To locate the vectors, we should impose a coordinate system. Here are examples of coordinate systems in 2 dimensions and 3 dimensions:
+Yeah, more precisely, each vector is a point living in *space*. To locate the vectors, we should impose a coordinate system. Here are examples of coordinate systems in 2-dimensional and 3-dimensional spaces:
 
 <center class='js'>
 <svg width="300" height="250" id="svg_point_coord_lines2d"></svg> <svg width="300" height="250" id="svg_point_coord_lines"></svg>
