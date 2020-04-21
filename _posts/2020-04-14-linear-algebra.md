@@ -3,34 +3,34 @@ title: A simple take on Linear Algebra
 ---
 
 
-Here is a vector.
-
-
-<center>
-<svg width="300" height="300"></svg>
-</center>
-<center>
-<button>update</button>
-</center>
-
-<!-- 
 <style type="text/css">
-button {
-    position: absolute;
-    right: 10px;
-    top: 10px;
+.js {
+  font-size: 12;
+  color: #696969;
 }
-</style> -->
+</style>
+
+Here is a bunch of vectors.
+
+<center class='js'>
+<svg width="300" height="200" id="svg_lone_vector"></svg>
+<br/> 
+Drag me or <button id='but_lone_vector'>shuffle</button> me
+</center>
+
+<script src="/assets/js/linear_algebra/lone_vector.js"></script>
 
 
-<script src="/assets/point_cloud.js"></script>
+*OK, so each vector is a point?*
 
+Yeah, more precisely, each vector is a point living in *space*. The space here is defined by a coordinate system. It can be 2-dimensional, 3-dimensional, or N-dimensional.
 
-*OK, so a vector is a point?*
+<center class='js'>
+<svg width="300" height="200" id="svg_point_coord_lines2d"></svg> <svg width="300" height="200" id="svg_point_coord_lines"></svg>
+</center>
 
-Yeah, more precisely, a vector is a point living in *space*. The space here is defined by a coordinate system. It can be 2-dimensional, 3-dimensional, or N-dimensional.
-
-> [a point in 2D][a point in 3D]
+<script src="/assets/js/linear_algebra/point_coord_lines.js"></script>
+<script src="/assets/js/linear_algebra/point_coord_lines2d.js"></script>
 
 *That's complicated. I thought vector is the only foundational building block, now there is a coordinate system?*
 

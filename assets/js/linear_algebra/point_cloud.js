@@ -80,7 +80,7 @@ function processData(data, tt){
 
     /* ----------- y-Scale ----------- */
     /*
-    var yScale = svg.selectAll('path.yScale').data(data[]);
+    var yScale = svg.selectAll('path.yScale').data(data[2]);
 
     yScale
         .enter()
@@ -134,7 +134,7 @@ function init(){
             xGrid.push([x, 1, z]);
             scatter.push({
                 x: d3.randomUniform(-j, j-1)(),
-                y: d3.randomUniform(0, -10)(), 
+                y: d3.randomUniform(-10, 10)(), 
                 z: d3.randomUniform(-j, j-1)(),
                 id: 'point_' + cnt++
             });
