@@ -7,10 +7,11 @@ var origin = [150, 100],
   xLine = [], 
   yLine = [], 
   zLine = [], 
-  beta = 0, 
+  beta = 0,
+  dx = 0, 
   alpha = 0, 
   key = function(d){ return d.id; }, 
-  startAngleX = 0.;
+  startAngleX = Math.PI;
   startAngleZ = 0.;
   startAngleY = 0.;
 
@@ -58,6 +59,48 @@ var zScale3d = d3._3d()
     .rotateY(startAngleY)
     .rotateZ(startAngleZ);
 
+
+function plotaxis(data, axis, name, dim){
+  var scale = svg
+      .selectAll('path.'.concat(name, 'Scale'))
+      .data(data);
+
+  scale
+      .enter()
+      .append('path')
+      .attr('class', '_3d '.concat(name, 'Scale'))
+      .merge(scale)
+      .attr('stroke', 'black')
+      .attr('stroke-width', .5)
+      .attr('d', axis.draw);
+
+  scale.exit().remove();  
+
+  var text = svg
+      .selectAll('text.'.concat(name, 'Text'))
+      .data(data[0]);
+
+  text
+      .enter()
+      .append('text')
+      .attr('class', '_3d '.concat(name, 'Text'))
+      .attr('dx', '.3em')
+      .merge(text)
+      .each(function(d){
+          d.centroid = {x: d.rotated.x, 
+                        y: d.rotated.y, 
+                        z: d.rotated.z};
+      })
+      .attr('x', function(d){ return d.projected.x; })
+      .attr('y', function(d){ return d.projected.y+3; })
+      .attr('z', function(d){ return d.projected.z; })
+      .text(function(d){ 
+          return d[dim] % 5 == 0 ? d[dim] : ''; 
+      });
+  text.exit().remove();
+}
+
+
 function processData(data, tt){
 
   var points = svg.selectAll('circle').data(data[0], key);
@@ -71,8 +114,8 @@ function processData(data, tt){
     .attr('cy', posPointY)
     .merge(points)
     .transition().duration(tt)
-    .attr('r', 1.5)
-    .attr('stroke', function(d){ return d3.color(color(d.id)).darker(1.5); })
+    .attr('r', 3)
+    // .attr('stroke', function(d){ return d3.color(color(d.id)).darker(1.5); })
     .attr('fill', function(d){ return color(d.id); })
     .attr('opacity', 1)
     .attr('cx', posPointX)
@@ -80,43 +123,8 @@ function processData(data, tt){
 
   points.exit().remove();
 
-  var xScale = svg.selectAll('path.xScale').data(data[1]);
-
-  xScale
-      .enter()
-      .append('path')
-      .attr('class', '_3d xScale')
-      .merge(xScale)
-      .attr('stroke', 'black')
-      .attr('stroke-width', .5)
-      .attr('d', xScale3d.draw);
-
-  xScale.exit().remove();
-
-  var yScale = svg.selectAll('path.yScale').data(data[2]);
-
-  yScale
-      .enter()
-      .append('path')
-      .attr('class', '_3d yScale')
-      .merge(yScale)
-      .attr('stroke', 'black')
-      .attr('stroke-width', .5)
-      .attr('d', yScale3d.draw);
-
-  yScale.exit().remove();
-
-
-  var zScale = svg.selectAll('path.zScale').data(data[3]);
-  zScale
-      .enter()
-      .append('path')
-      .attr('class', '_3d zScale')
-      .merge(zScale)
-      .attr('stroke', 'black')
-      .attr('stroke-width', .5)
-      .attr('d', zScale3d.draw);
-  zScale.exit().remove();
+  plotaxis(data[1], xScale3d, 'x', 0)
+  plotaxis(data[2], yScale3d, 'y', 1)
   // d3.selectAll('._3d').sort(d3._3d().sort);
 }
 
@@ -139,7 +147,7 @@ function init(){
     scatter.push({
         x: d3.randomUniform(-j, j-1)(),
         y: d3.randomUniform(-10, 10)(), 
-        z: d3.randomUniform(-j, j-1)(),
+        z: 0.,
         id: 'point_' + cnt++
     })
   }
@@ -177,20 +185,23 @@ function dragStart(){
 function dragged(){
   mouseX = mouseX || 0;
   mouseY = mouseY || 0;
-  beta   = (d3.event.x - mx + mouseX) * Math.PI / 230 ;
-  alpha  = (d3.event.y - my + mouseY) * Math.PI / 230  * (-1);
+  dx = d3.event.x - mx;
+  dy = d3.event.y - my;
+  beta = Math.atan((mouseX + dy - origin[0])/
+                   (mouseY + dx - origin[1]))
+  // beta = (mouseX + dx) * Math.PI / 230 ;
   var data = [
-      point3d.rotateZ(beta + startAngleZ)(scatter),
-      xScale3d.rotateZ(beta + startAngleZ)([xLine]),
-      yScale3d.rotateZ(beta + startAngleZ)([yLine]),
-      zScale3d.rotateZ(beta + startAngleZ)([zLine]),
+      point3d.rotateZ(startAngleZ - beta)(scatter),
+      xScale3d.rotateZ(startAngleZ - beta)([xLine]),
+      yScale3d.rotateZ(startAngleZ - beta)([yLine]),
+      zScale3d.rotateZ(startAngleZ - beta)([zLine]),
   ];
   processData(data, 0);
 }
 
 function dragEnd(){
-  mouseX = d3.event.x - mx + mouseX;
-  mouseY = d3.event.y - my + mouseY;
+  mouseX += dx;
+  mouseY += dy;
 }
 
 init();

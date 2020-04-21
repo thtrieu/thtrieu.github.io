@@ -15,7 +15,7 @@ Here is a bunch of vectors.
 <center class='js'>
 <svg width="300" height="200" id="svg_lone_vector"></svg>
 <br/> 
-Drag me or <button id='but_lone_vector'>shuffle</button> me
+Drag or <button id='but_lone_vector'>shuffle</button>
 </center>
 
 <script src="/assets/js/linear_algebra/lone_vector.js"></script>
@@ -29,8 +29,8 @@ Yeah, more precisely, each vector is a point living in *space*. The space here i
 <svg width="300" height="200" id="svg_point_coord_lines2d"></svg> <svg width="300" height="200" id="svg_point_coord_lines"></svg>
 </center>
 
-<script src="/assets/js/linear_algebra/point_coord_lines.js"></script>
 <script src="/assets/js/linear_algebra/point_coord_lines2d.js"></script>
+<script src="/assets/js/linear_algebra/point_coord_lines.js"></script>
 
 *That's complicated. I thought vector is the only foundational building block, now there is a coordinate system?*
 
