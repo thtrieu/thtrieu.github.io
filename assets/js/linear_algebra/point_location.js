@@ -10,9 +10,9 @@ var origin = [150, 130],
   beta = 0, 
   alpha = 0, 
   key = function(d){ return d.id; }, 
-  startAngleX = -Math.PI/8. * 3;
-  startAngleZ = Math.PI/8. * 1.5;
-  startAngleY = 0.;
+  startAngleX = -Math.PI/8. * 3,
+  startAngleZ = Math.PI/8. * 1;
+  startAngleY = 0;
 
 var svg    = d3.select("#svg_point_location")
                .call(d3.drag()
@@ -23,6 +23,15 @@ var svg    = d3.select("#svg_point_location")
 
 var color  = d3.scaleOrdinal(d3.schemeCategory20);
 var mx, my, mouseX, mouseY;
+var axis_color = d3.scaleOrdinal(d3['schemeCategory20c']);
+
+var rotated_z_to_size = d3.scaleLinear()
+                          .domain([-9, 9])
+                          .range([4, 5.5]);
+
+var rotated_z_to_txt_size = d3.scaleLinear()
+                              .domain([-9, 9])
+                              .range([9, 14]);
 
 var point3d = d3._3d()
   .x(function(d){ return d.x; })
@@ -33,6 +42,12 @@ var point3d = d3._3d()
   .rotateY(startAngleY)
   .rotateZ(startAngleZ)
   .scale(scale);
+
+var basis = point3d([
+    {x: 1, y: 0, z:0, id: 'basis_x'},
+    {x: 0, y: 1, z:0, id: 'basis_y'},
+    {x: 0, y: 0, z:1, id: 'basis_z'},
+]);
 
 var xScale3d = d3._3d()
     .shape('LINE_STRIP')
@@ -57,6 +72,7 @@ var zScale3d = d3._3d()
     .rotateX(-startAngleX)
     .rotateY(startAngleY)
     .rotateZ(startAngleZ);
+  
 
 function plotaxis(data, axis, name, dim){
   var scale = svg
@@ -68,8 +84,8 @@ function plotaxis(data, axis, name, dim){
       .append('path')
       .attr('class', '_3d '.concat(name, 'Scale'))
       .merge(scale)
-      .attr('stroke', 'black')
-      .attr('stroke-width', 1.)
+      .attr('stroke', 'grey')
+      .attr('stroke-width', 1.5)
       .attr('d', axis.draw);
 
   scale.exit().remove();  
@@ -90,7 +106,7 @@ function plotaxis(data, axis, name, dim){
                         z: d.rotated.z};
       })
       .attr('x', function(d){ return d.projected.x; })
-      .attr('y', function(d){ return d.projected.y+10; })
+      .attr('y', function(d){ return d.projected.y; })
       .attr('z', function(d){ return d.projected.z; })
       .text(function(d){ 
           if (d[dim] % 5 == 0) {
@@ -108,8 +124,9 @@ function processData(data, tt){
 
   var points = svg.selectAll('circle').data(data[0], key);
 
-  points
-    .enter()
+  var elemEnter = points.enter()
+
+  elemEnter
     .append('circle')
     .attr('class', '_3d point')
     .attr('opacity', 0)
@@ -117,16 +134,97 @@ function processData(data, tt){
     .attr('cy', posPointY)
     .merge(points)
     .transition().duration(tt)
-    .attr('r', 4)
+    .attr('r', function(d){
+        return rotated_z_to_size(d.rotated.z);
+    })
     // .attr('stroke', function(d){ return d3.color(color(d.id)).darker(1.5); })
     .attr('fill', function(d){ return color(d.id); })
     .attr('opacity', 1)
     .attr('cx', posPointX)
     .attr('cy', posPointY);
 
-  points.exit().remove();
+  // elemEnter
+  //   .append('text')
+  //   .attr('class', '_3d '.concat(name, 'Text'))
+  //   .attr('dx', '.4em')
+  //   .merge(text)
+  //   .transition().duration(tt)
+  //   .each(function(d){
+  //       d.centroid = {x: d.rotated.x, 
+  //                     y: d.rotated.y, 
+  //                     z: d.rotated.z};
+  //   })
+  //   .style('font-size', function(d){
+  //     return rotated_z_to_txt_size(d.rotated.z)
+  //               .toString()
+  //               .concat('px');
+  //   })
+  //   .attr('x', function(d){ return d.projected.x; })
+  //   .attr('y', function(d){ return d.projected.y; })
+  //   .attr('z', function(d){ return d.projected.z; })
+  //   .text(function(d){
+  //       return '['.concat(
+  //           d.rotated.x.toFixed(1),
+  //           ', ',
+  //           d.rotated.y.toFixed(1),
+  //           ', ',
+  //           d.rotated.z.toFixed(1),
+  //           ']');
+  //   });
+
+  // points.exit().remove();
+
+  var text = svg
+      .selectAll('text.'.concat(name, 'Text'))
+      .data(data[0]);
+  text
+      .enter()
+      .append('text')
+      .attr('class', '_3d '.concat(name, 'Text'))
+      .attr('dx', '.4em')
+      .merge(text)
+      .transition().duration(tt)
+      .each(function(d){
+          d.centroid = {x: d.rotated.x, 
+                        y: d.rotated.y, 
+                        z: d.rotated.z};
+      })
+      .style('font-size', function(d){
+        return rotated_z_to_txt_size(d.rotated.z)
+                  .toString()
+                  .concat('px');
+      })
+      .attr('x', function(d){ return d.projected.x; })
+      .attr('y', function(d){ return d.projected.y; })
+      .attr('z', function(d){ return d.projected.z; })
+      .text(function(d){
+          // return dragLine;
+          var coord = dot_basis(d);
+          return '['.concat(
+              coord.x.toFixed(1),
+              ', ',
+              coord.y.toFixed(1),
+              ', ',
+              coord.z.toFixed(1),
+              ']');
+      });
+  text.exit().remove();
 
   svg.selectAll('._3d').sort(d3._3d().sort);
+}
+
+
+function dot_product(u, v){
+  return u.x*v.x + u.y*v.y + u.z*v.z;
+}
+
+
+function dot_basis(d){
+  return {
+      x: dot_product(d.rotated, basis[0].rotated),
+      y: dot_product(d.rotated, basis[1].rotated),
+      z: dot_product(d.rotated, basis[2].rotated),
+  };
 }
 
 function posPointX(d){
@@ -180,12 +278,16 @@ function init(){
   plotaxis(data[2], yScale3d, 'y', 1)
   plotaxis(data[3], zScale3d, 'z', 2)
 
+  // processData([[basis[0], basis[2]]], 1000)
   processData(data, 1000);
 }
 
 function dragStart(){
   mx = d3.event.x;
   my = d3.event.y;
+  if (d3.event.target.tagName){
+      dragLine = d3.event.srcElement.tagName;
+  }
 }
 
 function dragged(){

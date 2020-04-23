@@ -24,6 +24,11 @@ var point3d = d3._3d()
   .scale(scale);
 
 
+var rotated_z_to_size = d3.scaleLinear()
+                          .domain([-9, 9])
+                          .range([4, 5.5]);
+
+
 function processData(scatter, tt){
 
   var points = svg.selectAll('circle').data(scatter, key);
@@ -37,7 +42,9 @@ function processData(scatter, tt){
     .attr('cy', posPointY)
     .merge(points)
     .transition().duration(tt)
-    .attr('r', 4)
+    .attr('r', function(d){
+        return rotated_z_to_size(d.rotated.z);
+    })
     // .attr('stroke', function(d){ return d3.color(color(d.id)).darker(1.5); })
     .attr('fill', function(d){ return color(d.id); })
     .attr('opacity', 1)

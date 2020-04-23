@@ -24,6 +24,10 @@ var svg    = d3.select("#svg_point_coord_lines")
 var color  = d3.scaleOrdinal(d3.schemeCategory20);
 var mx, my, mouseX, mouseY;
 
+var rotated_z_to_size = d3.scaleLinear()
+                          .domain([-9, 9])
+                          .range([4, 5.5]);
+
 var point3d = d3._3d()
   .x(function(d){ return d.x; })
   .y(function(d){ return d.y; })
@@ -69,7 +73,7 @@ function plotaxis(data, axis, name, dim){
       .attr('class', '_3d '.concat(name, 'Scale'))
       .merge(scale)
       .attr('stroke', 'black')
-      .attr('stroke-width', 1.0)
+      .attr('stroke-width', 1.)
       .attr('d', axis.draw);
 
   scale.exit().remove();  
@@ -98,6 +102,7 @@ function plotaxis(data, axis, name, dim){
   text.exit().remove();
 }
 
+
 function processData(data, tt){
 
   var points = svg.selectAll('circle').data(data[0], key);
@@ -111,7 +116,9 @@ function processData(data, tt){
     .attr('cy', posPointY)
     .merge(points)
     .transition().duration(tt)
-    .attr('r', 4)
+    .attr('r', function(d){
+        return rotated_z_to_size(d.rotated.z);
+    })
     // .attr('stroke', function(d){ return d3.color(color(d.id)).darker(1.5); })
     .attr('fill', function(d){ return color(d.id); })
     .attr('opacity', 1)
@@ -145,7 +152,7 @@ function init(){
   for (var z=0; z < 5; z++){
     scatter.push({
         x: d3.randomUniform(-j+1, j-2)(),
-        y: d3.randomUniform(-9, 9)(), 
+        y: d3.randomUniform(-j+1, j-2)(), 
         z: d3.randomUniform(-j+1, j-2)(),
         id: 'point_' + cnt++
     })

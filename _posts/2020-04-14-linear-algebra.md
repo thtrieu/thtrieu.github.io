@@ -2,6 +2,8 @@
 title: A simple take on Linear Algebra
 ---
 
+*Italica* is a design student who recently developed an appetite for intuitive illustrations of Mathematical concepts. Regula is a graduate student in Machine Learning and a regular coffee buddy of *Italica*. Today they talk about Linear Algebra while taking a leisurely walk along the sunny beach of Quy Nhon.
+
 
 <style type="text/css">
 .js {
@@ -27,14 +29,14 @@ d3.selectAll('#but_point_cloud')
 </script>
 
 
-*OK, so each vector is a point?*
+*OK, so I assume each vector is a point?*
 
-Yeah, more precisely, each vector is a point living in *space*. To locate the vectors, we should impose a coordinate system. Here are examples of coordinate systems in 2-dimensional and 3-dimensional spaces:
+Yeah, more precisely, each vector is a point living in *space*. The space here can be 2-, 3-, or N- dimensional. To locate the vectors, we usually attach a coordinate system. Here are examples of coordinate systems in 2-dimensional and 3-dimensional spaces:
 
 <center class='js'>
 <svg width="300" height="250" id="svg_point_coord_lines2d"></svg> <svg width="300" height="250" id="svg_point_coord_lines"></svg>
 <br/> 
-Drag or <button id='but_point_coord_lines'>shuffle</button>
+Drag or <button id='reset_point_coord_lines'>shuffle</button>
 </center>
 
 <script src="/assets/js/linear_algebra/point_coord_lines2d.js">
@@ -43,14 +45,14 @@ Drag or <button id='but_point_coord_lines'>shuffle</button>
 </script>
 
 <script>
-d3.selectAll('#but_point_coord_lines')
+d3.selectAll('#reset_point_coord_lines')
   .on('click', function(){
       point_coord_lines.init();
       point_coord_lines2d.init();
   })
 </script>
 
-In general, space can be N-dimensional with N as large as you want. Soon we'll see the coordinate system here is really just a bunch of other vectors, but more on that later. Now because there is a coordinate system, each vector will have a list of numbers indicating its location in the space:
+Soon we'll see the coordinate system here is really just a bunch of other vectors, but more on that later. Now because there is a coordinate system, each vector will have a list of numbers indicating its location in the space:
 
 
 <center class='js'>
@@ -59,8 +61,7 @@ In general, space can be N-dimensional with N as large as you want. Soon we'll s
 The coordinate system is now fixed. Drag or <button id='but_point_location'>shuffle</button> to change location of the vectors.
 </center>
 
-<script src="/assets/js/linear_algebra/point_location.js">
-</script>
+<script src="/assets/js/linear_algebra/point_location.js"></script>
 <script>
 d3.selectAll('#but_point_location')
   .on('click', function(){
