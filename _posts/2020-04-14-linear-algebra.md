@@ -1,8 +1,10 @@
 ---
-title: A simple take on Linear Algebra
+title: Interactive Visualizations of Linear Algebra - Part 1
 ---
 
-*Italica* is a design student who recently developed an appetite for intuitive illustrations of Mathematical concepts. Regula is a graduate student in Machine Learning and a regular coffee buddy of *Italica*. Today they talk about Linear Algebra while taking a leisurely walk along the sunny beach of Quy Nhon.
+*Italica* is a design student who recently acquired an appetite for intuitive illustration of Mathematical concepts. Regula is a graduate student in Machine Learning and a regular coffee buddy of *Italica*. Today they chat about Linear Algebra while striding leisurely along the sunny beach of Quy Nhon.
+
+<center><b>1. Vectors</b></center>
 
 
 <style type="text/css">
@@ -29,7 +31,7 @@ d3.selectAll('#but_point_cloud')
 </script>
 
 
-*OK, so I assume each vector is a point?*
+*OK, so I assume each dot is a vector?*
 
 Yeah, more precisely, each vector is a point living in *space*. The space here can be 2-, 3-, or N- dimensional. To locate the vectors, we usually attach a coordinate system. Here are examples of coordinate systems in 2-dimensional and 3-dimensional spaces:
 
@@ -52,33 +54,42 @@ d3.selectAll('#reset_point_coord_lines')
   })
 </script>
 
-Soon we'll see the coordinate system here is really just a bunch of other vectors, but more on that later. Now because there is a coordinate system, each vector will have a list of numbers indicating its location in the space:
+*Does the coordinate axes here acting like rulers on a map?*
+
+Yes! Soon we'll see the coordinate system is really just a bunch of other vectors, but more on that later. Now because there is a coordinate system, each vector will have a list of numbers indicating its location in the space as you suggested:
 
 
 <center class='js'>
-<svg width="300" height="250" id="svg_point_location"></svg> 
+<svg width="300" height="250" id="svg_point_location2d"></svg><svg width="300" height="250" id="svg_point_location"></svg> 
 <br/>
-The coordinate system is now fixed. Drag or <button id='but_point_location'>shuffle</button> to change location of the vectors.
+Drag to rotate <trieu id='toggle1'>
+  <input type="radio" name="element" value="everything" checked> everything, 
+  or <input type="radio" name="element" value="vectors"> vectors </trieu> only.
+<button id='but_point_location'>Shuffle</button> to change location of the vectors.
 </center>
 
 <script src="/assets/js/linear_algebra/point_location.js"></script>
+<script src="/assets/js/linear_algebra/point_location2d.js"></script>
 <script>
 d3.selectAll('#but_point_location')
   .on('click', function(){
       point_location.init();
-  })
+      point_location2d.init();
+  });
+
+var toggle = d3.select('#toggle1')
+               .selectAll('input')
+               .on('change', function(d){
+                    point_location.toggle(this.value);
+                    point_location2d.toggle(this.value);
+               })
 </script>
 
 *Is this why sometimes people refer to a list of numbers as a "vector"?*
 
 Exactly! People also refer to a vector as an arrow pointing from the origin to the location of the point. This arrow, the point living in a space, or the list of numbers are essentially three sides of the same coin. They are 3 different ways to refer to the same thing that we call "vector".
 
-> [a point in 2D annotated with its location and the arrow] [similar in 3D]
-
-<center> 
---------- 
-</center>
-
+<center><b>2. Dot Product as Projection</b></center>
 
 *Right, so now what do I do with a vector?*
 
@@ -103,13 +114,11 @@ The calculations done so far is correct only because I sneakily set the length o
 
 $$u \cdot v = v \cdot u  = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \textrm{length of}\ v = \textrm{Projection of}\ v\ \textrm{onto}\ u \times \textrm{length of}\ u$$
 
-*So, if \\(v\\) is hold fixed (and therefore its length fixed), while \\(u\\) is moving around, then dot product can still be think of as a measurement of the projection of \\(u\\) onto \\(v\\) right?*
+*So, if \\(v\\) is hold fixed and \\(u\\) is moving around, then you are suggesting that dot product can be think of as a measurement of the projection of \\(u\\) onto \\(v\\) right?*
 
-That's the right way to think about it :) The dot product is simply the projection times a fixed constant. So to compare the projection of \\(u_1\\) and \\(u_2\\) onto \\(v\\), we can just compare \\(u_1\cdot v\\) and \\(u_2\cdot v\\).
+That's the right way to think about it :) The dot product here is simply the projection times a fixed constant. So to compare the projection of \\(u_1\\) and \\(u_2\\) onto \\(v\\), we can just compare \\(u_1\cdot v\\) and \\(u_2\cdot v\\).
 
-<center> 
---------- 
-</center>
+<center><b>3. Changing in persepective</b></center>
 
 *Okay, that makes sense. But why do we care about projections of vectors onto each other anyway?*
 
@@ -117,7 +126,7 @@ That's a good question. One of the understanding here is that projecting \\(u\\)
 
 In the current space and coordinate system, \\(u\\) is a vector of certain direction and length. The question is, what does \\(u\\) look like in *another space and coordinate system?* In particular, how does \\(u\\) look like from \\(v\\)'s perspective? A reasonable answer is just projecting \\(u\\) onto \\(v\\).
 
-*That is reasonable. With projection, \\(v\\)'s view of \\(u\\) is larger when the two is more aligned, and minimized at 0 when the two is not aligned at all (perpendicular).*
+*That is reasonable. The projection will be larger when the two is more aligned, and shrinks to zero when the two vectors are not aligned at all (perpendicular).*
 
 Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Much of Linear Algebra is concerned with studying how a certain object of interest (represented by a point) looks like under different perspectives (different spaces and coordinate systems).
 
@@ -131,9 +140,7 @@ In certain applications of Machine Learning, the goal is to learn *How to change
 
 That is the spirit. The devil is in the detail though: How do we represent photo/text using vectors? How do we figure out the appropriate \\(v\\)? :)
 
-<center> 
---------- 
-</center>
+<center><b>4. Basis</b></center>
 
 For the moment, let us not digress too far and get back to our discussion about Linear Algebra.
 
@@ -161,9 +168,7 @@ Now you can forget about coordinate systems! Instead, think of space as being sp
 
 That's right. As long as the set of vectors is orthonormal, it is a valid basis. Explore other bases and how a vector \\(u\\) in the default basis looks like in the new basis below:
 
-<center> 
---------- 
-</center>
+<center><b>5. Matrix multiplication</b></center>
 
 *What if the set \\( \\{ v_1, v_2, v_3 \\} \\) is not orthonormal? What does the resulting vector after projecting \\(u\\) onto this set look like?*
 

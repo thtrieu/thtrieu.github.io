@@ -26,7 +26,11 @@ var point3d = d3._3d()
 
 var rotated_z_to_size = d3.scaleLinear()
                           .domain([-9, 9])
-                          .range([4, 5.5]);
+                          .range([4, 5]);
+
+var rotated_z_to_opacity = d3.scaleLinear()
+                          .domain([-9, 9])
+                          .range([0.3, 1.0]);
 
 
 function processData(scatter, tt){
@@ -47,7 +51,9 @@ function processData(scatter, tt){
     })
     // .attr('stroke', function(d){ return d3.color(color(d.id)).darker(1.5); })
     .attr('fill', function(d){ return color(d.id); })
-    .attr('opacity', 1)
+    .attr('opacity', function(d){
+        return rotated_z_to_opacity(d.rotated.z);
+    })
     .attr('cx', posPointX)
     .attr('cy', posPointY);
 

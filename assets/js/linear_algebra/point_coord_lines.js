@@ -28,6 +28,13 @@ var rotated_z_to_size = d3.scaleLinear()
                           .domain([-9, 9])
                           .range([4, 5.5]);
 
+var rotated_z_to_txt_opacity = d3.scaleLinear()
+                                 .domain([-9, 9])
+                                 .range([0.2, 1.0]);
+var rotated_z_to_opacity = d3.scaleLinear()
+                             .domain([-9, 9])
+                             .range([0.5, 1.0]);
+
 var point3d = d3._3d()
   .x(function(d){ return d.x; })
   .y(function(d){ return d.y; })
@@ -98,6 +105,9 @@ function plotaxis(data, axis, name, dim){
       .attr('z', function(d){ return d.projected.z; })
       .text(function(d){ 
           return d[dim] % 5 == 0 ? d[dim] : ''; 
+      })
+      .attr('opacity', function(d){
+          return rotated_z_to_txt_opacity(d.rotated.z);
       });
   text.exit().remove();
 }
@@ -121,9 +131,11 @@ function processData(data, tt){
     })
     // .attr('stroke', function(d){ return d3.color(color(d.id)).darker(1.5); })
     .attr('fill', function(d){ return color(d.id); })
-    .attr('opacity', 1)
     .attr('cx', posPointX)
-    .attr('cy', posPointY);
+    .attr('cy', posPointY)
+    .attr('opacity', function(d){
+        return rotated_z_to_opacity(d.rotated.z);
+    });
 
   points.exit().remove();
 
