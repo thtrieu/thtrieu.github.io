@@ -94,20 +94,36 @@ function setToggle(val){
 
 
 function plotaxis(data, axis, name, dim){
+
   var scale = svg
       .selectAll('path.'.concat(name, 'Scale'))
       .data(data);
-
   scale
       .enter()
       .append('path')
       .attr('class', '_3d '.concat(name, 'Scale'))
       .merge(scale)
+      .attr('d', axis.draw)
       .attr('stroke', 'grey')
-      .attr('stroke-width', 1.5)
-      .attr('d', axis.draw);
+      .attr('stroke-width', 1.5);
+  scale.exit().remove();
 
-  scale.exit().remove();  
+  // data[0].forEach(function(d){
+  //     var scale = svg
+  //         .selectAll('line')
+  //         .data([[d.rotated]]);
+  //     scale
+  //         .enter()
+  //         .append('line')
+  //         .attr('z',)
+  //         .attr('class', '_3d '.concat(name, 'Axis'))
+  //         .merge(scale)
+  //         // .attr('d', axis.draw)
+  //         .attr('fill', 'black')
+  //         .attr('stroke', 'grey')
+  //         .attr('stroke-width', 1.5);
+  //     scale.exit().remove();
+  // })
 
   var text = svg
       .selectAll('text.'.concat(name, 'Text'))
@@ -127,7 +143,6 @@ function plotaxis(data, axis, name, dim){
       .attr('x', function(d){ return d.projected.x; })
       .attr('y', function(d){ return d.projected.y; })
       .text(function(d, i){ 
-          // console.log('XXXXX', d);
           if (i % 5 == 0) {
             return i;
           } else if (i == 12) {
@@ -150,7 +165,12 @@ function processData(data, tt){
       ez: data[3][0][1],
   };
 
-  var points = svg.selectAll('circle').data(data[0], key);
+  var points = svg.selectAll('circle').data(data[0], key)
+                  .each(function(d){})
+                  .call(d3.drag()
+                          .on('drag', function(d, i){draggedPoint(i);})
+                          .on('start', function(){dragStart();})
+                          .on('end', function(){dragEnd();}))
 
  points
     .enter()
@@ -277,20 +297,41 @@ function dragged(){
   dx = d3.event.x - mx;
   dy = d3.event.y - my;
 
-  alphaAxis = startAngleX;
-  betaAxis = startAngleY;
   alpha  = startAngleX - dy * Math.PI / 230;
   beta   = startAngleY + dx * Math.PI / 230;
 
-  if (toggle_val == 'everything') {
-    alphaAxis = alpha;
-    betaAxis = beta;
-  }
-
   expectedScatter = rotatePoints(scatter, alpha, beta, startAngleZ);
-  expectedXLine = rotatePoints(xLine, alphaAxis, betaAxis, startAngleZ);
-  expectedYLine = rotatePoints(yLine, alphaAxis, betaAxis, startAngleZ);
-  expectedZLine = rotatePoints(zLine, alphaAxis, betaAxis, startAngleZ);
+  expectedXLine = rotatePoints(xLine, alpha, beta, startAngleZ);
+  expectedYLine = rotatePoints(yLine, alpha, beta, startAngleZ);
+  expectedZLine = rotatePoints(zLine, alpha, beta, startAngleZ);
+
+  var data = [
+      point3d(annotatePoint(expectedScatter)),
+      xScale3d([expectedXLine]),
+      yScale3d([expectedYLine]),
+      zScale3d([expectedZLine])
+  ];
+  processData(data, 0);
+}
+
+function draggedPoint(i){
+  dx = d3.event.x - mx;
+  dy = d3.event.y - my;
+
+  alpha  = startAngleX - dy * Math.PI / 230;
+  beta   = startAngleY + dx * Math.PI / 230;
+
+  expectedScatter = [];
+  scatter.forEach(function(d, j){
+      if (j == i) {
+        expectedScatter.push(rotatePoint(d, alpha, beta, startAngleZ));
+      } else {
+        expectedScatter.push(d);
+      }
+  });
+  expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, startAngleZ);
+  expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, startAngleZ);
+  expectedZLine = rotatePoints(zLine, startAngleX, startAngleY, startAngleZ);
 
   var data = [
       point3d(annotatePoint(expectedScatter)),
@@ -358,18 +399,13 @@ function rotateZ(p, a){
 
 
 function dragEnd(){
-  if (toggle_val != 'everything') {
-      scatter = expectedScatter;
-      xLine = expectedXLine;
-      yLine = expectedYLine;
-      zLine = expectedZLine;
-      startAngleX = 0;
-      startAngleY = 0;
-      startAngleZ = 0;
-  } else {
-    startAngleX = alpha;
-    startAngleY = beta;
-  }
+  scatter = expectedScatter;
+  xLine = expectedXLine;
+  yLine = expectedYLine;
+  zLine = expectedZLine;
+  startAngleX = 0;
+  startAngleY = 0;
+  startAngleZ = 0;
 }
 
 init();

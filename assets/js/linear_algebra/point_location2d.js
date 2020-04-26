@@ -10,10 +10,10 @@ var origin = [150, 130],
   expectedYLine = [],
   beta = 0, alpha = 0, 
   key = function(d){ return d.id; }, 
-  startAngleX = 0,
-  startAngleY = 0,
-  startAngleZ = Math.PI/8.;
-
+  startAngleX = Math.PI,
+  startAngleZ = 0.,
+  startAngleY = 0.,
+  center = [];
 
 d3.range(0, 13, 1).forEach(
     function(d){ 
@@ -28,12 +28,14 @@ d3.range(0, 13, 1).forEach(
 );
 
 
-var svg    = d3.select("#svg_point_location2d")
-               .call(d3.drag()
-                       .on('drag', dragged)
-                       .on('start', dragStart)
-                       .on('end', dragEnd))
-               .append('g');
+svg_select = d3.select("#svg_point_location2d");
+svg = svg_select
+    .call(d3.drag()
+            .on('drag', dragged)
+            .on('start', dragStart)
+            .on('end', dragEnd))
+    .append('g');
+
 
 var color  = d3.scaleOrdinal(d3.schemeCategory20);
 var mx, my, mouseX, mouseY, mouseXaxis, mouseYaxis;
@@ -117,7 +119,11 @@ function processData(data, tt){
       ey: data[2][0][1],
   };
 
-  var points = svg.selectAll('circle').data(data[0], key);
+  var points = svg.selectAll('circle').data(data[0], key)
+                  .call(d3.drag()
+                          .on('drag', function(d, i){draggedPoint(i);})
+                          .on('start', dragStart)
+                          .on('end', dragEnd));
 
  points
     .enter()
@@ -150,7 +156,6 @@ function processData(data, tt){
       })
       .attr('x', function(d){ return d.projected.x; })
       .attr('y', function(d){ return d.projected.y; })
-      .attr('z', function(d){ return d.projected.z; })
       .text(function(d){
           var coord = dot_basis(d, basis);
           return '['.concat(
@@ -162,10 +167,8 @@ function processData(data, tt){
 
   text.exit().remove();
 
-  if (toggle_val == 'everything') {
-    plotaxis(data[1], xScale3d, 'x', 0);
-    plotaxis(data[2], yScale3d, 'y', 1);
-  }
+  plotaxis(data[1], xScale3d, 'x', 0);
+  plotaxis(data[2], yScale3d, 'y', 1);
 
   svg.selectAll('._3d').sort(d3._3d().sort);
 }
@@ -219,25 +222,52 @@ function init(){
   processData(data, 1000);
 }
 
+function getMouse(){
+  return d3.mouse(svg.node());
+}
+
+function getMouseAtan2(){
+  mouse = getMouse();
+  return Math.atan2(mouse[1] - origin[1],
+                    mouse[0] - origin[0]);
+}
+
 function dragStart(){
-  atan0 = Math.atan2(d3.event.y - origin[1],
-                     d3.event.x - origin[0]);
+  atan0 = getMouseAtan2();
 }
 
 function dragged(){
-  atan1 = Math.atan2(d3.event.y - origin[1],
-                     d3.event.x - origin[0]);
+  atan1 = getMouseAtan2();
   
-  gammaAxis = startAngleZ;
   gamma = startAngleZ + atan1 - atan0;
 
-  if (toggle_val == 'everything') {
-    gammaAxis = gamma;
-  }
-
   expectedScatter = rotatePoints(scatter, startAngleX, startAngleY, gamma);
-  expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gammaAxis);
-  expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gammaAxis);
+  expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gamma);
+  expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gamma);
+
+  var data = [
+      point3d(annotatePoint(expectedScatter)),
+      xScale3d([expectedXLine]),
+      yScale3d([expectedYLine]),
+  ];
+  processData(data, 0);
+}
+
+function draggedPoint(i){
+  expectedScatter = [];
+  scatter.forEach(function(d, j){
+      if (j == i) {
+        mouse = getMouse();
+        mouse = [mouse[0] - origin[0], mouse[1] - origin[1]];
+        mouse = [mouse[0]/scale, mouse[1]/scale];
+        expectedScatter.push([mouse[0], mouse[1], 0]);
+      } else {
+        expectedScatter.push(d);
+      }
+  });
+
+  expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, startAngleZ);
+  expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, startAngleZ);
 
   var data = [
       point3d(annotatePoint(expectedScatter)),
@@ -304,19 +334,19 @@ function rotateZ(p, a){
 
 
 function dragEnd(){
-  if (toggle_val != 'everything') {
-      scatter = expectedScatter;
-      xLine = expectedXLine;
-      yLine = expectedYLine;
-      startAngleX = 0;
-      startAngleY = 0;
-      startAngleZ = 0;
-  } else {
-    startAngleZ = gamma;
-  }
+  scatter = expectedScatter;
+  xLine = expectedXLine;
+  yLine = expectedYLine;
+  startAngleX = 0;
+  startAngleY = 0;
+  startAngleZ = 0;
 }
 
 init();
+
+bbox = svg_select.node().getBoundingClientRect();
+// origin = [origin[0] + bbox.x, origin[1] + bbox.y]
+
 
 return {
   init: function(){init();},

@@ -62,10 +62,8 @@ Yes! Soon we'll see the coordinate system is really just a bunch of other vector
 <center class='js'>
 <svg width="300" height="250" id="svg_point_location2d"></svg><svg width="300" height="250" id="svg_point_location"></svg> 
 <br/>
-Drag to rotate <trieu id='toggle1'>
-  <input type="radio" name="element" value="everything" checked> everything, 
-  or <input type="radio" name="element" value="vectors"> vectors </trieu> only.
-<button id='but_point_location'>Shuffle</button> to change location of the vectors.
+Drag individual point or the whole space, or
+<button id='but_point_location'>shuffle</button>.
 </center>
 
 <script src="/assets/js/linear_algebra/point_location.js"></script>
