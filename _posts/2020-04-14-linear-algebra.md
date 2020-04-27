@@ -74,18 +74,28 @@ d3.selectAll('#but_point_location')
       point_location.init();
       point_location2d.init();
   });
-
-var toggle = d3.select('#toggle1')
-               .selectAll('input')
-               .on('change', function(d){
-                    point_location.toggle(this.value);
-                    point_location2d.toggle(this.value);
-               })
 </script>
 
 *Is this why sometimes people refer to a list of numbers as a "vector"?*
 
 Exactly! People also refer to a vector as an arrow pointing from the origin to the location of the point. This arrow, the point living in a space, or the list of numbers are essentially three sides of the same coin. They are 3 different ways to refer to the same thing that we call "vector".
+
+<center class='js'>
+<svg width="300" height="250" id="svg_point_arrow_location2d"></svg><svg width="300" height="250" id="svg_point_arrow_location"></svg> 
+<br/>
+Rotate the space, move individual point, or click
+<button id='but_point_arrow_location'>shuffle</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/point_arrow_location2d.js"></script>
+<script src="/assets/js/linear_algebra/point_arrow_location.js"></script>
+<script>
+d3.selectAll('#but_point_arrow_location')
+  .on('click', function(){
+      point_arrow_location2d.init();
+      point_arrow_location.init();
+  });
+</script>
 
 <center><b>2. Dot Product as Projection</b></center>
 

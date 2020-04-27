@@ -30,7 +30,7 @@ var rotated_z_to_size = d3.scaleLinear()
 
 var rotated_z_to_opacity = d3.scaleLinear()
                           .domain([-9, 9])
-                          .range([0.3, 1.0]);
+                          .range([0.5, 1.0]);
 
 
 function processData(scatter, tt){

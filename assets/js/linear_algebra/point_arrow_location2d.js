@@ -1,4 +1,4 @@
-var point_coord_lines = (function() {
+var point_arrow_location2d = (function() {
 
 var origin = [150, 130], 
   j = 10, 
@@ -6,16 +6,14 @@ var origin = [150, 130],
   scatter = [], 
   xLine = [],
   yLine = [],
-  zLine = [],
   expectedXLine = [],
   expectedYLine = [],
-  expectedZLine = [],
   beta = 0, alpha = 0, 
   key = function(d){ return d.id; }, 
-  startAngleX = Math.PI/8. * 2,
-  startAngleY = -Math.PI/8.,
-  startAngleZ = Math.PI/8.;
-
+  startAngleX = Math.PI,
+  startAngleZ = 0.,
+  startAngleY = 0.,
+  center = [];
 
 d3.range(0, 13, 1).forEach(
     function(d){ 
@@ -29,38 +27,19 @@ d3.range(0, 13, 1).forEach(
     }
 );
 
-d3.range(0, 13, 1).forEach(
-    function(d){ 
-      zLine.push([0, 0, d]); 
-    }
-);
 
+var svg_select = d3.select("#svg_point_arrow_location2d");
+var svg = svg_select
+          .call(d3.drag()
+                  .on('drag', dragged)
+                  .on('start', dragStart)
+                  .on('end', dragEnd))
+          .append('g');
 
-var svg    = d3.select("#svg_point_coord_lines")
-               .call(d3.drag()
-                       .on('drag', dragged)
-                       .on('start', dragStart)
-                       .on('end', dragEnd))
-               .append('g');
 
 var color  = d3.scaleOrdinal(d3.schemeCategory20);
+var mx, my, mouseX, mouseY, mouseXaxis, mouseYaxis;
 var axis_color = d3.scaleOrdinal(d3['schemeCategory20c']);
-
-var rotated_z_to_size = d3.scaleLinear()
-                          .domain([-9, 9])
-                          .range([4, 5.5]);
-
-var rotated_z_to_txt_size = d3.scaleLinear()
-                              .domain([-9, 9])
-                              .range([9, 14]);
-
-var rotated_z_to_txt_opacity = d3.scaleLinear()
-                                 .domain([-9, 9])
-                                 .range([0.2, 1.0]);
-
-var rotated_z_to_opacity = d3.scaleLinear()
-                          .domain([-9, 9])
-                          .range([0.5, 1.0]);
 
 var point3d = d3._3d()
   .x(function(d){ return d.x; })
@@ -79,11 +58,6 @@ var yScale3d = d3._3d()
     .origin(origin)
     .scale(scale);
 
-var zScale3d = d3._3d()
-    .shape('LINE_STRIP')
-    .origin(origin)
-    .scale(scale);
-
 
 var toggle_val = 'everything';
 
@@ -93,19 +67,20 @@ function setToggle(val){
 
 
 function plotaxis(data, axis, name, dim){
-
   var scale = svg
       .selectAll('path.'.concat(name, 'Scale'))
       .data(data);
+
   scale
       .enter()
       .append('path')
       .attr('class', '_3d '.concat(name, 'Scale'))
       .merge(scale)
-      .attr('d', axis.draw)
       .attr('stroke', 'grey')
-      .attr('stroke-width', 1.5);
-  scale.exit().remove();
+      .attr('stroke-width', 1.5)
+      .attr('d', axis.draw);
+
+  scale.exit().remove();  
 
   var text = svg
       .selectAll('text.'.concat(name, 'Text'))
@@ -125,6 +100,7 @@ function plotaxis(data, axis, name, dim){
       .attr('x', function(d){ return d.projected.x; })
       .attr('y', function(d){ return d.projected.y; })
       .text(function(d, i){ 
+          // console.log('XXXXX', d);
           if (i % 5 == 0) {
             return i;
           } else if (i == 12) {
@@ -133,9 +109,6 @@ function plotaxis(data, axis, name, dim){
             return '';
           }
       })
-      .attr('opacity', function(d){
-          return rotated_z_to_txt_opacity(d.rotated.z);
-      });
   text.exit().remove();
 }
 
@@ -143,49 +116,66 @@ function processData(data, tt){
 
   basis = {
       ex: data[1][0][1], 
-      ey: data[2][0][1], 
-      ez: data[3][0][1],
+      ey: data[2][0][1],
   };
 
   var points = svg.selectAll('circle').data(data[0], key)
-                  .each(function(d){})
                   .call(d3.drag()
                           .on('drag', function(d, i){draggedPoint(i);})
-                          .on('start', function(){dragStart();})
-                          .on('end', function(){dragEnd();}))
+                          .on('start', dragStart)
+                          .on('end', dragEnd));
 
  points
     .enter()
     .append('circle')
     .attr('class', '_3d point')
-    .attr('opacity', 0)
     .attr('cx', posPointX)
     .attr('cy', posPointY)
     .merge(points)
     .transition().duration(tt)
-    .attr('r', function(d){
-        return rotated_z_to_size(d.rotated.z);
-    })
-    // .attr('stroke', function(d){ return d3.color(color(d.id)).darker(1.5); })
+    .attr('r', 4)
     .attr('fill', function(d){ return color(d.id); })
-    .attr('opacity', function(d){
-        return rotated_z_to_opacity(d.rotated.z);
-    })
+    .attr('opacity', 1)
     .attr('cx', posPointX)
     .attr('cy', posPointY);
 
-  if (toggle_val == 'everything') {
-    plotaxis(data[1], xScale3d, 'x', 0);
-    plotaxis(data[2], yScale3d, 'y', 1);
-    plotaxis(data[3], zScale3d, 'z', 2);
-  }
+  var text = svg
+      .selectAll('text.'.concat(name, 'Text'))
+      .data(data[0]);
+  text
+      .enter()
+      .append('text')
+      .attr('class', '_3d '.concat(name, 'Text'))
+      .attr('dx', '.4em')
+      .merge(text)
+      .transition().duration(tt)
+      .each(function(d){
+          d.centroid = {x: d.rotated.x, 
+                        y: d.rotated.y, 
+                        z: d.rotated.z};
+      })
+      .attr('x', function(d){ return d.projected.x; })
+      .attr('y', function(d){ return d.projected.y; })
+      .text(function(d){
+          var coord = dot_basis(d, basis);
+          return '['.concat(
+              coord.x.toFixed(1),
+              ', ',
+              coord.y.toFixed(1),
+              ']');
+      })
+
+  text.exit().remove();
+
+  plotaxis(data[1], xScale3d, 'x', 0);
+  plotaxis(data[2], yScale3d, 'y', 1);
 
   svg.selectAll('._3d').sort(d3._3d().sort);
 }
 
 
 function dot_product(u, v){
-  return u.x*v.x + u.y*v.y + u.z*v.z;
+  return u.x*v.x + u.y*v.y;
 }
 
 
@@ -193,7 +183,6 @@ function dot_basis(d, basis){
   return {
       x: dot_product(d.rotated, basis.ex.rotated),
       y: dot_product(d.rotated, basis.ey.rotated),
-      z: dot_product(d.rotated, basis.ez.rotated),
   };
 }
 
@@ -210,77 +199,80 @@ function init(){
   var cnt = 0;
   scatter = [];
 
-  for (var z=0; z < 5; z++){
+  for (var z=0; z < 3; z++){
     scatter.push([
         d3.randomUniform(-j+1, j-2)(),
-        d3.randomUniform(-j+1, j-2)(), 
-        d3.randomUniform(-j+1, j-2)()
+        d3.randomUniform(-j+1, j-2)(),
+        0,
     ]);
   }
 
-  alpha = startAngleX;
-  beta = startAngleY;
+  gamma = startAngleZ;
+
+  expectedScatter = rotatePoints(scatter, startAngleX, startAngleY, gamma);
+  expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gamma);
+  expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gamma);
 
   var data = [
-      point3d(annotatePoint(rotatePoints(scatter, alpha, beta, startAngleZ))),
-      xScale3d([rotatePoints(xLine, alpha, beta, startAngleZ)]),
-      yScale3d([rotatePoints(yLine, alpha, beta, startAngleZ)]),
-      zScale3d([rotatePoints(zLine, alpha, beta, startAngleZ)])
+      point3d(annotatePoint(expectedScatter)),
+      xScale3d([expectedXLine]),
+      yScale3d([expectedYLine]),
   ];
 
   processData(data, 1000);
 }
 
+function getMouse(){
+  return d3.mouse(svg_select.node());
+}
+
+function getMouseAtan2(){
+  mouse = getMouse();
+  return Math.atan2(mouse[1] - origin[1],
+                    mouse[0] - origin[0]);
+}
+
 function dragStart(){
-  mx = d3.event.x;
-  my = d3.event.y;
+  atan0 = getMouseAtan2();
 }
 
 function dragged(){
-  dx = d3.event.x - mx;
-  dy = d3.event.y - my;
+  atan1 = getMouseAtan2();
+  
+  gamma = startAngleZ + atan1 - atan0;
 
-  alpha  = startAngleX - dy * Math.PI / 230;
-  beta   = startAngleY + dx * Math.PI / 230;
-
-  expectedScatter = rotatePoints(scatter, alpha, beta, startAngleZ);
-  expectedXLine = rotatePoints(xLine, alpha, beta, startAngleZ);
-  expectedYLine = rotatePoints(yLine, alpha, beta, startAngleZ);
-  expectedZLine = rotatePoints(zLine, alpha, beta, startAngleZ);
+  expectedScatter = rotatePoints(scatter, startAngleX, startAngleY, gamma);
+  expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gamma);
+  expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gamma);
 
   var data = [
       point3d(annotatePoint(expectedScatter)),
       xScale3d([expectedXLine]),
       yScale3d([expectedYLine]),
-      zScale3d([expectedZLine])
   ];
   processData(data, 0);
 }
 
 function draggedPoint(i){
-  dx = d3.event.x - mx;
-  dy = d3.event.y - my;
-
-  alpha  = startAngleX - dy * Math.PI / 230;
-  beta   = startAngleY + dx * Math.PI / 230;
-
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
-        expectedScatter.push(rotatePoint(d, alpha, beta, startAngleZ));
+        mouse = getMouse();
+        mouse = [mouse[0] - origin[0], mouse[1] - origin[1]];
+        mouse = [mouse[0]/scale, mouse[1]/scale];
+        expectedScatter.push([mouse[0], mouse[1], 0]);
       } else {
         expectedScatter.push(d);
       }
   });
+
   expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, startAngleZ);
   expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, startAngleZ);
-  expectedZLine = rotatePoints(zLine, startAngleX, startAngleY, startAngleZ);
 
   var data = [
       point3d(annotatePoint(expectedScatter)),
       xScale3d([expectedXLine]),
       yScale3d([expectedYLine]),
-      zScale3d([expectedZLine])
   ];
   processData(data, 0);
 }
@@ -345,13 +337,13 @@ function dragEnd(){
   scatter = expectedScatter;
   xLine = expectedXLine;
   yLine = expectedYLine;
-  zLine = expectedZLine;
   startAngleX = 0;
   startAngleY = 0;
   startAngleZ = 0;
 }
 
 init();
+
 
 return {
   init: function(){init();},

@@ -1,4 +1,4 @@
-var point_coord_lines = (function() {
+var point_arrow_location = (function() {
 
 var origin = [150, 130], 
   j = 10, 
@@ -36,7 +36,7 @@ d3.range(0, 13, 1).forEach(
 );
 
 
-var svg    = d3.select("#svg_point_coord_lines")
+var svg    = d3.select("#svg_point_arrow_location")
                .call(d3.drag()
                        .on('drag', dragged)
                        .on('start', dragStart)
@@ -44,6 +44,7 @@ var svg    = d3.select("#svg_point_coord_lines")
                .append('g');
 
 var color  = d3.scaleOrdinal(d3.schemeCategory20);
+var mx, my, mouseX, mouseY, mouseXaxis, mouseYaxis;
 var axis_color = d3.scaleOrdinal(d3['schemeCategory20c']);
 
 var rotated_z_to_size = d3.scaleLinear()
@@ -106,6 +107,23 @@ function plotaxis(data, axis, name, dim){
       .attr('stroke', 'grey')
       .attr('stroke-width', 1.5);
   scale.exit().remove();
+
+  // data[0].forEach(function(d){
+  //     var scale = svg
+  //         .selectAll('line')
+  //         .data([[d.rotated]]);
+  //     scale
+  //         .enter()
+  //         .append('line')
+  //         .attr('z',)
+  //         .attr('class', '_3d '.concat(name, 'Axis'))
+  //         .merge(scale)
+  //         // .attr('d', axis.draw)
+  //         .attr('fill', 'black')
+  //         .attr('stroke', 'grey')
+  //         .attr('stroke-width', 1.5);
+  //     scale.exit().remove();
+  // })
 
   var text = svg
       .selectAll('text.'.concat(name, 'Text'))
@@ -174,6 +192,45 @@ function processData(data, tt){
     .attr('cx', posPointX)
     .attr('cy', posPointY);
 
+  var text = svg
+      .selectAll('text.'.concat(name, 'Text'))
+      .data(data[0]);
+  text
+      .enter()
+      .append('text')
+      .attr('class', '_3d '.concat(name, 'Text'))
+      .attr('dx', '.4em')
+      .merge(text)
+      .transition().duration(tt)
+      .each(function(d){
+          d.centroid = {x: d.rotated.x, 
+                        y: d.rotated.y, 
+                        z: d.rotated.z};
+      })
+      .style('font-size', function(d){
+        return rotated_z_to_txt_size(d.rotated.z)
+                  .toString()
+                  .concat('px');
+      })
+      .attr('x', function(d){ return d.projected.x; })
+      .attr('y', function(d){ return d.projected.y; })
+      .attr('z', function(d){ return d.projected.z; })
+      .text(function(d){
+          var coord = dot_basis(d, basis);
+          return '['.concat(
+              coord.x.toFixed(1),
+              ', ',
+              coord.y.toFixed(1),
+              ', ',
+              coord.z.toFixed(1),
+              ']');
+      })
+      .attr('opacity', function(d){
+          return rotated_z_to_txt_opacity(d.rotated.z);
+      });
+
+  text.exit().remove();
+
   if (toggle_val == 'everything') {
     plotaxis(data[1], xScale3d, 'x', 0);
     plotaxis(data[2], yScale3d, 'y', 1);
@@ -210,7 +267,7 @@ function init(){
   var cnt = 0;
   scatter = [];
 
-  for (var z=0; z < 5; z++){
+  for (var z=0; z < 3; z++){
     scatter.push([
         d3.randomUniform(-j+1, j-2)(),
         d3.randomUniform(-j+1, j-2)(), 
@@ -354,8 +411,7 @@ function dragEnd(){
 init();
 
 return {
-  init: function(){init();},
-  toggle: function(val){setToggle(val);}
+  init: function(){init();}
 };
 
 })();
