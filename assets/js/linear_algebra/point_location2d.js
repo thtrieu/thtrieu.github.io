@@ -28,13 +28,13 @@ d3.range(0, 13, 1).forEach(
 );
 
 
-svg_select = d3.select("#svg_point_location2d");
-svg = svg_select
-    .call(d3.drag()
-            .on('drag', dragged)
-            .on('start', dragStart)
-            .on('end', dragEnd))
-    .append('g');
+var svg_select = d3.select("#svg_point_location2d");
+var svg = svg_select
+          .call(d3.drag()
+                  .on('drag', dragged)
+                  .on('start', dragStart)
+                  .on('end', dragEnd))
+          .append('g');
 
 
 var color  = d3.scaleOrdinal(d3.schemeCategory20);
@@ -223,7 +223,7 @@ function init(){
 }
 
 function getMouse(){
-  return d3.mouse(svg.node());
+  return d3.mouse(svg_select.node());
 }
 
 function getMouseAtan2(){
@@ -343,9 +343,6 @@ function dragEnd(){
 }
 
 init();
-
-bbox = svg_select.node().getBoundingClientRect();
-// origin = [origin[0] + bbox.x, origin[1] + bbox.y]
 
 
 return {

@@ -62,7 +62,7 @@ Yes! Soon we'll see the coordinate system is really just a bunch of other vector
 <center class='js'>
 <svg width="300" height="250" id="svg_point_location2d"></svg><svg width="300" height="250" id="svg_point_location"></svg> 
 <br/>
-Drag individual point or the whole space, or
+Rotate the space, move individual point, or click
 <button id='but_point_location'>shuffle</button>.
 </center>
 
