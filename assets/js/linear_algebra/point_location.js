@@ -191,6 +191,7 @@ function processData(data, tt){
     })
     .attr('cx', posPointX)
     .attr('cy', posPointY);
+  points.exit().remove();
 
   var text = svg
       .selectAll('text.'.concat(name, 'Text'))
@@ -237,7 +238,10 @@ function processData(data, tt){
     plotaxis(data[3], zScale3d, 'z', 2);
   }
 
+  // console.log(svg.selectAll('._3d'));
   svg.selectAll('._3d').sort(d3._3d().sort);
+  // console.log(svg.selectAll('._3d'));
+  // text.sort(d3._3d().sort);
 }
 
 
@@ -278,14 +282,20 @@ function init(){
   alpha = startAngleX;
   beta = startAngleY;
 
+  expectedScatter = rotatePoints(scatter, alpha, beta, startAngleZ);
+  expectedXLine = rotatePoints(xLine, alpha, beta, startAngleZ);
+  expectedYLine = rotatePoints(yLine, alpha, beta, startAngleZ);
+  expectedZLine = rotatePoints(zLine, alpha, beta, startAngleZ);
+  
   var data = [
-      point3d(annotatePoint(rotatePoints(scatter, alpha, beta, startAngleZ))),
-      xScale3d([rotatePoints(xLine, alpha, beta, startAngleZ)]),
-      yScale3d([rotatePoints(yLine, alpha, beta, startAngleZ)]),
-      zScale3d([rotatePoints(zLine, alpha, beta, startAngleZ)])
+      point3d(annotatePoint(expectedScatter)),
+      xScale3d([expectedXLine]),
+      yScale3d([expectedYLine]),
+      zScale3d([expectedZLine])
   ];
 
   processData(data, 1000);
+  dragEnd();
 }
 
 function dragStart(){

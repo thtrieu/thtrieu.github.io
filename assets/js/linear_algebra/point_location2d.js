@@ -208,7 +208,6 @@ function init(){
   }
 
   gamma = startAngleZ;
-
   expectedScatter = rotatePoints(scatter, startAngleX, startAngleY, gamma);
   expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gamma);
   expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gamma);
@@ -220,6 +219,7 @@ function init(){
   ];
 
   processData(data, 1000);
+  dragEnd();
 }
 
 function getMouse(){
@@ -240,7 +240,6 @@ function dragged(){
   atan1 = getMouseAtan2();
   
   gamma = startAngleZ + atan1 - atan0;
-
   expectedScatter = rotatePoints(scatter, startAngleX, startAngleY, gamma);
   expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gamma);
   expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gamma);

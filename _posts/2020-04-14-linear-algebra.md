@@ -101,9 +101,7 @@ d3.selectAll('#but_point_arrow_location')
 
 *Right, so now what do I do with a vector?*
 
-You don't do much with a vector. You start to have fun when there is more than one :) 
-
-Dot product between two vectors is a simple and important concept. In fact, **it is the only concept besides "vector" that we care about from here on out**. Below, you can see the dot product of two vectors \\(u\\) and \\(v\\) is the **length of the projection** of \\(u\\) onto \\(v\\).
+You don't do much with a vector. You start to have fun when there is more than one :) Dot product between two vectors is a simple and important concept. Below, you can see the dot product of two vectors \\(u\\) and \\(v\\) is the **length of the projection** of \\(u\\) onto \\(v\\).
 
 *So why don't we call it the projection, isn't that a more suiting name?*
 
@@ -154,33 +152,31 @@ For the moment, let us not digress too far and get back to our discussion about 
 
 As we have seen, projecting \\(u\\) onto \\(v\\) reduces \\(u\\) into one single number (called a scalar). In practice, we usually project \\(u\\) onto a bunch of vectors, e.g. three vectors \\( \\{ v_1, v_2, v_3 \\} \\), and thereby obtaining a list of numbers instead of just one number.
 
-*OK, this list of numbers is three different views of \\(u\\) from three different \\(v\\) vectors. But if \\(v_1 = v_2\\), we are obtaining the same view twice. If \\(v_1\\) and \\(v_2\\) is almost aligned, the two views are also almost identical. So I guess my question is, do people tend to select \\( \\{ v_1, v_2, v_3 \\} \\) such that these three views don't "overlap" with each other?*
+*OK, this list of numbers is three different views of \\(u\\) from three different \\(v\\) vectors. But if \\(v_1 = v_2\\), we are obtaining the same view twice. If \\(v_1\\) and \\(v_2\\) is almost aligned, the two views are also almost identical.*
 
-To answer your question, we will get back to the earlier point about how coordinate systems are just a bunch of vectors. Suppose \\(v_1 = [1, 0, 0]\\), \\(v_2 = [0, 1, 0]\\), \\(v_3 = [0, 0, 1]\\). Projecting \\(u\\) on \\( \\{ v_1, v_2, v_3 \\} \\) will give you the list of three coordinates of \\(u\\).
+*So I guess my question is, if we are taking more than one view, shouldn't we select \\( \\{ v_1, v_2, v_3 \\} \\) such that these views don't correlate with each other as much as possible?*
 
-As can be seen, the resulting list of numbers **is** the vector \\(u\\) itself. 
+Absolutely, this set of vectors needs to be pair-wise perpendicular for the views to not correlate. For example, when \\(v_1 = [1, 0, 0]\\), \\(v_2 = [0, 1, 0]\\), and \\(v_3 = [0, 0, 1]\\). In this case, projecting \\(u\\) on \\( \\{ v_1, v_2, v_3 \\} \\) will, surprise surprise, give you back the list of three coordinates of \\(u\\).
 
-*Oh wait, so the result of projecting a vector onto a bunch of vectors is a list of numbers, which can also be seen as a vector as well?*
+*Do you mean to say that \\(v_1, v_2, v_3\\) as defined above is acting as the coordinate system, measuring \\(u\\) in three perpendicular directions?*
 
-Correct. In our case, the resulting vector is precisely \\(u\\). This is because of two reasons:
+Yes, we are now back to the point I mentioned earlier about how coordinate systems are really just a bunch of vectors! Now you can forget about coordinate systems. Instead, think of space as being "measured" by this set of vectors. 
 
-* The chosen \\( \\{ v_1, v_2, v_3 \\} \\) is pairwise "non-overlapping" as you suggested earlier. Precisely, this means the projection of \\(v_1\\) and \\(v_2\\) onto each other is exactly 0, the same is true for the other two pairs (\\(v_1, v_3\\)) and (\\(v_2, v_3\\)) as well. 
+*In other words, this set of vectors is what gives any of the vectors living in space a coordinate?*
+
+Exactly. Be aware that there can be many such sets, as long as they satisfy the following two conditions:
+
+* The chosen \\( \\{ v_1, v_2, v_3 \\} \\) is pairwise perpendicular. 
 
 * Each of \\( v_1, v_2, v_3 \\) has length 1.
 
-Such a set of vectors are called "orthonormal" ("othor"= "perpendicular", "normal" = length of 1). 
-
-Now you can forget about coordinate systems! Instead, think of space as being spanned by this set of orthonormal vectors, called the basis. Then the "locations of a point in space" is now simply its projection onto this set of vectors.
-
-*Okay, so by saying a vector has some "coordinates" in space, we are implicitly introducing the basis \\(v_1 = [1, 0, 0]\\), \\(v_2 = [0, 1, 0]\\), \\(v_3 = [0, 0, 1]\\)?*
-
-That's right. As long as the set of vectors is orthonormal, it is a valid basis. Explore other bases and how a vector \\(u\\) in the default basis looks like in the new basis below:
+Such a set of vectors are called *orthonormal* ("othor"= "perpendicular", "normal" = length of 1). Any orthonormal set acting as a coordinate system is called a *basis*. To get the position (coordinates) of a point with respect to a basis, simply project the vector onto this set as shown earlier with \\(u\\) and \\( \\{ v_1, v_2, v_3 \\} \\):
 
 <center><b>5. Matrix multiplication</b></center>
 
 *What if the set \\( \\{ v_1, v_2, v_3 \\} \\) is not orthonormal? What does the resulting vector after projecting \\(u\\) onto this set look like?*
 
-You have just asked *The Question* of Linear Algebra. The answer is a fascinating journey we'll now embark on, uncovering it one step at a time! The list of numbers \\([u\cdot v_1, u\cdot v_2, u\cdot v_3]\\) is a new vector \\(u^\*\\). This new vector is what \\(u\\) looks like in the perspective of the skewed "coordinate system" \\( \\{ v_1, v_2, v_3 \\} \\). First, let's visualize it:
+You have just asked *The Question* of Linear Algebra. Earlier we see that if \\( \\{ v_1, v_2, v_3 \\} \\) is orthonormal The answer is a fascinating journey we'll now embark on, uncovering it one step at a time! The list of numbers \\([u\cdot v_1, u\cdot v_2, u\cdot v_3]\\) is a new vector \\(u^\*\\). This new vector is what \\(u\\) looks like in the perspective of the skewed "coordinate system" \\( \\{ v_1, v_2, v_3 \\} \\). First, let's visualize it:
 
 Notation wise, if we stack \\( \\{ v_1, v_2, v_3 \\} \\) horizontally into a rectangle of numbers, we have just reinvent the matrix-vector multiplication:
 
