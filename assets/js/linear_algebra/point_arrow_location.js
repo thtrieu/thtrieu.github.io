@@ -1,5 +1,9 @@
 var point_arrow_location = (function() {
 
+
+// !function(t,r){"object"==typeof exports&&"undefined"!=typeof module?r(exports):"function"==typeof define&&define.amd?define(["exports"],r):r(t.d3=t.d3||{})}(this,function(t){"use strict";function r(t,r,e,n){var o=Math.cos(r),u=Math.sin(r),a=Math.cos(e),d=Math.sin(e),c=Math.cos(n),i=Math.sin(n),f=o*d*i-u*c,p=o*d*c+u*i,y=u*a,x=u*d*i+o*c,h=u*d*c-o*i,s=-d,z=a*i,j=a*c;return{x:o*a*t.x+f*-t.y+p*t.z,y:y*t.x+x*-t.y+h*t.z,z:s*t.x+z*-t.y+j*t.z}}function e(t,r,e,n,o){return r===x.ortho?{x:e[0]+n*t.x,y:e[1]+n*t.y}:r===x.persp?{x:e[0]+n*t.x/(t.z+o),y:e[1]+n*t.y/(t.z+o)}:void 0}function n(t,n,o,u,a,d,c,i){for(var f=t.length-1;f>=0;f--){var p=t[f];p.rotated=r({x:p.x,y:p.y,z:p.z},o,u,a),p.projected=e(p.rotated,n,d,c,i)}return t}function o(t,n,o,u,a,d,c,i){for(var f=t.length-1;f>=0;f--){var p=t[f],y=p[0],x=p[1];y.rotated=r({x:y.x,y:y.y,z:y.z},o,u,a),x.rotated=r({x:x.x,y:x.y,z:x.z},o,u,a),y.projected=e(y.rotated,n,d,c,i),x.projected=e(x.rotated,n,d,c,i),p.lng=Math.sqrt(Math.pow(x.rotated.x-y.rotated.x,2)+Math.pow(x.rotated.y-y.rotated.y,2)+Math.pow(x.rotated.z-y.rotated.z,2)),p.midPoint={x:(y.x+x.x)/2,y:(y.y+x.y)/2,z:(y.z+x.z)/2}}return t}function u(t,r,e,n,o,u,a,d){for(var c=t.length-1;c>=0;c--);return t}function a(t,r,e,n,o,u,a,d){for(var c=t.length-1;c>=0;c--);return t}function d(t,n,o,u,a,d,c,i){for(var f=t.length-1;f>=0;f--){var p=t[f],y=p[0],x=p[1],h=p[2];y.rotated=r({x:y.x,y:y.y,z:y.z},o,u,a),x.rotated=r({x:x.x,y:x.y,z:x.z},o,u,a),h.rotated=r({x:h.x,y:h.y,z:h.z},o,u,a),y.projected=e(y.rotated,n,d,c,i),x.projected=e(x.rotated,n,d,c,i),h.projected=e(h.rotated,n,d,c,i),p.area=1}return t}function c(t,r,e,n,o,u,a,d){for(var c=t.length-1;c>=0;c--);return t}function i(t,r,e,n,o,u,a,d){for(var c=t.length-1;c>=0;c--);return t}function f(t){return"M"+t.projected.x+","+t.projected.y+"m"+-t.radius+",0a"+t.radius+","+t.radius+",0,1,1,"+2*t.radius+",0a"+t.radius+","+t.radius+",0,1,1,-"+2*t.radius+",0"}function p(t){return"M"+t[0].projected.x+","+t[0].projected.y+"L"+t[1].projected.x+","+t[1].projected.y}function y(t){return"M"+t[0].projected.x+","+t[0].projected.y+"L"+t[1].projected.x+","+t[1].projected.y+"L"+t[2].projected.x+","+t[2].projected.y}var x={ortho:"ortho",persp:"persp"},h=function(){function t(t){return M[v](t,e,j,l,g,h,s,z)}var r=x.ortho,e=(x.persp,r),h=[0,0],s=1,z=1,j=0,l=0,g=0,v="POINTS",M={POINTS:n,LINES:o,LINES_LOOP:u,LINES_STRIP:a,TRIANGLES:d,TRIANGLES_STRIP:c,TRIANGLES_FAN:i},I={POINTS:f,LINES:p,TRIANGLES:y};return t.projection=function(r){return arguments.length?(e=r,t):e},t.origin=function(r){return arguments.length?(h=r,t):h},t.scale=function(r){return arguments.length?(s=r,t):s},t.distance=function(r){return arguments.length?(z=r,t):z},t.rotateZ=function(r){return arguments.length?(j=r,t):j},t.rotateY=function(r){return arguments.length?(l=r,t):l},t.rotateX=function(r){return arguments.length?(g=r,t):g},t.primitiveType=function(r){return arguments.length?(v=r,t):v},t.draw=function(t){return I[v](t)},t};t._3d=h,Object.defineProperty(t,"__esModule",{value:!0})});
+
+
 var origin = [150, 130], 
   j = 10, 
   scale = 10, 
@@ -7,6 +11,7 @@ var origin = [150, 130],
   xLine = [],
   yLine = [],
   zLine = [],
+  npoint = 3,
   expectedXLine = [],
   expectedYLine = [],
   expectedZLine = [],
@@ -59,6 +64,10 @@ var rotated_z_to_txt_opacity = d3.scaleLinear()
                                  .domain([-9, 9])
                                  .range([0.2, 1.0]);
 
+var rotated_z_to_thick_opacity = d3.scaleLinear()
+                                 .domain([-9, 9])
+                                 .range([1.0, 1.5]);
+
 var rotated_z_to_opacity = d3.scaleLinear()
                           .domain([-9, 9])
                           .range([0.5, 1.0]);
@@ -69,6 +78,7 @@ var point3d = d3._3d()
   .z(function(d){ return d.z; })
   .origin(origin)
   .scale(scale);
+
 
 var xScale3d = d3._3d()
     .shape('LINE_STRIP')
@@ -85,6 +95,10 @@ var zScale3d = d3._3d()
     .origin(origin)
     .scale(scale);
 
+var arrow3d = d3._3d()
+    .shape('LINE')
+    .origin(origin)
+    .scale(scale);
 
 var toggle_val = 'everything';
 
@@ -108,23 +122,6 @@ function plotaxis(data, axis, name, dim){
       .attr('stroke-width', 1.5);
   scale.exit().remove();
 
-  // data[0].forEach(function(d){
-  //     var scale = svg
-  //         .selectAll('line')
-  //         .data([[d.rotated]]);
-  //     scale
-  //         .enter()
-  //         .append('line')
-  //         .attr('z',)
-  //         .attr('class', '_3d '.concat(name, 'Axis'))
-  //         .merge(scale)
-  //         // .attr('d', axis.draw)
-  //         .attr('fill', 'black')
-  //         .attr('stroke', 'grey')
-  //         .attr('stroke-width', 1.5);
-  //     scale.exit().remove();
-  // })
-
   var text = svg
       .selectAll('text.'.concat(name, 'Text'))
       .data(data[0]);
@@ -142,6 +139,7 @@ function plotaxis(data, axis, name, dim){
       })
       .attr('x', function(d){ return d.projected.x; })
       .attr('y', function(d){ return d.projected.y; })
+      .attr('z', function(d){ return d.z; })
       .text(function(d, i){ 
           if (i % 5 == 0) {
             return i;
@@ -157,22 +155,67 @@ function plotaxis(data, axis, name, dim){
   text.exit().remove();
 }
 
-function processData(data, tt){
+
+function project(d){
+    return {
+        x: origin[0] + scale * d.x,
+        y: origin[1] + scale * d.y
+    };
+}
+
+function processData(scatter, xline, yline, zline, tt){
 
   basis = {
-      ex: data[1][0][1], 
-      ey: data[2][0][1], 
-      ez: data[3][0][1],
+      ex: xline[1], 
+      ey: yline[1], 
+      ez: zline[1],
   };
 
-  var points = svg.selectAll('circle').data(data[0], key)
+
+  var scatter = point3d(scatter);
+  var xline = xScale3d([xline]);
+  var yline = yScale3d([yline]);
+  var zline = zScale3d([zline]);
+
+  var arrows = [];
+  scatter.forEach(function(d){
+    arrows.push([
+        {x: 0., y:0., z:0.}, 
+        {x: d.x, y:d.y, z:d.z, id:d.id}
+    ])
+  });
+  var arrows = arrow3d(arrows);
+
+  var lines = svg.selectAll('line').data(arrows);
+  lines
+    .enter()
+    .append('line')
+    .attr('class', '_3d line')
+    .merge(lines)
+    .transition().duration(tt)
+    .each(function(d){})
+    .attr('fill', function(d){ return color(d[1].id); })
+    .attr('stroke', function(d){ return color(d[1].id); })
+    .attr('stroke-width', function(d){
+        return rotated_z_to_thick_opacity(d[1].z)
+    })
+    .attr('x1', function(d){ return project(d[0]).x; })
+    .attr('y1', function(d){ return project(d[0]).y; })
+    .attr('x2', function(d){ return project(d[1]).x; })
+    .attr('y2', function(d){ return project(d[1]).y; })
+    .attr('opacity', function(d){
+        return rotated_z_to_opacity(d[1].z);
+    });
+
+  lines.exit().remove();
+
+  var points = svg.selectAll('circle').data(scatter, key)
                   .each(function(d){})
                   .call(d3.drag()
                           .on('drag', function(d, i){draggedPoint(i);})
                           .on('start', function(){dragStart();})
                           .on('end', function(){dragEnd();}))
-
- points
+  points
     .enter()
     .append('circle')
     .attr('class', '_3d point')
@@ -191,10 +234,12 @@ function processData(data, tt){
     })
     .attr('cx', posPointX)
     .attr('cy', posPointY);
+  points.exit().remove();
+
 
   var text = svg
       .selectAll('text.'.concat(name, 'Text'))
-      .data(data[0]);
+      .data(scatter);
   text
       .enter()
       .append('text')
@@ -214,7 +259,7 @@ function processData(data, tt){
       })
       .attr('x', function(d){ return d.projected.x; })
       .attr('y', function(d){ return d.projected.y; })
-      .attr('z', function(d){ return d.projected.z; })
+      .attr('z', function(d){ return d.z; })
       .text(function(d){
           var coord = dot_basis(d, basis);
           return '['.concat(
@@ -232,12 +277,15 @@ function processData(data, tt){
   text.exit().remove();
 
   if (toggle_val == 'everything') {
-    plotaxis(data[1], xScale3d, 'x', 0);
-    plotaxis(data[2], yScale3d, 'y', 1);
-    plotaxis(data[3], zScale3d, 'z', 2);
+    plotaxis(xline, xScale3d, 'x', 0);
+    plotaxis(yline, yScale3d, 'y', 1);
+    plotaxis(zline, zScale3d, 'z', 2);
   }
 
+  // console.log(svg.selectAll('._3d').sort);
   svg.selectAll('._3d').sort(d3._3d().sort);
+  // console.log(svg.selectAll('._3d'));
+  // text.sort(d3._3d().sort);
 }
 
 
@@ -254,9 +302,11 @@ function dot_basis(d, basis){
   };
 }
 
+
 function posPointX(d){
   return d.projected.x;
 }
+
 
 function posPointY(d){
   return d.projected.y;
@@ -267,7 +317,7 @@ function init(){
   var cnt = 0;
   scatter = [];
 
-  for (var z=0; z < 3; z++){
+  for (var z=0; z < npoint; z++){
     scatter.push([
         d3.randomUniform(-j+1, j-2)(),
         d3.randomUniform(-j+1, j-2)(), 
@@ -278,14 +328,17 @@ function init(){
   alpha = startAngleX;
   beta = startAngleY;
 
-  var data = [
-      point3d(annotatePoint(rotatePoints(scatter, alpha, beta, startAngleZ))),
-      xScale3d([rotatePoints(xLine, alpha, beta, startAngleZ)]),
-      yScale3d([rotatePoints(yLine, alpha, beta, startAngleZ)]),
-      zScale3d([rotatePoints(zLine, alpha, beta, startAngleZ)])
-  ];
+  expectedScatter = rotatePoints(scatter, alpha, beta, startAngleZ);
+  expectedXLine = rotatePoints(xLine, alpha, beta, startAngleZ);
+  expectedYLine = rotatePoints(yLine, alpha, beta, startAngleZ);
+  expectedZLine = rotatePoints(zLine, alpha, beta, startAngleZ);
 
-  processData(data, 1000);
+  processData(annotatePoint(expectedScatter), 
+              expectedXLine,
+              expectedYLine,
+              expectedZLine,
+              1000);
+  dragEnd();
 }
 
 function dragStart(){
@@ -305,13 +358,11 @@ function dragged(){
   expectedYLine = rotatePoints(yLine, alpha, beta, startAngleZ);
   expectedZLine = rotatePoints(zLine, alpha, beta, startAngleZ);
 
-  var data = [
-      point3d(annotatePoint(expectedScatter)),
-      xScale3d([expectedXLine]),
-      yScale3d([expectedYLine]),
-      zScale3d([expectedZLine])
-  ];
-  processData(data, 0);
+  processData(annotatePoint(expectedScatter), 
+              expectedXLine,
+              expectedYLine,
+              expectedZLine,
+              0);
 }
 
 function draggedPoint(i){
@@ -333,13 +384,11 @@ function draggedPoint(i){
   expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, startAngleZ);
   expectedZLine = rotatePoints(zLine, startAngleX, startAngleY, startAngleZ);
 
-  var data = [
-      point3d(annotatePoint(expectedScatter)),
-      xScale3d([expectedXLine]),
-      yScale3d([expectedYLine]),
-      zScale3d([expectedZLine])
-  ];
-  processData(data, 0);
+  processData(annotatePoint(expectedScatter), 
+              expectedXLine,
+              expectedYLine,
+              expectedZLine,
+              0);
 }
 
 
@@ -411,7 +460,8 @@ function dragEnd(){
 init();
 
 return {
-  init: function(){init();}
+  init: function(){init();},
+  toggle: function(val){setToggle(val);}
 };
 
 })();

@@ -192,6 +192,7 @@ function init(){
   ];
 
   processData(data, 1000);
+  dragEnd();
 }
 
 function getMouse(){

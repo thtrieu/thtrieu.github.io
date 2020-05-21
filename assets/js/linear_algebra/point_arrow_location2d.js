@@ -58,13 +58,26 @@ var yScale3d = d3._3d()
     .origin(origin)
     .scale(scale);
 
+var arrow3d = d3._3d()
+    .shape('LINE')
+    .origin(origin)
+    .scale(scale);
+
 
 var toggle_val = 'everything';
+
 
 function setToggle(val){
   toggle_val = val;
 }
 
+
+function project(d){
+    return {
+        x: origin[0] + scale * d.x,
+        y: origin[1] + scale * d.y
+    };
+}
 
 function plotaxis(data, axis, name, dim){
   var scale = svg
@@ -112,20 +125,59 @@ function plotaxis(data, axis, name, dim){
   text.exit().remove();
 }
 
-function processData(data, tt){
+function processData(scatter,
+                     xline,
+                     yline,
+                     tt){
 
   basis = {
-      ex: data[1][0][1], 
-      ey: data[2][0][1],
+      ex: xline[1], 
+      ey: yline[1], 
   };
 
-  var points = svg.selectAll('circle').data(data[0], key)
+  var scatter = point3d(scatter);
+  var xline = xScale3d([xline]);
+  var yline = yScale3d([yline]);
+
+  var arrows = [];
+  scatter.forEach(function(d){
+    arrows.push([
+        {x: 0., y:0., z:0.}, 
+        {x: d.x, y:d.y, z:d.z, id:d.id}
+    ]);
+    // arrows.push([
+    //     {x: d.x, y:d.y, z:d.z},
+    //     {x: d.x+1, y:d.y+1, z:d.z+1, id:d.id}
+    // ]);
+  });
+  var arrows = arrow3d(arrows);
+
+  var lines = svg.selectAll('line').data(arrows);
+  lines
+    .enter()
+    .append('line')
+    .attr('class', '_3d line')
+    .merge(lines)
+    .transition().duration(tt)
+    .each(function(d){})
+    .attr('fill', function(d){ return color(d[1].id); })
+    .attr('stroke', function(d){ return color(d[1].id); })
+    .attr('stroke-width', 1.5)
+    .attr('opacity', 1)
+    .attr('x1', function(d){ return project(d[0]).x; })
+    .attr('y1', function(d){ return project(d[0]).y; })
+    .attr('x2', function(d){ return project(d[1]).x; })
+    .attr('y2', function(d){ return project(d[1]).y; });
+
+  lines.exit().remove();
+
+  var points = svg.selectAll('circle').data(scatter, key)
                   .call(d3.drag()
                           .on('drag', function(d, i){draggedPoint(i);})
                           .on('start', dragStart)
                           .on('end', dragEnd));
 
- points
+  points
     .enter()
     .append('circle')
     .attr('class', '_3d point')
@@ -141,7 +193,7 @@ function processData(data, tt){
 
   var text = svg
       .selectAll('text.'.concat(name, 'Text'))
-      .data(data[0]);
+      .data(scatter);
   text
       .enter()
       .append('text')
@@ -167,8 +219,8 @@ function processData(data, tt){
 
   text.exit().remove();
 
-  plotaxis(data[1], xScale3d, 'x', 0);
-  plotaxis(data[2], yScale3d, 'y', 1);
+  plotaxis(xline, xScale3d, 'x', 0);
+  plotaxis(yline, yScale3d, 'y', 1);
 
   svg.selectAll('._3d').sort(d3._3d().sort);
 }
@@ -213,13 +265,11 @@ function init(){
   expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gamma);
   expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gamma);
 
-  var data = [
-      point3d(annotatePoint(expectedScatter)),
-      xScale3d([expectedXLine]),
-      yScale3d([expectedYLine]),
-  ];
-
-  processData(data, 1000);
+  processData(annotatePoint(expectedScatter), 
+              expectedXLine,
+              expectedYLine,
+              1000);
+  dragEnd();
 }
 
 function getMouse(){
@@ -245,12 +295,10 @@ function dragged(){
   expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gamma);
   expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gamma);
 
-  var data = [
-      point3d(annotatePoint(expectedScatter)),
-      xScale3d([expectedXLine]),
-      yScale3d([expectedYLine]),
-  ];
-  processData(data, 0);
+  processData(annotatePoint(expectedScatter), 
+              expectedXLine,
+              expectedYLine,
+              0);
 }
 
 function draggedPoint(i){
@@ -269,12 +317,10 @@ function draggedPoint(i){
   expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, startAngleZ);
   expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, startAngleZ);
 
-  var data = [
-      point3d(annotatePoint(expectedScatter)),
-      xScale3d([expectedXLine]),
-      yScale3d([expectedYLine]),
-  ];
-  processData(data, 0);
+  processData(annotatePoint(expectedScatter), 
+              expectedXLine,
+              expectedYLine, 
+              0);
 }
 
 
