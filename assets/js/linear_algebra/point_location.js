@@ -218,11 +218,11 @@ function processData(data, tt){
       .attr('z', function(d){ return d.projected.z; })
       .text(function(d){
           var coord = dot_basis(d, basis);
-          return '[x:'.concat(
+          return '[x='.concat(
               coord.x.toFixed(1),
-              ', y:',
+              ', y=',
               coord.y.toFixed(1),
-              ', z:',
+              ', z=',
               coord.z.toFixed(1),
               ']');
       })
