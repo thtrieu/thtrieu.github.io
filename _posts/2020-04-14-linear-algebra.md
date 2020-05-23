@@ -56,7 +56,7 @@ d3.selectAll('#reset_point_coord_lines')
 
 *Does the coordinate axes here acting like rulers on a map?*
 
-Yes! By measuring distance in different directions, this set of rulers can assign any point living in space a list of numbers, being its location as you suggested:
+Yes! By measuring distance in different directions, this set of rulers (which we named \\(x, y,\\) and \\(z\\)) can assign any point living in space a location as you suggested:
 
 
 <center class='js'>
@@ -83,7 +83,9 @@ Exactly. People also refer to a vector as an arrow pointing from the origin to t
 <center class='js'>
 <svg width="300" height="250" id="svg_point_arrow_location2d"></svg><svg width="300" height="250" id="svg_point_arrow_location"></svg> 
 <br/>
-For aesthetics, we use round-headed arrows. Rotate the space, move individual point, or click
+Here we use round-headed arrows and simplify the coordinates by assuming the order \(x\rightarrow y\rightarrow z\).
+<br/>
+Rotate the space, move individual point, or click
 <button id='but_point_arrow_location'>shuffle</button>.
 </center>
 
@@ -97,23 +99,39 @@ d3.selectAll('#but_point_arrow_location')
   });
 </script>
 
-
-
 <center><b>2. Dot Product as Projection</b></center>
 
 *Right, so now what do I do with a vector?*
 
 You don't do much with a vector. You start to have fun when there is more than one :) Dot product between two vectors is a simple and important concept. Below, you can see the dot product of two vectors \\(u\\) and \\(v\\) is the **length of the projection** of \\(u\\) onto \\(v\\).
 
+
+<center class='js'>
+<svg width="300" height="250" id="svg_dot_product_project2d"></svg><svg width="300" height="250" id="svg_dot_product_project"></svg> 
+<br/>
+The coordinate system is now fixed. Rotate all, move individual point, or click
+<button id='but_dot_product_project'>shuffle</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/dot_product_project2d.js"></script>
+<script src="/assets/js/linear_algebra/dot_product_project.js"></script>
+<script>
+d3.selectAll('#but_dot_product_project')
+  .on('click', function(){
+      dot_product_project2d.init();
+      dot_product_project.init();
+  });
+</script>
+
 *So why don't we call it the projection, isn't that a more intuitive name?*
 
-You are right. The name "dot product" here stands for a very simple formula. That is, we should take the product of corresponding coordinates between \\(u\\) and \\(v\\) and then add them up!
+You are right. The name "dot product" here stands for a very simple formula for the projection. That is, we should take the product of corresponding coordinates between \\(u\\) and \\(v\\) and then add them up!
 
 *Oh, that's a very nice coincidence.*
 
 Indeed it is. Here is a diagram showing how two vectors \\(u\\) and \\(v\\) collapsing into a single number (their dot product \\(uv\\)). This "collapsing" diagram of dot product is very useful and we will see it again soon.
 
-*So since this is symmetric between \\(u\\) and \\(v\\), should it give the same result as projecting v onto u?*
+*So since this operation is symmetric between \\(u\\) and \\(v\\), should it give the same result as projecting v onto u?*
 
 Well I cheated a bit in the explanation so far :) "Projection of \\(u\\) onto \\(v\\)" is almost, but not quite, the correct interpretation of dot product! The correct formula 
 here takes into account length of \\(v\\) besides its direction: 
@@ -126,7 +144,7 @@ $$u \cdot v = v \cdot u  = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \t
 
 *So, if \\(v\\) is hold fixed and \\(u\\) is moving around, then you are suggesting that dot product can be think of as a measurement of the projection of \\(u\\) onto \\(v\\) right?*
 
-That's the right way to think about it :) The dot product here is simply the projection times a fixed constant. So to compare the projection of \\(u_1\\) and \\(u_2\\) onto \\(v\\), we can just compare \\(u_1\cdot v\\) and \\(u_2\cdot v\\).
+That's the right way to think about it :) The dot product here is simply the projection times a fixed constant (length of \\(v\\)). So to compare the projection of \\(u_1\\) and \\(u_2\\) onto \\(v\\), we can just compare \\(u_1\cdot v\\) and \\(u_2\cdot v\\).
 
 <center><b>3. Changing in persepective</b></center>
 
@@ -136,7 +154,7 @@ That's a good question. One of the understanding here is that projecting \\(u\\)
 
 In the current space and coordinate system, \\(u\\) is a vector of certain direction and length. The question is, what does \\(u\\) look like in *another space and coordinate system?* In particular, how does \\(u\\) look like from \\(v\\)'s perspective? A reasonable answer is just projecting \\(u\\) onto \\(v\\).
 
-*I can see why. The projection will be larger when the two is more aligned, and shrinks to zero when the two vectors are not aligned at all (perpendicular).*
+*Maybe I am seeing why. The projection will be larger when the two is more aligned, and shrinks to zero when the two vectors are not aligned at all (perpendicular).*
 
 Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Much of Linear Algebra is concerned with studying how a certain object of interest (represented by a point) looks like under different perspectives (different spaces and coordinate systems).
 
@@ -150,13 +168,13 @@ In certain branches of Machine Learning, the goal is to learn *How to change the
 
 That is the spirit. The devil is in the detail though: How do we represent photo/text as vectors? How do we figure out the appropriate \\(v\\)? And so on :)
 
-Another application of changing in perspective is writing this tutorial. All the visualizations of 3D spaces done here will be displayed on your screen, a 2D surface. This requires a perspective change between the two spaces. The code that I wrote for the visualizations must therefore handle this change using Linear Algebra. 
+Consider writing this tutorial. All the visualizations of 3D spaces done here will be displayed on your screen, a 2D surface. This requires a perspective change between the two spaces. The code that I wrote for the visualizations must therefore handle this change using Linear Algebra. 
 
 More broadly, computer games in 3D or softwares that involve 3D manipulation rely heavily on this specific change to display stuff on your 2D screen.
 
 *I found [this answer](https://math.stackexchange.com/a/256695) on Math Stack Exchange. Seems like a fun read.*
 
-Better yet, reach for Chapter 10 in the classic [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Gilbert Strang. You'll find there a list of Linear Algebra applications, from analysing Networks to Cryptography to Google's PageRank algorithm. 
+Better yet, reach for Chapter 10 in the classic [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Gilbert Strang. You'll find there a list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and Google's PageRank algorithm. 
 
 <center><b>4. Basis</b></center>
 
@@ -172,7 +190,7 @@ Absolutely, setting aside what we really mean by "correlation" mathematically, t
 
 *It looks like \\(v_1, v_2, v_3\\) as defined above is acting as the coordinate system, because they are measuring \\(u\\) in three perpendicular directions.*
 
-Nice observation. In fact with this observation,  now you can forget about coordinate systems. Instead, think of space as being "measured" by this set of vectors. 
+Nice observation. In fact with this observation, now you can forget about coordinate systems. Instead, think of space as being "measured" by this set of vectors. 
 
 *In other words, this set of vectors is what gives any of the vectors living in space a coordinate?*
 
@@ -182,7 +200,7 @@ Exactly. Be aware that there can be many such sets, as long as they satisfy the 
 
 * Each of \\( v_1, v_2, v_3 \\) has length 1.
 
-Such a set of vectors are called *orthonormal* ("othor"= "perpendicular", "normal" = length of 1). Any orthonormal set acting as a coordinate system is called a *basis*. To get the position (coordinates) of a point with respect to any basis, simply project the vector onto this set as shown earlier with \\(u\\) and \\( \\{ v_1, v_2, v_3 \\} \\):
+Such a set of vectors are *orthonormal* ("othor"= "perpendicular", "normal" = length of 1). Any orthonormal set acting as a coordinate system is called a *basis*. To get the position (coordinates) of a point with respect to any basis, simply project the vector onto this set as shown earlier with \\(u\\) and \\( \\{ v_1, v_2, v_3 \\} \\):
 
 <center><b>5. Matrix multiplication</b></center>
 

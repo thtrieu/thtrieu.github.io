@@ -165,12 +165,13 @@ function project(d){
 
 function processData(scatter, xline, yline, zline, tt){
 
+  // scatter = [scatter[0], scatter[1]];
+
   basis = {
       ex: xline[1], 
       ey: yline[1], 
       ez: zline[1],
   };
-
 
   var scatter = point3d(scatter);
   var xline = xScale3d([xline]);
@@ -184,6 +185,7 @@ function processData(scatter, xline, yline, zline, tt){
         {x: d.x, y:d.y, z:d.z, id:d.id}
     ])
   });
+  // console.log(arrows)
   var arrows = arrow3d(arrows);
 
   var lines = svg.selectAll('line').data(arrows);
@@ -398,7 +400,7 @@ function annotatePoint(points){
       result.push({x: d[0], 
                    y: d[1], 
                    z: d[2], 
-                   id: 'point_' + i});
+                   id: i});
   });
   return result;
 }
