@@ -158,9 +158,9 @@ function processData(data, tt){
       .attr('y', function(d){ return d.projected.y; })
       .text(function(d){
           var coord = dot_basis(d, basis);
-          return '[x:'.concat(
+          return '[x='.concat(
               coord.x.toFixed(1),
-              ', y:',
+              ', y=',
               coord.y.toFixed(1),
               ']');
       })
