@@ -1,8 +1,8 @@
-var point_location2d = (function() {
+var dot_product_formula2d = (function() {
 
-var origin = [150, 130], 
-  j = 10, 
-  scale = 10, 
+var origin = [80, 130], 
+  j = 3, 
+  scale = 40, 
   scatter = [], 
   xLine = [],
   yLine = [],
@@ -15,20 +15,20 @@ var origin = [150, 130],
   startAngleY = 0.,
   center = [];
 
-d3.range(0, 13, 1).forEach(
+d3.range(0, j, 1).forEach(
     function(d){ 
       xLine.push([d, 0, 0]); 
     }
 );
 
-d3.range(0, 13, 1).forEach(
+d3.range(0, j, 1).forEach(
     function(d){ 
       yLine.push([0, d, 0]); 
     }
 );
 
 
-var svg_select = d3.select("#svg_point_location2d");
+var svg_select = d3.select("#svg_dot_product_formula2d");
 var svg = svg_select
           .call(d3.drag()
                   .on('drag', dragged)
@@ -58,13 +58,26 @@ var yScale3d = d3._3d()
     .origin(origin)
     .scale(scale);
 
+var arrow3d = d3._3d()
+    .shape('LINE')
+    .origin(origin)
+    .scale(scale);
+
 
 var toggle_val = 'everything';
+
 
 function setToggle(val){
   toggle_val = val;
 }
 
+
+function project(d){
+    return {
+        x: origin[0] + scale * d.x,
+        y: origin[1] + scale * d.y
+    };
+}
 
 function plotaxis(data, axis, name, dim){
   var scale = svg
@@ -100,10 +113,7 @@ function plotaxis(data, axis, name, dim){
       .attr('x', function(d){ return d.projected.x; })
       .attr('y', function(d){ return d.projected.y; })
       .text(function(d, i){ 
-          // console.log('XXXXX', d);
-          if (i % 5 == 0) {
-            return i;
-          } else if (i == 12) {
+          if (i == 2) {
             return name;
           } else {
             return '';
@@ -112,20 +122,83 @@ function plotaxis(data, axis, name, dim){
   text.exit().remove();
 }
 
-function processData(data, tt){
+function processData(scatter,
+                     xline,
+                     yline,
+                     tt){
+
+  u = scatter[0];
+  v = scatter[1];
+  var uv = dot_product(u, v);
+  scatter[2] = {
+      x: v.x * uv,
+      y: v.y * uv,
+      z: 0
+  };
+  uvv = scatter[2];
+  // uv = scatter[2];
 
   basis = {
-      ex: data[1][0][1], 
-      ey: data[2][0][1],
+      ex: xline[1], 
+      ey: yline[1], 
   };
 
-  var points = svg.selectAll('circle').data(data[0], key)
+  var xline = xScale3d([xline]);
+  var yline = yScale3d([yline]);
+
+  var arrows = [[
+      {x: u.x, y:u.y, z:u.z},
+      {x: uvv.x, y:uvv.y, z:uvv.z}
+  ]];
+  scatter.forEach(function(d){
+    arrows.push([
+        {x: 0., y:0., z:0.}, 
+        {x: d.x, y:d.y, z:d.z, id:d.id}
+    ]);
+    // arrows.push([
+    //     {x: d.x, y:d.y, z:d.z},
+    //     {x: d.x+1, y:d.y+1, z:d.z+1, id:d.id}
+    // ]);
+  });
+  var arrows = arrow3d(arrows);
+
+  var lines = svg.selectAll('line').data(arrows);
+  lines
+    .enter()
+    .append('line')
+    .attr('class', '_3d line')
+    .merge(lines)
+    .transition().duration(tt)
+    .each(function(d){})
+    .style('stroke-dasharray', function(d, i) {
+      if (i == 0) {
+        return ('3, 3');
+      }
+      return;
+    })
+    .attr('fill', function(d){ return color(d[1].id); })
+    .attr('stroke', function(d, i){ 
+      if (i == 0) {
+        return 'black';
+      }
+      return color(d[1].id); 
+    })
+    .attr('stroke-width', 1.5)
+    .attr('opacity', 1)
+    .attr('x1', function(d){ return project(d[0]).x; })
+    .attr('y1', function(d){ return project(d[0]).y; })
+    .attr('x2', function(d){ return project(d[1]).x; })
+    .attr('y2', function(d){ return project(d[1]).y; });
+
+  lines.exit().remove();
+
+  var points = svg.selectAll('circle').data(point3d(scatter), key)
                   .call(d3.drag()
                           .on('drag', function(d, i){draggedPoint(i);})
                           .on('start', dragStart)
                           .on('end', dragEnd));
 
- points
+  points
     .enter()
     .append('circle')
     .attr('class', '_3d point')
@@ -133,15 +206,26 @@ function processData(data, tt){
     .attr('cy', posPointY)
     .merge(points)
     .transition().duration(tt)
-    .attr('r', 4)
+    .attr('r', function(d, i) {
+      if (i == 2) {
+        return 0;
+      }
+      return 4
+    })
     .attr('fill', function(d){ return color(d.id); })
     .attr('opacity', 1)
     .attr('cx', posPointX)
     .attr('cy', posPointY);
 
+  scatter[2] = {
+    x: uvv.x/2,
+    y: uvv.y/2,
+    z: 0
+  };
+
   var text = svg
       .selectAll('text.'.concat(name, 'Text'))
-      .data(data[0]);
+      .data(point3d(scatter));
   text
       .enter()
       .append('text')
@@ -149,26 +233,48 @@ function processData(data, tt){
       .attr('dx', '.4em')
       .merge(text)
       .transition().duration(tt)
-      .each(function(d){
-          d.centroid = {x: d.rotated.x, 
-                        y: d.rotated.y, 
-                        z: d.rotated.z};
+      .each(function(d, i){
+        d.centroid = {x: d.rotated.x, 
+                      y: d.rotated.y, 
+                      z: d.rotated.z};
+      })
+      .style('fill', function(d, i) {
+        if (i < 2) {
+          return 'black';
+        }
+        return color(d.id);
       })
       .attr('x', function(d){ return d.projected.x; })
       .attr('y', function(d){ return d.projected.y; })
-      .text(function(d){
+      .text(function(d, i){
           var coord = dot_basis(d, basis);
-          return '[x:'.concat(
-              coord.x.toFixed(1),
-              ', y:',
-              coord.y.toFixed(1),
-              ']');
+          var name;
+          if (i == 0) {
+            name = 'u';
+          } else if (i == 1) {
+            name = 'v';
+          } else {
+            name = 'uv';
+          }
+
+          if (i < 2) {
+            return name.concat(
+                ' [',
+                coord.x.toFixed(1),
+                ', ',
+                coord.y.toFixed(1),
+                ']');
+          } else {
+            return name.concat(
+                ' = ', uv.toFixed(2)
+            );
+          }
       })
 
   text.exit().remove();
 
-  plotaxis(data[1], xScale3d, 'x', 0);
-  plotaxis(data[2], yScale3d, 'y', 1);
+  plotaxis(xline, xScale3d, 'x', 0);
+  plotaxis(yline, yScale3d, 'y', 1);
 
   svg.selectAll('._3d').sort(d3._3d().sort);
 }
@@ -199,26 +305,37 @@ function init(){
   var cnt = 0;
   scatter = [];
 
-  for (var z=0; z < 3; z++){
-    scatter.push([
-        d3.randomUniform(-j+1, j-2)(),
-        d3.randomUniform(-j+1, j-2)(),
-        0,
-    ]);
-  }
+  v = [
+      1./Math.sqrt(3.),
+      Math.sqrt(2./3.),
+      0 
+  ];
+
+  u = [
+      -1.5,
+      2.0,
+      0,
+  ];
+
+  uv = u[0] * v[0] + u[1] * v[1]
+  uv = [
+      v[0] * uv,
+      v[1] * uv,
+      0
+  ]
+
+  scatter = [u, v, uv]
 
   gamma = startAngleZ;
+
   expectedScatter = rotatePoints(scatter, startAngleX, startAngleY, gamma);
   expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gamma);
   expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gamma);
 
-  var data = [
-      point3d(annotatePoint(expectedScatter)),
-      xScale3d([expectedXLine]),
-      yScale3d([expectedYLine]),
-  ];
-
-  processData(data, 1000);
+  processData(annotatePoint(expectedScatter), 
+              expectedXLine,
+              expectedYLine,
+              1000);
   dragEnd();
 }
 
@@ -236,23 +353,28 @@ function dragStart(){
   atan0 = getMouseAtan2();
 }
 
-function dragged(){
+function dragged(rotateAxes=true){
   atan1 = getMouseAtan2();
   
   gamma = startAngleZ + atan1 - atan0;
-  expectedScatter = rotatePoints(scatter, startAngleX, startAngleY, gamma);
-  expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gamma);
-  expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gamma);
 
-  var data = [
-      point3d(annotatePoint(expectedScatter)),
-      xScale3d([expectedXLine]),
-      yScale3d([expectedYLine]),
-  ];
-  processData(data, 0);
+  expectedScatter = rotatePoints(scatter, startAngleX, startAngleY, gamma);
+  if (rotateAxes) {
+    expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gamma);
+    expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gamma);
+  }
+
+  processData(annotatePoint(expectedScatter), 
+              expectedXLine,
+              expectedYLine,
+              0);
 }
 
 function draggedPoint(i){
+  if (i > 0){
+    dragged(rotateAxes=false);
+    return;
+  }
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
@@ -265,15 +387,13 @@ function draggedPoint(i){
       }
   });
 
-  expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, startAngleZ);
-  expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, startAngleZ);
+  // expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, startAngleZ);
+  // expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, startAngleZ);
 
-  var data = [
-      point3d(annotatePoint(expectedScatter)),
-      xScale3d([expectedXLine]),
-      yScale3d([expectedYLine]),
-  ];
-  processData(data, 0);
+  processData(annotatePoint(expectedScatter), 
+              expectedXLine,
+              expectedYLine, 
+              0);
 }
 
 

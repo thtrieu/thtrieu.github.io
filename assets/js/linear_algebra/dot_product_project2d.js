@@ -1,9 +1,8 @@
 var dot_product_project2d = (function() {
 
 var origin = [150, 130], 
-  j = 10, 
-  scale = 10, 
-  npoints = 2,
+  j = 3, 
+  scale = 50, 
   scatter = [], 
   xLine = [],
   yLine = [],
@@ -16,13 +15,13 @@ var origin = [150, 130],
   startAngleY = 0.,
   center = [];
 
-d3.range(0, 13, 1).forEach(
+d3.range(0, j, 1).forEach(
     function(d){ 
       xLine.push([d, 0, 0]); 
     }
 );
 
-d3.range(0, 13, 1).forEach(
+d3.range(0, j, 1).forEach(
     function(d){ 
       yLine.push([0, d, 0]); 
     }
@@ -114,10 +113,7 @@ function plotaxis(data, axis, name, dim){
       .attr('x', function(d){ return d.projected.x; })
       .attr('y', function(d){ return d.projected.y; })
       .text(function(d, i){ 
-          // console.log('XXXXX', d);
-          if (i % 5 == 0) {
-            return i;
-          } else if (i == 12) {
+          if (i == 2) {
             return name;
           } else {
             return '';
@@ -131,16 +127,29 @@ function processData(scatter,
                      yline,
                      tt){
 
+  u = scatter[0];
+  v = scatter[1];
+  var uv = dot_product(u, v);
+  scatter[2] = {
+      x: v.x * uv,
+      y: v.y * uv,
+      z: 0
+  };
+  uvv = scatter[2];
+  // uv = scatter[2];
+
   basis = {
       ex: xline[1], 
       ey: yline[1], 
   };
 
-  var scatter = point3d(scatter);
   var xline = xScale3d([xline]);
   var yline = yScale3d([yline]);
 
-  var arrows = [];
+  var arrows = [[
+      {x: u.x, y:u.y, z:u.z},
+      {x: uvv.x, y:uvv.y, z:uvv.z}
+  ]];
   scatter.forEach(function(d){
     arrows.push([
         {x: 0., y:0., z:0.}, 
@@ -161,8 +170,19 @@ function processData(scatter,
     .merge(lines)
     .transition().duration(tt)
     .each(function(d){})
+    .style('stroke-dasharray', function(d, i) {
+      if (i == 0) {
+        return ('3, 3');
+      }
+      return;
+    })
     .attr('fill', function(d){ return color(d[1].id); })
-    .attr('stroke', function(d){ return color(d[1].id); })
+    .attr('stroke', function(d, i){ 
+      if (i == 0) {
+        return 'black';
+      }
+      return color(d[1].id); 
+    })
     .attr('stroke-width', 1.5)
     .attr('opacity', 1)
     .attr('x1', function(d){ return project(d[0]).x; })
@@ -172,7 +192,7 @@ function processData(scatter,
 
   lines.exit().remove();
 
-  var points = svg.selectAll('circle').data(scatter, key)
+  var points = svg.selectAll('circle').data(point3d(scatter), key)
                   .call(d3.drag()
                           .on('drag', function(d, i){draggedPoint(i);})
                           .on('start', dragStart)
@@ -186,15 +206,26 @@ function processData(scatter,
     .attr('cy', posPointY)
     .merge(points)
     .transition().duration(tt)
-    .attr('r', 4)
+    .attr('r', function(d, i) {
+      if (i == 2) {
+        return 0;
+      }
+      return 4
+    })
     .attr('fill', function(d){ return color(d.id); })
     .attr('opacity', 1)
     .attr('cx', posPointX)
     .attr('cy', posPointY);
 
+  scatter[2] = {
+    x: uvv.x/2,
+    y: uvv.y/2,
+    z: 0
+  };
+
   var text = svg
       .selectAll('text.'.concat(name, 'Text'))
-      .data(scatter);
+      .data(point3d(scatter));
   text
       .enter()
       .append('text')
@@ -202,20 +233,42 @@ function processData(scatter,
       .attr('dx', '.4em')
       .merge(text)
       .transition().duration(tt)
-      .each(function(d){
-          d.centroid = {x: d.rotated.x, 
-                        y: d.rotated.y, 
-                        z: d.rotated.z};
+      .each(function(d, i){
+        d.centroid = {x: d.rotated.x, 
+                      y: d.rotated.y, 
+                      z: d.rotated.z};
+      })
+      .style('fill', function(d, i) {
+        if (i < 2) {
+          return 'black';
+        }
+        return color(d.id);
       })
       .attr('x', function(d){ return d.projected.x; })
       .attr('y', function(d){ return d.projected.y; })
-      .text(function(d){
+      .text(function(d, i){
           var coord = dot_basis(d, basis);
-          return '['.concat(
-              coord.x.toFixed(1),
-              ', ',
-              coord.y.toFixed(1),
-              ']');
+          var name;
+          if (i == 0) {
+            name = 'u';
+          } else if (i == 1) {
+            name = 'v';
+          } else {
+            name = 'uv';
+          }
+
+          if (i < 2) {
+            return name.concat(
+                ' [',
+                coord.x.toFixed(1),
+                ', ',
+                coord.y.toFixed(1),
+                ']');
+          } else {
+            return name.concat(
+                ' = ', uv.toFixed(2)
+            );
+          }
       })
 
   text.exit().remove();
@@ -252,18 +305,26 @@ function init(){
   var cnt = 0;
   scatter = [];
 
-  scatter = [
-      [
-          1./Math.sqrt(3.),
-          Math.sqrt(2./3.),
-          0  
-      ],
-      [
-          d3.randomUniform(-j+1, j-2)(),
-          d3.randomUniform(-j+1, j-2)(),
-          0,
-      ]
+  v = [
+      1./Math.sqrt(3.),
+      Math.sqrt(2./3.),
+      0 
+  ];
+
+  u = [
+      -1.5,
+      2.0,
+      0,
+  ];
+
+  uv = u[0] * v[0] + u[1] * v[1]
+  uv = [
+      v[0] * uv,
+      v[1] * uv,
+      0
   ]
+
+  scatter = [u, v, uv]
 
   gamma = startAngleZ;
 
@@ -292,14 +353,16 @@ function dragStart(){
   atan0 = getMouseAtan2();
 }
 
-function dragged(){
+function dragged(rotateAxes=true){
   atan1 = getMouseAtan2();
   
   gamma = startAngleZ + atan1 - atan0;
 
   expectedScatter = rotatePoints(scatter, startAngleX, startAngleY, gamma);
-  // expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gamma);
-  // expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gamma);
+  if (rotateAxes) {
+    expectedXLine = rotatePoints(xLine, startAngleX, startAngleY, gamma);
+    expectedYLine = rotatePoints(yLine, startAngleX, startAngleY, gamma);
+  }
 
   processData(annotatePoint(expectedScatter), 
               expectedXLine,
@@ -308,6 +371,10 @@ function dragged(){
 }
 
 function draggedPoint(i){
+  if (i > 0){
+    dragged(rotateAxes=false);
+    return;
+  }
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {

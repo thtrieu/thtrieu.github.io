@@ -54,7 +54,7 @@ d3.selectAll('#reset_point_coord_lines')
   })
 </script>
 
-*Does the coordinate axes here acting like rulers on a map?*
+*Do the coordinate axes here acting like rulers on a map?*
 
 Yes! By measuring distance in different directions, this set of rulers (which we named \\(x, y,\\) and \\(z\\)) can assign any point living in space a location as you suggested:
 
@@ -103,14 +103,14 @@ d3.selectAll('#but_point_arrow_location')
 
 *Right, so now what do I do with a vector?*
 
-You don't do much with a vector. You start to have fun when there is more than one :) Dot product between two vectors is a simple and important concept. Below, you can see the dot product of two vectors \\(u\\) and \\(v\\) is the **length of the projection** of \\(u\\) onto \\(v\\).
+You don't do much with a vector. You start to have fun when there is more than one :) Dot product between two vectors is a simple and important concept. Below, you can see the dot product of two vectors \\(u\\) and \\(v\\), denoted \\(uv\\), is the **length of the projection** of \\(u\\) onto \\(v\\).
 
 
 <center class='js'>
 <svg width="300" height="250" id="svg_dot_product_project2d"></svg><svg width="300" height="250" id="svg_dot_product_project"></svg> 
 <br/>
-The coordinate system is now fixed. Rotate all, move individual point, or click
-<button id='but_dot_product_project'>shuffle</button>.
+Try dragging vector \(u\), \(v\), the whole space, or click
+<button id='but_dot_product_project'>reset</button>.
 </center>
 
 <script src="/assets/js/linear_algebra/dot_product_project2d.js"></script>
@@ -123,9 +123,26 @@ d3.selectAll('#but_dot_product_project')
   });
 </script>
 
-*So why don't we call it the projection, isn't that a more intuitive name?*
+*Projection length is not very accurate isn't it? Length cannot be negative, while in the illustration above the number can sometimes be negative, indicating \\(u\\) and \\(v\\) being roughly opposite in direction. And why don't we call it "signed-projection", isn't that a more intuitive name than "dot-product"?*
 
-You are right. The name "dot product" here stands for a very simple formula for the projection. That is, we should take the product of corresponding coordinates between \\(u\\) and \\(v\\) and then add them up!
+You are right, a negative dot-product carries more information than just the length of projection. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between \\(u\\) and \\(v\\) and then add them up!
+
+<center class='js'>
+<svg width="315" height="250" id="svg_dot_product_formula2d"></svg><svg width="315" height="250" id="svg_dot_product_formula"></svg> 
+<br/>
+Try dragging vector \(u\), \(v\), the whole space, or click
+<button id='but_dot_product_formula'>reset</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/dot_product_formula2d.js"></script>
+<script src="/assets/js/linear_algebra/dot_product_formula.js"></script>
+<script>
+d3.selectAll('#but_dot_product_formula')
+  .on('click', function(){
+      dot_product_formula2d.init();
+      dot_product_formula.init();
+  });
+</script>
 
 *Oh, that's a very nice coincidence.*
 
@@ -133,8 +150,8 @@ Indeed it is. Here is a diagram showing how two vectors \\(u\\) and \\(v\\) coll
 
 *So since this operation is symmetric between \\(u\\) and \\(v\\), should it give the same result as projecting v onto u?*
 
-Well I cheated a bit in the explanation so far :) "Projection of \\(u\\) onto \\(v\\)" is almost, but not quite, the correct interpretation of dot product! The correct formula 
-here takes into account length of \\(v\\) besides its direction: 
+Great observation. Well, I cheated a bit in the explanation so far :) "Projection of \\(u\\) onto \\(v\\)" is almost, but not quite, the correct interpretation of dot product! The correct formula 
+here takes into account length of \\(v\\):
 
 $$\textrm{dot product}(u, v) = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \textrm{length of}\ v$$
 
