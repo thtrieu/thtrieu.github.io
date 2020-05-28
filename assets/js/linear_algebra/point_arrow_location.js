@@ -238,14 +238,13 @@ function processData(scatter, xline, yline, zline, tt){
     .attr('cy', posPointY);
   points.exit().remove();
 
-
   var text = svg
-      .selectAll('text.'.concat(name, 'Text'))
+      .selectAll('text.Text')
       .data(scatter);
   text
       .enter()
       .append('text')
-      .attr('class', '_3d '.concat(name, 'Text'))
+      .attr('class', '_3d Text')
       .attr('dx', '.4em')
       .merge(text)
       .transition().duration(tt)
@@ -261,7 +260,6 @@ function processData(scatter, xline, yline, zline, tt){
       })
       .attr('x', function(d){ return d.projected.x; })
       .attr('y', function(d){ return d.projected.y; })
-      .attr('z', function(d){ return d.z; })
       .text(function(d){
           var coord = dot_basis(d, basis);
           return '['.concat(

@@ -123,9 +123,9 @@ d3.selectAll('#but_dot_product_project')
   });
 </script>
 
-*Projection length is not very accurate isn't it? Length cannot be negative, while in the illustration above the number can sometimes be negative, indicating \\(u\\) and \\(v\\) being roughly opposite in direction. And why don't we call it "signed-projection", isn't that a more intuitive name than "dot-product"?*
+*Projection length is not very accurate isn't it? Length cannot be negative, while in the illustration above the number can sometimes be negative. Why don't we call it "signed-projection", isn't that a more intuitive name than "dot-product"?*
 
-You are right, a negative dot-product carries more information than just the length of projection. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between \\(u\\) and \\(v\\) and then add them up!
+You are right, a negative dot-product carries more information than just the length of projection. Which is, \\(u\\) and \\(v\\) are roughly opposite in direction. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between \\(u\\) and \\(v\\) and then add them up!
 
 <center class='js'>
 <svg width="315" height="250" id="svg_dot_product_formula2d"></svg><svg width="315" height="250" id="svg_dot_product_formula"></svg> 
