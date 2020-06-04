@@ -2,6 +2,9 @@
 title: Interactive Visualizations of Linear Algebra - Part 1
 ---
 
+
+<script src="/assets/js/linear_algebra/lib.js"></script>
+
 *Italica* is a design student who recently acquired an appetite for intuitive illustration of Mathematical concepts. Regula is a graduate student in Machine Learning and a regular coffee buddy of *Italica*. Today they chat about Linear Algebra while striding leisurely along the sunny beach of Quy Nhon.
 
 <center><b>1. Vectors</b></center>
@@ -17,7 +20,7 @@ title: Interactive Visualizations of Linear Algebra - Part 1
 Here is a bunch of vectors.
 
 <center class='js'>
-<svg width="300" height="250" id="svg_lone_vector"></svg>
+<svg width="300" height="250" id="svg_point_cloud"></svg>
 <br/> 
 Drag or <button id='but_point_cloud'>shuffle</button>
 </center>
@@ -203,7 +206,7 @@ As we have seen, projecting \\(u\\) onto \\(v\\) reduces \\(u\\) into one single
 
 *So I guess my question is, if we are taking more than one view, shouldn't we select \\( \\{ v_1, v_2, v_3 \\} \\) such that these views don't correlate with each other as much as possible?*
 
-Absolutely, setting aside what we really mean by "correlation" mathematically, this set of vectors needs to be pair-wise perpendicular for the views to not correlate. For example, when \\(v_1 = [1, 0, 0]\\), \\(v_2 = [0, 1, 0]\\), and \\(v_3 = [0, 0, 1]\\). In this case, projecting \\(u\\) on \\( \\{ v_1, v_2, v_3 \\} \\) will, surprise surprise, give you back the list of three coordinates of \\(u\\).
+Absolutely. Setting aside what we really mean by "correlation", this set of vectors needs to be pair-wise perpendicular for the views to not correlate. For example, when \\(v_1 = [1, 0, 0]\\), \\(v_2 = [0, 1, 0]\\), and \\(v_3 = [0, 0, 1]\\). In this case, projecting \\(u\\) on \\( \\{ v_1, v_2, v_3 \\} \\) will, surprise surprise, give you back the list of three coordinates of \\(u\\).
 
 *It looks like \\(v_1, v_2, v_3\\) as defined above is acting as the coordinate system, because they are measuring \\(u\\) in three perpendicular directions.*
 
@@ -225,7 +228,7 @@ Such a set of vectors are *orthonormal* ("othor"= "perpendicular", "normal" = le
 
 You have just asked *The Question* of Linear Algebra. Earlier we see that if \\( \\{ v_1, v_2, v_3 \\} \\) is orthonormal, the result looks like \\(u\\), except rotated by an angle.
 
-The answer to the more general question is a fascinating journey we'll now embark on, uncovering it one step at a time! The list of numbers \\([u\cdot v_1, u\cdot v_2, u\cdot v_3]\\) is a new vector \\(u^\*\\). This new vector is what \\(u\\) looks like in the perspective of the skewed "coordinate system" \\( \\{ v_1, v_2, v_3 \\} \\). First, let's visualize it:
+The answer to your more general question is a fascinating journey we'll now embark on, uncovering it one step at a time! The list of numbers \\([u\cdot v_1, u\cdot v_2, u\cdot v_3]\\) is a new vector \\(u^\*\\). This new vector is what \\(u\\) looks like in the perspective of the skewed "coordinate system" \\( \\{ v_1, v_2, v_3 \\} \\). First, let's visualize it:
 
 Notation wise, if we stack \\( \\{ v_1, v_2, v_3 \\} \\) horizontally into a rectangle of numbers, we have just reinvented the matrix-vector multiplication using the "collapsing" diagram:
 
@@ -244,10 +247,16 @@ Here we have just turned a 3-dimensional vectors into a 2-dimensional vector.
 
 Of course, we can certainly do so by projecting \\(u\\), living in 2 dimensional space, onto a set of three vectors \\(v_1, v_2, v_3\\):
 
-*That looks cool! It seems to me these transformations done by matrix-vector mulitpication are stretching/squashing space uniformly throughout across all positions. Is it true?*
+*That looks cool! It seems matrix-vector multiplication is characterized by its stretching/squishing space uniformly everywhere. Is this true?*
 
-Yes that's true. Equivalently speaking, if two chunks of space before the transformation are equal in volume, they are also equal in volume *after* the transformation. 
+That is true. Let's take a moment to unpack what you really mean by "uniformly everywhere". First, we can study this stretching/squishing by looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers. Let's look at how different line segments change in terms of their length.
 
-*Oh that's an interesting way to describe it! This raises the question: how much bigger or smaller does the space get after a given transformation?*
+*It seems that they got scaled up/down by the same factor, regardless of their position and size.*
 
-You are asking the all the right questions! The point of Linear Algebra is really studying these transformations inside-out, characterizing them, breaking them apart. Volume contraction or expansion is just one of these studies. The keyword for your question here is *Determinant of a Matrix*. But let's take a break here and grab a coffee? We'll come back with many more interesting findings :)
+Yes. Equivalently speaking, any two segments equal in length before a transformation will still be equal in length after the transformation. 
+
+This property translates to higher dimensions as well. If two chunks of space are equal in volume before a matrix-vector multiplication, they are also equal in volume after said multiplication:
+
+*Oh that's an interesting way to describe it. This raises the question: how much bigger or smaller does the space get after a given transformation? In the 1-dimensional case, this factor is simply the number used to multiply. In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
+
+You are asking all the right questions! The point of Linear Algebra is really studying these transformations inside-out, characterizing them, breaking them apart. Volume contraction or expansion is just one of these studies. The keyword for your question here is *Determinant of a Matrix*. But let's take a break here and grab a coffee? We'll come back with many more interesting findings :)
