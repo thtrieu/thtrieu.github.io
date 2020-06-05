@@ -41,7 +41,7 @@ function plot(scatter, axis, tt){
                   drag_point_fn=function(d, i){dragged_point(i)},
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
-  svg.selectAll('._3d').sort(lib.sort_centroid_z);
+  lib.sort();
 }
 
 

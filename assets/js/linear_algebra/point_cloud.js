@@ -36,12 +36,11 @@ axis = lib.init_axis(axis_len=axis_len);
 function plot(scatter, axis, tt){
 
   var lines = [], points = [];
-  // lib.plot_lines(axis);
   lib.plot_points(scatter, tt,
                   drag_point_fn=function(d, i){dragged_point(i)},
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
-  svg.selectAll('._3d').sort(lib.sort_centroid_z);
+  lib.sort();
 }
 
 

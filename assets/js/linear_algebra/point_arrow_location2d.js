@@ -2,7 +2,7 @@ var point_arrow_location2d = (function() {
 
 
 
-var origin = [150, 130], 
+var origin = [150, 140], 
   scale = 10, 
   scatter = [], 
   axis = [],

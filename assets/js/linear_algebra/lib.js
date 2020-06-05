@@ -6,8 +6,11 @@ var
   atan0 = 0,
   atan1 = 0;
 
+let domain = [-9, 9];
 
-function _create_axis(axis, name, ord, axis_len=13) {
+
+function _create_axis(axis, name, ord, 
+                      axis_len=13) {
   d3.range(0, axis_len, 1).forEach(
       function(d){
         var text = '';
@@ -20,15 +23,24 @@ function _create_axis(axis, name, ord, axis_len=13) {
             p2 = [0, 0, 0];
         p1[ord] = d;
         p2[ord] = d+1;
-        axis.push([
-            {x: p1[0], y:p1[1], z:p1[2]},
-            {x: p2[0], y:p2[1], z:p2[2], text:text}
-        ]); 
+        var segment = [
+          {x: p1[0], y:p1[1], z:p1[2]},
+          {x: p2[0], y:p2[1], z:p2[2]}
+        ]
+        if (d == axis_len-1) {
+          segment[1].text = text;
+        }
+        else {
+          segment[0].text = text
+        }
+        axis.push(segment); 
       }
   );
 }
 
+
 function init_axis(axis_len=13) {
+  set_ranges(axis_len);
   var axis = [];
   _create_axis(axis, 'x', 0, axis_len);
   _create_axis(axis, 'y', 1, axis_len);
@@ -38,36 +50,98 @@ function init_axis(axis_len=13) {
   return axis;
 }
 
+function _create_axis_float(
+    axis, name, ord, axis_len=2, unit=0.2) {
+  d3.range(0, axis_len, unit).forEach(
+      function(d){
+        var text = '';
+        if (d == axis_len-unit) {
+          text = name
+        }
+        var p1 = [0, 0, 0],
+            p2 = [0, 0, 0];
+        p1[ord] = d;
+        p2[ord] = d+unit;
+        var segment = [
+          {x: p1[0], y:p1[1], z:p1[2]},
+          {x: p2[0], y:p2[1], z:p2[2]}
+        ]
+        if (d == axis_len-unit) {
+          segment[1].text = text;
+        }
+        else {
+          segment[0].text = text
+        }
+        axis.push(segment); 
+      }
+  );
+}
 
-var color  = d3.scaleOrdinal()
-               .domain(d3.range(0, 20))
-               .range(d3.schemeCategory20);
+function init_float_axis(axis_len=2.0, unit=0.2) {
+  set_ranges(axis_len)
+  var axis = [];
+  _create_axis_float(axis, 'x', 0, axis_len, unit);
+  _create_axis_float(axis, 'y', 1, axis_len, unit);
+  if (!is_2d) {
+    _create_axis_float(axis, 'z', 2, axis_len, unit);
+  }
+  return axis;
+}
+
+function normalize(v) {
+  let norm = Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+  let r = Object.assign({}, v);
+  r.x = v.x/norm;
+  r.y = v.y/norm;
+  r.z = v.z/norm;
+  return r;
+}
 
 
-var z_to_size_scale = d3.scaleLinear()
-                        .domain([-9, 9])
-                        .range([4, 5.5]);
 
-var z_to_txt_size_scale = d3.scaleLinear()
-                            .domain([-9, 9])
-                            .range([9, 14]);
+var  color  = d3.scaleOrdinal()
+             .domain(d3.range(0, 20))
+             .range(d3.schemeCategory20);
 
-var z_to_txt_opacity_scale = d3.scaleLinear()
-                               .domain([-9, 9])
-                               .range([0.2, 1.0]);
 
-var z_to_opacity_scale = d3.scaleLinear()
-                           .domain([-9, 9])
-                           .range([0.5, 1.0]);
+var z_to_size_scale,
+    z_to_txt_size_scale,
+    z_to_txt_opacity_scale,
+    z_to_opacity_scale,
+    z_to_stroke_width_scale;
 
-var z_to_stroke_width_scale = d3.scaleLinear()
-                                .domain([-9, 9])
-                                .range([1.0, 2.7]);
+
+
+function set_ranges(axis_len) {
+  domain = [-axis_len, axis_len];
+
+  z_to_size_scale = d3.scaleLinear()
+                      .domain(domain)
+                      .range([4, 5.5]);
+
+  z_to_txt_size_scale = d3.scaleLinear()
+                          .domain(domain)
+                          .range([9, 14]);
+
+  z_to_txt_opacity_scale = d3.scaleLinear()
+                             .domain(domain)
+                             .range([0.2, 1.0]);
+
+  z_to_opacity_scale = d3.scaleLinear()
+                         .domain(domain)
+                         .range([0.5, 1.0]);
+
+  z_to_stroke_width_scale = d3.scaleLinear()
+                              .domain(domain)
+                              .range([1.0, 2.7]);
+}
+
+
 
 
 function z_to_size(z){
   if (is_2d) {
-    return 4;
+    return 4.5;
   }
   return z_to_size_scale(z)
 }
@@ -75,7 +149,7 @@ function z_to_size(z){
 
 function z_to_txt_size(z){
   if (is_2d) {
-    return 12;
+    return 13;
   }
   return z_to_txt_size_scale(z)
 }
@@ -121,31 +195,50 @@ function get_line_color(d){
 
 
 function plot_lines(data, tt, name='none'){
+
+  data.forEach(function(d, j){
+    d.key = name + j.toString();
+  })
+
   var lines = svg
       .selectAll('line.' + name)
-      .data(data);
+      .data(data, function(d){ return d.key; });
   lines
       .enter()
       .append('line')
       .attr('class', '_3d ' + name)
       .merge(lines)
+      .transition().duration(tt)
       .each(function(d){
         d.centroid = {
-          x: (d[1].x+d[0].x)/2,
-          y: (d[1].y+d[0].y)/2,
-          z: (d[1].z+d[0].z)/2
-        }
+          x: (d[1].x+d[0].x)/2.,
+          y: (d[1].y+d[0].y)/2.,
+          z: (d[1].z+d[0].z)/2.
+        };
       })
-      .transition().duration(tt)
+      .style('stroke-dasharray', function(d) {
+        if (d.hasOwnProperty('dash')) {
+          return ('3, 3');
+        }
+        return;
+      })
       .attr('x1', function(d){ return project(d[0]).x; })
       .attr('y1', function(d){ return project(d[0]).y; })
       .attr('x2', function(d){ return project(d[1]).x; })
       .attr('y2', function(d){ return project(d[1]).y; })
       .attr('fill', get_line_color)
       .attr('stroke', get_line_color)
-      .attr('stroke-width', function(d){ return z_to_stroke_width(d.centroid.z);})
+      .attr('stroke-width', function(d){
+        if (d.hasOwnProperty('stroke_width')) {
+          return d.stroke_width;
+        }
+        return z_to_stroke_width(d.centroid.z);
+      })
       .attr('opacity', function(d){
-          return z_to_opacity(d[1].z);
+        if (d.hasOwnProperty('opacity')) {
+          return d.opacity;
+        }
+        return z_to_opacity(d[1].z);
       });
   lines.exit().remove();
 
@@ -160,31 +253,59 @@ function plot_lines(data, tt, name='none'){
       .attr('dx', '.1em')
       .merge(text)
       .each(function(d){
-          d.centroid = {x: d[1].x, 
-                        y: d[1].y, 
-                        z: d[1].z};
+        if (d.hasOwnProperty('text')) {
+          d.text_position = project(d.centroid);
+        } else if (d[0].hasOwnProperty('text')) {
+          d.text_position = project(d[0]);
+        }
+        else {
+          d.text_position = project(d[1]);
+        }
       })
       .transition().duration(tt)
       .style('font-size', function(d){
+        if (d.hasOwnProperty('font_size')) {
+          return d.font_size + 'px';
+        }
         return z_to_txt_size(d[1].z)
                   .toString()
                   .concat('px');
       })
-      .attr('x', function(d){ return project(d[0]).x; })
-      .attr('y', function(d){ return project(d[0]).y; })
+      .style('fill', function(d) {
+        if (!d.hasOwnProperty('text_color')) {
+          return 'black';
+        }
+        return color(d.text_color);
+      })
+      .attr('x', function(d){ return d.text_position.x; })
+      .attr('y', function(d){ return d.text_position.y; })
       .text(function(d){
-        return d[1].text;
+        if (d.hasOwnProperty('text')) {
+          return d.text;
+        } else if (d[0].hasOwnProperty('text')) {
+          return d[0].text;
+        }
+        else {
+          return d[1].text;
+        }
       })
       .attr('opacity', function(d){
-          return z_to_txt_opacity(d[1].z);
+        if (d.hasOwnProperty('text_opacity')){
+          return d.text_opacity;
+        }
+        return z_to_txt_opacity(d[1].z);
       });
   text.exit().remove();
 }
 
 
 function sort_centroid_z(a, b){
-    var _a = a.centroid.z, _b = b.centroid.z;
-    return _a < _b ? -1 : _a > _b ? 1 : _a >= _b ? 0 : NaN;
+
+  // var _a = a.centroid.z, _b = b.centroid.z;
+  var 
+    _a = a.hasOwnProperty('centroid_z') ? a.centroid_z : a.centroid.z,
+    _b = b.hasOwnProperty('centroid_z') ? b.centroid_z : b.centroid.z;
+  return _a < _b ? -1 : _a > _b ? 1 : _a >= _b ? 0 : NaN;
 }
 
 
@@ -194,7 +315,12 @@ function plot_points(data,
                      drag_start_fn,
                      drag_end_fn){
 
-  var points = svg.selectAll('circle').data(data)
+  data.forEach(function(d, j){
+    d.key = name + j.toString();
+  })
+
+  var points = svg.selectAll('circle')
+                  .data(data, function(d){ return d.key; })
                   .each(function(d){})
                   .call(d3.drag()
                           .on('drag', drag_point_fn)
@@ -214,11 +340,14 @@ function plot_points(data,
     })
     .attr('cx', function(d){return project(d).x})
     .attr('cy', function(d){return project(d).y})
-    .each(function(d){
-      d.centroid = {x: d.x, y: d.y, z: d.z};
-    })
+    // .each(function(d){
+    //   d.centroid = {x: d.x, y: d.y, z: d.z};
+    // })
     .attr('r', function(d){
-        return z_to_size(d.z);
+      if (d.hasOwnProperty('r')) {
+        return d.r;
+      }
+      return z_to_size(d.z);
     })
     .attr('fill', function(d){ return color(d.color); })
     .attr('opacity', function(d){
@@ -228,7 +357,7 @@ function plot_points(data,
 
   var text = svg
       .selectAll('text.pText')
-      .data(data);
+      .data(data, function(d){ return d.key; });
   text
       .enter()
       .append('text')
@@ -254,6 +383,11 @@ function plot_points(data,
       });
 
   text.exit().remove();
+}
+
+
+function sort(){
+  svg.selectAll('._3d').sort(sort_centroid_z);
 }
 
 
@@ -388,12 +522,12 @@ function create_segments(d, k=10) {
     let j = i + 1;
     let r1 = Object.assign({}, d);
     let r2 = Object.assign({}, d);
-    r1.x = i * d.x / 10.
-    r1.y = i * d.y / 10.
-    r1.z = i * d.z / 10.
-    r2.x = j * d.x / 10.
-    r2.y = j * d.y / 10.
-    r2.z = j * d.z / 10.
+    r1.x = i * d.x / k
+    r1.y = i * d.y / k
+    r1.z = i * d.z / k
+    r2.x = j * d.x / k
+    r2.y = j * d.y / k
+    r2.z = j * d.z / k
     r.push([r1, r2]);
   };
   return r;
@@ -401,20 +535,24 @@ function create_segments(d, k=10) {
 
 
 return {
+  color: color,
+  normalize: normalize,
+  dot_product: dot_product,
   plot_points: plot_points,
   plot_lines: plot_lines,
   dot_basis: dot_basis,
-  sort_centroid_z: sort_centroid_z,
   rotate_point: rotate_point,
   rotate_points: rotate_points,
   rotate_lines: rotate_lines,
   init_axis: init_axis,
+  init_float_axis: init_float_axis,
   drag_start: drag_start,
   get_drag_angles: get_drag_angles,
   drag_start2d: drag_start2d,
   get_drag_angle_2d: get_drag_angle_2d,
   update_point_position_from_mouse: update_point_position_from_mouse,
   create_segments: create_segments,
+  sort: sort,
 }
 
 };

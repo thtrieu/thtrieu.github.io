@@ -2,7 +2,7 @@ var point_coord_lines2d = (function() {
 
 
 
-var origin = [150, 130], 
+var origin = [150, 140], 
   scale = 10, 
   scatter = [], 
   axis = [],
@@ -32,7 +32,6 @@ axis = lib.init_axis(axis_len=axis_len);
 
 
 function plot(scatter, axis, tt){
-
   lib.plot_lines(axis);
   lib.plot_points(scatter, tt,
                     drag_point_fn=function(d, i){dragged_point(i)},

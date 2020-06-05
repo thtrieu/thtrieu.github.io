@@ -126,7 +126,7 @@ d3.selectAll('#but_dot_product_project')
   });
 </script>
 
-*Projection length is not very accurate isn't it? Length cannot be negative, while in the illustration above the number can sometimes be negative. Why don't we call it "signed-projection", isn't that a more intuitive name than "dot-product"?*
+*Projection length is not very accurate right? Length cannot be negative, while in the illustration above the number can sometimes be negative. Why don't we call it "signed-projection"? I think it is a more intuitive name than "dot-product".*
 
 You are right, a negative dot-product carries more information than just the length of projection. Which is, \\(u\\) and \\(v\\) are roughly opposite in direction. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between \\(u\\) and \\(v\\) and then add them up!
 
@@ -136,7 +136,7 @@ You are right, a negative dot-product carries more information than just the len
 Try dragging vector \(u\), \(v\), the whole space, or click
 <button id='but_dot_product_formula'>reset</button>.
 </center>
-
+<!-- 
 <script src="/assets/js/linear_algebra/dot_product_formula2d.js"></script>
 <script src="/assets/js/linear_algebra/dot_product_formula.js"></script>
 <script>
@@ -146,7 +146,7 @@ d3.selectAll('#but_dot_product_formula')
       dot_product_formula.init();
   });
 </script>
-
+ -->
 *Oh, that's a very nice coincidence.*
 
 Indeed it is. Here is a diagram showing how two vectors \\(u\\) and \\(v\\) collapsing into a single number (their dot product \\(uv\\)). This "collapsing" diagram of dot product is very useful and we will see it again soon.
