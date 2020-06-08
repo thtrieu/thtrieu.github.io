@@ -59,7 +59,7 @@ d3.selectAll('#reset_point_coord_lines')
 
 *Do the coordinate axes here acting like rulers on a map?*
 
-Yes! By measuring distance in different directions, this set of rulers (which we named \\(x, y,\\) and \\(z\\)) can assign any point living in space a location as you suggested:
+Yes! By measuring distance in different directions, this set of rulers (which we named $x, y,$ and $z$) can assign any point living in space a location as you suggested:
 
 
 <center class='js'>
@@ -86,7 +86,7 @@ Exactly. People also refer to a vector as an arrow pointing from the origin to t
 <center class='js'>
 <svg width="300" height="250" id="svg_point_arrow_location2d"></svg><svg width="300" height="250" id="svg_point_arrow_location"></svg> 
 <br/>
-Here we use round-headed arrows and simplify the coordinates by assuming the order \(x\rightarrow y\rightarrow z\).
+Here we use round-headed arrows and simplify the coordinates by assuming the order $x\rightarrow y\rightarrow z$.
 <br/>
 Rotate the space, move individual point, or click
 <button id='but_point_arrow_location'>shuffle</button>.
@@ -106,7 +106,7 @@ d3.selectAll('#but_point_arrow_location')
 
 *Right, so now what do I do with a vector?*
 
-You don't do much with a vector. You start to have fun when there is more than one :) Dot product between two vectors is a simple and important concept. Below, you can see the dot product of two vectors \\(u\\) and \\(v\\), denoted \\(uv\\), is the **length of the projection** of \\(u\\) onto \\(v\\).
+You don't do much with a vector. You start to have fun when there is more than one :) Dot product between two vectors is a simple and important concept. Below, you can see the dot product of two vectors $u$ and $v$, denoted $u^Tv$, is the **length of the projection** of $u$ onto $v$.
 
 
 <center class='js'>
@@ -128,15 +128,15 @@ d3.selectAll('#but_dot_product_project')
 
 *Projection length is not very accurate right? Length cannot be negative, while in the illustration above the number can sometimes be negative. Why don't we call it "signed-projection"? I think it is a more intuitive name than "dot-product".*
 
-You are right, a negative dot-product carries more information than just the length of projection. Which is, \\(u\\) and \\(v\\) are roughly opposite in direction. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between \\(u\\) and \\(v\\) and then add them up!
+You are right, a negative dot-product carries more information than just the length of projection. Which is, $u$ and $v$ are roughly opposite in direction. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between $u$ and $v$ and then add them up!
 
 <center class='js'>
-<svg width="315" height="250" id="svg_dot_product_formula2d"></svg><svg width="315" height="250" id="svg_dot_product_formula"></svg> 
+<svg width="315" height="350" id="svg_dot_product_formula2d"></svg><svg width="315" height="350" id="svg_dot_product_formula"></svg> 
 <br/>
 Try dragging vector \(u\), \(v\), the whole space, or click
 <button id='but_dot_product_formula'>reset</button>.
 </center>
-<!-- 
+
 <script src="/assets/js/linear_algebra/dot_product_formula2d.js"></script>
 <script src="/assets/js/linear_algebra/dot_product_formula.js"></script>
 <script>
@@ -146,33 +146,33 @@ d3.selectAll('#but_dot_product_formula')
       dot_product_formula.init();
   });
 </script>
- -->
+
 *Oh, that's a very nice coincidence.*
 
-Indeed it is. Here is a diagram showing how two vectors \\(u\\) and \\(v\\) collapsing into a single number (their dot product \\(uv\\)). This "collapsing" diagram of dot product is very useful and we will see it again soon.
+Indeed it is. Here is a diagram showing how two vectors $u$ and $v$ collapsing into a single number (their dot product $uv$). This "collapsing" diagram of dot product is very useful and we will see it again soon.
 
-*So since this operation is symmetric between \\(u\\) and \\(v\\), should it give the same result as projecting v onto u?*
+*So since this operation is symmetric between $u$ and $v$, should it give the same result as projecting v onto u?*
 
-Great observation. Well, I cheated a bit in the explanation so far :) "Projection of \\(u\\) onto \\(v\\)" is almost, but not quite, the correct interpretation of dot product! The correct formula 
-here takes into account length of \\(v\\):
+Great observation. Well, I cheated a bit in the explanation so far :) "Projection of $u$ onto $v$" is almost, but not quite, the correct interpretation of dot product! The correct formula 
+here takes into account length of $v$:
 
-$$\textrm{dot product}(u, v) = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \textrm{length of}\ v$$
+$$u^Tv = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \textrm{length of}\ v$$
 
-The calculations done so far is correct only because I sneakily set the length of \\(v\\) to be \\(1\\). Now to answer your question, with this correct formular:
+The calculations done so far is correct only because I sneakily set the length of $v$ to be $1$. Now to answer your question, with this correct formular:
 
-$$u \cdot v = v \cdot u  = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \textrm{length of}\ v = \textrm{Projection of}\ v\ \textrm{onto}\ u \times \textrm{length of}\ u$$
+$$u^Tv = v^Tu  = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \textrm{length of}\ v = \textrm{Projection of}\ v\ \textrm{onto}\ u \times \textrm{length of}\ u$$
 
-*So, if \\(v\\) is hold fixed and \\(u\\) is moving around, then you are suggesting that dot product can be think of as a measurement of the projection of \\(u\\) onto \\(v\\) right?*
+*So, if $v$ is hold fixed and $u$ is moving around, then you are suggesting that dot product can be think of as a measurement of the projection of $u$ onto $v$ right?*
 
-That's the right way to think about it :) The dot product here is simply the projection times a fixed constant (length of \\(v\\)). So to compare the projection of \\(u_1\\) and \\(u_2\\) onto \\(v\\), we can just compare \\(u_1\cdot v\\) and \\(u_2\cdot v\\).
+That's the right way to think about it :) The dot product here is simply the projection times a fixed constant (length of $v$). So to compare the projection of $u_1$ and $u_2$ onto $v$, we can just compare $u_1^Tv$ and $u_2^Tv$.
 
 <center><b>3. Changing in persepective</b></center>
 
 *Okay, that makes sense. But why do we care about projections of vectors onto each other anyway?*
 
-That's a good question. One of the understanding here is that projecting \\(u\\) onto \\(v\\) is essentially applying a **change in perspective**.
+That's a good question. One of the understanding here is that projecting $u$ onto $v$ is essentially applying a **change in perspective**.
 
-In the current space and coordinate system, \\(u\\) is a vector of certain direction and length. The question is, what does \\(u\\) look like in *another space and coordinate system?* In particular, how does \\(u\\) look like from \\(v\\)'s perspective? A reasonable answer is just projecting \\(u\\) onto \\(v\\).
+In the current space and coordinate system, $u$ is a vector of certain direction and length. The question is, what does $u$ look like in *another space and coordinate system?* In particular, how does $u$ look like from $v$'s perspective? A reasonable answer is just projecting $u$ onto $v$.
 
 *Maybe I am seeing why. The projection will be larger when the two is more aligned, and shrinks to zero when the two vectors are not aligned at all (perpendicular).*
 
@@ -182,11 +182,11 @@ Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Muc
 
 There are many, Linear Algebra is truly ubiquitous! As a student in Machine Learning, I can vouch for its application in this field.
 
-In certain branches of Machine Learning, the goal is to learn *How to change the perspective so that an object appear in a certain way.* For example, we want to find what changes of perspective that turn the pixels of a photo of my cat into the caption text \\(\texttt{"my cat"}\\).
+In certain branches of Machine Learning, the goal is to learn *How to change the perspective so that an object appear in a certain way.* For example, we want to find what changes of perspective that turn the pixels of a photo of my cat into the caption text $\texttt{"my cat"}$.
 
-*Cool, so we should first somehow represent the photo as a vector \\(u\\), then we try to find \\(v\\) such that the dot product \\(u\cdot v= u'\\) is the vector that represents the caption text?*
+*Cool, so we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that the dot product $u\cdot v= u'$ is the vector that represents the caption text?*
 
-That is the spirit. The devil is in the detail though: How do we represent photo/text as vectors? How do we figure out the appropriate \\(v\\)? And so on :)
+That is the spirit. The devil is in the detail though: How do we represent photo/text as vectors? How do we figure out the appropriate $v$? And so on :)
 
 Consider writing this tutorial. All the visualizations of 3D spaces done here will be displayed on your screen, a 2D surface. This requires a perspective change between the two spaces. The code that I wrote for the visualizations must therefore handle this change using Linear Algebra. 
 
@@ -200,15 +200,15 @@ Better yet, reach for Chapter 10 in the classic [Introduction to Linear Algebra]
 
 For the moment, let us not digress too far and get back to our main discussion.
 
-As we have seen, projecting \\(u\\) onto \\(v\\) reduces \\(u\\) into one single number (called a scalar). In practice, we usually project \\(u\\) onto a bunch of vectors, e.g. three vectors \\( \\{ v_1, v_2, v_3 \\} \\), and thereby obtaining a list of numbers instead of just one number.
+As we have seen, projecting $u$ onto $v$ reduces $u$ into one single number (called a scalar). In practice, we usually project $u$ onto a bunch of vectors, e.g. three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers instead of just one number.
 
-*OK, this list of numbers is three different views of \\(u\\) from three different \\(v\\) vectors. But if \\(v_1 = v_2\\), we are obtaining the same view twice. If \\(v_1\\) and \\(v_2\\) are almost aligned, the two views are also almost identical.*
+*OK, this list of numbers is three different views of $u$ from three different $v$ vectors. But if $v_1 = v_2$, we are obtaining the same view twice. If $v_1$ and $v_2$ are almost aligned, the two views are also almost identical.*
 
-*So I guess my question is, if we are taking more than one view, shouldn't we select \\( \\{ v_1, v_2, v_3 \\} \\) such that these views don't correlate with each other as much as possible?*
+*So I guess my question is, if we are taking more than one view, shouldn't we select $ \\{ v_1, v_2, v_3 \\} $ such that these views don't correlate with each other as much as possible?*
 
-Absolutely. Setting aside what we really mean by "correlation", this set of vectors needs to be pair-wise perpendicular for the views to not correlate. For example, when \\(v_1 = [1, 0, 0]\\), \\(v_2 = [0, 1, 0]\\), and \\(v_3 = [0, 0, 1]\\). In this case, projecting \\(u\\) on \\( \\{ v_1, v_2, v_3 \\} \\) will, surprise surprise, give you back the list of three coordinates of \\(u\\).
+Absolutely. Setting aside what we really mean by "correlation", this set of vectors needs to be pair-wise perpendicular for the views to not correlate. For example, when $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back the list of three coordinates of $u$.
 
-*It looks like \\(v_1, v_2, v_3\\) as defined above is acting as the coordinate system, because they are measuring \\(u\\) in three perpendicular directions.*
+*It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system, because they are measuring $u$ in three perpendicular directions.*
 
 Nice observation. In fact with this observation, now you can forget about coordinate systems. Instead, think of space as being "measured" by this set of vectors. 
 
@@ -216,24 +216,24 @@ Nice observation. In fact with this observation, now you can forget about coordi
 
 Exactly. Be aware that there can be many such sets, as long as they satisfy the following two conditions:
 
-* The chosen \\( \\{ v_1, v_2, v_3 \\} \\) is pairwise perpendicular. 
+* The chosen $ \\{ v_1, v_2, v_3 \\} $ is pairwise perpendicular. 
 
-* Each of \\( v_1, v_2, v_3 \\) has length 1.
+* Each of $ v_1, v_2, v_3 $ has length 1.
 
-Such a set of vectors are *orthonormal* ("othor"= "perpendicular", "normal" = length of 1). Any orthonormal set acting as a coordinate system is called a *basis*. To get the position (coordinates) of a point with respect to any basis, simply project the vector onto this set as shown earlier with \\(u\\) and \\( \\{ v_1, v_2, v_3 \\} \\):
+Such a set of vectors are *orthonormal* ("othor"= "perpendicular", "normal" = length of 1). Any orthonormal set acting as a coordinate system is called a *basis*. To get the position (coordinates) of a point with respect to any basis, simply project the vector onto this set as shown earlier with $u$ and $ \\{ v_1, v_2, v_3 \\} $:
 
 <center><b>5. Matrix multiplication</b></center>
 
-*What if the set \\( \\{ v_1, v_2, v_3 \\} \\) is not orthonormal? What does the resulting vector after projecting \\(u\\) onto this set look like?*
+*What if the set $ \\{ v_1, v_2, v_3 \\} $ is not orthonormal? What does the resulting vector after projecting $u$ onto this set look like?*
 
-You have just asked *The Question* of Linear Algebra. Earlier we see that if \\( \\{ v_1, v_2, v_3 \\} \\) is orthonormal, the result looks like \\(u\\), except rotated by an angle.
+You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result looks like $u$, except rotated by an angle.
 
-The answer to your more general question is a fascinating journey we'll now embark on, uncovering it one step at a time! The list of numbers \\([u\cdot v_1, u\cdot v_2, u\cdot v_3]\\) is a new vector \\(u^\*\\). This new vector is what \\(u\\) looks like in the perspective of the skewed "coordinate system" \\( \\{ v_1, v_2, v_3 \\} \\). First, let's visualize it:
+The answer to your more general question is a fascinating journey we'll now embark on, uncovering it one step at a time! The list of numbers $[u\cdot v_1, u\cdot v_2, u\cdot v_3]$ is a new vector $u^\*$. This new vector is what $u$ looks like in the perspective of the skewed "coordinate system" $ \\{ v_1, v_2, v_3 \\} $. First, let's visualize it:
 
-Notation wise, if we stack \\( \\{ v_1, v_2, v_3 \\} \\) horizontally into a rectangle of numbers, we have just reinvented the matrix-vector multiplication using the "collapsing" diagram:
+Notation wise, if we stack $ \\{ v_1, v_2, v_3 \\} $ horizontally into a rectangle of numbers, we have just reinvented the matrix-vector multiplication using the "collapsing" diagram:
 
 
-And so, the meaning of matrix-vector multiplication is really just projecting a vector onto the matrix rows. Let's go ahead and simultaneously project a bunch of vectors \\( \\{ u_1, u_2, u_3, u_4 \\} \\) onto the set \\( \\{ v_1, v_2, v_3 \\} \\):
+And so, the meaning of matrix-vector multiplication is really just projecting a vector onto the matrix rows. Let's go ahead and simultaneously project a bunch of vectors $ \\{ u_1, u_2, u_3, u_4 \\} $ onto the set $ \\{ v_1, v_2, v_3 \\} $:
 
 And there it is, we reinvent the matrix-matrix multiplication!
 
@@ -243,9 +243,9 @@ Exactly. With matrix multiplication, we now have the power to look at vectors fr
 
 Here we have just turned a 3-dimensional vectors into a 2-dimensional vector.
 
-*So we have just discarded some information from \\(u\\) by turning a list of 3 numbers into a list of 2 numbers right? I wonder if, in a reversed manner, we can add more information?*
+*So we have just discarded some information from $u$ by turning a list of 3 numbers into a list of 2 numbers right? I wonder if, in a reversed manner, we can add more information?*
 
-Of course, we can certainly do so by projecting \\(u\\), living in 2 dimensional space, onto a set of three vectors \\(v_1, v_2, v_3\\):
+Of course, we can certainly do so by projecting $u$, living in 2 dimensional space, onto a set of three vectors $v_1, v_2, v_3$:
 
 *That looks cool! It seems matrix-vector multiplication is characterized by its stretching/squishing space uniformly everywhere. Is this true?*
 

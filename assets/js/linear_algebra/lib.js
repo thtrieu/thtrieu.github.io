@@ -360,6 +360,8 @@ function plot_points(data,
       .data(data, function(d){ return d.key; });
   text
       .enter()
+      // .append('g')
+      // .attr('class', 'tick')
       .append('text')
       .attr('class', '_3d pText')
       .attr('dx', '.4em')
@@ -377,11 +379,10 @@ function plot_points(data,
       })
       .attr('x', function(d){ return project(d).x+3; })
       .attr('y', function(d){ return project(d).y; })
-      .text(function(d){ return d.text; })
       .attr('opacity', function(d){
           return z_to_txt_opacity(d.z);
-      });
-
+      })
+      .text(function(d){ return d.text; });
   text.exit().remove();
 }
 

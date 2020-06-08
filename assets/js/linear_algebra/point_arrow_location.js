@@ -7,9 +7,11 @@ var origin = [150, 130],
   axis = [],
   expectedAxis = [],
   beta = 0, alpha = 0, 
+
   startAngleX = Math.PI/8. * 2,
   startAngleY = -Math.PI/8.,
-  startAngleZ = Math.PI/8.
+  startAngleZ = Math.PI/8.,
+
   axis_len = 13;
 
 
@@ -23,8 +25,8 @@ var lib = space_plot_lib(
 
 
 svg = svg.call(d3.drag()
-         .on('drag', dragged)
          .on('start', drag_start)
+         .on('drag', dragged)
          .on('end', drag_end))
          .append('g');
 
@@ -37,21 +39,21 @@ function plot(scatter, axis, tt){
 
   var lines = [], points = [];
 
-  basis = {
-      ex: axis[axis_len * 0][1], 
-      ey: axis[axis_len * 1][1], 
-      ez: axis[axis_len * 2][1],
-  };
-
   lib.plot_lines(axis);
 
   scatter.forEach(function(d){
     lines.push(...lib.create_segments(d));
   })
 
+  basis = {
+      ex: axis[axis_len * 0][1], 
+      ey: axis[axis_len * 1][1], 
+      ez: axis[axis_len * 2][1],
+  };
+
   scatter.forEach(function(d){
     var coord = lib.dot_basis(d, basis);
-    var point = Object.assign({}, d)
+    var point = Object.assign({}, d);
     point.text = '['.concat(
         coord.x.toFixed(1),
         ', ',
@@ -65,9 +67,9 @@ function plot(scatter, axis, tt){
 
   lib.plot_lines(lines, tt, 'arrow');
   lib.plot_points(points, tt,
-                    drag_point_fn=function(d, i){dragged_point(i)},
-                    drag_start_fn=drag_start,
-                    drag_end_fn=drag_end);
+                  drag_point_fn=function(d, i){dragged_point(i)},
+                  drag_start_fn=drag_start,
+                  drag_end_fn=drag_end);
   lib.sort();
 }
 
@@ -84,11 +86,10 @@ function init(){
     });
   }
 
-  alpha = startAngleX;
-  beta = startAngleY;
-
-  expectedScatter = lib.rotate_points(scatter, alpha, beta, startAngleZ);
-  expectedAxis = lib.rotate_lines(axis, alpha, beta, startAngleZ);
+  expectedScatter = lib.rotate_points(
+      scatter, startAngleX, startAngleY, startAngleZ);
+  expectedAxis = lib.rotate_lines(
+      axis, startAngleX, startAngleY, startAngleZ);
   plot(expectedScatter, 
        expectedAxis, 
        1000);
@@ -129,6 +130,7 @@ function dragged_point(i){
 }
 
 
+
 function drag_end(){
   scatter = expectedScatter;
   axis = expectedAxis;
@@ -145,3 +147,6 @@ return {
 };
 
 })();
+
+
+
