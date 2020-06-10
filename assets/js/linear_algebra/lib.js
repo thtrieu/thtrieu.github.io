@@ -385,7 +385,7 @@ function plot_points(data,
   text.exit().remove();
 }
 
-function plot_texts(data, name='text', tt){
+function plot_texts(data, tt, name='text'){
 
   data.forEach(function(d, j){
     d.key = name + j.toString();
@@ -404,9 +404,13 @@ function plot_texts(data, name='text', tt){
       .each(function(d){
           d.centroid = {x: d.x, 
                         y: d.y,
-                        z: 0.};
+                        z: d.z};
       })
       .style('font-size', function(d){
+        if (d.hasOwnProperty('font_size')) {
+          return d.font_size + 'px';
+        }
+        
         return z_to_txt_size(d.z)
                   .toString()
                   .concat('px');
@@ -420,6 +424,9 @@ function plot_texts(data, name='text', tt){
       .attr('x', function(d){ return project(d).x; })
       .attr('y', function(d){ return project(d).y; })
       .attr('opacity', function(d){
+          if (d.hasOwnProperty('text_opacity')){
+          return d.text_opacity;
+        }
           return z_to_txt_opacity(d.z);
       })
       .text(function(d){ return d.text; });
