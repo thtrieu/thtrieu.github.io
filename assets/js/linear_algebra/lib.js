@@ -149,7 +149,7 @@ function z_to_size(z){
 
 function z_to_txt_size(z){
   if (is_2d) {
-    return 13;
+    return 14;
   }
   return z_to_txt_size_scale(z)
 }
@@ -313,7 +313,8 @@ function plot_points(data,
                      tt,
                      drag_point_fn,
                      drag_start_fn,
-                     drag_end_fn){
+                     drag_end_fn,
+                     name='none'){
 
   data.forEach(function(d, j){
     d.key = name + j.toString();
@@ -360,8 +361,6 @@ function plot_points(data,
       .data(data, function(d){ return d.key; });
   text
       .enter()
-      // .append('g')
-      // .attr('class', 'tick')
       .append('text')
       .attr('class', '_3d pText')
       .attr('dx', '.4em')
@@ -378,6 +377,47 @@ function plot_points(data,
                   .concat('px');
       })
       .attr('x', function(d){ return project(d).x+3; })
+      .attr('y', function(d){ return project(d).y; })
+      .attr('opacity', function(d){
+          return z_to_txt_opacity(d.z);
+      })
+      .text(function(d){ return d.text; });
+  text.exit().remove();
+}
+
+function plot_texts(data, name='text', tt){
+
+  data.forEach(function(d, j){
+    d.key = name + j.toString();
+  })
+
+  var text = svg
+      .selectAll('text.tText')
+      .data(data, function(d){ return d.key; });
+  text
+      .enter()
+      .append('text')
+      .attr('class', '_3d tText')
+      .attr('dx', '.4em')
+      .merge(text)
+      .transition().duration(tt)
+      .each(function(d){
+          d.centroid = {x: d.x, 
+                        y: d.y,
+                        z: 0.};
+      })
+      .style('font-size', function(d){
+        return z_to_txt_size(d.z)
+                  .toString()
+                  .concat('px');
+      })
+      .style('fill', function(d) {
+        if (!d.hasOwnProperty('color')) {
+          return 'black';
+        }
+        return color(d.color);
+      })
+      .attr('x', function(d){ return project(d).x; })
       .attr('y', function(d){ return project(d).y; })
       .attr('opacity', function(d){
           return z_to_txt_opacity(d.z);
@@ -517,6 +557,43 @@ function update_point_position_from_mouse(d){
 }
 
 
+function distance(u, v) {
+  let dx = u.x - v.x,
+      dy = u.y - v.y,
+      dz = u.z - v.z;
+  return Math.sqrt(dx*dx + dy*dy + dz*dz);
+}
+
+function create_dash_segments(from, to, unit=0.07) {
+  let r = [];
+      dx = to.x - from.x,
+      dy = to.y - from.y,
+      dz = to.z - from.z;
+
+  let norm = Math.sqrt(dx*dx + dy*dy + dz*dz);
+  let n = Math.floor(norm/unit);
+
+  dx = dx*unit/norm;
+  dy = dy*unit/norm;
+  dz = dz*unit/norm;
+
+  for (var i = 0; i < n; i++) {
+    if (i % 2 == 0) {
+      continue;
+    }
+    let r1 = Object.assign({}, from);
+    let r2 = Object.assign({}, to);
+    r1.x = from.x + i * dx;
+    r1.y = from.y + i * dy;
+    r1.z = from.z + i * dz;
+    r2.x = r1.x + dx;
+    r2.y = r1.y + dy;
+    r2.z = r1.z + dz;
+    r.push([r1, r2]);
+  };
+  return r;
+}
+
 function create_segments(d, k=10) {
   var r = [];
   for (var i = 0; i < k; i++) {
@@ -553,6 +630,9 @@ return {
   get_drag_angle_2d: get_drag_angle_2d,
   update_point_position_from_mouse: update_point_position_from_mouse,
   create_segments: create_segments,
+  create_dash_segments: create_dash_segments,
+  distance: distance,
+  plot_texts: plot_texts,
   sort: sort,
 }
 
