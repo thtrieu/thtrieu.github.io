@@ -10,9 +10,9 @@ var origin = [150, 130],
 
   startAngleX = Math.PI/8 * 2.65,
   startAngleY = -Math.PI/8,
-  startAngleZ = Math.PI/8 * 0.6
+  startAngleZ = Math.PI/8 * 0.6;
 
-  axis_len = 2;
+let  axis_len = 2,
   unit = axis_len/10;
 
 var svg = d3.select("#svg_dot_product_project");

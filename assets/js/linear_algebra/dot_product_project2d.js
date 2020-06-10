@@ -9,8 +9,8 @@ var origin = [150, 140],
   expectedAxis = [],
   startAngleX = Math.PI,
   startAngleY = 0.,
-  startAngleZ = 0.
-  axis_len = 2;
+  startAngleZ = 0.;
+let  axis_len = 2;
 
 let unit = axis_len/10;
 
