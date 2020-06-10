@@ -36,11 +36,9 @@ axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
 function plot(scatter, axis, tt){
 
   basis = {
-      ex: axis[4][1], 
-      ey: axis[14][1],
-      // ex: axis[axis_len/unit*4 * 0][1], 
-      // ey: axis[axis_len/unit*14 * 1][1],
-      ez: 0.
+      ex: axis[1/unit - 1 + axis_len * 0][1], 
+      ey: axis[1/unit - 1 + axis_len * 1][1],
+      ez: {x: 0, y: 0, z: 0}, // dummy 
   };
 
   scatter.forEach(function(d, i){
@@ -63,35 +61,42 @@ function plot(scatter, axis, tt){
   lib.plot_lines(axis);
 
   var lines = [];
-  scatter.forEach(function(d){
+  scatter.forEach(function(d,i){
     lines.push([
         {x: 0., y: 0., z: 0.},
         {x: d.x, y: d.y, z: d.z, 
          color: d.color, tt: true}
     ]);
+    if (i == 0) {
+      lines.centroid_z = 900;
+    }
   });
 
-  let mult_vec = scatter[0].x * scatter[1].x +
+  let dot_product = scatter[0].x * scatter[1].x +
                  scatter[0].y * scatter[1].y;
-  let projectionx = scatter[1].x * mult_vec;
-  let projectiony = scatter[1].y * mult_vec;
+  let projectionx = scatter[1].x * dot_product;
+  let projectiony = scatter[1].y * dot_product;
 
-  lines.push([
-    {x: 0, y: 0, z: 0},
-    {x: projectionx, y: projectiony, z: 0,
-     color: 0, tt:true}
-    ]);
-  lines[2].text = 'u\u1d40v = '.concat(mult_vec.toFixed(3));
-  lines[2].text_color = lines[2].color;
-  lines[2].font_size = 15;
+  let projection_line = [
+      {x: 0, y: 0, z: 0},
+      {x: projectionx, y: projectiony, z: 0,
+       color: 0, tt:true}
+  ];
 
-  lines.push([
-    {x: scatter[0].x, y: scatter[0].y, z: scatter[0].z},
-    {x: projectionx, y: projectiony, z: 0,
-     tt:true}
-    ]);
+  projection_line.text = 'u\u1d40v = '.concat(dot_product.toFixed(3));
+  projection_line.text_color = 0;
+  projection_line.font_size = 15;
 
-  lines[3].dash = true;
+  lines.push(projection_line);
+
+  let dash_line = [
+      {x: scatter[0].x, y: scatter[0].y, z: scatter[0].z},
+      {x: projectionx, y: projectiony, z: 0,
+       tt:true}];
+  
+  dash_line.dash = true;
+  dash_line.centroid_z = -5;
+  lines.push(dash_line);
 
   lib.plot_lines(lines, tt, 'arrow');
   lib.plot_points(scatter, tt,
@@ -157,7 +162,6 @@ function dragged_point_only(){
   angle_z = lib.get_drag_angle_2d();
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
-  // expectedAxis = lib.rotate_lines(axis, 0, 0, angle_z);
   
   plot(expectedScatter, 
        expectedAxis, 
