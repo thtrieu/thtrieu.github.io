@@ -179,7 +179,7 @@ That's a good question. One of the understanding here is that projecting $u$ ont
 
 In the current space and coordinate system, $u$ is a vector of certain direction and length. The question is, what does $u$ look like in *another space and coordinate system?* In particular, how does $u$ look like from $v$'s perspective? A reasonable answer is just projecting $u$ onto $v$.
 
-*Let me try to put it this way: The projection will be larger when the two is more aligned, and shrinks to zero when the two vectors are not aligned at all (perpendicular).*
+*That makes sense. The projection is larger when $u$ is more aligned to $v$, and shrinks to zero when the two are not aligned at all (perpendicular).*
 
 Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Much of Linear Algebra is concerned with studying how a certain object of interest (represented by a point) looks like under different perspectives (different spaces and coordinate systems).
 
@@ -187,17 +187,15 @@ Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Muc
 
 There are many. Linear Algebra is truly ubiquitous! As a student in Machine Learning, I can vouch for its application in this field. For example, we want to find what changes of perspective that turn my cat, currently represented as pixels in a photo, into the text $\texttt{"my cat"}$.
 
-*So Linear Algebra is what Facebook used to put captions into my photos uploaded there?*
+*So Linear Algebra is what Facebook AI used to put captions into the photos uploaded to the site?*
 
-Certainly so. Take Google Translate as another example. Linear Algebra is used there to represent the changes of the perspective under which what I'm saying (appears to be in English) presents itself as in another language.
+Yes. Take Google Translate as another example. Linear Algebra is used to represent the changes of the perspective that turn one sentence in one language to another.
 
-*Cool, so we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that the dot product $u\cdot v= u'$ is the scalar that represents the caption text?*
+*Cool, so we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that the dot product $u\cdot v= u'$ is the number that represents the caption text?*
 
-Nice, that is the spirit. The devil is in the detail though: How do we represent photo/text as vectors? How do we figure out the appropriate $v$? And so on :)
+That is the spirit. The devil is in the detail though: How do we represent photo/text as vectors? How do we figure out the appropriate $v$? And so on :)
 
-Consider writing this tutorial. All the visualizations of 3D spaces done here will be displayed on a screen, a 2D surface. This requires a perspective change between the two spaces. The code that I wrote for the visualizations must therefore handle this change using Linear Algebra. 
-
-More broadly, computer games in 3D or softwares that involve 3D manipulation rely heavily on this specific change to display stuff on your 2D screen.
+Consider writing this tutorial. All the visualizations of 3D spaces done here will be displayed on a screen, a 2D surface. This requires a perspective change between the two spaces. The code that I wrote for the visualizations must therefore handle this change using Linear Algebra. More broadly, computer games in 3D or softwares that involve 3D manipulation rely heavily on this specific change to display stuff on 2D screens.
 
 *Changing in perspective might not be all the reasons for Linear Algebra. For example, I found [this answer](https://math.stackexchange.com/a/256695) on Math Stack Exchange.*
 
@@ -205,7 +203,7 @@ Good find! Better yet, reach for Chapter 10 of [Introduction to Linear Algebra](
 
 <center><b>4. The coordinate system</b></center>
 
-*Good to know! Back to our discussion, I assume projecting $u$ onto $v$ to obtain a scalar isn't really useful. What we want might be many such scalars from many different views at once?*
+*Good to know! Back to our discussion, I assume projecting $u$ onto $v$ to obtain a number isn't really useful. What we want might be many such numbers from many different views at once?*
 
 That's right. Let's say we project $u$ onto a bunch of vectors, e.g. three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$, which is itself a vector as well! In other words, dot product is the building block of transforming one vector to another, thereby achieving a multi-dimensional change in perspective.
 
@@ -217,7 +215,7 @@ Absolutely. Setting aside what we really mean by "correlation", this set of vect
 
 Let's take a concrete example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
 
-*It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system, because they are measuring $u$ in three perpendicular directions.*
+*It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system, because they are measuring $u$ in three perpendicular directions that coincide with the three coordinate axes.*
 
 Nice observation. In fact with this observation, you can now do away with coordinate systems. Instead, think of space as being "measured" by this set of vectors. 
 
@@ -228,7 +226,7 @@ Exactly. Be aware that there can be many such sets. To get the position (coordin
 
 *It looks like the transformation I'm seeing here is rotation in 2-D and 3-D?*
 
-That is right. Rotation happens because each vector in the set $ \\{ w_1, w_2, w_3 \\} $ here has length $1$ and any pair of them are perpendicular. People call such sets "orthonormal", "ortho" for perpendicular and "normal" for length of 1.
+That is right. Rotation happens because each vector in the set $ \\{ w_1, w_2, w_3 \\} $ here has length $1$ and any pair of them are perpendicular. People call such sets "orthonormal", "ortho" for perpendicularity and "normal" for length of $1$.
 
 <center><b>5. Matrix multiplication</b></center>
 
@@ -236,7 +234,7 @@ That is right. Rotation happens because each vector in the set $ \\{ w_1, w_2, w
 
 You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result looks like $u$, except rotated by an angle.
 
-The answer to your more general question is a fascinating journey we'll now embark on, uncovering it one step at a time! The list of numbers $[u\cdot v_1, u\cdot v_2, u\cdot v_3]$ is a new vector $u^\*$. This new vector is what $u$ looks like in the perspective of the skewed "coordinate system" $ \\{ v_1, v_2, v_3 \\} $. First, let's visualize it:
+The answer to your more general question is a fascinating journey we'll now embark on, uncovering it one step at a time! The list of numbers $[u^T v_1, u^T v_2, u^T v_3]$ is a new vector $u^\*$. This new vector is what $u$ looks like in the perspective of the skewed "coordinate system" $ \\{ v_1, v_2, v_3 \\} $. First, let's visualize it:
 
 Notation wise, if we stack $ \\{ v_1, v_2, v_3 \\} $ horizontally into a rectangle of numbers, we have just reinvented the matrix-vector multiplication using the "collapsing" diagram:
 
