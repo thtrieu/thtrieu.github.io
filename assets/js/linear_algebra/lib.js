@@ -137,45 +137,57 @@ function set_ranges(axis_len) {
 }
 
 
-
-
-function z_to_size(z){
+function get_size(d) {
+  if (d.hasOwnProperty('r')) {
+    return d.r;
+  }
   if (is_2d) {
     return 4.5;
   }
-  return z_to_size_scale(z)
+  return z_to_size_scale(d.centroid.z);
 }
 
 
-function z_to_txt_size(z){
-  if (is_2d) {
-    return 14;
+function get_txt_size(d) {
+  if (d.hasOwnProperty('font_size')) {
+    return d.font_size + 'px';
   }
-  return z_to_txt_size_scale(z)
-}
-
-
-function z_to_txt_opacity(z){
   if (is_2d) {
-    return 1.0;
+    return '14px';
   }
-  return z_to_txt_opacity_scale(z)
+  return z_to_txt_size_scale(d.centroid.z) + 'px';
 }
 
 
-function z_to_opacity(z){
+function get_txt_opacity(d) {
+  if (d.hasOwnProperty('text_opacity')){
+    return d.text_opacity;
+  }
   if (is_2d) {
     return 1.0;
   }
-  return z_to_opacity_scale(z)
+  return z_to_txt_opacity_scale(d.centroid.z);
+}
+
+function get_opacity(d) {
+  if (d.hasOwnProperty('opacity')) {
+    return d.opacity;
+  }
+  if (is_2d) {
+    return 1.0;
+  }
+  return z_to_opacity_scale(d.centroid.z)
 }
 
 
-function z_to_stroke_width(z){
+function get_stroke_width(d){
+  if (d.hasOwnProperty('stroke_width')) {
+    return d.stroke_width;
+  }
   if (is_2d) {
     return 1.5;
   }
-  return z_to_stroke_width_scale(z)
+  return z_to_stroke_width_scale(d.centroid.z)
 }
 
 
@@ -220,7 +232,6 @@ function plot_lines(data, tt, name='none'){
         if (d.hasOwnProperty('dash')) {
           return ('3, 3');
         }
-        return;
       })
       .attr('x1', function(d){ return project(d[0]).x; })
       .attr('y1', function(d){ return project(d[0]).y; })
@@ -228,18 +239,8 @@ function plot_lines(data, tt, name='none'){
       .attr('y2', function(d){ return project(d[1]).y; })
       .attr('fill', get_line_color)
       .attr('stroke', get_line_color)
-      .attr('stroke-width', function(d){
-        if (d.hasOwnProperty('stroke_width')) {
-          return d.stroke_width;
-        }
-        return z_to_stroke_width(d.centroid.z);
-      })
-      .attr('opacity', function(d){
-        if (d.hasOwnProperty('opacity')) {
-          return d.opacity;
-        }
-        return z_to_opacity(d[1].z);
-      });
+      .attr('stroke-width', get_stroke_width)
+      .attr('opacity', get_opacity);
   lines.exit().remove();
 
   var text = svg
@@ -253,6 +254,11 @@ function plot_lines(data, tt, name='none'){
       .attr('dx', '.1em')
       .merge(text)
       .each(function(d){
+        d.centroid = {
+          x: (d[1].x+d[0].x)/2.,
+          y: (d[1].y+d[0].y)/2.,
+          z: (d[1].z+d[0].z)/2.
+        };
         if (d.hasOwnProperty('text')) {
           d.text_position = project(d.centroid);
         } else if (d[0].hasOwnProperty('text')) {
@@ -263,14 +269,7 @@ function plot_lines(data, tt, name='none'){
         }
       })
       .transition().duration(tt)
-      .style('font-size', function(d){
-        if (d.hasOwnProperty('font_size')) {
-          return d.font_size + 'px';
-        }
-        return z_to_txt_size(d[1].z)
-                  .toString()
-                  .concat('px');
-      })
+      .style('font-size', get_txt_size)
       .style('fill', function(d) {
         if (!d.hasOwnProperty('text_color')) {
           return 'black';
@@ -284,24 +283,16 @@ function plot_lines(data, tt, name='none'){
           return d.text;
         } else if (d[0].hasOwnProperty('text')) {
           return d[0].text;
-        }
-        else {
+        } else if (d[1].hasOwnProperty('text')){
           return d[1].text;
         }
       })
-      .attr('opacity', function(d){
-        if (d.hasOwnProperty('text_opacity')){
-          return d.text_opacity;
-        }
-        return z_to_txt_opacity(d[1].z);
-      });
+      .attr('opacity', get_txt_opacity);
   text.exit().remove();
 }
 
 
 function sort_centroid_z(a, b){
-
-  // var _a = a.centroid.z, _b = b.centroid.z;
   var 
     _a = a.hasOwnProperty('centroid_z') ? a.centroid_z : a.centroid.z,
     _b = b.hasOwnProperty('centroid_z') ? b.centroid_z : b.centroid.z;
@@ -341,19 +332,9 @@ function plot_points(data,
     })
     .attr('cx', function(d){return project(d).x})
     .attr('cy', function(d){return project(d).y})
-    // .each(function(d){
-    //   d.centroid = {x: d.x, y: d.y, z: d.z};
-    // })
-    .attr('r', function(d){
-      if (d.hasOwnProperty('r')) {
-        return d.r;
-      }
-      return z_to_size(d.z);
-    })
+    .attr('r', get_size)
     .attr('fill', function(d){ return color(d.color); })
-    .attr('opacity', function(d){
-        return z_to_opacity(d.z);
-    });
+    .attr('opacity', get_opacity);
   points.exit().remove();
 
   var text = svg
@@ -371,16 +352,10 @@ function plot_points(data,
                         y: d.y, 
                         z: d.z};
       })
-      .style('font-size', function(d){
-        return z_to_txt_size(d.z)
-                  .toString()
-                  .concat('px');
-      })
+      .style('font-size', get_txt_size)
       .attr('x', function(d){ return project(d).x+3; })
       .attr('y', function(d){ return project(d).y; })
-      .attr('opacity', function(d){
-          return z_to_txt_opacity(d.z);
-      })
+      .attr('opacity', get_txt_opacity)
       .text(function(d){ return d.text; });
   text.exit().remove();
 }
@@ -406,15 +381,7 @@ function plot_texts(data, tt, name='text'){
                         y: d.y,
                         z: d.z};
       })
-      .style('font-size', function(d){
-        if (d.hasOwnProperty('font_size')) {
-          return d.font_size + 'px';
-        }
-        
-        return z_to_txt_size(d.z)
-                  .toString()
-                  .concat('px');
-      })
+      .style('font-size', get_txt_size)
       .style('fill', function(d) {
         if (!d.hasOwnProperty('color')) {
           return 'black';
@@ -423,12 +390,7 @@ function plot_texts(data, tt, name='text'){
       })
       .attr('x', function(d){ return project(d).x; })
       .attr('y', function(d){ return project(d).y; })
-      .attr('opacity', function(d){
-          if (d.hasOwnProperty('text_opacity')){
-          return d.text_opacity;
-        }
-          return z_to_txt_opacity(d.z);
-      })
+      .attr('opacity', get_txt_opacity)
       .text(function(d){ return d.text; });
   text.exit().remove();
 }
