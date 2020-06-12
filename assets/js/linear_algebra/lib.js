@@ -26,14 +26,17 @@ function _create_axis(axis, name, ord,
         var segment = [
           {x: p1[0], y:p1[1], z:p1[2]},
           {x: p2[0], y:p2[1], z:p2[2]}
-        ]
+        ];
+        axis.push(segment); 
+        if (text == '') {
+          return;
+        }
         if (d == axis_len-1) {
           segment[1].text = text;
         }
         else {
           segment[0].text = text
         }
-        axis.push(segment); 
       }
   );
 }
@@ -133,7 +136,7 @@ function set_ranges(axis_len) {
 
   z_to_stroke_width_scale = d3.scaleLinear()
                               .domain(domain)
-                              .range([1.0, 2.7]);
+                              .range([0.5, 3.0]);
 }
 
 
@@ -206,7 +209,7 @@ function get_line_color(d){
 }
 
 
-function plot_lines(data, tt, name='none'){
+function plot_lines(data, tt, name='line'){
 
   data.forEach(function(d, j){
     d.key = name + j.toString();
@@ -305,7 +308,7 @@ function plot_points(data,
                      drag_point_fn,
                      drag_start_fn,
                      drag_end_fn,
-                     name='none'){
+                     name='point'){
 
   data.forEach(function(d, j){
     d.key = name + j.toString();
@@ -363,16 +366,18 @@ function plot_points(data,
 function plot_texts(data, tt, name='text'){
 
   data.forEach(function(d, j){
-    d.key = name + j.toString();
+    if (!d.hasOwnProperty('key')){
+      d.key = name + j.toString();
+    }
   })
 
   var text = svg
-      .selectAll('text.tText')
+      .selectAll('text.'+name+'Text')
       .data(data, function(d){ return d.key; });
   text
       .enter()
       .append('text')
-      .attr('class', '_3d tText')
+      .attr('class', '_3d '+name+'Text')
       .attr('dx', '.4em')
       .merge(text)
       .transition().duration(tt)
