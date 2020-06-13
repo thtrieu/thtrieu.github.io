@@ -1,8 +1,8 @@
 var dot_product_formula = (function() {
 
 
-var origin = [150, 130], 
-  scale = 70, 
+var origin = [150, 140], 
+  scale = 60, 
   scatter = [], 
   axis = [],
   expectedAxis = [],
@@ -81,7 +81,6 @@ function plot(scatter, axis, tt){
   lines.push(...dash_line);
 
   scatter.forEach(function(d, i){
-  // for d in scatter:
     var coord = lib.dot_basis(d, basis);
     d.coord = coord;
     var point = Object.assign({}, d);
@@ -119,43 +118,49 @@ function plot(scatter, axis, tt){
           {text: 'u'}, {text: '= ['},  
           {text: u.coord.x.toFixed(2), color: 8},
           {text: ''}, {text: ''}, {text: ','},
-          {text: u.coord.y.toFixed(2), color: 6},
+          {text: u.coord.y.toFixed(2), color: 8},
           {text: ''}, {text: ''}, {text: ','},
-          {text: u.coord.z.toFixed(2), color: 10},
-          {text: ''}, {text: ''}, {text: ']'}, {text: ''}
+          {text: u.coord.z.toFixed(2), color: 8},
+          {text: ''}, {text: ''}, {text: ']'}
       ], [
           {text: 'v'}, {text: '= ['},
           {text: ''}, {text: ''},
-          {text: v.coord.x.toFixed(2), color: 8},
+          {text: v.coord.x.toFixed(2), color: 6},
           {text: ','}, {text: ''}, {text: ''},
           {text: v.coord.y.toFixed(2), color: 6},
           {text: ','}, {text: ''}, {text: ''},
-          {text: v.coord.z.toFixed(2), color: 10},
-          {text: ']'}, {text: ''}
+          {text: v.coord.z.toFixed(2), color: 6},
+          {text: ']'}
       ], [
-          {text: 'u\u1d40v'}, {text: '='},
+          {text: 'u\u1d40v', color: 0}, {text: '='},
           {text: u.coord.x.toFixed(2), color: 8},
           {text: '\u00d7'},
-          {text: v.coord.x.toFixed(2), color: 8},
+          {text: v.coord.x.toFixed(2), color: 6},
           {text: '+'},
-          {text: u.coord.y.toFixed(2), color: 6},
+          {text: u.coord.y.toFixed(2), color: 8},
           {text: '\u00d7'},
           {text: v.coord.y.toFixed(2), color: 6},
           {text: '+'},
-          {text: u.coord.z.toFixed(2), color: 10},
+          {text: u.coord.z.toFixed(2), color: 8},
           {text: '\u00d7'},
-          {text: v.coord.z.toFixed(2), color: 10},
-          {text: '='},
-          {text: uTv.toFixed(3), color: 0}
+          {text: v.coord.z.toFixed(2), color: 6},
+          {text: ''}
+      ], [
+          {text: ''}, {text: '='},
+          {text: uTv.toFixed(3), color: 0},
+          {text: ''}, {text: ''}, {text: ''},
+          {text: ''}, {text: ''}, {text: ''},
+          {text: ''}, {text: ''}, {text: ''},
+          {text: ''}, {text: ''},
       ]
   ];
  
   lib.plot_texts(lib.text_table_to_list(
       texts_to_show, 
       start_coord_x=-2.2, start_coord_y=2.2,
-      col_unit=0.21, row_unit=0.3,
-      cols_width_array=[1.5, 1.2, 2, 0.7, 2, 0.7, 2, 0.7, 2, 0.7, 2, 0.7, 2, 0.7],
-      rows_width_array=[1.0, 1.0])
+      col_unit=0.24, row_unit=0.3,
+      cols_width_array=[1.5, 1.2, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2],
+      rows_width_array=[1.0, 1.8, 1.0])
   );
 }
 
