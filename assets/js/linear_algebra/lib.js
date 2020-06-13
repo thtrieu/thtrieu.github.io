@@ -101,6 +101,16 @@ function normalize(v) {
 }
 
 
+function get_duration(tt) {
+  function duration(d) {
+    if (d.hasOwnProperty('tt')) {
+      return d.tt;
+    }
+    return tt;
+  }
+  return duration;
+}
+
 
 var  color  = d3.scaleOrdinal()
              .domain(d3.range(0, 20))
@@ -223,7 +233,7 @@ function plot_lines(data, tt, name='line'){
       .append('line')
       .attr('class', '_3d ' + name)
       .merge(lines)
-      .transition().duration(tt)
+      .transition().duration(get_duration(tt))
       .each(function(d){
         d.centroid = {
           x: (d[1].x+d[0].x)/2.,
@@ -271,7 +281,7 @@ function plot_lines(data, tt, name='line'){
           d.text_position = project(d[1]);
         }
       })
-      .transition().duration(tt)
+      .transition().duration(get_duration(tt))
       .style('font-size', get_txt_size)
       .style('fill', function(d) {
         if (!d.hasOwnProperty('text_color')) {
@@ -327,7 +337,7 @@ function plot_points(data,
     .append('circle')
     .attr('class', '_3d point')
     .merge(points)
-    .transition().duration(tt)
+    .transition().duration(get_duration(tt))
     .each(function(d){
         d.centroid = {x: d.x, 
                       y: d.y, 
@@ -349,7 +359,7 @@ function plot_points(data,
       .attr('class', '_3d pText')
       .attr('dx', '.4em')
       .merge(text)
-      .transition().duration(tt)
+      .transition().duration(get_duration(tt))
       .each(function(d){
           d.centroid = {x: d.x, 
                         y: d.y, 
@@ -380,7 +390,7 @@ function plot_texts(data, tt, name='text'){
       .attr('class', '_3d '+name+'Text')
       .attr('dx', '.4em')
       .merge(text)
-      .transition().duration(tt)
+      .transition().duration(get_duration(tt))
       .each(function(d){
           d.centroid = {x: d.x, 
                         y: d.y,
