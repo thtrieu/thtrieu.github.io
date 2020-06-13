@@ -1,28 +1,26 @@
-var dot_product_formula = (function() {
+let dot_product_formula = (function() {
 
+let origin = [150, 140], 
+    scale = 60, 
+    scatter = [], 
+    axis = [],
+    expectedAxis = [],
+    beta = 0, alpha = 0, 
 
-var origin = [150, 140], 
-  scale = 60, 
-  scatter = [], 
-  axis = [],
-  expectedAxis = [],
-  beta = 0, alpha = 0, 
+    startAngleX = Math.PI/8 * 2.65,
+    startAngleY = -Math.PI/8,
+    startAngleZ = Math.PI/8 * 0.6,
 
-  startAngleX = Math.PI/8 * 2.65,
-  startAngleY = -Math.PI/8,
-  startAngleZ = Math.PI/8 * 0.6;
+    axis_len = 2,
+    unit = axis_len/10,
+    
+    svg = d3.select("#svg_dot_product_formula");
 
-let  axis_len = 2,
-  unit = axis_len/10;
-
-var svg = d3.select("#svg_dot_product_formula");
-
-var lib = space_plot_lib(
+let lib = space_plot_lib(
   svg,
   origin,
   scale,
   is_2d=false)
-
 
 svg = svg.call(d3.drag()
          .on('start', drag_start)
@@ -30,15 +28,13 @@ svg = svg.call(d3.drag()
          .on('end', drag_end))
          .append('g');
 
-
 axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
-
 
 function plot(scatter, axis, tt){
   let u = scatter[0],
       v = scatter[1];
 
-  var lines = [], points = [];
+  let lines = [], points = [];
 
   lib.plot_lines(axis);
 
@@ -65,8 +61,9 @@ function plot(scatter, axis, tt){
   let uTvv_line = [
       {x: 0, y: 0, z: 0},
       {x: uTvv.x, y: uTvv.y, z: uTvv.z,
-       color: 0, tt: true}
+       tt: true}
   ]
+  uTvv_line.color = 0
   uTvv_line.centroid_z = 1000;
   uTvv_line.text = 'u\u1d40v = ' + uTv.toFixed(3);
   uTvv_line.text_color = 0;
@@ -75,15 +72,13 @@ function plot(scatter, axis, tt){
 
   lines.push(uTvv_line);
 
-  
-
-  var dash_line = lib.create_dash_segments(u, uTvv);
+  let dash_line = lib.create_dash_segments(u, uTvv);
   lines.push(...dash_line);
 
   scatter.forEach(function(d, i){
-    var coord = lib.dot_basis(d, basis);
+    let coord = lib.dot_basis(d, basis);
     d.coord = coord;
-    var point = Object.assign({}, d);
+    let point = Object.assign({}, d);
     if (i == 0) {
       point.text = 'u = ';
     } else {
@@ -159,14 +154,12 @@ function plot(scatter, axis, tt){
       texts_to_show, 
       start_coord_x=-2.2, start_coord_y=2.2,
       col_unit=0.24, row_unit=0.3,
-      cols_width_array=[1.5, 1.2, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2],
-      rows_width_array=[1.0, 1.8, 1.0])
+      dhs_array=[1.5, 1.2, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2],
+      dws_array=[1.0, 1.8, 1.0])
   );
 }
 
 function init(){
-  scatter = [];
-
   let u = {
       x: 0.8,
       y: 0.8, 
@@ -191,7 +184,6 @@ function init(){
        1000);
   drag_end();
 }
-
 
 function drag_start(){
   lib.drag_start();
@@ -244,7 +236,6 @@ function drag_end(){
 }
 
 init();
-
 
 return {
   init: function(){init();}
