@@ -618,6 +618,45 @@ function create_segments(d, k=10) {
   return r;
 }
 
+function text_table_to_list(texts, start_coord_x, start_coord_y,
+                            col_unit, row_unit,
+                            cols_width_array, rows_width_array, // [a, b, ...] means a unit, b unit ...;
+                            start_coord_z=0){
+    var numb_of_rows = texts.length,
+        numb_of_cols = cols_width_array.length + 1,
+        col_coords = [],
+        row_coords = [];
+
+    // setting the collumns' coords:
+
+    col_coords.push(start_coord_x);
+    for (var j = 1; j < numb_of_cols; j++) {
+      col_coords.push(col_coords[j-1] +
+                           col_unit * cols_width_array[j-1]);
+    };
+
+    // setting the rows' coords:
+    row_coords.push(start_coord_y);
+    for (var i = 1; i < numb_of_rows; i++) {
+        row_coords.push(row_coords[i-1] +
+                           row_unit * rows_width_array[i-1]);
+    }
+
+    var list_of_text = [];
+
+    for (var i = 0; i < numb_of_rows; i++) {
+      for (var j = 0; j < numb_of_cols; j++) {
+        text_to_plot = texts[i][j];
+        text_to_plot.x = col_coords[j];
+        text_to_plot.y = row_coords[i];
+        text_to_plot.text_opacity = 1;
+        list_of_text.push(text_to_plot);
+      };
+    }
+
+    return list_of_text;
+  }
+
 
 return {
   color: color,
@@ -641,6 +680,7 @@ return {
   distance: distance,
   plot_texts: plot_texts,
   sort: sort,
+  text_table_to_list: text_table_to_list
 }
 
 };
