@@ -621,8 +621,8 @@ function create_segments(d, k=10) {
 
 function text_table_to_list(texts, start_coord_x, start_coord_y,
                             col_unit, row_unit,
-                            cols_width_array, rows_width_array, // [a, b, ...] means a unit, b unit ...;
-                            start_coord_z=0){
+                            cols_width_array, rows_width_array
+                            ){
   var numb_of_rows = texts.length,
       numb_of_cols = cols_width_array.length + 1,
       col_coords = [start_coord_x],
@@ -646,6 +646,7 @@ function text_table_to_list(texts, start_coord_x, start_coord_y,
       text_to_plot.x = col_coords[j];
       text_to_plot.y = row_coords[i];
       text_to_plot.text_opacity = 1;
+      text_to_plot.font_size = 14;
       list_of_text.push(text_to_plot);
     };
   }
