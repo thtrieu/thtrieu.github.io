@@ -1,23 +1,23 @@
-var dot_product_project = (function() {
+let dot_product_project = (function() {
 
 
-var origin = [150, 130], 
-  scale = 70, 
-  scatter = [], 
-  axis = [],
-  expectedAxis = [],
-  beta = 0, alpha = 0, 
+let origin = [150, 130], 
+    scale = 70, 
+    scatter = [], 
+    axis = [],
+    expectedAxis = [],
+    beta = 0, alpha = 0, 
 
-  startAngleX = Math.PI/8 * 2.65,
-  startAngleY = -Math.PI/8,
-  startAngleZ = Math.PI/8 * 0.6;
+    startAngleX = Math.PI/8 * 2.65,
+    startAngleY = -Math.PI/8,
+    startAngleZ = Math.PI/8 * 0.6,
 
-let  axis_len = 2,
-  unit = axis_len/10;
+    axis_len = 2,
+    unit = axis_len/10,
 
-var svg = d3.select("#svg_dot_product_project");
+    svg = d3.select("#svg_dot_product_project");
 
-var lib = space_plot_lib(
+let lib = space_plot_lib(
   svg,
   origin,
   scale,
@@ -30,13 +30,13 @@ svg = svg.call(d3.drag()
          .on('end', drag_end))
          .append('g');
 
-
 axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
 
-
 function plot(scatter, axis, tt){
+  let u = scatter[0],
+      v = scatter[1];
 
-  var lines = [], points = [];
+  let lines = [], points = [];
 
   lib.plot_lines(axis);
 
@@ -50,47 +50,36 @@ function plot(scatter, axis, tt){
       ez: axis[1/unit - 1 + axis_len/unit * 2][1],
   };
 
-  let dot_product = scatter[0].x * scatter[1].x +
-                    scatter[0].y * scatter[1].y +
-                    scatter[0].z * scatter[1].z;
+  let uTv = lib.dot_product(u, v);
 
-  let projectionx = scatter[1].x * dot_product;
-      projectiony = scatter[1].y * dot_product;
-      projectionz = scatter[1].z * dot_product;
-
-  let projection_line = [
-      {x: 0, y: 0, z: 0},
-      {x: projectionx, y: projectiony, z: projectionz,
-       color: 0, tt: true}
-  ]
-  projection_line.centroid_z = 1000;
-  projection_line.text = 'u\u1d40v = ' + dot_product.toFixed(3);
-  projection_line.text_color = 0;
-  projection_line.font_size = 14;
-  projection_line.text_opacity = 1.0;
-
-  lines.push(projection_line);
-
-  let dash_line_x_unit = (projectionx - scatter[0].x)/10,
-      dash_line_y_unit = (projectiony - scatter[0].y)/10,
-      dash_line_z_unit = (projectionz - scatter[0].z)/10;
-  for ( i = 0; i < 10; i++) {
-    lines.push([
-        {x: scatter[0].x + dash_line_x_unit * i,
-         y: scatter[0].y + dash_line_y_unit * i,
-         z: scatter[0].z + dash_line_z_unit * i},
-
-        {x: scatter[0].x + dash_line_x_unit * (i+1/2),
-         y: scatter[0].y + dash_line_y_unit * (i+1/2),
-         z: scatter[0].z + dash_line_z_unit * (i+1/2),
-         tt: true}
-    ])
+  let uTvv = {
+    x: v.x * uTv,
+    y: v.y * uTv,
+    z: v.z * uTv,
+    r: 1.8,
+    color: 'grey'
   };
 
+  let uTvv_line = [
+      {x: 0, y: 0, z: 0},
+      {x: uTvv.x, y: uTvv.y, z: uTvv.z,
+       tt: true}
+  ]
+  uTvv_line.color = 0;
+  uTvv_line.centroid_z = 1000;
+  uTvv_line.text = 'u\u1d40v = ' + uTv.toFixed(3);
+  uTvv_line.text_color = 0;
+  uTvv_line.font_size = 14;
+  uTvv_line.text_opacity = 1.0;
 
-  scatter.forEach(function(d,i){
-    var coord = lib.dot_basis(d, basis);
-    var point = Object.assign({}, d);
+  lines.push(uTvv_line);
+
+  let dash_line = lib.create_dash_segments(u, uTvv);
+  lines.push(...dash_line);
+
+  scatter.forEach(function(d, i){
+    let coord = lib.dot_basis(d, basis);
+    let point = Object.assign({}, d);
     if (i == 0) {
       point.text = 'u = ';
     } else {
@@ -106,6 +95,7 @@ function plot(scatter, axis, tt){
     points.push(point);
   })
 
+  points.push(uTvv);
 
   lib.plot_lines(lines, tt, 'arrow');
   lib.plot_points(points, tt,
@@ -121,23 +111,22 @@ function plot(scatter, axis, tt){
   lib.sort();
 }
 
-
 function init(){
-  scatter = [];
-
-  scatter.push({
+  let u = {
       x: 0.8,
       y: 0.8, 
       z: -0.8,
       color: 4,
-  });
+  };
 
-  scatter.push({
+  let v = {
       x: 1/Math.sqrt(14),
       y: -2/Math.sqrt(14), 
       z: 3/Math.sqrt(14),
       color: 2,
-  });
+  };
+
+  scatter = [u, v];
 
   expectedScatter = lib.rotate_points(
       scatter, startAngleX, startAngleY, startAngleZ);
@@ -148,7 +137,6 @@ function init(){
        1000);
   drag_end();
 }
-
 
 function drag_start(){
   lib.drag_start();
@@ -201,7 +189,6 @@ function drag_end(){
 }
 
 init();
-
 
 return {
   init: function(){init();}
