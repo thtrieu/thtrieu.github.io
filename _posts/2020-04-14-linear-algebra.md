@@ -112,7 +112,7 @@ You don't do much with a vector. You start to have fun when there is more than o
 <center class='js'>
 <svg width="300" height="250" id="svg_dot_product_project2d"></svg><svg width="300" height="250" id="svg_dot_product_project"></svg> 
 <br/>
-Try dragging vector \(u\), \(v\), the whole space, or click
+Try dragging vector $u$, $v$, the whole space, or click
 <button id='but_dot_product_project'>reset</button>.
 </center>
 
@@ -133,7 +133,7 @@ You are right, a negative dot-product carries more information than just the len
 <center class='js'>
 <svg width="315" height="360" id="svg_dot_product_formula2d"></svg><svg width="315" height="360" id="svg_dot_product_formula"></svg> 
 <br/>
-Try dragging vector \(u\), \(v\), the whole space, or click
+Try dragging vector $u$, $v$, the whole space, or click
 <button id='but_dot_product_formula'>reset</button>.
 </center>
 
@@ -154,7 +154,7 @@ Indeed it is. Let's look at a very useful diagram for this same formula. It show
 <center class='js'>
 <svg width="315" height="350" id="svg_dot_product_collide2d"></svg><svg width="315" height="350" id="svg_dot_product_collide"></svg> 
 <br/>
-Try dragging vector \(u\), \(v\), the whole space. Click
+Try dragging vector $u$, $v$, the whole space. Click
 <button id='but_dot_product_collide_init'>reset</button> or <button id='but_dot_product_collide_compute'>compute $u^Tv$</button>.
 </center>
 
@@ -180,14 +180,55 @@ That's exactly what it is :) The $^T$ operation here is called "transpose". Tran
 
 *So since this operation is symmetric between $u$ and $v$, it should give the same result as projecting v onto u, i.e. $u^Tv = v^Tu$, right?*
 
-Great observation. Well, I cheated a bit in the explanation so far :) "Projection of $u$ onto $v$" is almost, but not quite, the correct interpretation of dot product! The correct formula 
-here takes into account length of $v$:
+<center class='js'>
+<svg width="315" height="350" id="svg_dot_product_symmetric2d"></svg><svg width="315" height="350" id="svg_dot_product_symmetric"></svg> 
+<br/>
+Try dragging vector $u$, $v$, the whole space. Click
+<button id='but_dot_product_symmetric_init'>reset</button> or <button id='but_dot_product_symmetric_swap'>swap $u^Tv \leftrightarrow v^Tu$</button>.
+</center>
 
-$$u^Tv = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \textrm{length of}\ v$$
+<script src="/assets/js/linear_algebra/dot_product_symmetric2d.js"></script>
+<script src="/assets/js/linear_algebra/dot_product_symmetric.js"></script>
+<script>
+d3.selectAll('#but_dot_product_symmetric_init')
+  .on('click', function(){
+      dot_product_symmetric2d.init();
+      dot_product_symmetric.init();
+  });
+d3.selectAll('#but_dot_product_symmetric_swap')
+  .on('click', function(){
+      dot_product_symmetric2d.swap();
+      dot_product_symmetric.swap();
+  });
+</script>
 
-The calculations done so far is correct only because I sneakily set the length of $v$ to be $1$. Now to answer your question, with this correct formular:
+Great observation. Well, I cheated a bit in the explanation so far :) "Projection of $u$ onto $v$" is almost, but not quite, the correct interpretation of dot product! It is only correct when length of $v$ (denoted $\|v\|$) is 1. The correct formula 
+here takes into account $|v|$ as well:
 
-$$u^Tv = v^Tu  = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \textrm{length of}\ v = \textrm{Projection of}\ v\ \textrm{onto}\ u \times \textrm{length of}\ u$$
+$$u^Tv = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \left|v\right|$$
+
+<center class='js'>
+<svg width="315" height="280" id="svg_dot_product_correct2d"></svg><svg width="315" height="280" id="svg_dot_product_correct"></svg> 
+<br/>
+Try dragging $u$, $v$, or any of the other lines/points, or click
+<button id='but_dot_product_correct_init'>reset</button>.
+<br/>
+Notice when $|v|=1$, $u^Tv$ coincides with the projection (shaded blue).
+</center>
+
+<script src="/assets/js/linear_algebra/dot_product_correct2d.js"></script>
+<script src="/assets/js/linear_algebra/dot_product_correct.js"></script>
+<script>
+d3.selectAll('#but_dot_product_correct_init')
+  .on('click', function(){
+      dot_product_correct2d.init();
+      dot_product_correct.init();
+  });
+</script>
+
+So dot product not only projects $u$ onto $v$'s direction, it also scales the result by $\|v\|$. The calculations done so far is correct only because I sneakily set the length of $v$ to be $1$. Now with this new interpretation, $u^Tv = v^Tu$ indeed!
+
+<!-- = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \textrm{length of}\ v = \textrm{Projection of}\ v\ \textrm{onto}\ u \times \textrm{length of}\ u$$ -->
 
 <!-- *So, if $v$ is hold fixed and $u$ is moving around, then you are suggesting that dot product can be think of as a measurement of the projection of $u$ onto $v$ right?*
 

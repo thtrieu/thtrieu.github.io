@@ -251,9 +251,9 @@ function plot_lines(data,
       .data(data, function(d){ return d.key; })
       .each(function(d){})
       .call(d3.drag()
-              .on('drag', drag_point_fn)
+              .on('drag', drag_line_fn)
               .on('start', drag_start_fn)
-              .on('end', drag_end_fn));;
+              .on('end', drag_end_fn));
   lines
       .enter()
       .append('line')
@@ -317,7 +317,7 @@ function plot_lines(data,
       .transition().duration(get_duration(tt))
       .style('font-size', get_txt_size)
       .style('fill', get_color())
-      .attr('x', function(d){ return d.text_position.x; })
+      .attr('x', function(d){ return d.text_position.x+3; })
       .attr('y', function(d){ return d.text_position.y; })
       .text(function(d){
         if (d.hasOwnProperty('text')) {
@@ -552,13 +552,19 @@ function get_drag_angle_2d(){
 }
 
 
+function mouse_to_point_position(){
+  [x, y] = getMouse();
+  [x, y] = [x - origin[0], y - origin[1]];
+  [x, y] = [x/scale, y/scale];
+  return {x: x, y: y, z:0.};
+}
+
+
 function update_point_position_from_mouse(d){
-  mouse = getMouse();
-  mouse = [mouse[0] - origin[0], mouse[1] - origin[1]];
-  mouse = [mouse[0]/scale, mouse[1]/scale];
+  mouse_pos = mouse_to_point_position();
   let r = Object.assign({}, d)
-  r.x = mouse[0];
-  r.y = mouse[1];
+  r.x = mouse_pos.x;
+  r.y = mouse_pos.y;
   r.z = 0.
   return r
 }
@@ -672,6 +678,7 @@ return {
   drag_start2d: drag_start2d,
   get_drag_angle_2d: get_drag_angle_2d,
   update_point_position_from_mouse: update_point_position_from_mouse,
+  mouse_to_point_position: mouse_to_point_position,
   create_segments: create_segments,
   create_dash_segments: create_dash_segments,
   distance: distance,
