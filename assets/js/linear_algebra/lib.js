@@ -621,21 +621,21 @@ function create_segments(d, k=10) {
 
 function text_table_to_list(texts, start_coord_x, start_coord_y,
                             col_unit, row_unit,
-                            cols_width_array, rows_width_array
+                            dhs_array, dws_array
                             ){
   var numb_of_rows = texts.length,
-      numb_of_cols = cols_width_array.length + 1,
+      numb_of_cols = dhs_array.length + 1,
       col_coords = [start_coord_x],
       row_coords = [start_coord_y];
 
   for (var j = 1; j < numb_of_cols; j++) {
     col_coords.push(col_coords[j-1] +
-                    col_unit * cols_width_array[j-1]);
+                    col_unit * dhs_array[j-1]);
   };
 
   for (var i = 1; i < numb_of_rows; i++) {
       row_coords.push(row_coords[i-1] +
-                      row_unit * rows_width_array[i-1]);
+                      row_unit * dws_array[i-1]);
   }
 
   var list_of_text = [];
