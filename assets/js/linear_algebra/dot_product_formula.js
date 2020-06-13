@@ -1,8 +1,7 @@
-let dot_product_project = (function() {
+let dot_product_formula = (function() {
 
-
-let origin = [150, 130], 
-    scale = 70, 
+let origin = [150, 140], 
+    scale = 60, 
     scatter = [], 
     axis = [],
     expectedAxis = [],
@@ -14,15 +13,14 @@ let origin = [150, 130],
 
     axis_len = 2,
     unit = axis_len/10,
-
-    svg = d3.select("#svg_dot_product_project");
+    
+    svg = d3.select("#svg_dot_product_formula");
 
 let lib = space_plot_lib(
   svg,
   origin,
   scale,
   is_2d=false)
-
 
 svg = svg.call(d3.drag()
          .on('start', drag_start)
@@ -51,21 +49,21 @@ function plot(scatter, axis, tt){
   };
 
   let uTv = lib.dot_product(u, v);
-
+  
   let uTvv = {
-    x: v.x * uTv,
-    y: v.y * uTv,
-    z: v.z * uTv,
-    r: 1.8,
-    color: 'grey'
-  };
+      x: v.x * uTv,
+      y: v.y * uTv,
+      z: v.z * uTv,
+      r: 1.8,
+      color: 'grey'
+  }
 
   let uTvv_line = [
       {x: 0, y: 0, z: 0},
       {x: uTvv.x, y: uTvv.y, z: uTvv.z,
        tt: true}
   ]
-  uTvv_line.color = 0;
+  uTvv_line.color = 0
   uTvv_line.centroid_z = 1000;
   uTvv_line.text = 'u\u1d40v = ' + uTv.toFixed(3);
   uTvv_line.text_color = 0;
@@ -79,6 +77,7 @@ function plot(scatter, axis, tt){
 
   scatter.forEach(function(d, i){
     let coord = lib.dot_basis(d, basis);
+    d.coord = coord;
     let point = Object.assign({}, d);
     if (i == 0) {
       point.text = 'u = ';
@@ -108,7 +107,56 @@ function plot(scatter, axis, tt){
                   },
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
-  lib.sort();
+
+  let texts_to_show = [
+      [
+          {text: 'u'}, {text: '= ['},  
+          {text: u.coord.x.toFixed(2), color: 8},
+          {text: ''}, {text: ''}, {text: ','},
+          {text: u.coord.y.toFixed(2), color: 8},
+          {text: ''}, {text: ''}, {text: ','},
+          {text: u.coord.z.toFixed(2), color: 8},
+          {text: ''}, {text: ''}, {text: ']'}
+      ], [
+          {text: 'v'}, {text: '= ['},
+          {text: ''}, {text: ''},
+          {text: v.coord.x.toFixed(2), color: 6},
+          {text: ','}, {text: ''}, {text: ''},
+          {text: v.coord.y.toFixed(2), color: 6},
+          {text: ','}, {text: ''}, {text: ''},
+          {text: v.coord.z.toFixed(2), color: 6},
+          {text: ']'}
+      ], [
+          {text: 'u\u1d40v', color: 0}, {text: '='},
+          {text: u.coord.x.toFixed(2), color: 8},
+          {text: '\u00d7'},
+          {text: v.coord.x.toFixed(2), color: 6},
+          {text: '+'},
+          {text: u.coord.y.toFixed(2), color: 8},
+          {text: '\u00d7'},
+          {text: v.coord.y.toFixed(2), color: 6},
+          {text: '+'},
+          {text: u.coord.z.toFixed(2), color: 8},
+          {text: '\u00d7'},
+          {text: v.coord.z.toFixed(2), color: 6},
+          {text: ''}
+      ], [
+          {text: ''}, {text: '='},
+          {text: uTv.toFixed(3), color: 0},
+          {text: ''}, {text: ''}, {text: ''},
+          {text: ''}, {text: ''}, {text: ''},
+          {text: ''}, {text: ''}, {text: ''},
+          {text: ''}, {text: ''},
+      ]
+  ];
+ 
+  lib.plot_texts(lib.text_table_to_list(
+      texts_to_show, 
+      start_coord_x=-2.2, start_coord_y=2.2,
+      col_unit=0.24, row_unit=0.3,
+      dhs_array=[1.5, 1.2, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2],
+      dws_array=[1.0, 1.8, 1.0])
+  );
 }
 
 function init(){
@@ -125,7 +173,6 @@ function init(){
       z: 3/Math.sqrt(14),
       color: 2,
   };
-
   scatter = [u, v];
 
   expectedScatter = lib.rotate_points(
