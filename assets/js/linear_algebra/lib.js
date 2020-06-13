@@ -1,6 +1,6 @@
 space_plot_lib = function(svg, origin, scale, is_2d) {
 
-var 
+let 
   mx = 0,
   my = 0,
   atan0 = 0,
@@ -13,17 +13,17 @@ function _create_axis(axis, name, ord,
                       axis_len=13) {
   d3.range(0, axis_len, 1).forEach(
       function(d){
-        var text = '';
+        let text = '';
         if (d % 5 == 0) {
           text = d;
         } else if (d == axis_len-1) {
           text = name
         }
-        var p1 = [0, 0, 0],
+        let p1 = [0, 0, 0],
             p2 = [0, 0, 0];
         p1[ord] = d;
         p2[ord] = d+1;
-        var segment = [
+        let segment = [
           {x: p1[0], y:p1[1], z:p1[2]},
           {x: p2[0], y:p2[1], z:p2[2]}
         ];
@@ -44,7 +44,7 @@ function _create_axis(axis, name, ord,
 
 function init_axis(axis_len=13) {
   set_ranges(axis_len);
-  var axis = [];
+  let axis = [];
   _create_axis(axis, 'x', 0, axis_len);
   _create_axis(axis, 'y', 1, axis_len);
   if (!is_2d) {
@@ -57,15 +57,15 @@ function _create_axis_float(
     axis, name, ord, axis_len=2, unit=0.2) {
   d3.range(0, axis_len, unit).forEach(
       function(d){
-        var text = '';
+        let text = '';
         if (d == axis_len-unit) {
           text = name
         }
-        var p1 = [0, 0, 0],
+        let p1 = [0, 0, 0],
             p2 = [0, 0, 0];
         p1[ord] = d;
         p2[ord] = d+unit;
-        var segment = [
+        let segment = [
           {x: p1[0], y:p1[1], z:p1[2]},
           {x: p2[0], y:p2[1], z:p2[2]}
         ]
@@ -82,7 +82,7 @@ function _create_axis_float(
 
 function init_float_axis(axis_len=2.0, unit=0.2) {
   set_ranges(axis_len)
-  var axis = [];
+  let axis = [];
   _create_axis_float(axis, 'x', 0, axis_len, unit);
   _create_axis_float(axis, 'y', 1, axis_len, unit);
   if (!is_2d) {
@@ -112,12 +112,12 @@ function get_duration(tt) {
 }
 
 
-var  color  = d3.scaleOrdinal()
+let  color  = d3.scaleOrdinal()
              .domain(d3.range(0, 20))
              .range(d3.schemeCategory20);
 
 
-var z_to_size_scale,
+let z_to_size_scale,
     z_to_txt_size_scale,
     z_to_txt_opacity_scale,
     z_to_opacity_scale,
@@ -246,7 +246,7 @@ function plot_lines(data,
     d.key = name + j.toString();
   })
 
-  var lines = svg
+  let lines = svg
       .selectAll('line.' + name)
       .data(data, function(d){ return d.key; })
       .each(function(d){})
@@ -289,7 +289,7 @@ function plot_lines(data,
       .attr('opacity', get_opacity);
   lines.exit().remove();
 
-  var text = svg
+  let text = svg
       .selectAll('text.' + name)
       .data(data);
 
@@ -334,7 +334,7 @@ function plot_lines(data,
 
 
 function sort_centroid_z(a, b){
-  var 
+  let 
     _a = a.hasOwnProperty('centroid_z') ? a.centroid_z : a.centroid.z,
     _b = b.hasOwnProperty('centroid_z') ? b.centroid_z : b.centroid.z;
   return _a < _b ? -1 : _a > _b ? 1 : _a >= _b ? 0 : NaN;
@@ -352,7 +352,7 @@ function plot_points(data,
     d.key = name + j.toString();
   })
 
-  var points = svg.selectAll('circle')
+  let points = svg.selectAll('circle')
                   .data(data, function(d){ return d.key; })
                   .each(function(d){})
                   .call(d3.drag()
@@ -378,7 +378,7 @@ function plot_points(data,
     .attr('opacity', get_opacity);
   points.exit().remove();
 
-  var text = svg
+  let text = svg
       .selectAll('text.pText')
       .data(data, function(d){ return d.key; });
   text
@@ -409,7 +409,7 @@ function plot_texts(data, tt, name='text'){
     }
   })
 
-  var text = svg
+  let text = svg
       .selectAll('text.'+name+'Text')
       .data(data, function(d){ return d.key; });
   text
@@ -454,10 +454,10 @@ function dot_basis(d, basis){
 
 
 function rotate_lines(l, rx=0, ry=0, rz=0){
-  var result = [];
+  let result = [];
   l.forEach(function(d){
-    var p1 = Object.assign({}, d[0]);
-    var p2 = Object.assign({}, d[1]);
+    let p1 = Object.assign({}, d[0]);
+    let p2 = Object.assign({}, d[1]);
     result.push([rotate_point(p1, rx, ry, rz), 
                  rotate_point(p2, rx, ry, rz)
                 ]);
@@ -467,7 +467,7 @@ function rotate_lines(l, rx=0, ry=0, rz=0){
 
 
 function rotate_points(g, rx=0, ry=0, rz=0){
-  var result = [];
+  let result = [];
   g.forEach(function(d){
     result.push(rotate_point(d, rx, ry, rz));
   })
@@ -484,8 +484,8 @@ function rotate_point(p, rx=0, ry=0, rz=0){
 
 
 function rotate_x(p, a){
-    var sa = Math.sin(a), ca = Math.cos(a);
-    var r = Object.assign({}, p)
+    let sa = Math.sin(a), ca = Math.cos(a);
+    let r = Object.assign({}, p)
     r.x = p.x;
     r.y = p.y * ca - p.z * sa;
     r.z = p.y * sa + p.z * ca;
@@ -494,8 +494,8 @@ function rotate_x(p, a){
 
 
 function rotate_y(p, a){
-    var sa = Math.sin(a), ca = Math.cos(a);
-    var r = Object.assign({}, p)
+    let sa = Math.sin(a), ca = Math.cos(a);
+    let r = Object.assign({}, p)
     r.x = p.z * sa + p.x * ca;
     r.y = p.y;
     r.z = p.z * ca - p.x * sa;
@@ -504,8 +504,8 @@ function rotate_y(p, a){
 
 
 function rotate_z(p, a){
-    var sa = Math.sin(a), ca = Math.cos(a);
-    var r = Object.assign({}, p)
+    let sa = Math.sin(a), ca = Math.cos(a);
+    let r = Object.assign({}, p)
     r.x = p.x * ca - p.y * sa;
     r.y = p.x * sa + p.y * ca;
     r.z = p.z;
@@ -556,7 +556,7 @@ function update_point_position_from_mouse(d){
   mouse = getMouse();
   mouse = [mouse[0] - origin[0], mouse[1] - origin[1]];
   mouse = [mouse[0]/scale, mouse[1]/scale];
-  var r = Object.assign({}, d)
+  let r = Object.assign({}, d)
   r.x = mouse[0];
   r.y = mouse[1];
   r.z = 0.
@@ -584,7 +584,7 @@ function create_dash_segments(from, to, unit=0.07) {
   dy = dy*unit/norm;
   dz = dz*unit/norm;
 
-  for (var i = 0; i < n; i++) {
+  for (let i = 0; i < n; i++) {
     if (i % 2 == 0) {
       continue;
     }
@@ -602,8 +602,8 @@ function create_dash_segments(from, to, unit=0.07) {
 }
 
 function create_segments(d, k=10) {
-  var r = [];
-  for (var i = 0; i < k; i++) {
+  let r = [];
+  for (let i = 0; i < k; i++) {
     let j = i + 1;
     let r1 = Object.assign({}, d);
     let r2 = Object.assign({}, d);
@@ -623,25 +623,25 @@ function text_table_to_list(texts, start_coord_x, start_coord_y,
                             col_unit, row_unit,
                             dhs_array, dws_array
                             ){
-  var numb_of_rows = texts.length,
+  let numb_of_rows = texts.length,
       numb_of_cols = dhs_array.length + 1,
       col_coords = [start_coord_x],
       row_coords = [start_coord_y];
 
-  for (var j = 1; j < numb_of_cols; j++) {
+  for (let j = 1; j < numb_of_cols; j++) {
     col_coords.push(col_coords[j-1] +
                     col_unit * dhs_array[j-1]);
   };
 
-  for (var i = 1; i < numb_of_rows; i++) {
+  for (let i = 1; i < numb_of_rows; i++) {
       row_coords.push(row_coords[i-1] +
                       row_unit * dws_array[i-1]);
   }
 
-  var list_of_text = [];
+  let list_of_text = [];
 
-  for (var i = 0; i < numb_of_rows; i++) {
-    for (var j = 0; j < numb_of_cols; j++) {
+  for (let i = 0; i < numb_of_rows; i++) {
+    for (let j = 0; j < numb_of_cols; j++) {
       text_to_plot = texts[i][j];
       text_to_plot.x = col_coords[j];
       text_to_plot.y = row_coords[i];
