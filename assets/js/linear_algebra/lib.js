@@ -211,15 +211,36 @@ function project(d){
   };
 }
 
-function get_line_color(d){
-  if (d[1].hasOwnProperty('color')) {
+function get_color(default_color='black'){
+  function get_color_fn(d) {
+    if (!d.hasOwnProperty('color')) {
+      return default_color;
+    }
+    if (typeof d.color == 'number') {
+      return color(d.color);
+    }
+    return d.color;
+  }
+  return get_color_fn;
+}
+
+function get_line_color(d) {
+  if (!d[1].hasOwnProperty('color')) {
+    return 'grey';
+  }
+  if (typeof d[1].color == 'number') {
     return color(d[1].color);
   }
-  return 'grey';
+  return d[1].color;
 }
 
 
-function plot_lines(data, tt, name='line'){
+function plot_lines(data,
+                    tt,
+                    name='line',
+                    drag_line_fn=null,
+                    drag_start_fn=null,
+                    drag_end_fn=null){
 
   data.forEach(function(d, j){
     d.key = name + j.toString();
@@ -227,7 +248,12 @@ function plot_lines(data, tt, name='line'){
 
   var lines = svg
       .selectAll('line.' + name)
-      .data(data, function(d){ return d.key; });
+      .data(data, function(d){ return d.key; })
+      .each(function(d){})
+      .call(d3.drag()
+              .on('drag', drag_point_fn)
+              .on('start', drag_start_fn)
+              .on('end', drag_end_fn));;
   lines
       .enter()
       .append('line')
@@ -240,6 +266,13 @@ function plot_lines(data, tt, name='line'){
           y: (d[1].y+d[0].y)/2.,
           z: (d[1].z+d[0].z)/2.
         };
+        if (!d.hasOwnProperty('color')) {
+          if (d[1].hasOwnProperty('color')) {
+            d.color = d[1].color;
+          } else if (d[0].hasOwnProperty('color')) {
+            d.color = d[0].color;
+          }
+        }
       })
       .style('stroke-dasharray', function(d) {
         if (d.hasOwnProperty('dash')) {
@@ -250,8 +283,8 @@ function plot_lines(data, tt, name='line'){
       .attr('y1', function(d){ return project(d[0]).y; })
       .attr('x2', function(d){ return project(d[1]).x; })
       .attr('y2', function(d){ return project(d[1]).y; })
-      .attr('fill', get_line_color)
-      .attr('stroke', get_line_color)
+      .attr('fill', get_color('grey'))
+      .attr('stroke', get_color('grey'))
       .attr('stroke-width', get_stroke_width)
       .attr('opacity', get_opacity);
   lines.exit().remove();
@@ -283,12 +316,7 @@ function plot_lines(data, tt, name='line'){
       })
       .transition().duration(get_duration(tt))
       .style('font-size', get_txt_size)
-      .style('fill', function(d) {
-        if (!d.hasOwnProperty('text_color')) {
-          return 'black';
-        }
-        return color(d.text_color);
-      })
+      .style('fill', get_color())
       .attr('x', function(d){ return d.text_position.x; })
       .attr('y', function(d){ return d.text_position.y; })
       .text(function(d){
@@ -315,9 +343,9 @@ function sort_centroid_z(a, b){
 
 function plot_points(data, 
                      tt,
-                     drag_point_fn,
-                     drag_start_fn,
-                     drag_end_fn,
+                     drag_point_fn=null,
+                     drag_start_fn=null,
+                     drag_end_fn=null,
                      name='point'){
 
   data.forEach(function(d, j){
@@ -346,7 +374,7 @@ function plot_points(data,
     .attr('cx', function(d){return project(d).x})
     .attr('cy', function(d){return project(d).y})
     .attr('r', get_size)
-    .attr('fill', function(d){ return color(d.color); })
+    .attr('fill', get_color())
     .attr('opacity', get_opacity);
   points.exit().remove();
 
@@ -397,12 +425,7 @@ function plot_texts(data, tt, name='text'){
                         z: d.z};
       })
       .style('font-size', get_txt_size)
-      .style('fill', function(d) {
-        if (!d.hasOwnProperty('color')) {
-          return 'black';
-        }
-        return color(d.color);
-      })
+      .style('fill', get_color())
       .attr('x', function(d){ return project(d).x; })
       .attr('y', function(d){ return project(d).y; })
       .attr('opacity', get_txt_opacity)
