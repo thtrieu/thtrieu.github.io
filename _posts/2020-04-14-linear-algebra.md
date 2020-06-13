@@ -149,14 +149,36 @@ d3.selectAll('#but_dot_product_formula')
 
 *Oh, that's a very nice coincidence.*
 
-Indeed it is. Here is a diagram showing how two vectors $u$ and $v$ colliding into a single number (their dot product $u^Tv$). 
+Indeed it is. Let's look at a very useful diagram for this same formula. It shows how two vectors $u$ and $v$ colliding into a single number (their dot product $u^Tv$).
+
+<center class='js'>
+<svg width="315" height="350" id="svg_dot_product_collide2d"></svg><svg width="315" height="350" id="svg_dot_product_collide"></svg> 
+<br/>
+Try dragging vector \(u\), \(v\), the whole space. Click
+<button id='but_dot_product_collide_init'>reset</button> or <button id='but_dot_product_collide_compute'>compute $u^Tv$</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/dot_product_collide2d.js"></script>
+<script src="/assets/js/linear_algebra/dot_product_collide.js"></script>
+<script>
+d3.selectAll('#but_dot_product_collide_init')
+  .on('click', function(){
+      dot_product_collide2d.init();
+      dot_product_collide.init();
+  });
+d3.selectAll('#but_dot_product_collide_compute')
+  .on('click', function(){
+      dot_product_collide2d.compute();
+      dot_product_collide.compute();
+  });
+</script>
 
 
-*Looks like this diagram explains the notation $u^Tv$ very clearly. $u^T$ is $u$, but lying down horizontally, while $v$ is standing and $u^Tv$ is the collision of $u^T$ and $v$.*
+*Looks like this diagram explains the notation $u^Tv$ very well. $u^T$ is $u$ lying down, while $v$ is standing and $u^Tv$ is the collision of $u^T$ and $v$.*
 
-That's exactly what it is :) The $^T$ operation here is called "transpose". This diagram will become very helpful later on and we'll meet it again soon.
+That's exactly what it is :) The $^T$ operation here is called "transpose". Transposing flips the vector so it lies down. This diagram will become very helpful later on and we'll meet it again soon.
 
-*So since this operation is symmetric between $u$ and $v$, should it give the same result as projecting v onto u?*
+*So since this operation is symmetric between $u$ and $v$, it should give the same result as projecting v onto u, i.e. $u^Tv = v^Tu$, right?*
 
 Great observation. Well, I cheated a bit in the explanation so far :) "Projection of $u$ onto $v$" is almost, but not quite, the correct interpretation of dot product! The correct formula 
 here takes into account length of $v$:
@@ -179,7 +201,7 @@ That's a good question. One of the understanding here is that projecting $u$ ont
 
 In the current space and coordinate system, $u$ is a vector of certain direction and length. The question is, what does $u$ look like in *another space and coordinate system?* In particular, how does $u$ look like from $v$'s perspective? A reasonable answer is just projecting $u$ onto $v$.
 
-*That makes sense. The projection is larger when $u$ is more aligned to $v$, and shrinks to zero when the two are not aligned at all (perpendicular).*
+*One way I can think of how this makes sense: the projection is larger when $u$ is more aligned to $v$, and shrinks to zero when the two are not aligned at all (perpendicular).*
 
 Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Much of Linear Algebra is concerned with studying how a certain object of interest (represented by a point) looks like under different perspectives (different spaces and coordinate systems).
 
@@ -187,7 +209,7 @@ Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Muc
 
 There are many. Linear Algebra is truly ubiquitous! As a student in Machine Learning, I can vouch for its application in this field. For example, we want to find what changes of perspective that turn my cat, currently represented as pixels in a photo, into the text $\texttt{"my cat"}$.
 
-*So Linear Algebra is what Facebook AI used to put captions into the photos uploaded to the site?*
+*So this is how Facebook AI put captions on the photos uploaded to the site?*
 
 Yes. Take Google Translate as another example. Linear Algebra is used to represent the changes of the perspective that turn one sentence in one language to another.
 
@@ -199,13 +221,15 @@ Consider writing this tutorial. All the visualizations of 3D spaces done here wi
 
 *Changing in perspective might not be all the reasons for Linear Algebra. For example, I found [this answer](https://math.stackexchange.com/a/256695) on Math Stack Exchange.*
 
-Good find! Better yet, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Gilbert Strang. You'll find there a list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm. 
+Good find! Better yet, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm. 
 
 <center><b>4. The coordinate system</b></center>
 
-*Good to know! Back to our discussion, I assume projecting $u$ onto $v$ to obtain a number isn't really useful. What we want might be many such numbers from many different views at once?*
+*Good to know! Back to changing of perspective, now what do I do with the projection of $u$ on $v$?*
 
-That's right. Let's say we project $u$ onto a bunch of vectors, e.g. three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$, which is itself a vector as well! In other words, dot product is the building block of transforming one vector to another, thereby achieving a multi-dimensional change in perspective.
+Reducing $u$, living in a multi-dimensional space, to a single number $u^Tv$ is useful, but we want more. What people usually do is instead projecting $u$ on many $v$'s and obtain many different views at once.
+
+Let's say we project $u$ onto a bunch of vectors, e.g. three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$, which is itself a vector as well! In other words, dot product is the building block of transforming one vector to another, thereby achieving a multi-dimensional change in perspective.
 
 <!-- *OK, this list of numbers is three different views of $u$ from three different $v$ vectors. But if $v_1 = v_2$, we are obtaining the same view twice. If $v_1$ and $v_2$ are almost aligned, the two views are also almost the same.*
 
@@ -217,26 +241,28 @@ Let's take a concrete example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_
 
 *It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system, because they are measuring $u$ in three perpendicular directions that coincide with the three coordinate axes.*
 
-Nice observation. In fact with this observation, you can now do away with coordinate systems. Instead, think of space as being "measured" by this set of vectors. 
+Nice observation. In fact with this observation, there is no longer need for coordinate systems. Instead, think of space as being "measured" by this set of vectors through dot products.
 
-*In other words, this set of vectors is what gives any vector living in space a coordinate?*
+*So this set of vectors is what gives any vector living in space a coordinate?*
 
-Exactly. Be aware that there can be many such sets. To get the position (coordinates) of a vector $u$ with respect to any of such set, simply project $u$ onto this set as shown earlier with $u$ and $ \\{ v_1, v_2, v_3 \\} $:
+Exactly. Be aware that there can be many such sets. To get the position (coordinates) of a vector $u$ with respect to any of such set $ \\{ w_1, w_2, w_3 \\} $, simply project $u$ onto this set as shown earlier with $u$ and $ \\{ v_1, v_2, v_3 \\} $:
 
 
 *It looks like the transformation I'm seeing here is rotation in 2-D and 3-D?*
 
-That is right. Rotation happens because each vector in the set $ \\{ w_1, w_2, w_3 \\} $ here has length $1$ and any pair of them are perpendicular. People call such sets "orthonormal", "ortho" for perpendicularity and "normal" for length of $1$.
+That is right. Rotation happens because each vector in the set $ \\{ w_1, w_2, w_3 \\} $ here has length $1$ and any pair of them are perpendicular. You can sort of see why this is the case through the above illustrations. We'll make this concrete very soon. People call such sets "orthonormal", "ortho" stands for orthogonal (perpendicular) and "normal" stands for length of $1$.
 
 <center><b>5. Matrix multiplication</b></center>
 
-*Okay, but what if the set $ \\{ v_1, v_2, v_3 \\} $ is not orthonormal? What is the transformation?*
+*Okay, but what if the set $ \\{ v_1, v_2, v_3 \\} $ is not orthonormal?*
 
-You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result looks like $u$, except rotated by an angle.
+You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result looks like $u$, except rotated by an angle. Let's extend this a bit by considering a simple case where the set $ \\{ v_1, v_2, v_3 \\} $ is only "ortho" but not "normal". We can see that the transformation amounts to first rotating, and then stretching on each axis individually, according to the length of $ v_1, v_2, v_3 $:
 
-The answer to your more general question is a fascinating journey we'll now embark on, uncovering it one step at a time! The list of numbers $[u^T v_1, u^T v_2, u^T v_3]$ is a new vector $u^\*$. This new vector is what $u$ looks like in the perspective of the skewed "coordinate system" $ \\{ v_1, v_2, v_3 \\} $. First, let's visualize it:
+*Are you suggesting rotating and stretching are the two building blocks of any transformation done by dot-products?*
 
-Notation wise, if we stack $ \\{ v_1, v_2, v_3 \\} $ horizontally into a rectangle of numbers, we have just reinvented the matrix-vector multiplication using the "collapsing" diagram:
+That's a very quick jump ahead, but totally accurate :) In fact, rotation and stretching are **the only two** building blocks. We'll soon see how this is the case, but first let's take it slow and enjoy ourselves some nice visualizations. Let's call the list of numbers $[u^T v_1, u^T v_2, u^T v_3]$ a new vector $u^\*$. This new vector is what $u$ looks like in the perspective of the skewed "coordinate system" $ \\{ v_1, v_2, v_3 \\} $:
+
+Notation wise, if we stack $ \\{ v_1, v_2, v_3 \\} $ horizontally into a rectangle of numbers that we called the matrix $A$, we have just invented the matrix-vector multiplication using the "colliding" diagram:
 
 
 And so, the meaning of matrix-vector multiplication is really just projecting a vector onto the matrix rows. Let's go ahead and simultaneously project a bunch of vectors $ \\{ u_1, u_2, u_3, u_4 \\} $ onto the set $ \\{ v_1, v_2, v_3 \\} $:
