@@ -131,7 +131,7 @@ d3.selectAll('#but_dot_product_project')
 You are right, a negative dot-product carries more information than just the length of projection. Which is, $u$ and $v$ are roughly opposite in direction. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between $u$ and $v$ and then add them up!
 
 <center class='js'>
-<svg width="315" height="350" id="svg_dot_product_formula2d"></svg><svg width="315" height="350" id="svg_dot_product_formula"></svg> 
+<svg width="315" height="360" id="svg_dot_product_formula2d"></svg><svg width="315" height="360" id="svg_dot_product_formula"></svg> 
 <br/>
 Try dragging vector \(u\), \(v\), the whole space, or click
 <button id='but_dot_product_formula'>reset</button>.
