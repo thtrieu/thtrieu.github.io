@@ -235,16 +235,22 @@ function get_line_color(d) {
 }
 
 
+function add_keys(data) {
+  data.forEach(function(d, j){
+    if (!d.hasOwnProperty('key')){
+      d.key = name + j.toString();
+    }
+  })
+}
+
+
 function plot_lines(data,
                     tt,
                     name='line',
                     drag_line_fn=null,
                     drag_start_fn=null,
                     drag_end_fn=null){
-
-  data.forEach(function(d, j){
-    d.key = name + j.toString();
-  })
+  add_keys(data);
 
   let lines = svg
       .selectAll('line.' + name)
@@ -347,10 +353,7 @@ function plot_points(data,
                      drag_start_fn=null,
                      drag_end_fn=null,
                      name='point'){
-
-  data.forEach(function(d, j){
-    d.key = name + j.toString();
-  })
+  add_keys(data);
 
   let points = svg.selectAll('circle')
                   .data(data, function(d){ return d.key; })
@@ -401,13 +404,9 @@ function plot_points(data,
   text.exit().remove();
 }
 
-function plot_texts(data, tt, name='text'){
 
-  data.forEach(function(d, j){
-    if (!d.hasOwnProperty('key')){
-      d.key = name + j.toString();
-    }
-  })
+function plot_texts(data, tt, name='text'){
+  add_keys(data);
 
   let text = svg
       .selectAll('text.'+name+'Text')
@@ -625,39 +624,39 @@ function create_segments(d, k=10) {
 }
 
 
-function text_table_to_list(texts, start_coord_x, start_coord_y,
-                            col_unit, row_unit,
-                            dhs_array, dws_array
-                            ){
-  let numb_of_rows = texts.length,
-      numb_of_cols = dhs_array.length + 1,
+function text_table_to_list(texts, 
+                            start_coord_x, start_coord_y,
+                            w_unit, h_unit,
+                            dws_array, dhs_array){
+  let nrow = texts.length,
+      ncol = dws_array.length + 1,
       col_coords = [start_coord_x],
       row_coords = [start_coord_y];
 
-  for (let j = 1; j < numb_of_cols; j++) {
+  for (let j = 1; j < ncol; j++) {
     col_coords.push(col_coords[j-1] +
-                    col_unit * dhs_array[j-1]);
+                    w_unit * dws_array[j-1]);
   };
 
-  for (let i = 1; i < numb_of_rows; i++) {
+  for (let i = 1; i < nrow; i++) {
       row_coords.push(row_coords[i-1] +
-                      row_unit * dws_array[i-1]);
+                      h_unit * dhs_array[i-1]);
   }
 
-  let list_of_text = [];
+  let list_of_texts = [];
 
-  for (let i = 0; i < numb_of_rows; i++) {
-    for (let j = 0; j < numb_of_cols; j++) {
+  for (let i = 0; i < nrow; i++) {
+    for (let j = 0; j < ncol; j++) {
       text_to_plot = texts[i][j];
       text_to_plot.x = col_coords[j];
       text_to_plot.y = row_coords[i];
       text_to_plot.text_opacity = 1;
       text_to_plot.font_size = 14;
-      list_of_text.push(text_to_plot);
+      list_of_texts.push(text_to_plot);
     };
   }
 
-  return list_of_text;
+  return list_of_texts;
 }
 
 

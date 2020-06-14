@@ -152,10 +152,10 @@ function plot(scatter, axis, tt){
  
   lib.plot_texts(lib.text_table_to_list(
       texts_to_show, 
-      start_coord_x=-2.2, start_coord_y=2.2,
+      start_coord_x=-2.5, start_coord_y=2.2,
       col_unit=0.24, row_unit=0.3,
-      dhs_array=[1.5, 1.2, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2, 0.8, 2.2],
-      dws_array=[1.0, 1.8, 1.0])
+      dws_array=[1.5, 1.2, 2.4, 0.85, 2.4, 0.85, 2.4, 0.85, 2.4, 0.85, 2.4, 0.85, 2.25],
+      dhs_array=[1.0, 1.8, 1.0])
   );
 }
 
