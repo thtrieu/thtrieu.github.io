@@ -235,7 +235,7 @@ function get_line_color(d) {
 }
 
 
-function add_keys(data) {
+function add_keys(name, data) {
   data.forEach(function(d, j){
     if (!d.hasOwnProperty('key')){
       d.key = name + j.toString();
@@ -250,7 +250,7 @@ function plot_lines(data,
                     drag_line_fn=null,
                     drag_start_fn=null,
                     drag_end_fn=null){
-  add_keys(data);
+  add_keys(name, data);
 
   let lines = svg
       .selectAll('line.' + name)
@@ -353,7 +353,7 @@ function plot_points(data,
                      drag_start_fn=null,
                      drag_end_fn=null,
                      name='point'){
-  add_keys(data);
+  add_keys(name, data);
 
   let points = svg.selectAll('circle')
                   .data(data, function(d){ return d.key; })
@@ -406,7 +406,7 @@ function plot_points(data,
 
 
 function plot_texts(data, tt, name='text'){
-  add_keys(data);
+  add_keys(name, data);
 
   let text = svg
       .selectAll('text.'+name+'Text')
