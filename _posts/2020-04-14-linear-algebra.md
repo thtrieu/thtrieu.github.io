@@ -202,7 +202,7 @@ d3.selectAll('#but_dot_product_symmetric_swap')
   });
 </script>
 
-Great observation. Well, I cheated a bit in the explanation so far :) "Projection of $u$ onto $v$" is almost, but not quite, the correct interpretation of dot product! It is only correct when length of $v$ (denoted $\|v\|$) is 1. The correct formula 
+Great observation. Well, I cheated a bit in the explanation so far :) "Projection of $u$ onto $v$" is almost, but not quite, the correct interpretation of dot product! It is only correct when length of $v$ (denoted $\|v\|$) is 1 - which is what I sneakily set it to be so far. The correct formula 
 here takes into account $|v|$ as well:
 
 $$u^Tv = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \left|v\right|$$
@@ -226,7 +226,7 @@ d3.selectAll('#but_dot_product_correct_init')
   });
 </script>
 
-So dot product not only projects $u$ onto $v$'s direction, it also scales the result by $\|v\|$. The calculations done so far is correct only because I sneakily set the length of $v$ to be $1$. Now with this new interpretation, $u^Tv = v^Tu$ indeed!
+So dot product not only projects $u$ onto $v$'s direction, it also scales the result by $\|v\|$. Now with this new interpretation, $u^Tv = v^Tu$ indeed!
 
 <!-- = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \textrm{length of}\ v = \textrm{Projection of}\ v\ \textrm{onto}\ u \times \textrm{length of}\ u$$ -->
 
