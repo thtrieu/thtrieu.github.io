@@ -27,6 +27,11 @@ function _create_axis(axis, name, ord,
           {x: p1[0], y:p1[1], z:p1[2]},
           {x: p2[0], y:p2[1], z:p2[2]}
         ];
+        if (is_2d && ord == 2) {
+          segment.opacity = 0.0;
+          segment.text_opacity = 0.0;
+        }
+        // segment.key = 'axis' + name + d;
         axis.push(segment); 
         if (text == '') {
           return;
@@ -47,9 +52,7 @@ function init_axis(axis_len=13) {
   let axis = [];
   _create_axis(axis, 'x', 0, axis_len);
   _create_axis(axis, 'y', 1, axis_len);
-  if (!is_2d) {
-    _create_axis(axis, 'z', 2, axis_len);
-  }
+  _create_axis(axis, 'z', 2, axis_len);
   return axis;
 }
 
@@ -297,7 +300,7 @@ function plot_lines(data,
 
   let text = svg
       .selectAll('text.' + name)
-      .data(data);
+      .data(data, function(d){ return d.key; });
 
   text
       .enter()
@@ -439,7 +442,11 @@ function sort(){
 
 
 function dot_product(u, v){
-  return u.x*v.x + u.y*v.y + u.z*v.z;
+  let uTv = u.x*v.x + u.y*v.y;
+  if (!is_2d) {
+    uTv += u.z * v.z;
+  } 
+  return uTv;
 }
 
 
@@ -455,11 +462,10 @@ function dot_basis(d, basis){
 function rotate_lines(l, rx=0, ry=0, rz=0){
   let result = [];
   l.forEach(function(d){
-    let p1 = Object.assign({}, d[0]);
-    let p2 = Object.assign({}, d[1]);
-    result.push([rotate_point(p1, rx, ry, rz), 
-                 rotate_point(p2, rx, ry, rz)
-                ]);
+    let s = Object.assign({}, d);
+    s[0] = rotate_point(d[0], rx, ry, rz);
+    s[1] = rotate_point(d[1], rx, ry, rz);
+    result.push(s);
   })
   return result;
 }
