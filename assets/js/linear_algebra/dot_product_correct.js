@@ -187,7 +187,6 @@ function stretch_point(d, i){
 }
 
 function dragged_point(d, i){
-  console.log(i);
   if (i == 1) {
     stretch_point(d, i);
     return;
