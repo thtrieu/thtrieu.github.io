@@ -51,6 +51,7 @@ function plot(scatter, axis, tt){
       y: v.y/v_norm,
       z: 0.0,
       color: 2,
+      r: 6,
       opacity: 0.6,
       centroid_z: -1000,
       text: '|v| = 1.00',
