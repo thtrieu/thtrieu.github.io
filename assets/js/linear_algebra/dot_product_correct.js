@@ -80,8 +80,8 @@ function plot(scatter, axis, tt){
 
   let uTv_ = lib.dot_product(u, v_);
   let uTvv_ = {x: v_.x * uTv_,
-              y: v_.y * uTv_,
-              z: v_.z * uTv_};
+               y: v_.y * uTv_,
+               z: v_.z * uTv_};
 
   let uTvv__line = [
       {x: 0, y: 0, z: 0},
@@ -160,16 +160,19 @@ function dragged_point_only(){
        expectedAxis, 
        0);
 }
-function stretch_point(d, i){
-  let d_ = lib.normalize(d),
-      d2d_ = lib.normalize({x: d.x, y: d.y, z:0}),
-      m = lib.mouse_to_point_position();
 
-  let d_Tm = lib.dot_product(d2d_, m);
+
+function stretch_point(d, i){
+  let d_2d = {x: d.x, y: d.y, z: 0.},
+      d_2d_ = lib.normalize(d_2d),
+      m = lib.mouse_to_point_position(),
+      d_2d_Tm = lib.dot_product(d_2d_, m),
+      r = d_2d_Tm / lib.norm(d_2d);
+
   let p = {
-    x: d_.x * d_Tm,
-    y: d_.y * d_Tm,
-    z: d_.z * d_Tm,
+    x: d.x * r,
+    y: d.y * r,
+    z: d.z * r,
   }
   expectedScatter = [];
   scatter.forEach(function(d, j){
@@ -185,6 +188,7 @@ function stretch_point(d, i){
        expectedAxis, 
        0);
 }
+
 
 function dragged_point(d, i){
   if (i == 1) {
