@@ -93,7 +93,12 @@ function plot(scatter, axis, tt){
 
   lines.push(uTvv_line);
   lines.push(uTvv__line);
-  lines.push(...lib.create_dash_segments(u, uTvv_));
+  lib.create_dash_segments(u, uTvv_).forEach(
+      function(d) {
+        d.color = 'grey';
+        lines.push(d);
+      }
+  );
 
   u.text = 'u';
   v.text = '|v| = ' + v_norm.toFixed(2);
