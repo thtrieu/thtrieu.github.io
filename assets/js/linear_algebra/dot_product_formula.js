@@ -157,6 +157,7 @@ function plot(scatter, axis, tt){
       dws_array=[1.5, 1.2, 2.4, 0.85, 2.4, 0.85, 2.4, 0.85, 2.4, 0.85, 2.4, 0.85, 2.25],
       dhs_array=[1.0, 1.8, 1.0])
   );
+  lib.sort();
 }
 
 function init(){
