@@ -94,12 +94,17 @@ function init_float_axis(axis_len=2.0, unit=0.2) {
   return axis;
 }
 
+
+function norm(v) {
+  return Math.sqrt(dot_product(v, v));
+}
+
 function normalize(v) {
-  let norm = Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+  let v_norm = norm(v);
   let r = Object.assign({}, v);
-  r.x = v.x/norm;
-  r.y = v.y/norm;
-  r.z = v.z/norm;
+  r.x = v.x/v_norm;
+  r.y = v.y/v_norm;
+  r.z = v.z/v_norm;
   return r;
 }
 
@@ -576,24 +581,28 @@ function update_point_position_from_mouse(d){
 
 
 function distance(u, v) {
-  let dx = u.x - v.x,
-      dy = u.y - v.y,
-      dz = u.z - v.z;
-  return Math.sqrt(dx*dx + dy*dy + dz*dz);
+  let d = {
+          x: to.x - from.x,
+          y: to.y - from.y,
+          z: to.z - from.z,
+      };
+  return Math.sqrt(dot_product(d, d));
 }
 
 function create_dash_segments(from, to, unit=0.07) {
   let r = [];
-      dx = to.x - from.x,
-      dy = to.y - from.y,
-      dz = to.z - from.z;
+      d = {
+          x: to.x - from.x,
+          y: to.y - from.y,
+          z: to.z - from.z,
+      };
 
-  let norm = Math.sqrt(dx*dx + dy*dy + dz*dz);
+  let norm = Math.sqrt(dot_product(d, d));
   let n = Math.floor(norm/unit);
 
-  dx = dx*unit/norm;
-  dy = dy*unit/norm;
-  dz = dz*unit/norm;
+  let dx = d.x*unit/norm,
+      dy = d.y*unit/norm,
+      dz = d.z*unit/norm;
 
   for (let i = 0; i < n; i++) {
     if (i % 2 == 0) {
@@ -669,6 +678,7 @@ function text_table_to_list(texts,
 return {
   color: color,
   normalize: normalize,
+  norm: norm,
   dot_product: dot_product,
   plot_points: plot_points,
   plot_lines: plot_lines,
