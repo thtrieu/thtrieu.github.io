@@ -15,6 +15,92 @@ title: Interactive Visualizations of Linear Algebra - Part 1
   font-size: 12.5;
   color: #696969;
 }
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 16px;
+  top: -10px;
+  left: 20px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+  display: inline;
+}
+
+.slider {
+  position: absolute;
+  display: inline-block;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(24px);
+  -ms-transform: translateX(24px);
+  transform: translateX(24px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+/*------ ADDED CSS ---------*/
+.slider:after
+{
+ content:'2D';
+ color: white;
+ display: block;
+ position: absolute;
+ transform: translate(-50%,-50%);
+ top: 50%;
+ left: 65%;
+ font-size: 10px;
+ font-family: Verdana, sans-serif;
+}
+
+input:checked + .slider:after
+{  
+  content:'3D';
+  left: 35%;
+}
+
+/*--------- END --------*/
 </style>
 
 Here is a bunch of vectors.
@@ -63,8 +149,11 @@ Yes! By measuring distance in different directions, this set of rulers (which we
 
 
 <center class='js'>
-<svg width="300" height="250" id="svg_point_location2d"></svg><svg width="300" height="250" id="svg_point_location"></svg> 
+  <label class='switch'> <input type='checkbox' id='switch_point_location'> <div class='slider'></div></label>
+  <br/>
+<svg width="600" height="280" id="svg_point_location"></svg>
 <br/>
+
 Rotate the space, drag individual point, or click
 <button id='but_point_location'>shuffle</button>.
 </center>
@@ -72,11 +161,36 @@ Rotate the space, drag individual point, or click
 <script src="/assets/js/linear_algebra/point_location.js"></script>
 <script src="/assets/js/linear_algebra/point_location2d.js"></script>
 <script>
-d3.selectAll('#but_point_location')
-  .on('click', function(){
-      point_location.init();
-      point_location2d.init();
-  });
+
+function draw_on_svg(fn_2d, fn_3d) {
+  let is_3d = false;
+  fn_2d.select_svg();
+  fn_2d.init(tt=0);
+
+  d3.selectAll('#but_point_location')
+    .on('click', function(){
+      if (is_3d) {
+        fn_3d.init();
+      } else {
+        fn_2d.init();
+      }
+    });
+
+  d3.selectAll('#switch_point_location')
+    .on('click', function(){
+      if (this.checked) {
+        is_3d = true;
+        fn_3d.select_svg();
+        fn_3d.init();
+      } else {
+        is_3d = false;
+        fn_2d.select_svg();
+        fn_2d.init();
+      }
+    })
+}
+
+draw_on_svg(point_location2d, point_location);
 </script>
 
 *Is this why sometimes people refer to a list of numbers as a "vector"?*
