@@ -1,78 +1,76 @@
-var point_arrow_location2d = (function() {
+let point_arrow_location2d = (function() {
 
-
-
-var origin = [150, 140], 
+let origin = [300, 140], 
   scale = 10, 
   scatter = [], 
   axis = [],
   expectedAxis = [],
   startAngleX = Math.PI,
   startAngleY = 0.,
-  startAngleZ = 0.
-  axis_len = 13;
-
-var svg = d3.select("#svg_point_arrow_location2d");
-
-
-var lib = space_plot_lib(
-  svg,
-  origin, 
-  scale,
-  is_2d=true);
+  startAngleZ = 0.,
+  axis_len = 13,
+  svg = null,
+  lib = null;
 
 
-svg = svg.call(d3.drag()
-         .on('drag', dragged)
-         .on('start', drag_start)
-         .on('end', drag_end))
-         .append('g');
+function select_svg(svg_id) {
+  svg = d3.select(svg_id);
 
-axis = lib.init_axis(axis_len=axis_len);
+  lib = space_plot_lib(
+    svg,
+    origin, 
+    scale,
+    is_2d=true);
+
+  svg = svg.call(d3.drag()
+           .on('drag', dragged)
+           .on('start', drag_start)
+           .on('end', drag_end))
+           .append('g');
+}
 
 
 function plot(scatter, axis, tt){
+
+  let lines = [], points = [];
 
   basis = {
       ex: axis[axis_len * 0][1], 
       ey: axis[axis_len * 1][1],
       ez: 0.
   };
+  scatter.forEach(function(d){
+    lines.push(...lib.create_segments(d));
+  })
 
   scatter.forEach(function(d){
-    var coord = lib.dot_basis(d, basis);
-    d.text = '['.concat(
+    let coord = lib.dot_basis(d, basis);
+    let point = Object.assign({}, d);
+    point.text = '['.concat(
         coord.x.toFixed(1),
         ', ',
         coord.y.toFixed(1),
         ']');
+    points.push(point);
   })
 
-  lib.plot_lines(axis);
-
-  var lines = [];
-  scatter.forEach(function(d){
-    lines.push([
-        {x: 0., y: 0., z: 0.},
-        {x: d.x, y: d.y, z: d.z, 
-         color: d.color, tt: true}
-    ]);
-  })
-
+  lib.plot_lines(axis, tt);
 
   lib.plot_lines(lines, tt, 'arrow');
-  lib.plot_points(scatter, tt,
-                    drag_point_fn=function(d, i){dragged_point(i)},
-                    drag_start_fn=drag_start,
-                    drag_end_fn=drag_end);
+  lib.plot_points(points, tt,
+                  drag_point_fn=function(d, i){dragged_point(i)},
+                  drag_start_fn=drag_start,
+                  drag_end_fn=drag_end);
   svg.selectAll('._3d').sort(lib.sort_centroid_z);
 }
 
 
-function init(){
+function init(tt){
+  axis = lib.init_axis(axis_len=axis_len);
+
   scatter = [];
 
-  for (var i=0; i < 3; i++){
+  for (let i=0; i < 3; i++){
     scatter.push({
         x: d3.randomUniform(-axis_len+3, axis_len-3)(),
         y: d3.randomUniform(-axis_len+3, axis_len-3)(), 
@@ -88,7 +86,7 @@ function init(){
   expectedAxis = lib.rotate_lines(axis, alpha, beta, startAngleZ);
   plot(expectedScatter, 
        expectedAxis, 
-       1000);
+       tt);
   drag_end();
 }
 
@@ -128,15 +126,12 @@ function dragged_point(i){
 function drag_end(){
   scatter = expectedScatter;
   axis = expectedAxis;
-  startAngleX = 0;
-  startAngleY = 0;
-  startAngleZ = 0;
 }
 
-init();
 
 return {
-  init: function(){init();}
+  init: function(tt=0){init(tt);},
+  select_svg: function(svg_id){select_svg(svg_id);}
 };
 
 })();

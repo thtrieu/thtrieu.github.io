@@ -187,7 +187,6 @@ Rotate the space, drag individual point, or click
 <script src="/assets/js/linear_algebra/point_location.js"></script>
 <script src="/assets/js/linear_algebra/point_location2d.js"></script>
 <script>
-
 draw_on_svg(
     'point_location',
     point_location2d, 
@@ -199,22 +198,22 @@ draw_on_svg(
 Exactly. People also refer to a vector as an arrow pointing from the origin to the location. This arrow, the point living in a space, or the list of numbers are essentially three sides of the same coin. They are 3 different ways to refer to the same thing that we call "vector".
 
 <center class='js'>
-<svg width="300" height="250" id="svg_point_arrow_location2d"></svg><svg width="300" height="250" id="svg_point_arrow_location"></svg> 
+  <label class='switch'> <input type='checkbox' id='switch_point_arrow_location'> <div class='slider'></div></label>
+  <br/>
+<svg width="600" height="280" id="svg_point_arrow_location"></svg>
 <br/>
 Here we use round-headed arrows and simplify the coordinates by assuming the order $x\rightarrow y\rightarrow z$.
 <br/>
 Rotate the space, move individual point, or click
-<button id='but_point_arrow_location'>shuffle</button>.
+<button id='init_point_arrow_location'>shuffle</button>.
 </center>
 
 <script src="/assets/js/linear_algebra/point_arrow_location2d.js"></script>
 <script src="/assets/js/linear_algebra/point_arrow_location.js"></script>
 <script>
-d3.selectAll('#but_point_arrow_location')
-  .on('click', function(){
-      point_arrow_location2d.init();
-      point_arrow_location.init();
-  });
+draw_on_svg('point_arrow_location',
+            point_arrow_location2d,
+            point_arrow_location)
 </script>
 
 <center><b>2. Dot Product as Projection</b></center>

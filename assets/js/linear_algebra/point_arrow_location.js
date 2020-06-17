@@ -1,45 +1,42 @@
-var point_arrow_location = (function() {
+let point_arrow_location = (function() {
 
 
-var origin = [150, 130], 
+let origin = [300, 140], 
   scale = 10, 
   scatter = [], 
   axis = [],
   expectedAxis = [],
   beta = 0, alpha = 0, 
-
   startAngleX = Math.PI/8. * 2,
   startAngleY = -Math.PI/8.,
   startAngleZ = Math.PI/8.,
-
-  axis_len = 13;
-
-
-var svg = d3.select("#svg_point_arrow_location");
-
-var lib = space_plot_lib(
-  svg,
-  origin,
-  scale,
-  is_2d=false)
+  axis_len = 13,
+  svg = null,
+  lib = null;
 
 
-svg = svg.call(d3.drag()
-         .on('start', drag_start)
-         .on('drag', dragged)
-         .on('end', drag_end))
-         .append('g');
+function select_svg(svg_id) {
+  svg = d3.select("#svg_point_arrow_location");
 
+  lib = space_plot_lib(
+    svg,
+    origin,
+    scale,
+    is_2d=false)
 
-
-axis = lib.init_axis(axis_len=axis_len);
+  svg = svg.call(d3.drag()
+           .on('start', drag_start)
+           .on('drag', dragged)
+           .on('end', drag_end))
+           .append('g');
+}
 
 
 function plot(scatter, axis, tt){
 
-  var lines = [], points = [];
+  let lines = [], points = [];
 
-  lib.plot_lines(axis);
+  lib.plot_lines(axis, tt);
 
   scatter.forEach(function(d){
     lines.push(...lib.create_segments(d));
@@ -52,8 +49,8 @@ function plot(scatter, axis, tt){
   };
 
   scatter.forEach(function(d){
-    var coord = lib.dot_basis(d, basis);
-    var point = Object.assign({}, d);
+    let coord = lib.dot_basis(d, basis);
+    let point = Object.assign({}, d);
     point.text = '['.concat(
         coord.x.toFixed(1),
         ', ',
@@ -74,10 +71,11 @@ function plot(scatter, axis, tt){
 }
 
 
-function init(){
+function init(tt){
+  axis = lib.init_axis(axis_len=axis_len);
   scatter = [];
 
-  for (var i=0; i < 3; i++){
+  for (let i=0; i < 3; i++){
     scatter.push({
         x: d3.randomUniform(-axis_len+3, axis_len-3)(),
         y: d3.randomUniform(-axis_len+3, axis_len-3)(), 
@@ -92,7 +90,7 @@ function init(){
       axis, startAngleX, startAngleY, startAngleZ);
   plot(expectedScatter, 
        expectedAxis, 
-       1000);
+       tt);
   drag_end();
 }
 
@@ -134,16 +132,12 @@ function dragged_point(i){
 function drag_end(){
   scatter = expectedScatter;
   axis = expectedAxis;
-  startAngleX = 0;
-  startAngleY = 0;
-  startAngleZ = 0;
 }
-
-init();
 
 
 return {
-  init: function(){init();}
+  init: function(tt=0){init(tt);},
+  select_svg: function(svg_id){select_svg(svg_id);}
 };
 
 })();
