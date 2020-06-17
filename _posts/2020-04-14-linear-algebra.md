@@ -241,7 +241,7 @@ draw_on_svg('dot_product_project',
             dot_product_project)
 </script>
 
-*Projection length is not very accurate right? Length cannot be negative, while in the illustration above the number can sometimes be negative. Why don't we call it "signed-projection"? I think it is a more intuitive name than "dot-product".*
+*Projection length is not very accurate right? Length cannot be negative, while in the illustration above the number can sometimes be negative. Why don't we call it "signed-projection"?*
 
 You are right, a negative dot-product carries more information than just the length of projection. Which is, $u$ and $v$ are roughly opposite in direction. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between $u$ and $v$ and then add them up!
 
@@ -262,9 +262,9 @@ draw_on_svg('dot_product_formula',
             dot_product_formula)
 </script>
 
-*Oh, that's a very nice coincidence.*
+*Oh, that's surprisingly simple!*
 
-Indeed it is. Let's look at a very useful diagram for this same formula. It shows how two vectors $u$ and $v$ colliding into a single number (their dot product $u^Tv$).
+Indeed it is. Let's look at a very useful diagram for this formula. It shows how two vectors $u$ and $v$ colliding into a single number (their dot product $u^Tv$).
 
 <center class='js'>
 <svg width="315" height="350" id="svg_dot_product_collide2d"></svg><svg width="315" height="350" id="svg_dot_product_collide"></svg> 
@@ -289,7 +289,7 @@ d3.selectAll('#but_dot_product_collide_compute')
 </script>
 
 
-*Looks like this diagram explains the notation $u^Tv$ very well. $u^T$ is $u$ lying down, while $v$ is standing and $u^Tv$ is the collision of $u^T$ and $v$.*
+*Looks like this diagram explains the notation $u^Tv$ very well: $u^T$ is $u$ lying down, while $v$ is standing, and $u^Tv$ is the collision of $u^T$ and $v$.*
 
 That's exactly what it is :) The $^T$ operation here is called "transpose". Transposing flips the vector so it lies down. This diagram will become very helpful later on and we'll meet it again soon.
 
@@ -356,6 +356,25 @@ That's the right way to think about it :) The dot product here is simply the pro
 That's a good question. One of the understanding here is that projecting $u$ onto $v$ is essentially applying a **change in perspective**.
 
 In the current space and coordinate system, $u$ is a vector of certain direction and length. The question is, what does $u$ look like in *another space and coordinate system?* In particular, how does $u$ look like from $v$'s perspective? A reasonable answer is just projecting $u$ onto $v$.
+
+
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_v_perspective'> <div class='slider'></div></label>
+  <br/>
+<svg width="600" height="280" id="svg_v_perspective"></svg>
+<br/> 
+Try dragging $u$, $v$, the whole space, or click 
+<button id='init_v_perspective'>reset</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/v_perspective2d.js"></script>
+<script src="/assets/js/linear_algebra/v_perspective.js"></script>
+<script>
+draw_on_svg('v_perspective',
+            v_perspective2d,
+            v_perspective);
+</script>
+
 
 *One way I can think of how this makes sense: the projection is larger when $u$ is more aligned to $v$, and shrinks to zero when the two are not aligned at all (perpendicular).*
 
