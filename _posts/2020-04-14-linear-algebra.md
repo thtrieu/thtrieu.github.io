@@ -84,6 +84,7 @@ input:checked + .slider:before {
 .slider:after
 {
  content:'2D';
+ font-weight: bold;
  color: white;
  display: block;
  position: absolute;
@@ -322,10 +323,12 @@ here takes into account $|v|$ as well:
 $$u^Tv = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \left|v\right|$$
 
 <center class='js'>
-<svg width="315" height="280" id="svg_dot_product_correct2d"></svg><svg width="315" height="280" id="svg_dot_product_correct"></svg> 
-<br/>
+  <label class='switch'> <input type='checkbox' id='switch_dot_product_correct'> <div class='slider'></div></label>
+  <br/>
+<svg width="600" height="280" id="svg_dot_product_correct"></svg>
+<br/> 
 Try dragging $u$, $v$, or any of the other lines/points, or click
-<button id='but_dot_product_correct_init'>reset</button>.
+<button id='init_dot_product_correct'>reset</button>.
 <br/>
 Notice when $|v|=1$, $u^Tv$ coincides with the projection (shaded blue).
 </center>
@@ -333,11 +336,9 @@ Notice when $|v|=1$, $u^Tv$ coincides with the projection (shaded blue).
 <script src="/assets/js/linear_algebra/dot_product_correct2d.js"></script>
 <script src="/assets/js/linear_algebra/dot_product_correct.js"></script>
 <script>
-d3.selectAll('#but_dot_product_correct_init')
-  .on('click', function(){
-      dot_product_correct2d.init();
-      dot_product_correct.init();
-  });
+draw_on_svg('dot_product_correct',
+            dot_product_correct2d,
+            dot_product_correct);
 </script>
 
 So dot product not only projects $u$ onto $v$'s direction, it also scales the result by $\|v\|$. Now with this new interpretation, $u^Tv = v^Tu$ indeed!

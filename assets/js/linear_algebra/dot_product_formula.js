@@ -73,13 +73,7 @@ function plot(scatter, axis, tt){
 
   lines.push(uTvv_line);
 
-  lib.create_dash_segments(u, uTvv).forEach(
-    function(d, i){
-      if (tt > 0) {
-        d.tt = tt + i * 40;
-      }
-      lines.push(d);
-  });
+  lines.push(...lib.create_dash_segments(u, uTvv));
 
   scatter.forEach(function(d, i){
     let coord = lib.dot_basis(d, basis);
@@ -163,6 +157,7 @@ function plot(scatter, axis, tt){
       dws_array=[1.7, 1.5, 2.4, 0.8, 2.4, 0.8, 2.4, 0.8, 2.4, 0.85, 2.4, 0.85, 2.4],
       dhs_array=[1.0, 1.8, 1.0])
   );
+  
   lib.sort();
 }
 

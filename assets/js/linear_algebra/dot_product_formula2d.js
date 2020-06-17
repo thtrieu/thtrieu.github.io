@@ -89,17 +89,16 @@ function plot(scatter, axis, tt){
   uTvv_line.color = 0;
   uTvv_line.text = 'u\u1d40v = '.concat(uTv.toFixed(3));
   uTvv_line.text_color = 0;
+  uTvv_line.centroid_z = 1000;
 
   lines.push(uTvv_line);
 
-  let dash_line = [
-      {x: u.x, y: u.y, z: u.z},
-      {x: uTvv.x, y: uTvv.y, z: 0,
-       tt:true}];
-  
-  dash_line.dash = true;
-  dash_line.centroid_z = -1000;
-  lines.push(dash_line);
+  lib.create_dash_segments(u, uTvv).forEach(
+      function(d) {
+        d.centroid_z = -900;
+        lines.push(d);
+      }
+  )
 
   lib.plot_lines(lines, tt, 'arrow');
   lib.plot_points(points, tt,

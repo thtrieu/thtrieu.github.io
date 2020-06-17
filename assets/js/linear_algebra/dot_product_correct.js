@@ -1,44 +1,40 @@
-var dot_product_correct = (function() {
+let dot_product_correct = (function() {
 
-
-var origin = [150, 140], 
+let origin = [300, 140], 
   scale = 60, 
   scatter = [], 
   axis = [],
   expectedAxis = [],
-  beta = 0, alpha = 0, 
-
   startAngleX = Math.PI/8 * 2.65,
   startAngleY = -Math.PI/8,
-  startAngleZ = Math.PI/8 * 0.6;
-
-let  axis_len = 2,
-  unit = axis_len/10;
-
-var svg = d3.select("#svg_dot_product_correct");
-
-var lib = space_plot_lib(
-  svg,
-  origin,
-  scale,
-  is_2d=false)
+  startAngleZ = Math.PI/8 * 0.6,
+  axis_len = 2,
+  unit = axis_len/10,
+  svg = null,
+  lib = null;
 
 
-svg = svg.call(d3.drag()
-         .on('start', drag_start)
-         .on('drag', dragged)
-         .on('end', drag_end))
-         .append('g');
+function select_svg(svg_id) {
+  svg = d3.select(svg_id);
 
+  lib = space_plot_lib(
+    svg,
+    origin,
+    scale,
+    is_2d=false)
 
-axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
+  svg = svg.call(d3.drag()
+           .on('start', drag_start)
+           .on('drag', dragged)
+           .on('end', drag_end))
+           .append('g'); 
+}
 
 
 function plot(scatter, axis, tt){
+  let lines = [], points = [];
 
-  var lines = [], points = [];
-
-  lib.plot_lines(axis);
+  lib.plot_lines(axis, tt);
 
   scatter.forEach(function(d){
     lines.push(...lib.create_segments(d));
@@ -113,8 +109,8 @@ function plot(scatter, axis, tt){
 }
 
 
-function init(){
-
+function init(tt){
+  axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
   let u = {
       x: 0.8,
       y: 0.8, 
@@ -136,7 +132,7 @@ function init(){
       axis, startAngleX, startAngleY, startAngleZ);
   plot(expectedScatter, 
        expectedAxis, 
-       1000);
+       tt);
   drag_end();
 }
 
@@ -222,16 +218,12 @@ function dragged_point(d, i){
 function drag_end(){
   scatter = expectedScatter;
   axis = expectedAxis;
-  startAngleX = 0;
-  startAngleY = 0;
-  startAngleZ = 0;
 }
-
-init();
 
 
 return {
-  init: function(){init();}
+  init: function(tt=0){init(tt);},
+  select_svg: function(svg_id){select_svg(svg_id);}
 };
 
 })();
