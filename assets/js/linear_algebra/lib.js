@@ -72,13 +72,20 @@ function _create_axis_float(
           {x: p1[0], y:p1[1], z:p1[2]},
           {x: p2[0], y:p2[1], z:p2[2]}
         ]
+        if (is_2d && ord == 2) {
+          segment.opacity = 0.0;
+          segment.text_opacity = 0.0;
+        }
+        axis.push(segment); 
+        if (text == '') {
+          return;
+        }
         if (d == axis_len-unit) {
           segment[1].text = text;
         }
         else {
           segment[0].text = text
         }
-        axis.push(segment); 
       }
   );
 }
@@ -88,9 +95,7 @@ function init_float_axis(axis_len=2.0, unit=0.2) {
   let axis = [];
   _create_axis_float(axis, 'x', 0, axis_len, unit);
   _create_axis_float(axis, 'y', 1, axis_len, unit);
-  if (!is_2d) {
-    _create_axis_float(axis, 'z', 2, axis_len, unit);
-  }
+  _create_axis_float(axis, 'z', 2, axis_len, unit);
   return axis;
 }
 

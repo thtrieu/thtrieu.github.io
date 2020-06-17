@@ -224,20 +224,20 @@ You don't do much with a vector. You start to have fun when there is more than o
 
 
 <center class='js'>
-<svg width="300" height="250" id="svg_dot_product_project2d"></svg><svg width="300" height="250" id="svg_dot_product_project"></svg> 
+  <label class='switch'> <input type='checkbox' id='switch_dot_product_project'> <div class='slider'></div></label>
+  <br/>
+<svg width="600" height="280" id="svg_dot_product_project"></svg>
 <br/>
 Try dragging vector $u$, $v$, the whole space, or click
-<button id='but_dot_product_project'>reset</button>.
+<button id='init_dot_product_project'>reset</button>.
 </center>
 
 <script src="/assets/js/linear_algebra/dot_product_project2d.js"></script>
 <script src="/assets/js/linear_algebra/dot_product_project.js"></script>
 <script>
-d3.selectAll('#but_dot_product_project')
-  .on('click', function(){
-      dot_product_project2d.init();
-      dot_product_project.init();
-  });
+draw_on_svg('dot_product_project',
+            dot_product_project2d,
+            dot_product_project)
 </script>
 
 *Projection length is not very accurate right? Length cannot be negative, while in the illustration above the number can sometimes be negative. Why don't we call it "signed-projection"? I think it is a more intuitive name than "dot-product".*
@@ -245,20 +245,20 @@ d3.selectAll('#but_dot_product_project')
 You are right, a negative dot-product carries more information than just the length of projection. Which is, $u$ and $v$ are roughly opposite in direction. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between $u$ and $v$ and then add them up!
 
 <center class='js'>
-<svg width="315" height="360" id="svg_dot_product_formula2d"></svg><svg width="315" height="360" id="svg_dot_product_formula"></svg> 
+  <label class='switch'> <input type='checkbox' id='switch_dot_product_formula'> <div class='slider'></div></label>
+  <br/>
+<svg width="600" height="350" id="svg_dot_product_formula"></svg>
 <br/>
 Try dragging vector $u$, $v$, the whole space, or click
-<button id='but_dot_product_formula'>reset</button>.
+<button id='init_dot_product_formula'>reset</button>.
 </center>
 
 <script src="/assets/js/linear_algebra/dot_product_formula2d.js"></script>
 <script src="/assets/js/linear_algebra/dot_product_formula.js"></script>
 <script>
-d3.selectAll('#but_dot_product_formula')
-  .on('click', function(){
-      dot_product_formula2d.init();
-      dot_product_formula.init();
-  });
+draw_on_svg('dot_product_formula',
+            dot_product_formula2d,
+            dot_product_formula)
 </script>
 
 *Oh, that's a very nice coincidence.*

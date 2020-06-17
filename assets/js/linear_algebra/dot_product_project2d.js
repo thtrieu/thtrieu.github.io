@@ -1,37 +1,48 @@
 let dot_product_project2d = (function() {
 
-let origin = [150, 140], 
+let origin = [300, 140], 
     scale = 60, 
     scatter = [], 
     axis = [],
     expectedAxis = [],
-
     startAngleX = Math.PI,
     startAngleY = 0.,
     startAngleZ = 0.,
-    
     axis_len = 2,
     unit = axis_len/10,
-    
-    svg = d3.select("#svg_dot_product_project2d");
+    svg = null,
+    lib = null;
 
-let lib = space_plot_lib(
-  svg,
-  origin, 
-  scale,
-  is_2d=true);
+function select_svg(svg_id) {
+  svg = d3.select(svg_id);
 
-svg = svg.call(d3.drag()
-         .on('drag', dragged)
-         .on('start', drag_start)
-         .on('end', drag_end))
-         .append('g');
+  lib = space_plot_lib(
+      svg,
+      origin, 
+      scale,
+      is_2d=true);
 
-axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
+  svg = svg.call(d3.drag()
+           .on('drag', dragged)
+          .on('start', drag_start)
+          .on('end', drag_end))
+          .append('g');
+}
+
 
 function plot(scatter, axis, tt){
+  lib.plot_lines(axis, tt);
+
+  let points = [], lines = [];
   let u = scatter[0],
       v = scatter[1];
+
+  scatter.forEach(function(d, i){
+    lines.push(...lib.create_segments(d));
+    if (i == 0) {
+      lines.centroid_z = 900;
+    }
+  });
 
   basis = {
       ex: axis[1/unit - 1 + axis_len * 0][1], 
@@ -41,40 +52,24 @@ function plot(scatter, axis, tt){
 
   scatter.forEach(function(d, i){
     let coord = lib.dot_basis(d, basis);
+    let p = Object.assign({}, d);
     if (i == 0) {
-      d.text = 'u = ';
+      p.text = 'u = ';
     } else {
-      d.text = 'v = ';
+      p.text = 'v = ';
     }
-    d.text += '['.concat(
+    p.text += '['.concat(
       coord.x.toFixed(2),
       ', ',
       coord.y.toFixed(2),
       ']');
     
-    d.text_color = d.color;
-
+    p.text_color = d.color;
+    points.push(p);
   })
 
-  lib.plot_lines(axis);
-
-  let lines = [];
-  scatter.forEach(function(d, i){
-    lines.push([
-        {x: 0., y: 0., z: 0.},
-        {x: d.x, y: d.y, z: d.z, 
-         color: d.color, tt: true}
-    ]);
-    if (i == 0) {
-      lines.centroid_z = 900;
-    }
-  });
 
   let uTv = lib.dot_product(u, v);
-  let points = [];
-  scatter.forEach(function(d){
-    points.push(d)
-  })
   let uTvv = {
       x: v.x * uTv,
       y: v.y * uTv,
@@ -120,7 +115,8 @@ function plot(scatter, axis, tt){
   lib.sort();
 }
 
-function init(){
+function init(tt){
+  axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
   let u = {
       x: -1.0,
       y: -4.0/3, 
@@ -141,7 +137,7 @@ function init(){
   expectedAxis = lib.rotate_lines(axis, startAngleX, startAngleY, startAngleZ);
   plot(expectedScatter, 
        expectedAxis, 
-       1000);
+       tt);
   drag_end();
 }
 
@@ -189,15 +185,12 @@ function dragged_point(i){
 function drag_end(){
   scatter = expectedScatter;
   axis = expectedAxis;
-  startAngleX = 0;
-  startAngleY = 0;
-  startAngleZ = 0;
 }
 
-init();
 
 return {
-  init: function(){init();}
+  init: function(tt=0){init(tt);},
+  select_svg: function(svg_id){select_svg(svg_id);}
 };
 
 })();

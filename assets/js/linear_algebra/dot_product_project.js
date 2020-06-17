@@ -1,36 +1,37 @@
 let dot_product_project = (function() {
 
 
-let origin = [150, 130], 
-    scale = 70, 
+let origin = [300, 140], 
+    scale = 60, 
     scatter = [], 
     axis = [],
     expectedAxis = [],
     beta = 0, alpha = 0, 
-
     startAngleX = Math.PI/8 * 2.65,
     startAngleY = -Math.PI/8,
     startAngleZ = Math.PI/8 * 0.6,
-
     axis_len = 2,
     unit = axis_len/10,
-
-    svg = d3.select("#svg_dot_product_project");
-
-let lib = space_plot_lib(
-  svg,
-  origin,
-  scale,
-  is_2d=false)
+    svg = null,
+    lib = null;
 
 
-svg = svg.call(d3.drag()
-         .on('start', drag_start)
-         .on('drag', dragged)
-         .on('end', drag_end))
-         .append('g');
+function select_svg(svg_id) {
+  svg = d3.select(svg_id);
 
-axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
+  lib = space_plot_lib(
+    svg,
+    origin,
+    scale,
+    is_2d=false);
+
+  svg = svg.call(d3.drag()
+           .on('start', drag_start)
+           .on('drag', dragged)
+           .on('end', drag_end))
+           .append('g');
+}
+
 
 function plot(scatter, axis, tt){
   let u = scatter[0],
@@ -38,7 +39,7 @@ function plot(scatter, axis, tt){
 
   let lines = [], points = [];
 
-  lib.plot_lines(axis);
+  lib.plot_lines(axis, tt);
 
   scatter.forEach(function(d){
     lines.push(...lib.create_segments(d));
@@ -74,8 +75,13 @@ function plot(scatter, axis, tt){
 
   lines.push(uTvv_line);
 
-  let dash_line = lib.create_dash_segments(u, uTvv);
-  lines.push(...dash_line);
+  lib.create_dash_segments(u, uTvv).forEach(
+    function(d, i){
+      if (tt > 0) {
+        d.tt = tt + i * 40;
+      }
+      lines.push(d);
+  });
 
   scatter.forEach(function(d, i){
     let coord = lib.dot_basis(d, basis);
@@ -111,7 +117,8 @@ function plot(scatter, axis, tt){
   lib.sort();
 }
 
-function init(){
+function init(tt){
+  axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
   let u = {
       x: 0.8,
       y: 0.8, 
@@ -134,9 +141,11 @@ function init(){
       axis, startAngleX, startAngleY, startAngleZ);
   plot(expectedScatter, 
        expectedAxis, 
-       1000);
+       tt);
+
   drag_end();
 }
+
 
 function drag_start(){
   lib.drag_start();
@@ -183,15 +192,12 @@ function dragged_point(i){
 function drag_end(){
   scatter = expectedScatter;
   axis = expectedAxis;
-  startAngleX = 0;
-  startAngleY = 0;
-  startAngleZ = 0;
 }
 
-init();
 
 return {
-  init: function(){init();}
+  init: function(tt=0){init(tt);},
+  select_svg: function(svg_id){select_svg(svg_id);}
 };
 
 })();
