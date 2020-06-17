@@ -125,9 +125,11 @@ d3.selectAll('#but_point_cloud')
 Yeah, more precisely, each vector is a point living in *space*. The space here can be 2-, 3-, or N- dimensional. To locate the vectors, we usually attach a coordinate system. Here are examples of coordinate systems in 2-dimensional and 3-dimensional spaces:
 
 <center class='js'>
-<svg width="300" height="250" id="svg_point_coord_lines2d"></svg> <svg width="300" height="250" id="svg_point_coord_lines"></svg>
+  <label class='switch'> <input type='checkbox' id='switch_point_coord_lines'> <div class='slider'></div></label>
+  <br/>
+<svg width="600" height="280" id="svg_point_coord_lines"></svg>
 <br/> 
-Drag or <button id='reset_point_coord_lines'>shuffle</button>
+Drag or <button id='init_point_coord_lines'>shuffle</button>
 </center>
 
 <script src="/assets/js/linear_algebra/point_coord_lines2d.js">
@@ -136,11 +138,36 @@ Drag or <button id='reset_point_coord_lines'>shuffle</button>
 </script>
 
 <script>
-d3.selectAll('#reset_point_coord_lines')
-  .on('click', function(){
-      point_coord_lines.init();
-      point_coord_lines2d.init();
-  })
+function draw_on_svg(svg_id, fn_2d, fn_3d) {
+  let is_3d = false;
+  fn_2d.select_svg('#svg_' + svg_id);
+  fn_2d.init();
+
+  d3.selectAll('#init_' + svg_id)
+    .on('click', function(){
+      if (is_3d) {
+        fn_3d.init(tt=1000);
+      } else {
+        fn_2d.init(tt=1000);
+      }
+    });
+
+  d3.selectAll('#switch_' + svg_id)
+    .on('click', function(){
+      is_3d = this.checked;
+      if (is_3d) {
+        fn_3d.select_svg('#svg_' + svg_id);
+        fn_3d.init(tt=1000);
+      } else {
+        fn_2d.select_svg('#svg_' + svg_id);
+        fn_2d.init(tt=1000);
+      }
+    })
+}
+
+draw_on_svg('point_coord_lines',
+            point_coord_lines2d,
+            point_coord_lines)
 </script>
 
 *Do the coordinate axes here acting like rulers on a map?*
@@ -153,44 +180,18 @@ Yes! By measuring distance in different directions, this set of rulers (which we
   <br/>
 <svg width="600" height="280" id="svg_point_location"></svg>
 <br/>
-
 Rotate the space, drag individual point, or click
-<button id='but_point_location'>shuffle</button>.
+<button id='init_point_location'>shuffle</button>.
 </center>
 
 <script src="/assets/js/linear_algebra/point_location.js"></script>
 <script src="/assets/js/linear_algebra/point_location2d.js"></script>
 <script>
 
-function draw_on_svg(fn_2d, fn_3d) {
-  let is_3d = false;
-  fn_2d.select_svg();
-  fn_2d.init(tt=0);
-
-  d3.selectAll('#but_point_location')
-    .on('click', function(){
-      if (is_3d) {
-        fn_3d.init();
-      } else {
-        fn_2d.init();
-      }
-    });
-
-  d3.selectAll('#switch_point_location')
-    .on('click', function(){
-      if (this.checked) {
-        is_3d = true;
-        fn_3d.select_svg();
-        fn_3d.init();
-      } else {
-        is_3d = false;
-        fn_2d.select_svg();
-        fn_2d.init();
-      }
-    })
-}
-
-draw_on_svg(point_location2d, point_location);
+draw_on_svg(
+    'point_location',
+    point_location2d, 
+    point_location);
 </script>
 
 *Is this why sometimes people refer to a list of numbers as a "vector"?*
