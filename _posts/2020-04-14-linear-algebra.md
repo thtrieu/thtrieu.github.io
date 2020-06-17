@@ -267,7 +267,7 @@ draw_on_svg('dot_product_formula',
 Indeed it is. Let's look at a very useful diagram for this same formula. It shows how two vectors $u$ and $v$ colliding into a single number (their dot product $u^Tv$).
 
 <center class='js'>
-<svg width="315" height="350" id="svg_dot_product_collide2d"></svg><svg width="315" height="350" id="svg_dot_product_collide"></svg> 
+<svg width="315" height="400" id="svg_dot_product_collide2d"></svg><svg width="315" height="400" id="svg_dot_product_collide"></svg> 
 <br/>
 Try dragging vector $u$, $v$, the whole space. Click
 <button id='but_dot_product_collide_init'>reset</button> or <button id='but_dot_product_collide_compute'>compute $u^Tv$</button>.
