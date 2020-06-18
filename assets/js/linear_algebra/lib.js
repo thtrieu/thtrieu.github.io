@@ -376,7 +376,7 @@ function plot_points(data,
                      with_origin=null){
   add_keys(name, data);
 
-  let points = svg.selectAll('circle')
+  let points = svg.selectAll('circle.' + name)
                   .data(data, function(d){ return d.key; })
                   .each(function(d){})
                   .call(d3.drag()
@@ -387,7 +387,7 @@ function plot_points(data,
   points
     .enter()
     .append('circle')
-    .attr('class', '_3d point')
+    .attr('class', '_3d ' + name)
     .merge(points)
     .transition().duration(get_duration(tt))
     .each(function(d){
@@ -403,12 +403,12 @@ function plot_points(data,
   points.exit().remove();
 
   let text = svg
-      .selectAll('text.pText')
+      .selectAll('text.' + name)
       .data(data, function(d){ return d.key; });
   text
       .enter()
       .append('text')
-      .attr('class', '_3d pText')
+      .attr('class', '_3d ' + name)
       .attr('dx', '.4em')
       .merge(text)
       .transition().duration(get_duration(tt))
@@ -553,7 +553,8 @@ function get_drag_angles(){
 
 
 function getMouse(){
-  return d3.mouse(svg.node());
+  let [x, y] = d3.mouse(svg.node());
+  return {x: x, y: y, z: 0.};
 }
 
 
@@ -561,9 +562,9 @@ function getMouseAtan2(with_origin){
   if (with_origin == null) {
     with_origin = origin;
   }
-  mouse = getMouse(svg);
-  return Math.atan2(mouse[1] - with_origin[1],
-                    mouse[0] - with_origin[0]);
+  let m = getMouse();
+  return Math.atan2(m.y - with_origin[1],
+                    m.x - with_origin[0]);
 }
 
 
@@ -573,8 +574,7 @@ function drag_start2d(with_origin=null){
 
 
 function get_drag_angle_2d(with_origin=null){
-  atan1 = getMouseAtan2(with_origin);
-  return atan1 - atan0;
+  return getMouseAtan2(with_origin) - atan0;
 }
 
 
@@ -582,8 +582,8 @@ function mouse_to_point_position(with_origin=null){
   if (with_origin == null) {
     with_origin = origin;
   }
-  [x, y] = getMouse();
-  [x, y] = [x - with_origin[0], y - with_origin[1]];
+  m = getMouse();
+  [x, y] = [m.x - with_origin[0], m.y - with_origin[1]];
   [x, y] = [x/scale, y/scale];
   return {x: x, y: y, z:0.};
 }
