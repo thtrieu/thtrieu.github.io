@@ -1,4 +1,7 @@
-space_plot_lib = function(svg, origin, scale, is_2d) {
+space_plot_lib = function(svg, 
+                          origin, 
+                          scale, 
+                          is_2d) {
 
 let 
   mx = 0,
@@ -217,10 +220,13 @@ function get_stroke_width(d){
 }
 
 
-function project(d){
+function project(d, with_origin){
+  if (with_origin == null) {
+    with_origin = origin;
+  }
   return {
-      x: origin[0] + scale * d.x,
-      y: origin[1] + scale * d.y
+      x: with_origin[0] + scale * d.x,
+      y: with_origin[1] + scale * d.y
   };
 }
 
@@ -257,12 +263,21 @@ function add_keys(name, data) {
 }
 
 
+function sort_centroid_z(a, b){
+  let 
+    _a = a.hasOwnProperty('centroid_z') ? a.centroid_z : a.centroid.z,
+    _b = b.hasOwnProperty('centroid_z') ? b.centroid_z : b.centroid.z;
+  return _a < _b ? -1 : _a > _b ? 1 : _a >= _b ? 0 : NaN;
+}
+
+
 function plot_lines(data,
                     tt,
                     name='line',
                     drag_line_fn=null,
                     drag_start_fn=null,
-                    drag_end_fn=null){
+                    drag_end_fn=null,
+                    with_origin=null){
   add_keys(name, data);
 
   let lines = svg
@@ -298,10 +313,10 @@ function plot_lines(data,
           return ('3, 3');
         }
       })
-      .attr('x1', function(d){ return project(d[0]).x; })
-      .attr('y1', function(d){ return project(d[0]).y; })
-      .attr('x2', function(d){ return project(d[1]).x; })
-      .attr('y2', function(d){ return project(d[1]).y; })
+      .attr('x1', function(d){ return project(d[0], with_origin).x; })
+      .attr('y1', function(d){ return project(d[0], with_origin).y; })
+      .attr('x2', function(d){ return project(d[1], with_origin).x; })
+      .attr('y2', function(d){ return project(d[1], with_origin).y; })
       .attr('fill', get_color('grey'))
       .attr('stroke', get_color('grey'))
       .attr('stroke-width', get_stroke_width)
@@ -325,12 +340,12 @@ function plot_lines(data,
           z: (d[1].z+d[0].z)/2.
         };
         if (d.hasOwnProperty('text')) {
-          d.text_position = project(d.centroid);
+          d.text_position = project(d.centroid, with_origin);
         } else if (d[0].hasOwnProperty('text')) {
-          d.text_position = project(d[0]);
+          d.text_position = project(d[0], with_origin);
         }
         else {
-          d.text_position = project(d[1]);
+          d.text_position = project(d[1], with_origin);
         }
       })
       .transition().duration(get_duration(tt))
@@ -352,20 +367,13 @@ function plot_lines(data,
 }
 
 
-function sort_centroid_z(a, b){
-  let 
-    _a = a.hasOwnProperty('centroid_z') ? a.centroid_z : a.centroid.z,
-    _b = b.hasOwnProperty('centroid_z') ? b.centroid_z : b.centroid.z;
-  return _a < _b ? -1 : _a > _b ? 1 : _a >= _b ? 0 : NaN;
-}
-
-
 function plot_points(data, 
                      tt,
                      drag_point_fn=null,
                      drag_start_fn=null,
                      drag_end_fn=null,
-                     name='point'){
+                     name='point',
+                     with_origin=null){
   add_keys(name, data);
 
   let points = svg.selectAll('circle')
@@ -387,8 +395,8 @@ function plot_points(data,
                       y: d.y, 
                       z: d.z};
     })
-    .attr('cx', function(d){return project(d).x})
-    .attr('cy', function(d){return project(d).y})
+    .attr('cx', function(d){return project(d, with_origin).x})
+    .attr('cy', function(d){return project(d, with_origin).y})
     .attr('r', get_size)
     .attr('fill', get_color())
     .attr('opacity', get_opacity);
@@ -410,15 +418,15 @@ function plot_points(data,
                         z: d.z};
       })
       .style('font-size', get_txt_size)
-      .attr('x', function(d){ return project(d).x+3; })
-      .attr('y', function(d){ return project(d).y; })
+      .attr('x', function(d){ return project(d, with_origin).x+3; })
+      .attr('y', function(d){ return project(d, with_origin).y; })
       .attr('opacity', get_txt_opacity)
       .text(function(d){ return d.text; });
   text.exit().remove();
 }
 
 
-function plot_texts(data, tt, name='text'){
+function plot_texts(data, tt, name='text', with_origin=null){
   add_keys(name, data);
 
   let text = svg
@@ -438,8 +446,8 @@ function plot_texts(data, tt, name='text'){
       })
       .style('font-size', get_txt_size)
       .style('fill', get_color())
-      .attr('x', function(d){ return project(d).x; })
-      .attr('y', function(d){ return project(d).y; })
+      .attr('x', function(d){ return project(d, with_origin).x; })
+      .attr('y', function(d){ return project(d, with_origin).y; })
       .attr('opacity', get_txt_opacity)
       .text(function(d){ return d.text; });
   text.exit().remove();
@@ -538,7 +546,7 @@ function get_drag_angles(){
   dx = d3.event.x - mx;
   dy = d3.event.y - my;
 
-  alpha  = - dy * Math.PI / 230;
+  alpha  = -dy * Math.PI / 230;
   beta   = dx * Math.PI / 230;
   return [alpha, beta];
 }
@@ -549,34 +557,40 @@ function getMouse(){
 }
 
 
-function getMouseAtan2(){
+function getMouseAtan2(with_origin){
+  if (with_origin == null) {
+    with_origin = origin;
+  }
   mouse = getMouse(svg);
-  return Math.atan2(mouse[1] - origin[1],
-                    mouse[0] - origin[0]);
+  return Math.atan2(mouse[1] - with_origin[1],
+                    mouse[0] - with_origin[0]);
 }
 
 
-function drag_start2d(){
-  atan0 = getMouseAtan2();
+function drag_start2d(with_origin=null){
+  atan0 = getMouseAtan2(with_origin);
 }
 
 
-function get_drag_angle_2d(){
-  atan1 = getMouseAtan2();
+function get_drag_angle_2d(with_origin=null){
+  atan1 = getMouseAtan2(with_origin);
   return atan1 - atan0;
 }
 
 
-function mouse_to_point_position(){
+function mouse_to_point_position(with_origin=null){
+  if (with_origin == null) {
+    with_origin = origin;
+  }
   [x, y] = getMouse();
-  [x, y] = [x - origin[0], y - origin[1]];
+  [x, y] = [x - with_origin[0], y - with_origin[1]];
   [x, y] = [x/scale, y/scale];
   return {x: x, y: y, z:0.};
 }
 
 
-function update_point_position_from_mouse(d){
-  mouse_pos = mouse_to_point_position();
+function update_point_position_from_mouse(d, with_origin=null){
+  mouse_pos = mouse_to_point_position(with_origin);
   let r = Object.assign({}, d)
   r.x = mouse_pos.x;
   r.y = mouse_pos.y;
@@ -625,6 +639,7 @@ function create_dash_segments(from, to, unit=0.07) {
   };
   return r;
 }
+
 
 function create_segments(d, k=10) {
   let r = [];
@@ -680,6 +695,7 @@ function text_table_to_list(texts,
 }
 
 
+
 return {
   color: color,
   normalize: normalize,
@@ -687,6 +703,7 @@ return {
   dot_product: dot_product,
   plot_points: plot_points,
   plot_lines: plot_lines,
+  plot_texts: plot_texts,
   dot_basis: dot_basis,
   rotate_point: rotate_point,
   rotate_points: rotate_points,
@@ -697,14 +714,14 @@ return {
   get_drag_angles: get_drag_angles,
   drag_start2d: drag_start2d,
   get_drag_angle_2d: get_drag_angle_2d,
+  get_mouse_position: getMouse,
   update_point_position_from_mouse: update_point_position_from_mouse,
   mouse_to_point_position: mouse_to_point_position,
   create_segments: create_segments,
   create_dash_segments: create_dash_segments,
   distance: distance,
-  plot_texts: plot_texts,
   sort: sort,
-  text_table_to_list: text_table_to_list
+  text_table_to_list: text_table_to_list,
 }
 
 };
