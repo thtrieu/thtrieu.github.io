@@ -22,7 +22,7 @@ title: Interactive Visualizations of Linear Algebra - Part 1
   width: 40px;
   height: 16px;
   top: -10px;
-  left: 20px;
+  left: 0px;
 }
 
 .switch input { 
@@ -231,6 +231,8 @@ You don't do much with a vector. You start to have fun when there is more than o
 <br/>
 Try dragging vector $u$, $v$, the whole space, or click
 <button id='init_dot_product_project'>reset</button>.
+<br/>
+Can you make $u^Tv$ negative?
 </center>
 
 <script src="/assets/js/linear_algebra/dot_product_project2d.js"></script>
@@ -355,13 +357,13 @@ That's the right way to think about it :) The dot product here is simply the pro
 
 That's a good question. One of the understanding here is that projecting $u$ onto $v$ is essentially applying a **change in perspective**.
 
-In the current space and coordinate system, $u$ is a vector of certain direction and length. The question is, what does $u$ look like in *another space and coordinate system?* In particular, how does $u$ look like from $v$'s perspective? A reasonable answer is just projecting $u$ onto $v$.
+In the current space and coordinate system, $u$ is a vector of certain direction and length. The question is, what does $u$ look like in *another space and coordinate system?* In particular, how does $u$ look like from $v$'s perspective? One answer is that in $v$'s view, $u'=u^Tv$ is what $u$ looks like:
 
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_v_perspective'> <div class='slider'></div></label>
   <br/>
-<svg width="600" height="280" id="svg_v_perspective"></svg>
+<svg width="630" height="280" id="svg_v_perspective"></svg>
 <br/> 
 Try dragging $u$, $v$, the whole space, or click 
 <button id='init_v_perspective'>reset</button>.
@@ -375,8 +377,11 @@ draw_on_svg('v_perspective',
             v_perspective);
 </script>
 
+*So $u$ in $v$'s view is just one number and not a vector?*
 
-*One way I can think of how this makes sense: the projection is larger when $u$ is more aligned to $v$, and shrinks to zero when the two are not aligned at all (perpendicular).*
+Yes it is just one number. However, a single number is still a vector: it is in fact a 1-dimensional vector! So dot product achieves one-dimensional change of perspective.
+
+*Okay, here is what I think why projection makes sense: the projection is larger when $u$ is more aligned to $v$, and shrinks to zero when the two are not aligned at all (perpendicular). And so when the two is more aligned, each views the other as larger.*
 
 Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Much of Linear Algebra is concerned with studying how a certain object of interest (represented by a point) looks like under different perspectives (different spaces and coordinate systems).
 
