@@ -36,9 +36,9 @@ function plot(scatter, axis, tt){
       v = scatter[1];
 
   basis = {
-      ex: axis[1/unit - 1 + axis_len * 0][1], 
-      ey: axis[1/unit - 1 + axis_len * 1][1],
-      ez: {x: 0, y: 0, z: 0}, // dummy 
+      ex: axis[1/unit - 1 + axis_len/unit * 0][1], 
+      ey: axis[1/unit - 1 + axis_len/unit * 1][1],
+      ez: axis[1/unit - 1 + axis_len/unit * 2][1]
   };
 
   scatter.forEach(function(d, i){
@@ -148,7 +148,7 @@ function plot(scatter, axis, tt){
   lib.plot_texts(lib.text_table_to_list(
       texts_to_show,
       start_coord_x=-2.2, start_coord_y=2.2,
-      col_unit=0.24, row_unit=0.3,
+      w_unit=0.24, h_unit=0.3,
       dws_array=[1.7, 1.5, 2.4, 0.8, 2.4, 0.8, 2.4, 0.8, 2.4],
       dhs_array=[1.0, 1.8, 1.0])
   );
