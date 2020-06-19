@@ -700,8 +700,6 @@ function text_table_to_list(texts,
       text_to_plot = texts[i][j];
       text_to_plot.x = col_coords[j];
       text_to_plot.y = row_coords[i];
-      // text_to_plot.text_opacity = 0.1;
-      // text_to_plot.font_size = 100;
       list_of_texts.push(text_to_plot);
     };
   }

@@ -102,7 +102,7 @@ function plot(scatter, axis, tt){
   lib.plot_lines(lines, tt, 'arrow');
   lib.plot_points(points, tt,
                   drag_point_fn=function(d, i){
-                    if ( i == 0) {
+                    if (i == 0) {
                       dragged_point(i);
                     } else {
                       dragged_point_only();
@@ -158,11 +158,9 @@ function plot(scatter, axis, tt){
       {text:'u\u1d40v = '.concat(uTv.toFixed(3)),
        x: (v.x * uTv/2).toFixed(2),
        y: (v.y * uTv/2).toFixed(2),
-       color: 0,
+       color: 0, text_opacity: uTvv_opacity,
        font_size: 15, tt: 0, key: 'uTv_texts'}
   ];
-  
-  uTv_texts[0].text_opacity = uTvv_opacity;
 
   let uTvv_line_text = [{text: 'u\u1d40v',
                          x: v.x * uTv/2, y: v.y * uTv/2,

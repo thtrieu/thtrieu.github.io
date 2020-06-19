@@ -47,7 +47,7 @@ function plot(scatter, axis, tt){
   basis = {
       ex: axis[1/unit - 1 + axis_len/unit * 0][1], 
       ey: axis[1/unit - 1 + axis_len/unit * 1][1],
-      ez: {x: 0, y: 0, z: 0}, // dummy 
+      ez: axis[1/unit - 1 + axis_len/unit * 2][1]
   };
 
   scatter.forEach(function(d, i){

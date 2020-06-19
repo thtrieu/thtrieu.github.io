@@ -36,9 +36,9 @@ function plot(scatter, axis, tt){
       v = scatter[1];
 
   basis = {
-      ex: axis[1/unit -1 + axis_len/unit * 0][1], 
-      ey: axis[1/unit -1 + axis_len/unit * 1][1],
-      ez: {x: 0, y: 0, z: 0}, // dummy 
+      ex: axis[1/unit - 1 + axis_len/unit * 0][1], 
+      ey: axis[1/unit - 1 + axis_len/unit * 1][1],
+      ez: axis[1/unit - 1 + axis_len/unit * 2][1]
   };
 
 
@@ -154,11 +154,9 @@ function plot(scatter, axis, tt){
       {text:'u\u1d40v = '.concat(uTv.toFixed(3)),
        x: (v.x * uTv/2).toFixed(2),
        y: (v.y * uTv/2).toFixed(2),
-       color: 0,
+       color: 0, text_opacity: uTvv_opacity,
        font_size: 15, tt: 0, key: 'uTv_texts'}
   ];
-  
-  uTv_texts[0].text_opacity = uTvv_opacity;
 
   let uTvv_line_text = [{text: 'u\u1d40v',
                          x: v.x * uTv/2, y: v.y * uTv/2,
@@ -185,7 +183,6 @@ function plot(scatter, axis, tt){
   );
 
   lib.sort();
-
 }
 
 function init(tt){
@@ -220,25 +217,19 @@ function drag_start(){
   lib.drag_start2d();
 }
 
-function dragged(printed_uTvv){
+function dragged(){
   angle_z = lib.get_drag_angle_2d();
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
   expectedAxis = lib.rotate_lines(axis, 0, 0, angle_z);
   
-  if (printed_uTvv==true){
-    plot(expectedScatter, 
+  plot(expectedScatter, 
        expectedAxis, 
-       0, printed_uTvv=true);  
-  } else {
-    plot(expectedScatter, 
-       expectedAxis, 
-       0);
-  }
+       0);  
 };
 
 
-function dragged_point_only(printed_uTvv){
+function dragged_point_only(){
   angle_z = lib.get_drag_angle_2d();
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
@@ -249,7 +240,7 @@ function dragged_point_only(printed_uTvv){
        0);
 }
 
-function dragged_point(i,printed_uTvv){
+function dragged_point(i){
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {

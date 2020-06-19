@@ -106,7 +106,7 @@ function plot(scatter, axis, tt){
   lib.plot_lines(lines, tt, 'arrow');
   lib.plot_points(points, tt,
                   drag_point_fn=function(d, i){
-                    if ( i == 0) {
+                    if (i == 0) {
                       dragged_point(i);
                     } else {
                       dragged_point_only();
