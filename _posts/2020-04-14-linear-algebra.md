@@ -387,7 +387,7 @@ draw_on_svg('v_perspective',
 
 *So $u$ in $v$'s view is just one number and not a vector?*
 
-Yes it is just one number. However, a single number is still a vector: it is in fact a 1-dimensional vector! So dot product achieves one-dimensional change of perspective.
+Yes it is just one number. However, a single number is still a vector: it is in fact a 1-dimensional vector! And so, dot product achieves one-dimensional change of perspective.
 
 *Okay, here is what I think why projection makes sense: the projection is larger when $u$ is more aligned to $v$, and shrinks to zero when the two are not aligned at all (perpendicular). And so when the two is more aligned, each views the other as larger.*
 
