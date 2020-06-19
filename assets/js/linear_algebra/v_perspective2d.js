@@ -231,11 +231,22 @@ function init(tt){
 }
 
 
+let drag_on_left = true;
+
+
 function drag_start(){
   lib.drag_start2d();
+  if (lib.get_mouse_position().x < 300) {
+    drag_on_left = true;
+  } else {
+    drag_on_left = false;
+  }
 }
 
 function dragged(){
+  if (!drag_on_left) {
+    return;
+  }
   angle_z = lib.get_drag_angle_2d();
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
@@ -248,6 +259,9 @@ function dragged(){
 
 
 function dragged_point_only(){
+  if (!drag_on_left) {
+    return;
+  }
   angle_z = lib.get_drag_angle_2d();
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
@@ -269,7 +283,7 @@ function stretch_point(d, i){
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
-        d.x = p.x;
+        d.x = Math.min(p.x, (300-origin[0])/scale);
         d.y = p.y;
       }
       expectedScatter.push(d);
@@ -281,6 +295,9 @@ function stretch_point(d, i){
 }
 
 function dragged_point(d, i){
+  if (!drag_on_left) {
+    return;
+  }
   if (i == 1) {
     stretch_point(d, i);
     return;
@@ -291,8 +308,9 @@ function dragged_point(d, i){
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
-        expectedScatter.push(
-            lib.update_point_position_from_mouse(d));
+        let r = lib.update_point_position_from_mouse(d);
+        r.x = Math.min(r.x, (300-origin[0])/scale);
+        expectedScatter.push(r);
       } else {
         expectedScatter.push(d);
       }
@@ -305,6 +323,9 @@ function dragged_point(d, i){
 
 
 function drag_end(){
+  if (!drag_on_left) {
+    return;
+  }
   scatter = expectedScatter;
   axis = expectedAxis;
 }
