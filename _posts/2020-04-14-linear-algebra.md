@@ -379,9 +379,9 @@ draw_on_svg('v_perspective',
 
 *So $u$ in $v$'s view is just one number and not a vector?*
 
-Yes it is just one number. However, a single number is still a vector: it is in fact a 1-dimensional vector! And so, dot product achieves one-dimensional change of perspective.
+Yes it is just one number. However, a single number is still a vector: it is in fact a 1-dimensional vector! And so, dot product achieves 1-dimensional change of perspective: $u$ living in an arbitrary number of dimension is reduced into a 1-dimensional vector in $v$'s coordinate system.
 
-*Okay, here is what I think why projection makes sense: the projection is larger when $u$ is more aligned to $v$, and shrinks to zero when the two are not aligned at all (perpendicular). And so when the two is more aligned, each views the other as larger.*
+*Okay, from the above visualization, here is what I think why projecting makes sense: the projection is larger when $u$ is more aligned to $v$, and shrinks to $0$ when the two are not aligned at all (perpendicular). And so when the two is more aligned, each views the other as larger.*
 
 Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Much of Linear Algebra is concerned with studying how a certain object of interest (represented by a point) looks like under different perspectives (different spaces and coordinate systems).
 
@@ -407,7 +407,7 @@ Good find! Better yet, reach for Chapter 10 of [Introduction to Linear Algebra](
 
 *Good to know! Back to changing of perspective, now what do I do with the projection of $u$ on $v$?*
 
-Reducing $u$, living in a multi-dimensional space, to a single number $u^Tv$ is useful, but we want more. What people usually do is instead projecting $u$ on many $v$'s and obtain many different views at once.
+Reducing $u$, living in a multi-dimensional space, to a single number $u^Tv$ is useful, but we want more. What people usually do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
 
 Let's say we project $u$ onto a bunch of vectors, e.g. three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$, which is itself a vector as well! In other words, dot product is the building block of transforming one vector to another, thereby achieving a multi-dimensional change in perspective.
 
