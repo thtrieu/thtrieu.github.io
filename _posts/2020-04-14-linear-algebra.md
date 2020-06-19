@@ -271,7 +271,7 @@ Indeed it is. Let's look at a very useful diagram for this formula. It shows how
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_dot_product_collide'> <div class='slider'></div></label>
   <br/>
-<svg width="600" height="350" id="svg_dot_product_collide"></svg>
+<svg width="600" height="280" id="svg_dot_product_collide"></svg>
 <br/>
 Try dragging vector $u$, $v$, the whole space. Click
 <button id='init_dot_product_collide'>reset</button> or <button id='but_dot_product_collide_compute'>compute $u^Tv$</button>.
