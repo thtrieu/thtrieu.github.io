@@ -269,25 +269,33 @@ draw_on_svg('dot_product_formula',
 Indeed it is. Let's look at a very useful diagram for this formula. It shows how two vectors $u$ and $v$ colliding into a single number (their dot product $u^Tv$).
 
 <center class='js'>
-<svg width="315" height="400" id="svg_dot_product_collide2d"></svg><svg width="315" height="400" id="svg_dot_product_collide"></svg> 
+  <label class='switch'> <input type='checkbox' id='switch_dot_product_collide'> <div class='slider'></div></label>
+  <br/>
+<svg width="600" height="350" id="svg_dot_product_collide"></svg>
 <br/>
 Try dragging vector $u$, $v$, the whole space. Click
-<button id='but_dot_product_collide_init'>reset</button> or <button id='but_dot_product_collide_compute'>compute $u^Tv$</button>.
+<button id='init_dot_product_collide'>reset</button> or <button id='but_dot_product_collide_compute'>compute $u^Tv$</button>.
 </center>
 
 <script src="/assets/js/linear_algebra/dot_product_collide2d.js"></script>
 <script src="/assets/js/linear_algebra/dot_product_collide.js"></script>
 <script>
-d3.selectAll('#but_dot_product_collide_init')
-  .on('click', function(){
-      dot_product_collide2d.init();
-      dot_product_collide.init();
-  });
+
 d3.selectAll('#but_dot_product_collide_compute')
   .on('click', function(){
-      dot_product_collide2d.compute();
-      dot_product_collide.compute();
+      let is_3d = d3.selectAll('#switch_dot_product_collide').node().checked;
+
+      if (is_3d) {
+        dot_product_collide.compute();
+      } else {
+        dot_product_collide2d.compute(); 
+      }
   });
+
+draw_on_svg('dot_product_collide',
+            dot_product_collide2d,
+            dot_product_collide);
+
 </script>
 
 
