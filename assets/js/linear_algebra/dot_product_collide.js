@@ -126,7 +126,9 @@ function plot(scatter, axis, tt){
 
   // Step 2: Plot the non-computed uTvv_line_text.
   let uTvv_line_text = [{text: 'u\u1d40v',
-                         x: v.x * uTv/2, y: v.y * uTv/2,
+                         x: v.x * uTv/2, 
+                         y: v.y * uTv/2,
+                         z: v.z * uTv/2,
                          text_opacity: 1,
                          color: 0}];
   lib.plot_texts(uTvv_line_text, tt=tt, name='uTvv_line_text');
@@ -168,8 +170,9 @@ function plot(scatter, axis, tt){
   }
   let uTv_texts = [
       {text:'u\u1d40v = '.concat(uTv.toFixed(3)),
-       x: (v.x * uTv/2).toFixed(2),
-       y: (v.y * uTv/2).toFixed(2),
+       x: v.x * uTv/2,
+       y: v.y * uTv/2,
+       z: v.z * uTv/2,
        color: 0, text_opacity: uTvv_opacity,
        key: 'uTv_texts'},
       {text: uTv.toFixed(3), color: 0, 
@@ -315,8 +318,9 @@ function compute(u, v){
   // Step 4: plot computed uTvv_line's text and uTv value 
   let uTv_texts = [
       {text:'u\u1d40v = '.concat(uTv.toFixed(3)),
-       x: (v.x * uTv/2).toFixed(2),
-       y: (v.y * uTv/2).toFixed(2),
+       x: v.x * uTv/2,
+       y: v.y * uTv/2,
+       z: v.z * uTv/2,
        color: 0, text_opacity: 1.0,
        key: 'uTv_texts'},
       {text: uTv.toFixed(3), color: 0, 
