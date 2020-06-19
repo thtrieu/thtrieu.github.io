@@ -173,7 +173,10 @@ function get_size(d) {
   if (is_2d) {
     return 4.5;
   }
-  return z_to_size_scale(d.centroid.z);
+  if (d.centroid.z != undefined) {
+    return z_to_size_scale(d.centroid.z);
+  }
+  return 4.5;
 }
 
 
@@ -184,7 +187,10 @@ function get_txt_size(d) {
   if (is_2d) {
     return '14px';
   }
-  return z_to_txt_size_scale(d.centroid.z) + 'px';
+  if (d.centroid.z != undefined) {
+    return z_to_txt_size_scale(d.centroid.z) + 'px';
+  }
+  return '14px';
 }
 
 
@@ -195,7 +201,10 @@ function get_txt_opacity(d) {
   if (is_2d) {
     return 1.0;
   }
-  return z_to_txt_opacity_scale(d.centroid.z);
+  if (d.centroid.z != undefined) {
+    return z_to_txt_opacity_scale(d.centroid.z);
+  }
+  return 1.0;
 }
 
 function get_opacity(d) {
@@ -205,7 +214,10 @@ function get_opacity(d) {
   if (is_2d) {
     return 1.0;
   }
-  return z_to_opacity_scale(d.centroid.z)
+  if (d.centroid.z != undefined) {
+    return z_to_opacity_scale(d.centroid.z)
+  }
+  return 1.0;
 }
 
 
@@ -216,7 +228,10 @@ function get_stroke_width(d){
   if (is_2d) {
     return 1.5;
   }
-  return z_to_stroke_width_scale(d.centroid.z)
+  if (d.centroid.z != undefined) {
+    return z_to_stroke_width_scale(d.centroid.z)
+  }
+  return 1.5;
 }
 
 
@@ -438,12 +453,12 @@ function plot_texts(data, tt, name='text', with_origin=null){
       .attr('class', '_3d '+name+'Text')
       .attr('dx', '.4em')
       .merge(text)
-      .transition().duration(get_duration(tt))
       .each(function(d){
           d.centroid = {x: d.x, 
                         y: d.y,
                         z: d.z};
       })
+      .transition().duration(get_duration(tt))
       .style('font-size', get_txt_size)
       .style('fill', get_color())
       .attr('x', function(d){ return project(d, with_origin).x; })
@@ -685,8 +700,6 @@ function text_table_to_list(texts,
       text_to_plot = texts[i][j];
       text_to_plot.x = col_coords[j];
       text_to_plot.y = row_coords[i];
-      text_to_plot.text_opacity = 1;
-      text_to_plot.font_size = 14;
       list_of_texts.push(text_to_plot);
     };
   }

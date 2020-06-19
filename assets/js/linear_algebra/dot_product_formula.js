@@ -73,7 +73,12 @@ function plot(scatter, axis, tt){
 
   lines.push(uTvv_line);
 
-  lines.push(...lib.create_dash_segments(u, uTvv));
+  lib.create_dash_segments(u, uTvv).forEach(
+    function(d) {
+      d.centroid_z = -900;
+      lines.push(d);
+    }
+  )
 
   scatter.forEach(function(d, i){
     let coord = lib.dot_basis(d, basis);
@@ -99,7 +104,7 @@ function plot(scatter, axis, tt){
   lib.plot_lines(lines, tt, 'arrow');
   lib.plot_points(points, tt,
                   drag_point_fn=function(d, i){
-                    if ( i == 0) {
+                    if (i == 0) {
                       dragged_point(i);
                     } else {
                       dragged_point_only();
@@ -153,7 +158,7 @@ function plot(scatter, axis, tt){
   lib.plot_texts(lib.text_table_to_list(
       texts_to_show, 
       start_coord_x=-2.2, start_coord_y=2.2,
-      col_unit=0.24, row_unit=0.3,
+      w_unit=0.24, h_unit=0.3,
       dws_array=[1.7, 1.5, 2.4, 0.8, 2.4, 0.8, 2.4, 0.8, 2.4, 0.85, 2.4, 0.85, 2.4],
       dhs_array=[1.0, 1.8, 1.0])
   );
