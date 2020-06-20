@@ -266,7 +266,7 @@ draw_on_svg('dot_product_formula',
 
 *Oh, that's surprisingly simple!*
 
-Indeed it is. Let's look at a very useful diagram for this formula. It shows how two vectors $u$ and $v$ colliding into a single number (their dot product $u^Tv$).
+Indeed it is. Let's look at a very useful diagram for this formula. It represents the formula by showing $u$ and $v$ colliding into a single number (their dot product $u^Tv$).
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_dot_product_collide'> <div class='slider'></div></label>

@@ -213,11 +213,24 @@ function init(tt){
   drag_end();
 }
 
+
+let drag_on_left = true;
+
+
 function drag_start(){
   lib.drag_start2d();
+  if (lib.get_mouse_position().x < 300) {
+    drag_on_left = true;
+  } else {
+    drag_on_left = false;
+  }
 }
 
+
 function dragged(){
+  if (!drag_on_left) {
+    return;
+  }
   angle_z = lib.get_drag_angle_2d();
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
@@ -230,6 +243,9 @@ function dragged(){
 
 
 function dragged_point_only(){
+  if (!drag_on_left) {
+    return;
+  }
   angle_z = lib.get_drag_angle_2d();
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
@@ -241,6 +257,9 @@ function dragged_point_only(){
 }
 
 function dragged_point(i){
+  if (!drag_on_left) {
+    return;
+  }
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
@@ -257,10 +276,15 @@ function dragged_point(i){
        0);
 }
 
+
 function drag_end(){
+  if (!drag_on_left) {
+    return;
+  }
   scatter = expectedScatter;
   axis = expectedAxis;
 }
+
 
 function compute(u, v){
   let uTv = lib.dot_product(u, v);

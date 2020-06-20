@@ -216,11 +216,24 @@ function init(tt){
   drag_end();
 }
 
+
+let drag_on_left = true;
+
+
 function drag_start(){
   lib.drag_start();
+  if (lib.get_mouse_position().x < 300) {
+    drag_on_left = true;
+  } else {
+    drag_on_left = false;
+  }
 }
 
+
 function dragged(){
+  if (!drag_on_left) {
+    return;
+  }
   [angle_x, angle_y] = lib.get_drag_angles();
 
   expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
@@ -232,6 +245,9 @@ function dragged(){
 }
 
 function dragged_point_only(){
+  if (!drag_on_left) {
+    return;
+  }
   [angle_x, angle_y] = lib.get_drag_angles();
 
   expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
@@ -243,6 +259,9 @@ function dragged_point_only(){
 }
 
 function dragged_point(i){
+  if (!drag_on_left) {
+    return;
+  }
   [angle_x, angle_y] = lib.get_drag_angles();
 
   expectedScatter = [];
@@ -261,6 +280,9 @@ function dragged_point(i){
 }
 
 function drag_end(){
+  if (!drag_on_left) {
+    return;
+  }
   scatter = expectedScatter;
   axis = expectedAxis;
 }

@@ -232,6 +232,7 @@ function drag_start(){
   }
 }
 
+
 function dragged(){
   if (!drag_on_left) {
     return;
