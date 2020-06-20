@@ -263,8 +263,9 @@ function dragged_point(i){
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
-        expectedScatter.push(
-            lib.update_point_position_from_mouse(d));
+        r = lib.update_point_position_from_mouse(d);
+        r.x = Math.min(r.x, (300-origin[0])/scale);
+        expectedScatter.push(r);
       } else {
         expectedScatter.push(d);
       }
