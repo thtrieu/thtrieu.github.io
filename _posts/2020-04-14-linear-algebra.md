@@ -5,13 +5,13 @@ title: Interactive Visualizations of Linear Algebra - Part 1
 
 <script src="/assets/js/linear_algebra/lib.js"></script>
 
-Sunday morning. A busy coffee shop by the sunny beach of Quynhon. Two regular coffee buddies are chatting away on some fun ideas. 
+Sunday morning. A busy coffee shop by the sunny beach of Quynhon. Two regular coffee buddies are chatting away on fun ideas. 
 
-*"So tell me about Linear Algebra?"* - said *Italica*, a design student who recently acquired an appetite for pretty illustrations of Math concepts.
+*"Linear Algebra?"* - said *Italica*, a design student who recently acquired an appetite for pretty illustrations of Math concepts.
 
-"Linear Algebra is a story about vectors." - Regula, a graduate student in Machine Learning.
+"Yes. Linear Algebra, is a story about vectors." - Regula, a graduate student in Machine Learning.
 
-*"I like stories. I've heard of vectors many times. What exactly are they?"*
+*"I like stories. How does this one start?"*
 
 <center><b>1. Vectors</b></center>
 
@@ -110,7 +110,7 @@ input:checked + .slider:after
 /*--------- END --------*/
 </style>
 
-Let's actually see them. Here is a bunch of vectors.
+With the main character: vectors. Let's actually see them. Here is a bunch of vectors.
 
 <center class='js'>
 <svg width="300" height="250" id="svg_point_cloud"></svg>
@@ -129,7 +129,7 @@ d3.selectAll('#but_point_cloud')
 
 *OK, so I assume each dot is a vector?*
 
-Yeah, more precisely, each vector is a point living in *space*. The space here can be 2-, 3-, or N- dimensional. To locate the vectors, we usually attach a coordinate system. Here are examples of coordinate systems in 2-dimensional and 3-dimensional spaces:
+Yeah, more precisely, each vector is a point living in *space*. The space here can be 2-, 3-, or N- dimensional. To locate the vectors, we attach a coordinate system. Here are examples of coordinate systems in 2-dimensional and 3-dimensional spaces:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_point_coord_lines'> <div class='slider'></div></label>
@@ -447,7 +447,7 @@ Exactly. Be aware that there can be many such sets. To get the position (coordin
 
 *It looks like the transformation from $u$ to $u'$ that I'm seeing here is rotation in 2-D and 3-D?*
 
-That is right. Rigourously speaking, rotation preserves the length of $u$ after transformation. It can be shown that rotation happens when each vector in the set $ \\{ w_1, w_2, w_3 \\} $ here has length $1$ and any pair of them are perpendicular. You can sort of see why this is the case through the above illustrations. We'll make this concrete very soon. People call such sets "orthonormal", "ortho" stands for orthogonal (perpendicular) and "normal" stands for length of $1$.
+That is right. It can be shown that rotation happens when each vector in the set $ \\{ w_1, w_2, w_3 \\} $ here has length $1$ and any pair of them are perpendicular. You can sort of see why this is the case through the above illustrations. We'll make this concrete very soon. People call such sets "orthonormal", where "ortho" stands for orthogonal and "normal" stands for length of $1$.
 
 <center><b>5. Matrix multiplication</b></center>
 
