@@ -64,12 +64,14 @@ function init(tt){
 
   scatter = [];
 
+  let colors = [0, 3, 4];
+
   for (let i=0; i < 3; i++){
     scatter.push({
         x: d3.randomUniform(-axis_len+3, axis_len-3)(),
         y: d3.randomUniform(-axis_len+3, axis_len-3)(), 
         z: 0.,
-        color: i*2,
+        color: colors[i],
     });
   }
 

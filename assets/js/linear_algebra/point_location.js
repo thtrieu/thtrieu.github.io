@@ -71,12 +71,14 @@ function init(tt){
   axis = lib.init_axis(axis_len=axis_len);
   scatter = [];
 
+  let colors = [0, 3, 4];
+
   for (let i=0; i < 3; i++){
     scatter.push({
         x: d3.randomUniform(-axis_len+3, axis_len-3)(),
         y: d3.randomUniform(-axis_len+3, axis_len-3)(), 
         z: d3.randomUniform(-axis_len+3, axis_len-3)(),
-        color: i*2,
+        color: colors[i],
     });
   }
 

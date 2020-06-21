@@ -179,7 +179,7 @@ function init(tt){
       x: 1/Math.sqrt(14),
       y: -2/Math.sqrt(14), 
       z: 3/Math.sqrt(14),
-      color: 2,
+      color: 3,
   };
   scatter = [u, v];
 
