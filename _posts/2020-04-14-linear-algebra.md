@@ -5,7 +5,7 @@ title: Interactive Visualizations of Linear Algebra - Part 1
 
 <script src="/assets/js/linear_algebra/lib.js"></script>
 
-Sunday morning. A busy coffee shop by the sunny beach of Quynhon. Two regular coffee buddies are chatting away on fun ideas. 
+Sunday morning. Quy nhon, a peaceful small town with an ocean view. In a busy coffee shop, two regular coffee buddies are chatting away on fun ideas. 
 
 *"Linear Algebra?"* - said *Italica*, a design student who recently acquired an appetite for pretty illustrations of Math concepts.
 
@@ -20,6 +20,7 @@ Sunday morning. A busy coffee shop by the sunny beach of Quynhon. Two regular co
 .js {
   font-size: 12.5;
   color: #696969;
+  text-align: center-justify;
 }
 
 .switch {
@@ -370,7 +371,7 @@ That's the right way to think about it :) The dot product here is simply the pro
 
 That's a good question. One of the understanding here is that projecting $u$ onto $v$ is essentially applying a **change in perspective**.
 
-In the current space and coordinate system, $u$ is a vector of certain direction and length. The question is, what does $u$ look like in *another space and coordinate system?* In particular, how does $u$ look like from $v$'s perspective? One answer is that in $v$'s view, $u'=u^Tv$ is what $u$ looks like:
+In the current space and coordinate system, $u$ is a vector of certain location. The question is, what does $u$ look like in *another space and/or coordinate system?* In particular, how does $u$ look like from $v$'s perspective? One answer is that in $v$'s view, $u'=u^Tv$ is what $u$ looks like:
 
 
 <center class='js'>
@@ -404,13 +405,39 @@ Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Muc
 
 There are many. Linear Algebra is truly ubiquitous! As a student in Machine Learning, I can vouch for its application in this field. For example, we want to find what changes of perspective that turn my cat, currently represented as pixels in a photo, into the text $\texttt{"my cat"}$.
 
+
+<center class='js'>
+<img src='/assets/js/linear_algebra/cat_text.svg' width=450>
+<br/>
+<br/>
+An example of image captioning.
+</center>
+
 *So this is how Facebook AI put captions on the photos uploaded to the site?*
 
-Yes. Take Google Translate as another example. Linear Algebra is used to represent the changes of the perspective that turn one sentence in one language to another.
+Yep. Take Google Translate as another example. Linear Algebra is used to represent the changes of the perspective that turn one sentence in one language to another.
 
-*Cool, so we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that the dot product $u\cdot v= u'$ is the number that represents the caption text?*
+<center class='js'>
+<img src='/assets/js/linear_algebra/translation.svg' width=450>
+<br/>
+<br/>
+An example of translation.
+</center>
 
-That is the spirit. The devil is in the detail though: How do we represent photo/text as vectors? How do we figure out the appropriate $v$? And so on :)
+*Okay, let me try to connect the dots here. So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=u^T v$ is the number that represents the caption text?*
+
+<center class='js'>
+<svg width="630" height="280" id="svg_cat_text"></svg>
+<br/> 
+Try dragging $v$, the whole space, or click 
+<button id='init_cat_text'>reset</button>.
+<br/>
+Can you find $v$ such that our image captioning AI says "my dog"?
+</center>
+
+<script src="/assets/js/linear_algebra/cat_text.js"></script>
+
+That is the spirit! The devil is in the detail though: How do we represent photo/text as vectors? How do we figure out the appropriate $v$? And so on :)
 
 Consider writing this tutorial. All the visualizations of 3D spaces done here will be displayed on a screen, a 2D surface. This requires a perspective change between the two spaces. The code that I wrote for the visualizations must therefore handle this change using Linear Algebra. More broadly, computer games in 3D or softwares that involve 3D manipulation rely heavily on this specific change to display stuff on 2D screens.
 
