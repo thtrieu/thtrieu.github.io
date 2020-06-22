@@ -418,7 +418,7 @@ Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Muc
 There are many. Linear Algebra is truly ubiquitous! As a student in Machine Learning, I can vouch for its application in this field. For example, we want to find what changes of perspective that turn my cat, currently represented as pixels in a photo, into the text $\texttt{"my cat"}$.
 
 
-<center class='js'>
+<center>
 <img src="{{site.url}}/assets/js/linear_algebra/cat_text.svg" width=450>
 <!-- <br/>
 <br/>
@@ -429,7 +429,7 @@ An example of image captioning. -->
 
 Yep. Take Google Translate as another example. Linear Algebra is used to represent the changes of the perspective that turn one sentence in one language to another.
 
-<center class='js'>
+<center>
 <img src="{{site.url}}/assets/js/linear_algebra/translation.svg" width=310>
 <!-- <br/>
 <br/>
