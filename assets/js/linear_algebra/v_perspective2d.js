@@ -49,7 +49,7 @@ function plot(scatter, axis, tt){
       x: v.x/v_norm,
       y: v.y/v_norm,
       z: 0.0,
-      color: 2,
+      color: 3,
       r: 6,
       opacity: 0.6,
       centroid_z: -1000,
@@ -149,7 +149,7 @@ function plot_v_perspective(uTv, tt){
   for (let i = -axis_len; i < axis_len; i += unit) {
     let seg = [{x: i, y: 0, z: 0},
                 {x: i+unit, y: 0, z: 0}];
-    seg.color = 2;
+    seg.color = 3;
     lines.push(seg);
   }
 
@@ -215,7 +215,7 @@ function init(tt){
     x: 1/Math.sqrt(3),
     y: -Math.sqrt(2/3), 
     z: 0.,
-    color: 2,
+    color: 3,
   })
 
 

@@ -141,28 +141,26 @@ let z_to_size_scale,
 
 
 
+function linear_scale_positive_range(domain, range) {
+  let f = function(z) {
+    let [db, de] = domain;
+    let [rb, re] = range;
+    t = (z - db) / (de - db);
+    return Math.max(0.0, t * (re - rb) + rb);
+  }
+  return f;
+}
+
+
+
+
 function set_ranges(axis_len) {
   domain = [-axis_len, axis_len];
-
-  z_to_size_scale = d3.scaleLinear()
-                      .domain(domain)
-                      .range([4, 5.5]);
-
-  z_to_txt_size_scale = d3.scaleLinear()
-                          .domain(domain)
-                          .range([9, 14]);
-
-  z_to_txt_opacity_scale = d3.scaleLinear()
-                             .domain(domain)
-                             .range([0.2, 1.0]);
-
-  z_to_opacity_scale = d3.scaleLinear()
-                         .domain(domain)
-                         .range([0.5, 1.0]);
-
-  z_to_stroke_width_scale = d3.scaleLinear()
-                              .domain(domain)
-                              .range([0.5, 3.0]);
+  z_to_size_scale = linear_scale_positive_range(domain, [4, 5.5]);
+  z_to_txt_size_scale = linear_scale_positive_range(domain, [9, 14]);
+  z_to_txt_opacity_scale = linear_scale_positive_range(domain, [0.2, 1.0]);
+  z_to_opacity_scale = linear_scale_positive_range(domain, [0.5, 1.0]);
+  z_to_stroke_width_scale = linear_scale_positive_range(domain, [0.5, 3.0]);
 }
 
 
