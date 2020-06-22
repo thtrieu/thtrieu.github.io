@@ -130,7 +130,7 @@ function plot(scatter, axis, tt){
                          y: v.y * uTv/2,
                          z: v.z * uTv/2,
                          text_opacity: 1,
-                         color: 0}];
+                         text_color: 0}];
   lib.plot_texts(uTvv_line_text, tt=tt, name='uTvv_line_text');
 
   // Step 3: Plot the uT and v tables.
@@ -173,9 +173,9 @@ function plot(scatter, axis, tt){
        x: v.x * uTv/2,
        y: v.y * uTv/2,
        z: v.z * uTv/2,
-       color: 0, text_opacity: uTvv_opacity,
+       text_color: 0, text_opacity: uTvv_opacity,
        key: 'uTv_texts'},
-      {text: uTv.toFixed(3), color: 0, 
+      {text: uTv.toFixed(3), text_color: 0, 
        x: bot_right_x, y: bot_right_y,
        text_opacity: uTvv_opacity,
        font_size: uTv_font_size,
@@ -343,9 +343,9 @@ function compute(u, v){
        x: v.x * uTv/2,
        y: v.y * uTv/2,
        z: v.z * uTv/2,
-       color: 0, text_opacity: 1.0,
+       text_color: 0, text_opacity: 1.0,
        key: 'uTv_texts'},
-      {text: uTv.toFixed(3), color: 0, 
+      {text: uTv.toFixed(3), text_color: 0, 
        x: bot_right_x, y: bot_right_y,
        text_opacity: 1.0, 
        font_size: 15,

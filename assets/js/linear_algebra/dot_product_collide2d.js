@@ -129,8 +129,8 @@ function plot(scatter, axis, tt){
   let uTvv_line_text = [{text: 'u\u1d40v',
                          x: v.x * uTv/2, 
                          y: v.y * uTv/2,
-                         tt: tt, text_opacity: 1,
-                         color: 0}];
+                         tt: tt,
+                         text_color: 0}];
   lib.plot_texts(uTvv_line_text, tt=tt, name='uTvv_line_text');
 
   // First we plot uT and v
@@ -173,9 +173,9 @@ function plot(scatter, axis, tt){
       {text:'u\u1d40v = '.concat(uTv.toFixed(3)),
        x: v.x * uTv/2,
        y: v.y * uTv/2,
-       color: 0, text_opacity: uTvv_opacity,
+       text_color: 0, text_opacity: uTvv_opacity,
        tt: tt, key: 'uTv_texts'},
-      {text: uTv.toFixed(3), color: 0, 
+      {text: uTv.toFixed(3), text_color: 0, 
        x: bot_right_x, y: bot_right_y,
        text_opacity: uTvv_opacity, font_size: uTv_font_size, 
        tt: tt, key: 'uTv'}
@@ -344,9 +344,9 @@ function compute(u, v){
   let uTv_texts = [{text:'u\u1d40v = '.concat(uTv.toFixed(3)), 
                     x: v.x * uTv/2, 
                     y: v.y * uTv/2,
-                    text_opacity: 1, color: 0,
+                    text_opacity: 1, text_color: 0,
                     key: 'uTv_texts'},
-                   {text: uTv.toFixed(3), color: 0, 
+                   {text: uTv.toFixed(3), text_color: 0, 
                     x: bot_right_x, y: bot_right_y,
                     text_opacity: 1, font_size: 15, 
                     key: 'uTv'}];
