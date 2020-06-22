@@ -420,9 +420,9 @@ There are many. Linear Algebra is truly ubiquitous! As a student in Machine Lear
 
 <center class='js'>
 <img src="{{site.url}}/assets/js/linear_algebra/cat_text.svg" width=450>
+<!-- <br/>
 <br/>
-<br/>
-An example of image captioning.
+An example of image captioning. -->
 </center>
 
 *So this is how Facebook AI put captions on the photos uploaded to the site?*
@@ -431,9 +431,9 @@ Yep. Take Google Translate as another example. Linear Algebra is used to represe
 
 <center class='js'>
 <img src="{{site.url}}/assets/js/linear_algebra/translation.svg" width=310>
+<!-- <br/>
 <br/>
-<br/>
-An example of translation.
+An example of translation. -->
 </center>
 
 *Okay, let me try to connect the dots here. So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=u^T v$, is the number that represents the caption text?*
