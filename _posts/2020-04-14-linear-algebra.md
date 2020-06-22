@@ -407,7 +407,7 @@ There are many. Linear Algebra is truly ubiquitous! As a student in Machine Lear
 
 
 <center class='js'>
-<img src='/assets/js/linear_algebra/cat_text.svg' width=450>
+<img src="/assets/js/linear_algebra/cat_text.svg" width=450>
 <br/>
 <br/>
 An example of image captioning.
@@ -418,7 +418,7 @@ An example of image captioning.
 Yep. Take Google Translate as another example. Linear Algebra is used to represent the changes of the perspective that turn one sentence in one language to another.
 
 <center class='js'>
-<img src='/assets/js/linear_algebra/translation.svg' width=300>
+<img src="/assets/js/linear_algebra/translation.svg" width=310>
 <br/>
 <br/>
 An example of translation.
