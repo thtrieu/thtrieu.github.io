@@ -77,9 +77,6 @@ function plot(scatter, axis, tt){
 
   lib.create_dash_segments(u, uTvv).forEach(
     function(d, i){
-      // if (tt > 0) {
-      //   d.tt = tt + i * 40;
-      // }
       lines.push(d);
   });
 

@@ -63,8 +63,6 @@ function plot(scatter, axis, tt){
       ', ',
       coord.y.toFixed(2),
       ']');
-    
-    p.text_color = d.color;
     points.push(p);
   })
 

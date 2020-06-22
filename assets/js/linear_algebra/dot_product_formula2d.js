@@ -115,30 +115,30 @@ function plot(scatter, axis, tt){
   let texts_to_show = [
       [
           {text: 'u'}, {text: '= ['},  
-          {text: u.coord.x.toFixed(2), color: 8},
+          {text: u.coord.x.toFixed(2), text_color: 8},
           {text: ''}, {text: ''}, {text: ','},
-          {text: u.coord.y.toFixed(2), color: 8},
+          {text: u.coord.y.toFixed(2), text_color: 8},
           {text: ''}, {text: ''}, {text: ']'}
       ], [
           {text: 'v'}, {text: '= ['},
           {text: ''}, {text: ''},
-          {text: v.coord.x.toFixed(2), color: 6},
+          {text: v.coord.x.toFixed(2), text_color: 6},
           {text: ','}, {text: ''}, {text: ''},
-          {text: v.coord.y.toFixed(2), color: 6},
+          {text: v.coord.y.toFixed(2), text_color: 6},
           {text: ']'}
       ], [
-          {text: 'u\u1d40v', color: 0}, {text: '='},
-          {text: u.coord.x.toFixed(2), color: 8},
+          {text: 'u\u1d40v', text_color: 0}, {text: '='},
+          {text: u.coord.x.toFixed(2), text_color: 8},
           {text: '\u00d7'},
-          {text: v.coord.x.toFixed(2), color: 6},
+          {text: v.coord.x.toFixed(2), text_color: 6},
           {text: '+'},
-          {text: u.coord.y.toFixed(2), color: 8},
+          {text: u.coord.y.toFixed(2), text_color: 8},
           {text: '\u00d7'},
-          {text: v.coord.y.toFixed(2), color: 6},
+          {text: v.coord.y.toFixed(2), text_color: 6},
           {text: ''},
       ], [
           {text: ''}, {text: '='},
-          {text: uTv.toFixed(3), color: 0},
+          {text: uTv.toFixed(3), text_color: 0},
           {text: ''}, {text: ''}, {text: ''},
           {text: ''}, {text: ''}, {text: ''},
           {text: ''}
