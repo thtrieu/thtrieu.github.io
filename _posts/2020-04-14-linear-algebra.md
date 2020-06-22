@@ -306,25 +306,37 @@ That's exactly what it is :) The $^T$ operation here is called "transpose". Tran
 *So since this operation is symmetric between $u$ and $v$, it should give the same result as projecting v onto u, i.e. $u^Tv = v^Tu$, right?*
 
 <center class='js'>
-<svg width="315" height="350" id="svg_dot_product_symmetric2d"></svg><svg width="315" height="350" id="svg_dot_product_symmetric"></svg> 
+  <label class='switch'> <input type='checkbox' id='switch_dot_product_symmetric'> <div class='slider'></div></label>
+  <br/>
+<svg width="600" height="350" id="svg_dot_product_symmetric"></svg>
 <br/>
+
 Try dragging vector $u$, $v$, the whole space. Click
-<button id='but_dot_product_symmetric_init'>reset</button> or <button id='but_dot_product_symmetric_swap'>swap $u^Tv \leftrightarrow v^Tu$</button>.
+<button id='init_dot_product_symmetric'>reset</button> or <button id='but_dot_product_symmetric_swap'>swap $u^Tv \leftrightarrow v^Tu$</button>.
 </center>
 
 <script src="/assets/js/linear_algebra/dot_product_symmetric2d.js"></script>
 <script src="/assets/js/linear_algebra/dot_product_symmetric.js"></script>
 <script>
-d3.selectAll('#but_dot_product_symmetric_init')
-  .on('click', function(){
-      dot_product_symmetric2d.init();
-      dot_product_symmetric.init();
-  });
+
 d3.selectAll('#but_dot_product_symmetric_swap')
   .on('click', function(){
-      dot_product_symmetric2d.swap();
-      dot_product_symmetric.swap();
+      let is_3d = d3.selectAll('#switch_dot_product_symmetric').node().checked;
+      if (is_3d) {
+        dot_product_symmetric.swap();
+        dot_product_symmetric2d.set_position(
+            dot_product_symmetric.get_position());
+      } else {
+        dot_product_symmetric2d.swap(); 
+        dot_product_symmetric.set_position(
+            dot_product_symmetric2d.get_position());
+      }
   });
+
+draw_on_svg('dot_product_symmetric',
+            dot_product_symmetric2d,
+            dot_product_symmetric);
+
 </script>
 
 Great observation. Well, I cheated a bit in the explanation so far :) "Projection of $u$ onto $v$" is almost, but not quite, the correct interpretation of dot product! It is only correct when length of $v$ (denoted $\|v\|$) is 1 - which is what I sneakily set it to be so far. The correct formula 
