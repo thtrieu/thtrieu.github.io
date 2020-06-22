@@ -31,7 +31,7 @@ function init(tt){
   let [w, h] = [310, 280];
   lib.plot_images([{
     path: '/assets/js/linear_algebra/translation.svg',
-    x: -w/2/scale + 25/scale,
+    x: -w/2/scale+15/scale,
     y: -h/2/scale,
     z: 0,
     width: w,
