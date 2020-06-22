@@ -7,7 +7,7 @@ title: Interactive Visualizations of Linear Algebra - Part 1
 
 Sunday morning. Quy nhon, a peaceful small town with an ocean view. In a busy coffee shop, two regular coffee buddies are chatting away on fun ideas. 
 
-*"Linear Algebra?"* - said *Italica*, a design student who recently acquired an appetite for pretty illustrations of Math concepts.
+*"Linear Algebra?"* - said *Italica*, a student in Design who recently acquired an appetite for pretty illustrations of Math concepts.
 
 "Yes. Linear Algebra, is a story about vectors." - Regula, a graduate student in Machine Learning.
 
@@ -418,13 +418,13 @@ An example of image captioning.
 Yep. Take Google Translate as another example. Linear Algebra is used to represent the changes of the perspective that turn one sentence in one language to another.
 
 <center class='js'>
-<img src='/assets/js/linear_algebra/translation.svg' width=450>
+<img src='/assets/js/linear_algebra/translation.svg' width=300>
 <br/>
 <br/>
 An example of translation.
 </center>
 
-*Okay, let me try to connect the dots here. So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=u^T v$ is the number that represents the caption text?*
+*Okay, let me try to connect the dots here. So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=u^T v$, is the number that represents the caption text?*
 
 <center class='js'>
 <svg width="630" height="280" id="svg_cat_text"></svg>
