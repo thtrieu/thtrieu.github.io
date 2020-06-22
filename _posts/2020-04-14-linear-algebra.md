@@ -313,7 +313,7 @@ That's exactly what it is :) The $^T$ operation here is called "transpose". Tran
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_dot_product_symmetric'> <div class='slider'></div></label>
   <br/>
-<svg width="600" height="350" id="svg_dot_product_symmetric"></svg>
+<svg width="600" height="300" id="svg_dot_product_symmetric"></svg>
 <br/>
 
 Try dragging vector $u$, $v$, the whole space. Click

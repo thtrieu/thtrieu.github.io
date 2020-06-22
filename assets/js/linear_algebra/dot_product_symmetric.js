@@ -1,6 +1,6 @@
 let dot_product_symmetric = (function(position) {
 
-let origin = [300, 140], 
+let origin = [150, 140], 
     scale = 60, 
     scatter = [], 
     axis = [],
@@ -13,13 +13,15 @@ let origin = [300, 140],
     unit = axis_len/10,
     lib = null,
     svg = null,
-    position_state = 0,
-    w_unit = 0.3,
-    h_unit = 0.3,
-    start_x = -2.2 - 2.5 * w_unit,
-    start_y = 2.2 - 1.2 * h_unit,
-    dws_array = [1.5, 2.5, 2.5, 2.5], // sum: 9;
-    dhs_array = [1.2, 1.2, 1.2, 1.2]; //sum: 4.8;
+    position_state = 0;
+
+let w_unit = 1.0, h_unit = 1.0,
+    dws_array = [0.4, 0.7, 0.7, 0.7],
+    dhs_array = [0.4, 0.4, 0.4, 0.4];
+
+let start_coord_x=(375 - origin[0])/scale, 
+    start_coord_y=(75 - origin[1])/scale;
+    
 
 function texts_to_show(u, v){
   let uTv = lib.dot_product(u, v);
@@ -174,7 +176,7 @@ function plot(scatter, axis, tt){
   if (position_state == 0) {
     lib.plot_texts(lib.text_table_to_list(
       uTv_text_table,
-      start_coord_x=start_x, start_coord_y=start_y,
+      start_coord_x=start_coord_x, start_coord_y=start_coord_y,
       w_unit=w_unit, h_unit=h_unit,
       dws_array=dws_array, dhs_array=dhs_array),
     tt=1000, name='transition');
@@ -182,7 +184,7 @@ function plot(scatter, axis, tt){
   } else {
     lib.plot_texts(lib.text_table_to_list(
       vTu_text_table,
-      start_coord_x=start_x, start_coord_y=start_y,
+      start_coord_x=start_coord_x, start_coord_y=start_coord_y,
       w_unit=w_unit, h_unit=h_unit,
       dws_array=dws_array, dhs_array=dhs_array),
     tt=1000, name='transition');
@@ -231,11 +233,22 @@ function init(tt){
   drag_end();
 }
 
+let drag_on_left = true; 
+
 function drag_start(){
   lib.drag_start();
+  if (lib.get_mouse_position().x < 300) {
+    drag_on_left = true;
+  } else {
+    drag_on_left = false;
+  }
 }
 
 function dragged(){
+  if (!drag_on_left) {
+    return;
+  }
+
   [angle_x, angle_y] = lib.get_drag_angles();
 
   expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
@@ -247,6 +260,10 @@ function dragged(){
 }
 
 function dragged_point_only(){
+  if (!drag_on_left) {
+    return;
+  }
+
   [angle_x, angle_y] = lib.get_drag_angles();
 
   expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
@@ -256,7 +273,12 @@ function dragged_point_only(){
        0);
 }
 
+
 function dragged_point(i){
+  if (!drag_on_left) {
+    return;
+  }
+
   [angle_x, angle_y] = lib.get_drag_angles();
 
   expectedScatter = [];
@@ -273,18 +295,26 @@ function dragged_point(i){
        0);
 }
 
+
 function drag_end(){
+  if (!drag_on_left) {
+    return;
+  }
+
   scatter = expectedScatter;
   axis = expectedAxis;
 }
+
 
 function get_position() {
   return position_state;
 }
 
+
 function set_position(pos){
   position_state = pos;
 }
+
 
 function swap(u, v){
   let uTv = lib.dot_product(u, v),
@@ -305,7 +335,7 @@ function swap(u, v){
   if (position_state == 0) {
     lib.plot_texts(lib.text_table_to_list(
       vTu_text_table,
-      start_coord_x=start_x, start_coord_y=start_y,
+      start_coord_x=start_coord_x, start_coord_y=start_coord_y,
       w_unit=w_unit, h_unit=h_unit,
       dws_array=dws_array, dhs_array=dhs_array),
       tt=1000, name='transition');
@@ -314,7 +344,7 @@ function swap(u, v){
   } else {
     lib.plot_texts(lib.text_table_to_list(
       uTv_text_table,
-      start_coord_x=start_x, start_coord_y=start_y,
+      start_coord_x=start_coord_x, start_coord_y=start_coord_y,
       w_unit=w_unit, h_unit=h_unit,
       dws_array=dws_array, dhs_array=dhs_array),
     tt=1000, name='transition');
