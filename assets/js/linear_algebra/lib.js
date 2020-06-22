@@ -232,6 +232,21 @@ function get_stroke_width(d){
   return 1.5;
 }
 
+function get_width(d) {
+  if (d.hasOwnProperty('width')) {
+    return d.width;
+  }
+  return;
+}
+
+
+function get_height(d) {
+  if (d.hasOwnProperty('height')) {
+    return d.height;
+  }
+  return;
+}
+
 
 function project(d, with_origin){
   if (with_origin == null) {
@@ -255,6 +270,17 @@ function get_color(default_color='black'){
   }
   return get_color_fn;
 }
+
+function get_txt_color(d) {
+  if (!d.hasOwnProperty('text_color')) {
+    return 'black';
+  }
+  if (typeof d.text_color == 'number') {
+    return color(d.text_color);
+  }
+  return d.text_color;
+}
+
 
 function get_line_color(d) {
   if (!d[1].hasOwnProperty('color')) {
@@ -363,9 +389,9 @@ function plot_lines(data,
       })
       .transition().duration(get_duration(tt))
       .style('font-size', get_txt_size)
-      .style('fill', get_color())
+      .style('fill', get_txt_color)
       .attr('x', function(d){ return d.text_position.x+3; })
-      .attr('y', function(d){ return d.text_position.y; })
+      .attr('y', function(d){ return d.text_position.y-3; })
       .text(function(d){
         if (d.hasOwnProperty('text')) {
           return d.text;
@@ -431,8 +457,9 @@ function plot_points(data,
                         z: d.z};
       })
       .style('font-size', get_txt_size)
-      .attr('x', function(d){ return project(d, with_origin).x+3; })
-      .attr('y', function(d){ return project(d, with_origin).y; })
+      .style('fill', get_txt_color)
+      .attr('x', function(d){ return project(d, with_origin).x; })
+      .attr('y', function(d){ return project(d, with_origin).y+3; })
       .attr('opacity', get_txt_opacity)
       .text(function(d){ return d.text; });
   text.exit().remove();
@@ -458,12 +485,40 @@ function plot_texts(data, tt, name='text', with_origin=null){
       })
       .transition().duration(get_duration(tt))
       .style('font-size', get_txt_size)
-      .style('fill', get_color())
+      .style('fill', get_txt_color)
       .attr('x', function(d){ return project(d, with_origin).x; })
       .attr('y', function(d){ return project(d, with_origin).y; })
       .attr('opacity', get_txt_opacity)
       .text(function(d){ return d.text; });
   text.exit().remove();
+}
+
+
+function plot_images(data, tt, name='image', with_origin=null){
+  add_keys(name, data);
+
+  let image = svg
+      .selectAll('image.'+name+'Image')
+      .data(data, function(d){ return d.key; });
+  image
+      .enter()
+      .append('image')
+      .attr('class', '_3d '+name+'Image')
+      .merge(image)
+      .each(function(d){
+          d.centroid = {x: d.x, 
+                        y: d.y,
+                        z: d.z};
+      })
+      .transition().duration(get_duration(tt))
+      .style('font-size', get_txt_size)
+      .attr('x', function(d){ return project(d, with_origin).x; })
+      .attr('y', function(d){ return project(d, with_origin).y; })
+      .attr('opacity', get_opacity)
+      .attr('xlink:href', function(d) {return d.path;})
+      .attr('width', get_width)
+      .attr('height', get_height)
+  image.exit().remove();
 }
 
 
@@ -715,6 +770,7 @@ return {
   plot_points: plot_points,
   plot_lines: plot_lines,
   plot_texts: plot_texts,
+  plot_images: plot_images,
   dot_basis: dot_basis,
   rotate_point: rotate_point,
   rotate_points: rotate_points,
