@@ -21,7 +21,6 @@ let w_unit = 1.0, h_unit = 1.0,
 
 let start_coord_x=(375 - origin[0])/scale, 
     start_coord_y=(75 - origin[1])/scale;
-    
 
 function texts_to_show(u, v){
   let uTv = lib.dot_product(u, v);
@@ -45,7 +44,7 @@ function texts_to_show(u, v){
             {text: u.coord.x.toFixed(2), text_opacity: 0.7, key: 'xu'},
             {text: u.coord.y.toFixed(2), text_opacity: 0.7, key: 'yu'},
             {text: u.coord.z.toFixed(2), text_opacity: 0.7, key: 'zu'},
-            {text: uTv.toFixed(3), font_size: 15, color: 0,
+            {text: uTv.toFixed(3), font_size: 15, text_color: 0,
              text_opacity: 1, key:'uTv'}
         ]
     ], [
@@ -66,7 +65,7 @@ function texts_to_show(u, v){
             {text: v.coord.x.toFixed(2), text_opacity: 0.7, key: 'xv'},
             {text: v.coord.y.toFixed(2), text_opacity: 0.7, key: 'yv'},
             {text: v.coord.z.toFixed(2), text_opacity: 0.7, key: 'zv'},
-            {text: uTv.toFixed(3), font_size: 15, color: 0,
+            {text: uTv.toFixed(3), font_size: 15, text_color: 0,
              text_opacity: 1, key:'uTv'}
         ]
         ]
@@ -194,7 +193,7 @@ function plot(scatter, axis, tt){
     {text:'u\u1d40v = '.concat(uTv.toFixed(3)),
      x: (v.x * uTv/2).toFixed(2),
      y: (v.y * uTv/2).toFixed(2),
-     color: 0, text_opacity: 1,
+     text_color: 0, text_opacity: 1,
      font_size: 15, tt: 0, key: 'uTv_texts'}
   ];
   
@@ -326,7 +325,7 @@ function swap(u, v){
       {text:'u\u1d40v = '.concat(uTv.toFixed(3)),
        x: (v.x * uTv/2).toFixed(2),
        y: (v.y * uTv/2).toFixed(2),
-       color: 0, text_opacity: 1,
+       text_color: 0, text_opacity: 1,
        font_size: 15, tt: 0, key: 'uTv_texts'}
   ];
 
