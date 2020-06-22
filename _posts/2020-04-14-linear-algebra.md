@@ -5,11 +5,11 @@ title: Interactive Visualizations of Linear Algebra - Part 1
 
 <script src="/assets/js/linear_algebra/lib.js"></script>
 
-Sunday morning. Quy nhon, a peaceful small town with an ocean view. In a busy coffee shop, two regular coffee buddies are chatting away on fun ideas. 
+Sunday morning. Quy nhon, a peaceful small town by the ocean. In a busy coffee shop, two regular coffee buddies are chatting away on fun ideas. 
 
 *"Linear Algebra?"* - said *Italica*, a student in Design who recently acquired an appetite for pretty illustrations of Math concepts.
 
-"Yes. Linear Algebra, is a story about vectors." - Regula, a graduate student in Machine Learning.
+"Yes. Linear Algebra, is a story about vectors." - Regan, a Machine Learning engineer, sipping her favourite coffee with condensed milk.
 
 *"I like stories. How does this one start?"*
 
@@ -418,13 +418,25 @@ Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Muc
 There are many. Linear Algebra is truly ubiquitous! As a student in Machine Learning, I can vouch for its application in this field. For example, we want to find what changes of perspective that turn my cat, currently represented as pixels in a photo, into the text $\texttt{"my cat"}$.
 
 
-<center><img src="{{site.url}}/assets/js/linear_algebra/cat_text.svg"></center>
+<center class='js'>
+<svg width="630" height="140" id="svg_cat_text_perspective"></svg>
+<br/> 
+An example of Image Captioning.
+</center>
+
+<script src="/assets/js/linear_algebra/cat_text_perspective.js"></script>
 
 *So this is how Facebook AI put captions on the photos uploaded to the site?*
 
 Yep. Take Google Translate as another example. Linear Algebra is used to represent the changes of the perspective that turn one sentence in one language to another.
 
-<center><img src="{{site.url}}/assets/js/linear_algebra/translation.svg"></center>
+<center class='js'>
+<svg width="630" height="150" id="svg_translation_perspective"></svg>
+<br/> 
+An example of Translation.
+</center>
+
+<script src="/assets/js/linear_algebra/translation_perspective.js"></script>
 
 *Okay, let me try to connect the dots here. So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=u^T v$, is the number that represents the caption text?*
 
