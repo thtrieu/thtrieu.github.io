@@ -460,23 +460,62 @@ draw_on_svg('cat_text',
             cat_text);
 </script>
 
-That is the spirit! The devil is in the detail though: How do we represent photo/text as vectors? How do we figure out the appropriate $v$? And so on :)
+That is the spirit! Although realistically, a single number isn't the best way to represent texts, but we'll come to that soon. The devil is really in the detail: How do we represent photo/text as vectors? How do we figure out the appropriate $v$? And so on :)
 
 <!-- Consider writing this tutorial. All the visualizations of 3D spaces done here will be displayed on a screen, a 2D surface. This requires a perspective change between the two spaces. The code that I wrote for the visualizations must therefore handle this change using Linear Algebra. More broadly, computer games in 3D or softwares that involve 3D manipulation rely heavily on this specific change to display stuff on 2D screens. -->
 
 <!-- *Changing in perspective might not be all the reasons for Linear Algebra though. I found [this answer](https://math.stackexchange.com/a/256695) on Math Stack Exchange that says people approximate complex questions with Linear Algebra to get approximate answers.* -->
 
-Better yet, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm. 
+Further, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Prof. Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm that runs at the heart of the search engine itself. 
+
+*Wow, exciting stuff!*
 
 <center><b>4. The coordinate system</b></center>
 
-*! Now back to changing perspectives, what do I do with the projection of $u$ on $v$?*
+That was a very nice discussion. For now, let's get back on track to our main discussion. Reducing $u$, living in a multi-dimensional space, to a single number $u^Tv$ is useful, but we want more. What people do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
 
-Reducing $u$, living in a multi-dimensional space, to a single number $u^Tv$ is useful, but we want more. What people do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
+
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_many_perspective'> <div class='slider'></div></label>
+  <br/>
+<svg width="630" height="280" id="svg_many_perspective"></svg>
+<br/> 
+Here we hide the coordinate axes to simplify the figure.
+<br/>
+Try dragging $u$, $v_1$, $v_2$, the whole space, or click 
+<button id='init_many_perspective'>reset</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/many_perspective2d.js"></script>
+<script src="/assets/js/linear_algebra/many_perspective.js"></script>
+<script>
+draw_on_svg('many_perspective',
+            many_perspective2d,
+            many_perspective);
+</script>
 
 *So we are getting many numbers at once, that's kind of cumbersome right?*
 
-It will not be if we consider these many numbers as a single vector! Let's say we project $u$ onto a bunch of vectors, e.g. three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$, which is itself a vector as you pointed out earlier. Here, dot product is the building block of transforming one vector to another, thereby achieving a multi-dimensional change in perspective.
+It will not be if we consider these many numbers as a single vector! Let's say we project $u$ onto a bunch of vectors, e.g. three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$, which is itself a vector as you pointed out earlier:
+
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_multi_dim_change'> <div class='slider'></div></label>
+  <br/>
+<svg width="630" height="280" id="svg_multi_dim_change"></svg>
+<br/> 
+Here we hide the coordinate axes to simplify the figure.
+<br/>
+Try dragging $u$, $v_1$, $v_2$, the whole space, or click 
+<button id='init_multi_dim_change'>reset</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/multi_dim_change2d.js"></script>
+<script src="/assets/js/linear_algebra/multi_dim_change.js"></script>
+<script>
+draw_on_svg('multi_dim_change',
+            multi_dim_change2d,
+            multi_dim_change);
+</script>
 
 <!-- *OK, this list of numbers is three different views of $u$ from three different $v$ vectors. But if $v_1 = v_2$, we are obtaining the same view twice. If $v_1$ and $v_2$ are almost aligned, the two views are also almost the same.*
 
@@ -484,7 +523,7 @@ It will not be if we consider these many numbers as a single vector! Let's say w
 
 Absolutely. Setting aside what we really mean by "correlation", this set of vectors needs to be pair-wise perpendicular for the views to not correlate. For example, -->
 
-Let's take a concrete example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
+Let's take a fun example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
 
 *It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system, because they are measuring $u$ in three perpendicular directions that coincide with the three coordinate axes.*
 
