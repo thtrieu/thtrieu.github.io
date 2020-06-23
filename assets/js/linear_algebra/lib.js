@@ -107,6 +107,11 @@ function norm(v) {
   return Math.sqrt(dot_product(v, v));
 }
 
+
+function norm2(v) {
+  return dot_product(v, v);
+}
+
 function normalize(v) {
   let v_norm = norm(v);
   let r = Object.assign({}, v);
@@ -776,6 +781,7 @@ return {
   color: color,
   normalize: normalize,
   norm: norm,
+  norm2: norm2,
   dot_product: dot_product,
   plot_points: plot_points,
   plot_lines: plot_lines,
