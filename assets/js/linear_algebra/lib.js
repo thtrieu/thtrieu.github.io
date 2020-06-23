@@ -192,6 +192,13 @@ function get_txt_size(d) {
 }
 
 
+function get_font_family(d) {
+  if (d.hasOwnProperty('font_family')) {
+    return d.font_family;
+  }
+}
+
+
 function get_txt_opacity(d) {
   if (d.hasOwnProperty('text_opacity')){
     return d.text_opacity;
@@ -390,6 +397,7 @@ function plot_lines(data,
       .transition().duration(get_duration(tt))
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
+      .attr('font-family', get_font_family)
       .attr('x', function(d){ return d.text_position.x+3; })
       .attr('y', function(d){ return d.text_position.y-3; })
       .text(function(d){
@@ -458,6 +466,7 @@ function plot_points(data,
       })
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
+      .attr('font-family', get_font_family)
       .attr('x', function(d){ return project(d, with_origin).x; })
       .attr('y', function(d){ return project(d, with_origin).y+3; })
       .attr('opacity', get_txt_opacity)
@@ -486,6 +495,7 @@ function plot_texts(data, tt, name='text', with_origin=null){
       .transition().duration(get_duration(tt))
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
+      .attr('font-family', get_font_family)
       .attr('x', function(d){ return project(d, with_origin).x; })
       .attr('y', function(d){ return project(d, with_origin).y; })
       .attr('opacity', get_txt_opacity)
