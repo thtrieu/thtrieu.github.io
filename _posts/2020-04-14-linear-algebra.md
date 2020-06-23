@@ -307,7 +307,7 @@ draw_on_svg('dot_product_collide',
 
 *Looks like this diagram explains the notation $u^Tv$ very well: $u^T$ is $u$ lying down, while $v$ is standing, and $u^Tv$ is the collision of $u^T$ and $v$.*
 
-That's exactly what it is :) The $^T$ operation here is called "transpose". Transposing flips the vector so it lies down. This diagram will become very helpful later on and we'll meet it again soon.
+That's exactly what it is :) The $^T$ operation here is called "transpose". Transposing flips the vector so it lies down. This diagram will become very helpful later on, so hang on to that for a little while.
 
 *So since this operation is symmetric between $u$ and $v$, it should give the same result as projecting v onto u, i.e. $u^Tv = v^Tu$, right?*
 
@@ -441,27 +441,36 @@ An example of Translation.
 *Okay, let me try to connect the dots here. So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=u^T v$, is the number that represents the caption text?*
 
 <center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_cat_text'> <div class='slider'></div></label>
+  <br/>
 <svg width="630" height="280" id="svg_cat_text"></svg>
 <br/> 
-Try dragging $v$, the whole space, or click 
+Try rotating $v$, the whole space, or click 
 <button id='init_cat_text'>reset</button>.
 <br/>
-Can you find $v$ such that our image captioning AI says "my dog"?
+Can you find $v$ such that our image captioning AI says "your dog"?
 </center>
 
+<script src="/assets/js/linear_algebra/cat_text2d.js"></script>
 <script src="/assets/js/linear_algebra/cat_text.js"></script>
+
+<script>
+draw_on_svg('cat_text',
+            cat_text2d,
+            cat_text);
+</script>
 
 That is the spirit! The devil is in the detail though: How do we represent photo/text as vectors? How do we figure out the appropriate $v$? And so on :)
 
-Consider writing this tutorial. All the visualizations of 3D spaces done here will be displayed on a screen, a 2D surface. This requires a perspective change between the two spaces. The code that I wrote for the visualizations must therefore handle this change using Linear Algebra. More broadly, computer games in 3D or softwares that involve 3D manipulation rely heavily on this specific change to display stuff on 2D screens.
+<!-- Consider writing this tutorial. All the visualizations of 3D spaces done here will be displayed on a screen, a 2D surface. This requires a perspective change between the two spaces. The code that I wrote for the visualizations must therefore handle this change using Linear Algebra. More broadly, computer games in 3D or softwares that involve 3D manipulation rely heavily on this specific change to display stuff on 2D screens. -->
 
-*Changing in perspective might not be all the reasons for Linear Algebra. For example, I found [this answer](https://math.stackexchange.com/a/256695) on Math Stack Exchange.*
+<!-- *Changing in perspective might not be all the reasons for Linear Algebra though. I found [this answer](https://math.stackexchange.com/a/256695) on Math Stack Exchange that says people approximate complex questions with Linear Algebra to get approximate answers.* -->
 
-Good find! Better yet, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm. 
+Better yet, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm. 
 
 <center><b>4. The coordinate system</b></center>
 
-*Good to know! Back to changing of perspective, now what do I do with the projection of $u$ on $v$?*
+*! Now back to changing perspectives, what do I do with the projection of $u$ on $v$?*
 
 Reducing $u$, living in a multi-dimensional space, to a single number $u^Tv$ is useful, but we want more. What people do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
 
