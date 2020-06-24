@@ -176,6 +176,13 @@ function plot_v_perspective(uTv, tt){
               z: 0,
               font_size: 14,
               text_opacity: 1.0});
+  texts.push({text: 'v\'s world view:',
+              x: -0.8,
+              y: -2,
+              z: 0,
+              font_size: 15,
+              text_opacity: 0.8
+             });
 
   let u_on_v = {
     x: uTv,

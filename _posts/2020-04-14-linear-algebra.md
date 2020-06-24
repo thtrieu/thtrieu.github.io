@@ -32,6 +32,11 @@ Sunday morning. Quy nhon, a peaceful small town by the ocean. In a busy coffee s
   left: 0px;
 }
 
+.switch.show {
+  width: 52px;
+  top: -8.5px;
+}
+
 .switch input { 
   opacity: 0;
   width: 0;
@@ -87,7 +92,6 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/*------ ADDED CSS ---------*/
 .slider:after
 {
  content:'2D';
@@ -108,7 +112,25 @@ input:checked + .slider:after
   left: 35%;
 }
 
-/*--------- END --------*/
+input:checked + .slider.show:before {
+  -webkit-transform: translateX(36px);
+  -ms-transform: translateX(36px);
+  transform: translateX(36px);
+}
+
+.slider.show:after {
+  content: 'Show';
+  font-weight: bold;
+  left: 63%;
+  font-size: 12px;
+  font-family: Georgia, sans-serif;
+}
+
+input:checked + .slider.show:after
+{  
+  content:'Hide';
+}
+
 </style>
 
 With the main character: vectors. Let's actually see them. Here is a bunch of vectors.
@@ -290,7 +312,6 @@ Try dragging vector $u$, $v$, the whole space. Click
 d3.selectAll('#but_dot_product_collide_compute')
   .on('click', function(){
       let is_3d = d3.selectAll('#switch_dot_product_collide').node().checked;
-
       if (is_3d) {
         dot_product_collide.compute();
       } else {
@@ -307,7 +328,7 @@ draw_on_svg('dot_product_collide',
 
 *Looks like this diagram explains the notation $u^Tv$ very well: $u^T$ is $u$ lying down, while $v$ is standing, and $u^Tv$ is the collision of $u^T$ and $v$.*
 
-That's exactly what it is :) The $^T$ operation here is called "transpose". Transposing flips the vector so it lies down. This diagram will become very helpful later on and we'll meet it again soon.
+That's exactly what it is :) The $^T$ operation here is called "transpose". Transposing flips the vector so it lies down. This diagram will become very helpful later on, so hang on to that for a little while.
 
 *So since this operation is symmetric between $u$ and $v$, it should give the same result as projecting v onto u, i.e. $u^Tv = v^Tu$, right?*
 
@@ -441,33 +462,95 @@ An example of Translation.
 *Okay, let me try to connect the dots here. So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=u^T v$, is the number that represents the caption text?*
 
 <center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_cat_text'> <div class='slider'></div></label>
+  <br/>
 <svg width="630" height="280" id="svg_cat_text"></svg>
 <br/> 
-Try dragging $v$, the whole space, or click 
+Try rotating $v$, the whole space, or click 
 <button id='init_cat_text'>reset</button>.
 <br/>
-Can you find $v$ such that our image captioning AI says "my dog"?
+Can you find $v$ such that our image captioning AI says "your dog"?
 </center>
 
+<script src="/assets/js/linear_algebra/cat_text2d.js"></script>
 <script src="/assets/js/linear_algebra/cat_text.js"></script>
 
-That is the spirit! The devil is in the detail though: How do we represent photo/text as vectors? How do we figure out the appropriate $v$? And so on :)
+<script>
+draw_on_svg('cat_text',
+            cat_text2d,
+            cat_text);
+</script>
 
-Consider writing this tutorial. All the visualizations of 3D spaces done here will be displayed on a screen, a 2D surface. This requires a perspective change between the two spaces. The code that I wrote for the visualizations must therefore handle this change using Linear Algebra. More broadly, computer games in 3D or softwares that involve 3D manipulation rely heavily on this specific change to display stuff on 2D screens.
+That is the spirit! Although realistically, a single number isn't the best way to represent texts, but we'll come to that soon. The devil is really in the detail: How do we represent photo/text as vectors? How do we figure out the appropriate $v$? And so on :)
 
-*Changing in perspective might not be all the reasons for Linear Algebra. For example, I found [this answer](https://math.stackexchange.com/a/256695) on Math Stack Exchange.*
+<!-- Consider writing this tutorial. All the visualizations of 3D spaces done here will be displayed on a screen, a 2D surface. This requires a perspective change between the two spaces. The code that I wrote for the visualizations must therefore handle this change using Linear Algebra. More broadly, computer games in 3D or softwares that involve 3D manipulation rely heavily on this specific change to display stuff on 2D screens. -->
 
-Good find! Better yet, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm. 
+<!-- *Changing in perspective might not be all the reasons for Linear Algebra though. I found [this answer](https://math.stackexchange.com/a/256695) on Math Stack Exchange that says people approximate complex questions with Linear Algebra to get approximate answers.* -->
+
+Further, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Prof. Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm that runs at the heart of the search engine itself. 
+
+*Wow, exciting stuff!*
 
 <center><b>4. The coordinate system</b></center>
 
-*Good to know! Back to changing of perspective, now what do I do with the projection of $u$ on $v$?*
+That was a very nice discussion. For now, let's get back on track to our main discussion. Reducing $u$, living in a multi-dimensional space, to a single number $u^Tv$ is useful, but we want more. What people do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
 
-Reducing $u$, living in a multi-dimensional space, to a single number $u^Tv$ is useful, but we want more. What people do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
+
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_many_perspective'> <div class='slider'></div></label>
+  <br/>
+<svg width="630" height="280" id="svg_many_perspective"></svg>
+<br/> 
+Here we hide the coordinate axes to simplify the figure.
+<br/>
+Try dragging $u$, $v_1$, $v_2$, the whole space, or click 
+<button id='init_many_perspective'>reset</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/many_perspective2d.js"></script>
+<script src="/assets/js/linear_algebra/many_perspective.js"></script>
+<script>
+draw_on_svg('many_perspective',
+            many_perspective2d,
+            many_perspective);
+</script>
 
 *So we are getting many numbers at once, that's kind of cumbersome right?*
 
-It will not be if we consider these many numbers as a single vector! Let's say we project $u$ onto a bunch of vectors, e.g. three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$, which is itself a vector as you pointed out earlier. Here, dot product is the building block of transforming one vector to another, thereby achieving a multi-dimensional change in perspective.
+It will not be. Let's say we project $u$ onto three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$. This list of numbers, as you pointed out earlier, is itself a vector $u'$ as well! So now, using $v_1, v_2, v_3$ and the dot product, we achieved the change in perspective from current $u$ to $u'$ in another space and coordinate:
+
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_multi_dim_change'> <div class='slider'></div></label>
+  <br/>
+<svg width="630" height="280" id="svg_multi_dim_change"></svg>
+<br/> 
+<label class='switch show'> <input type='checkbox' id='show_hide_proj'> <div class='slider show'></div></label> projection details.
+<br/>
+Try dragging $u$, $v_1$, $v_2$, $v_3$, the whole space, or click 
+<button id='init_multi_dim_change'>reset</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/multi_dim_change2d.js"></script>
+<script src="/assets/js/linear_algebra/multi_dim_change.js"></script>
+<script>
+draw_on_svg('multi_dim_change',
+            multi_dim_change2d,
+            multi_dim_change);
+
+
+d3.selectAll('#show_hide_proj')
+  .on('click', function(){
+      let show_proj = !this.checked;
+      let is_3d = d3.selectAll('#switch_multi_dim_change').node().checked;
+      multi_dim_change2d.set_show_proj(show_proj);
+      multi_dim_change.set_show_proj(show_proj);
+      if (is_3d) {
+        multi_dim_change.replot();
+      } else {
+        multi_dim_change2d.replot();
+      }
+  });
+</script>
 
 <!-- *OK, this list of numbers is three different views of $u$ from three different $v$ vectors. But if $v_1 = v_2$, we are obtaining the same view twice. If $v_1$ and $v_2$ are almost aligned, the two views are also almost the same.*
 
@@ -475,7 +558,9 @@ It will not be if we consider these many numbers as a single vector! Let's say w
 
 Absolutely. Setting aside what we really mean by "correlation", this set of vectors needs to be pair-wise perpendicular for the views to not correlate. For example, -->
 
-Let's take a concrete example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
+*Interesting. This is like taking the 3 number lines that represents the world view of $v_1, v_2,$ and $v_3$ individually, placing them perpendicular to each other, so we get the coordinate axes of a new space. In this new space lives the new vector $u'$.*
+
+Exactly, let's take a fun example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
 
 *It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system, because they are measuring $u$ in three perpendicular directions that coincide with the three coordinate axes.*
 

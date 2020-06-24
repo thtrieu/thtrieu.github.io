@@ -31,6 +31,7 @@ function _create_axis(axis, name, ord,
           {x: p2[0], y:p2[1], z:p2[2]}
         ];
         if (is_2d && ord == 2) {
+          text = '';
           segment.opacity = 0.0;
           segment.text_opacity = 0.0;
         }
@@ -76,6 +77,7 @@ function _create_axis_float(
           {x: p2[0], y:p2[1], z:p2[2]}
         ]
         if (is_2d && ord == 2) {
+          text = '';
           segment.opacity = 0.0;
           segment.text_opacity = 0.0;
         }
@@ -105,6 +107,11 @@ function init_float_axis(axis_len=2.0, unit=0.2) {
 
 function norm(v) {
   return Math.sqrt(dot_product(v, v));
+}
+
+
+function norm2(v) {
+  return dot_product(v, v);
 }
 
 function normalize(v) {
@@ -157,7 +164,7 @@ function linear_scale_positive_range(domain, range) {
 function set_ranges(axis_len) {
   domain = [-axis_len, axis_len];
   z_to_size_scale = linear_scale_positive_range(domain, [4, 5.5]);
-  z_to_txt_size_scale = linear_scale_positive_range(domain, [9, 14]);
+  z_to_txt_size_scale = linear_scale_positive_range(domain, [11, 16]);
   z_to_txt_opacity_scale = linear_scale_positive_range(domain, [0.2, 1.0]);
   z_to_opacity_scale = linear_scale_positive_range(domain, [0.5, 1.0]);
   z_to_stroke_width_scale = linear_scale_positive_range(domain, [0.5, 3.0]);
@@ -189,6 +196,13 @@ function get_txt_size(d) {
     return z_to_txt_size_scale(d.centroid.z) + 'px';
   }
   return '14px';
+}
+
+
+function get_font_family(d) {
+  if (d.hasOwnProperty('font_family')) {
+    return d.font_family;
+  }
 }
 
 
@@ -390,6 +404,7 @@ function plot_lines(data,
       .transition().duration(get_duration(tt))
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
+      .attr('font-family', get_font_family)
       .attr('x', function(d){ return d.text_position.x+3; })
       .attr('y', function(d){ return d.text_position.y-3; })
       .text(function(d){
@@ -458,6 +473,7 @@ function plot_points(data,
       })
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
+      .attr('font-family', get_font_family)
       .attr('x', function(d){ return project(d, with_origin).x; })
       .attr('y', function(d){ return project(d, with_origin).y+3; })
       .attr('opacity', get_txt_opacity)
@@ -486,6 +502,7 @@ function plot_texts(data, tt, name='text', with_origin=null){
       .transition().duration(get_duration(tt))
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
+      .attr('font-family', get_font_family)
       .attr('x', function(d){ return project(d, with_origin).x; })
       .attr('y', function(d){ return project(d, with_origin).y; })
       .attr('opacity', get_txt_opacity)
@@ -760,12 +777,46 @@ function text_table_to_list(texts,
   return list_of_texts;
 }
 
+function _add(v1, v2) {
+  let r = Object.assign({}, v1);
+  r.x += v2.x;
+  r.y += v2.y;
+  r.z += v2.z;
+  return r;
+}
+
+function add(vs) {
+  let r = vs[0];
+  vs.forEach(function(v, i) {
+    if (i > 0) {
+      r = _add(r, v);
+    }
+  })
+  return r;
+}
+
+function times(v, c) {
+  let r = Object.assign({}, v);
+  r.x *= c;
+  r.y *= c;
+  r.z *= c;
+  return r;
+}
+
+function strip(v) {
+  return {
+      x: v.x,
+      y: v.y,
+      z: v.z
+  }
+}
 
 
 return {
   color: color,
   normalize: normalize,
   norm: norm,
+  norm2: norm2,
   dot_product: dot_product,
   plot_points: plot_points,
   plot_lines: plot_lines,
@@ -789,6 +840,9 @@ return {
   distance: distance,
   sort: sort,
   text_table_to_list: text_table_to_list,
+  add: add,
+  times: times,
+  strip: strip,
 }
 
 };
