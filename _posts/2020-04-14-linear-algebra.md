@@ -32,6 +32,11 @@ Sunday morning. Quy nhon, a peaceful small town by the ocean. In a busy coffee s
   left: 0px;
 }
 
+.switch.show {
+  width: 52px;
+  top: -8.5px;
+}
+
 .switch input { 
   opacity: 0;
   width: 0;
@@ -87,7 +92,6 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/*------ ADDED CSS ---------*/
 .slider:after
 {
  content:'2D';
@@ -108,7 +112,25 @@ input:checked + .slider:after
   left: 35%;
 }
 
-/*--------- END --------*/
+input:checked + .slider.show:before {
+  -webkit-transform: translateX(36px);
+  -ms-transform: translateX(36px);
+  transform: translateX(36px);
+}
+
+.slider.show:after {
+  content: 'Show';
+  font-weight: bold;
+  left: 63%;
+  font-size: 12px;
+  font-family: Georgia, sans-serif;
+}
+
+input:checked + .slider.show:after
+{  
+  content:'Hide';
+}
+
 </style>
 
 With the main character: vectors. Let's actually see them. Here is a bunch of vectors.
@@ -290,7 +312,6 @@ Try dragging vector $u$, $v$, the whole space. Click
 d3.selectAll('#but_dot_product_collide_compute')
   .on('click', function(){
       let is_3d = d3.selectAll('#switch_dot_product_collide').node().checked;
-
       if (is_3d) {
         dot_product_collide.compute();
       } else {
@@ -496,16 +517,16 @@ draw_on_svg('many_perspective',
 
 *So we are getting many numbers at once, that's kind of cumbersome right?*
 
-It will not be if we consider these many numbers as a single vector! Let's say we project $u$ onto a bunch of vectors, e.g. three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$, which is itself a vector as you pointed out earlier:
+It will not be. Let's say we project $u$ onto three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$. This list of numbers, as you pointed out earlier, is itself a vector $u'$ as well! So now, using $v_1, v_2, v_3$ and the dot product, we achieved the change in perspective from current $u$ to $u'$ in another space and coordinate:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_multi_dim_change'> <div class='slider'></div></label>
   <br/>
 <svg width="630" height="280" id="svg_multi_dim_change"></svg>
 <br/> 
-Here we hide the coordinate axes to simplify the figure.
+<label class='switch show'> <input type='checkbox' id='show_hide_proj'> <div class='slider show'></div></label> projection details.
 <br/>
-Try dragging $u$, $v_1$, $v_2$, the whole space, or click 
+Try dragging $u$, $v_1$, $v_2$, $v_3$, the whole space, or click 
 <button id='init_multi_dim_change'>reset</button>.
 </center>
 
@@ -515,6 +536,20 @@ Try dragging $u$, $v_1$, $v_2$, the whole space, or click
 draw_on_svg('multi_dim_change',
             multi_dim_change2d,
             multi_dim_change);
+
+
+d3.selectAll('#show_hide_proj')
+  .on('click', function(){
+      let show_proj = !this.checked;
+      let is_3d = d3.selectAll('#switch_multi_dim_change').node().checked;
+      multi_dim_change2d.set_show_proj(show_proj);
+      multi_dim_change.set_show_proj(show_proj);
+      if (is_3d) {
+        multi_dim_change.replot();
+      } else {
+        multi_dim_change2d.replot();
+      }
+  });
 </script>
 
 <!-- *OK, this list of numbers is three different views of $u$ from three different $v$ vectors. But if $v_1 = v_2$, we are obtaining the same view twice. If $v_1$ and $v_2$ are almost aligned, the two views are also almost the same.*
@@ -523,7 +558,9 @@ draw_on_svg('multi_dim_change',
 
 Absolutely. Setting aside what we really mean by "correlation", this set of vectors needs to be pair-wise perpendicular for the views to not correlate. For example, -->
 
-Let's take a fun example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
+*Interesting. This is like taking the 3 number lines that represents the world view of $v_1, v_2,$ and $v_3$ individually, placing them perpendicular to each other, so we get the coordinate axes of a new space. In this new space lives the new vector $u'$.*
+
+Exactly, let's take a fun example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
 
 *It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system, because they are measuring $u$ in three perpendicular directions that coincide with the three coordinate axes.*
 
