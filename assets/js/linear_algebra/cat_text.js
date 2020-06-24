@@ -99,7 +99,7 @@ function plot(scatter, axis, tt){
   let uTvv = {
       x: v.x * uTv,
       y: v.y * uTv,
-      z: 0,
+      z: v.z * uTv,
       color: 0,
       tt: true
   }
