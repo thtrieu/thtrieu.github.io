@@ -40,7 +40,7 @@ function plot_project_u_onto_v(u, v, tt, name, visible=true) {
       x: v.x * uTv,
       y: v.y * uTv,
       z: 0,
-      color: 0,
+      color: v.color-1,
       tt: true
   }
 
@@ -79,20 +79,22 @@ function plot(scatter, axis, tt){
   scatter.forEach(function(d){
     points.push(Object.assign({}, d));
   });
+
   points.push({
     x: 0,
     y: 0,
     z: 1,
     opacity: 0,
   });
-
-  let [u, v1, v2, v3] = points;
-
+  
   let lines = [];
   points.forEach(function(d, i){
     lines.push(...lib.create_segments(d));
   });
   lib.plot_lines(lines, tt, 'arrow');
+
+
+  let [u, v1, v2, v3] = points;
 
   plot_project_u_onto_v(u, v1, tt, 'v1');
   plot_project_u_onto_v(u, v2, tt, 'v2');
@@ -119,26 +121,29 @@ function plot(scatter, axis, tt){
                   drag_end_fn=drag_end);
 
   plot_v_perspective(
-      lib.dot_product(u, v1), 
+      u, v1, 
       -0.5, 3,
       'v\u2081',
       tt, 'v1');
   plot_v_perspective(
-      lib.dot_product(u, v2),
+      u, v2,
       0.5, 19,
       'v\u2082',
       tt, 'v2');
   plot_v_perspective(
-      lib.dot_product(u, v3),
-      3, 8,
+      u, v3,
+      3, 9,
       'v\u2083',
       tt, 'v3');
   lib.sort();
 }
 
 
-function plot_v_perspective(uTv, y, line_color, v_name, tt, name){
-
+function plot_v_perspective(u, v, y, line_color, v_name, tt, name){
+  let uTv = lib.dot_product(u, v)/lib.norm2(v);
+  if (lib.norm2(v) == 0) {
+    uTv = 1.0
+  }
   let lines = [], texts = [];
   for (let i = -axis_len; i < axis_len; i += unit) {
     let seg = [{x: i, y: y, z: 0},
@@ -151,7 +156,7 @@ function plot_v_perspective(uTv, y, line_color, v_name, tt, name){
       {x:0, y:y, z:0},
       {x:uTv, y:y, z:0}
   ];
-  uTv_line.color = 0;
+  uTv_line.color = v.color-1;
   uTv_line.centroid_z = 1000;
   lines.push(uTv_line);
 

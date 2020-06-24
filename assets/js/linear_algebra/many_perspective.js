@@ -42,7 +42,7 @@ function plot_project_u_onto_v(u, v, tt, name) {
       {x: 0, y: 0, z: 0},
       {x: uTvv.x, y: uTvv.y, z: uTvv.z}
   ]
-  uTvv_line.color = 0;
+  uTvv_line.color = v.color-1;
   uTvv_line.centroid_z = 1000;
 
   lines.push(uTvv_line);
@@ -72,7 +72,6 @@ function plot(scatter, axis, tt){
   plot_project_u_onto_v(u, v2, tt, 'v2')
   plot_project_u_onto_v(u, v3, tt, 'v3')
 
-
   u.text = 'u';
   v1.text = 'v\u2081';
   v2.text = 'v\u2082';
@@ -87,25 +86,26 @@ function plot(scatter, axis, tt){
                   drag_end_fn=drag_end);
 
   plot_v_perspective(
-      lib.dot_product(u, v1)/lib.norm2(v1), 
+      u, v1, 
       -1, 3,
       'v\u2081',
       tt, 'v1');
   plot_v_perspective(
-      lib.dot_product(u, v2)/lib.norm2(v2),
+      u, v2,
       0, 19,
       'v\u2082',
       tt, 'v2');
   plot_v_perspective(
-      lib.dot_product(u, v3)/lib.norm2(v3),
+      u, v3,
       1, 9,
       'v\u2083',
       tt, 'v3');
   lib.sort();
 }
 
-function plot_v_perspective(uTv, y, line_color, v_name, tt, name){
-
+function plot_v_perspective(u, v, y, line_color, v_name, tt, name){
+  // console.log(uTv);
+  let uTv = lib.dot_product(u, v) / lib.norm2(v);
   let lines = [], texts = [];
   for (let i = -axis_len; i < axis_len; i += unit) {
     let seg = [{x: i, y: y, z: 0},
@@ -120,7 +120,7 @@ function plot_v_perspective(uTv, y, line_color, v_name, tt, name){
       {x:0, y:y, z:0},
       {x:uTv, y:y, z:0}
   ];
-  uTv_line.color = 0;
+  uTv_line.color = v.color-1;
   uTv_line.centroid_z = 1000;
   uTv_line.opacity = 1.0;
   lines.push(uTv_line);
@@ -180,7 +180,7 @@ function init(tt){
       x: Math.sqrt(0.5/14)*1.5, 
       y: Math.sqrt(0.5/14)*1.5,  
       z: Math.sqrt(13/14)*1.5,  
-      color: 8,
+      color: 9,
   };
 
   scatter = [u, v1, v2, v3];
