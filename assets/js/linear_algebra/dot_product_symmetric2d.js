@@ -14,65 +14,100 @@ let origin = [150, 140],
     lib = null,
     position_state = 0;
 
-let w_unit = 1.0, h_unit = 1.0,
-    dws_array = [0.4, 0.7, 0., 0.7],
-    dhs_array = [0.4, 0.4, 0., 0.4];
+let row_width = 0.35,
+    col_width = 0.6,
+    w_unit = 1.0, h_unit = 1.0;
 
-let start_coord_x=(375 - origin[0])/scale + 0.7 * w_unit,
-    start_coord_y=(75 - origin[1])/scale + 0.4 * h_unit;
+    // dws_array = [0.5, 0.7, 0., 0.7],
+    // dhs_array = [0.4, 0.4, 0., 0.4];
 
+let start_coord_x=(340 - origin[0])/scale + 0.6 * w_unit,
+    start_coord_y=(75 - origin[1])/scale + 0.2 * h_unit,
+    last_col_coord = start_coord_x + 1.2 * w_unit,
+    last_row_coord = start_coord_y + 0.7 * h_unit;
 
-function texts_to_show(u, v){
-  let uTv = lib.dot_product(u, v);
-  return [
-      [
-          [
-              {text: ''}, {text: ''}, {text: ''}, {text: ''}, 
-              {text: 'v', text_opacity: 0.7, key: 'v'},
-          ], [
-              {text: ''}, {text: ''}, {text: ''}, {text: ''}, 
-              {text: v.coord.x.toFixed(2), text_opacity: 0.7, key: 'xv'},
-          ], [
-              {text: ''}, {text: ''}, {text: ''}, {text: ''},
-              {text: v.coord.z.toFixed(2), text_opacity: 0., tt: 0, key: 'zv'}
-          ], [
-              {text: ''}, {text: ''}, {text: ''}, {text: ''},
-              {text: v.coord.y.toFixed(2), text_opacity: 0.7, key: 'yv'}, 
-          ], [
-              {text: 'u\u1d40', text_opacity: 0.7, key: 'u'},
-              {text: u.coord.x.toFixed(2), text_opacity: 0.7, key: 'xu'},
-              {text: u.coord.z.toFixed(2), text_opacity: 0., tt: 0, key: 'zu'},
-              {text: u.coord.y.toFixed(2), text_opacity: 0.7, key: 'yu'},
-              {text: uTv.toFixed(3), font_size: 15, text_color: 0,
-               text_opacity: 1, key:'uTv'}
-          ]
-      ],
+let v_name = {text: 'v =', x: last_col_coord,
+              y: start_coord_y - 0.4 * h_unit, key: 'v'},
+    u_name = {text: 'u =', x: last_col_coord,
+              y: start_coord_y - 0.4 * h_unit, key: 'u'},
+    vT_name = {text: 'v\u1d40 =', x: start_coord_x - 0.6 * w_unit,
+               y: last_row_coord + 0.05, key: 'v' },
+    uT_name = {text: 'u\u1d40 =', x: start_coord_x - 0.6 * w_unit,
+               y: last_row_coord + 0.05, key: 'u' };
+               
+
+function text_matrix_to_list(coord_texts, coord,
+                                        size, coord_keys, brack_key) {
+    // print vector u: vec_texts = ['u =', 'v =', ...], coord_texts = [[u.x, u.y], [v.x, v.y],
+                   //  keys = [[xu, yu,], [xv, yv] ...], 
+                  // coord = [x, y] coord to start printing, size = font_size;
+
+  let size_of_space = coord_texts[0].length,
+      numb_of_vector =  coord_texts.length,
+      matrix_w = 0.62 * size/14 * numb_of_vector * w_unit,
+      matrix_h = 0.36 * size/14 * size_of_space  * h_unit,
+
+      texts_list = [],
+      lines_list = [],
       
-      [
-          [
-              {text: ''}, {text: ''}, {text: ''}, {text: ''}, 
-              {text: 'u', text_opacity: 0.7, key: 'u'}
-          ], [
-              {text: ''}, {text: ''}, {text: ''}, {text: ''}, 
-              {text: u.coord.x.toFixed(2), text_opacity: 0.7, key: 'xu'}
-          ], [
-              {text: ''}, {text: ''}, {text: ''}, {text: ''},
+      cols_list = [],
+      rows_list = [];
+  
+  // text
+  cols_list.push(coord[0]);
+  for (i = 1; i < numb_of_vector; i++) {
+    cols_list.push(cols_list[0] + 0.6 * size/14 * i * w_unit);
+  }
 
-              {text: u.coord.z.toFixed(2), text_opacity: 0., tt: 0, key: 'zu'},
-          ], [
-              {text: ''}, {text: ''}, {text: ''}, {text: ''},
-              {text: u.coord.y.toFixed(2), text_opacity: 0.7, key: 'yu'}
-          ], [
-              {text: 'v\u1d40', text_opacity: 0.7, key: 'v'},
-              {text: v.coord.x.toFixed(2), text_opacity: 0.7, key: 'xv'},
-              {text: v.coord.z.toFixed(2), text_opacity: 0., tt: 0, key: 'zv'},
-              {text: v.coord.y.toFixed(2), text_opacity: 0.7, key: 'yv'},
-              {text: uTv.toFixed(3), font_size: 15, text_color: 0,
-               text_opacity: 1, key:'uTv'}
-          ]
-      ]
+  rows_list.push(coord[1] - matrix_h/2 + 0.225 * size/14 * h_unit);
+  for (i = 1; i < size_of_space; i++) {
+    rows_list.push(rows_list[0] + 0.36 * size/14 * i * h_unit);
+  }
+
+  for (i = 0; i < numb_of_vector; i++) {
+    for (j = 0; j < size_of_space; j++) {
+      texts_list.push({text: coord_texts[i][j], x: cols_list[i],
+                       y: rows_list[j], font_size: size,
+                       text_opacity: 1.0, key: coord_keys[i][j]});
+    }
+  }; 
+  console.log(texts_list);
+  
+  lines_list = [
+      [
+        {x: coord[0], y: coord[1] - matrix_h/2, z: 0},
+        {x: coord[0] + 0.1 * size/14 * w_unit, y: coord[1] - matrix_h/2,
+         z: 0, color: 'grey', tt: true}],
+      [
+        {x: coord[0], y: coord[1] -matrix_h/2, z: 0},
+        {x: coord[0], y: coord[1] + matrix_h/2,
+         z: 0, color: 'grey', tt: true}],
+      [
+        {x: coord[0], y: coord[1] + matrix_h/2, z: 0},
+        {x: coord[0] + 0.1 * size/14 * w_unit,
+         y: coord[1] + matrix_h/2, z: 0, color: 'grey', tt: true}],
+      [
+        {x: coord[0] + matrix_w - 0.1 * size/14 * w_unit,
+         y: coord[1] - matrix_h/2, z: 0},
+        {x: coord[0] + matrix_w,
+         y: coord[1] - matrix_h/2, z: 0, color: 'grey', tt: true}],
+      [
+        {x: coord[0] + matrix_w, y: coord[1] - matrix_h/2, z: 0},
+        {x: coord[0] + matrix_w,
+         y: coord[1] + matrix_h/2, z: 0, color: 'grey', tt: true}],
+      [
+        {x: coord[0] + matrix_w, y: coord[1] + matrix_h/2, z: 0},
+        {x: coord[0] + matrix_w - 0.1 * size/14 * w_unit,
+         y: coord[1] + matrix_h/2, z: 0, color: 'grey', tt: true}]
   ];
-}
+
+  for (i = 0; i < lines_list.length; i++) {
+    lines_list[i].key = 'bracket'.concat(brack_key - i);
+    lines_list[i].stroke_width = size/14;
+  }
+  
+  return [lines_list, texts_list];
+};
 
 
 function select_svg(svg_id){
@@ -100,7 +135,6 @@ function plot(scatter, axis, tt){
       ey: axis[1/unit - 1 + axis_len/unit * 1][1],
       ez: axis[1/unit - 1 + axis_len/unit * 2][1]
   };
-
 
   lib.plot_lines(axis, tt);
 
@@ -139,7 +173,7 @@ function plot(scatter, axis, tt){
       z: v.z * uTv,
       r: 1.8,
       color: 'grey'
-  }
+  };
 
   points.push(uTvv);
   uTvv.centroid_z = 1000;
@@ -160,7 +194,7 @@ function plot(scatter, axis, tt){
         d.centroid_z = -900;
         lines.push(d);
       }
-  )
+  );
 
   lib.plot_lines(lines, tt, 'arrow');
   lib.plot_points(points, tt,
@@ -172,45 +206,99 @@ function plot(scatter, axis, tt){
                     }
                   },
                   drag_staSameSitert_fn=drag_start,
-                  drag_end_fn=drag_end);
+                  drag_end_fn=drag_end
+                  );
 
-  let texts_for_table = texts_to_show(u, v),
-      uTv_text_table = texts_for_table[0],
-      vTu_text_table = texts_for_table[1];
+  let [lines_vector_u, texts_vector_u] = text_matrix_to_list(
+          [[u.coord.x.toFixed(2), u.coord.y.toFixed(2)]],
+          [last_col_coord, start_coord_y],
+          14, [['xu', 'yu']], 5
+          ),
+      [lines_vector_v, texts_vector_v] = text_matrix_to_list(
+          [[v.coord.x.toFixed(2), v.coord.y.toFixed(2)]],
+          [last_col_coord, start_coord_y],
+          14, [['xv', 'yv']], 15
+          ),
+      [lines_uT, texts_uT] = text_matrix_to_list(
+          [[u.coord.x.toFixed(2)], [u.coord.y.toFixed(2)]],
+          [start_coord_x, last_row_coord],
+          14, [['xu'], ['yu']], 5
+          ),
+      [lines_vT, texts_vT] = text_matrix_to_list(
+          [[v.coord.x.toFixed(2)],[v.coord.y.toFixed(2)]],
+          [start_coord_x, last_row_coord],
+          14, [['xv'], ['yv']], 15
+          );
 
   
+  let uTv_texts = [],
+      uTv_lines = [],
+      vTu_texts = [],
+      vTu_lines = [];
+
+  let zv_text = {text: '', x: last_col_coord,
+                 y: start_coord_y + 0.525 * h_unit, text_opacity: 0, key: 'zv'
+                },
+      zu_text = {text: '', x: last_col_coord,
+                  y: start_coord_y + 0.525 * h_unit, text_opacity: 0, key: 'zu'
+                },
+      zvT_text = {text: '', x: start_coord_x + 0.6 * w_unit,
+                  y: last_row_coord, text_opacity: 0, key: 'zv'
+                },
+      zuT_text = {text: '', x: start_coord_x + 0.6 * w_unit,
+                  y: last_row_coord, text_opacity: 0, key: 'zu'
+                };
+
+  uTv_texts.push(...texts_uT);
+  uTv_texts.push(...texts_vector_v);
+  uTv_texts.push(uT_name, v_name, zuT_text, zv_text);
+
+  uTv_lines.push(...lines_uT);
+  uTv_lines.push(...lines_vector_v);
+
+  vTu_texts.push(...texts_vT);
+  vTu_texts.push(...texts_vector_u);
+  vTu_texts.push(vT_name, u_name, zvT_text, zu_text);
+
+  vTu_lines.push(...lines_vT);
+  vTu_lines.push(...lines_vector_u);
+
   if (position_state == 0) {
-    lib.plot_texts(lib.text_table_to_list(
-        uTv_text_table,
-        start_coord_x=start_coord_x,
-        start_coord_y=start_coord_y,
-        w_unit=w_unit, h_unit=h_unit,
-        dws_array=dws_array, dhs_array=dhs_array),
-      tt, name='transition');
+    lib.plot_texts(uTv_texts, tt, 'transition');
+    lib.plot_lines(uTv_lines, tt, 'bracket');
   } else {
-    lib.plot_texts(lib.text_table_to_list(
-        vTu_text_table,
-        start_coord_x=start_coord_x,
-        start_coord_y=start_coord_y,
-        w_unit=w_unit, h_unit=h_unit,
-        dws_array=dws_array, dhs_array=dhs_array),
-      tt, name='transition');
+    lib.plot_texts(vTu_texts, tt, 'transition');
+    lib.plot_lines(vTu_lines, tt, 'bracket');
   }
 
+  let dot_product_texts_at_bot = [
+      {text: uTv.toFixed(3),
+       x: last_col_coord,
+       y: last_row_coord + 0.05 * h_unit,
+       text_color: 0, text_opacity: 1,
+       font_size: 14, tt: 0, key: 'text_at_bot'}
+  ];
 
-  let uTv_texts = [
+  lib.plot_texts(dot_product_texts_at_bot, tt, 'text_at_bot');
+
+
+  let dot_product_texts = [
       {text:'u\u1d40v = '.concat(uTv.toFixed(3)),
        x: (v.x * uTv/2).toFixed(2),
        y: (v.y * uTv/2).toFixed(2),
        text_color: 0, text_opacity: 1,
-       font_size: 15, tt: 0, key: 'uTv_texts'}
+       font_size: 15, tt: 0, key: 'texts_in_blue_line'}
   ];
 
-  lib.plot_texts(uTv_texts, tt, name='uTv_texts');
-
+  lib.plot_texts(dot_product_texts, tt, 'texts_in_blue_line');
+  // let [lines_k, texts_k] = text_matrix_to_list([[1],[2]], [1, 1], 14, [['x'],['y']], 3);
+  // lib.plot_texts(texts_k, tt, 'test');
+  // lib.plot_lines(lines_k, tt, 'test');
   lib.sort();
 }
 
+
+// why isn't it a function??
 
 function init(tt){
   axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
@@ -231,8 +319,10 @@ function init(tt){
 
   scatter = [u, v];
 
-  expectedScatter = lib.rotate_points(scatter, startAngleX, startAngleY, startAngleZ);
-  expectedAxis = lib.rotate_lines(axis, startAngleX, startAngleY, startAngleZ);
+  expectedScatter = lib.rotate_points(
+      scatter, startAngleX, startAngleY, startAngleZ);
+  expectedAxis = lib.rotate_lines(
+      axis, startAngleX, startAngleY, startAngleZ);
 
   plot(expectedScatter, 
        expectedAxis, 
@@ -268,7 +358,6 @@ function dragged(){
        expectedAxis, 
        0);
 };
-
 
 function dragged_point_only(){
   if (!drag_on_left){
@@ -326,33 +415,73 @@ function set_position(pos){
 
 
 function swap(u, v){
-  let uTv = lib.dot_product(u, v),
-      texts_for_table = texts_to_show(u, v),
-      uTv_text_table = texts_for_table[0],
-      vTu_text_table = texts_for_table[1];
+  let uTv = lib.dot_product(u, v);
+      
+
+  let [lines_vector_u, texts_vector_u] = text_matrix_to_list(
+          [[u.coord.x.toFixed(2), u.coord.y.toFixed(2)]],
+          [last_col_coord, start_coord_y],
+          14, [['xu', 'yu']], 5
+          ),
+      [lines_vector_v, texts_vector_v] = text_matrix_to_list(
+          [[v.coord.x.toFixed(2), v.coord.y.toFixed(2)]],
+          [last_col_coord, start_coord_y],
+          14, [['xv', 'yv']], 15
+          ),
+      [lines_uT, texts_uT] = text_matrix_to_list(
+          [[u.coord.x.toFixed(2)], [u.coord.y.toFixed(2)]],
+          [start_coord_x, last_row_coord],
+          14, [['xu'], ['yu']], 5
+          ),
+      [lines_vT, texts_vT] = text_matrix_to_list(
+          [[v.coord.x.toFixed(2)], [v.coord.y.toFixed(2)]],
+          [start_coord_x, last_row_coord],
+          14, [['xv'], ['yv']], 15
+          ),
+      
+      uTv_texts = [],
+      uTv_lines = [],
+      vTu_texts = [],
+      vTu_lines = [];
+
+  let zv_text = {text: v.coord.z.toFixed(2), x: last_col_coord,
+                 y: start_coord_y + 0.525 * h_unit, text_opacity: 0, key: 'zv'
+                },
+      zu_text =  {text: u.coord.z.toFixed(2), x: last_col_coord,
+                  y: start_coord_y + 0.525 * h_unit, text_opacity: 0, key: 'zu'
+                },
+      zvT_text = {text: v.coord.z.toFixed(2), x: start_coord_x + 0.6 * w_unit,
+                  y: last_row_coord, text_opacity: 0, key: 'zv'
+                },
+      zuT_text = {text: u.coord.z.toFixed(2), x: start_coord_x + 0.6 * w_unit,
+                  y: last_row_coord, text_opacity: 0, key: 'zu'
+                };
+
+  uTv_texts.push(...texts_uT);
+  uTv_texts.push(...texts_vector_v);
+  uTv_texts.push(uT_name, v_name, zuT_text, zv_text);
+  uTv_lines.push(...lines_uT);
+  uTv_lines.push(...lines_vector_v);
+  
+  vTu_texts.push(...texts_vT);
+  vTu_texts.push(...texts_vector_u);
+  vTu_texts.push(vT_name, u_name, zvT_text, zu_text);
+  vTu_lines.push(...lines_vT);
+  vTu_lines.push(...lines_vector_u);
+  
 
   if (position_state == 0) {
-    lib.plot_texts(lib.text_table_to_list(
-        vTu_text_table,
-        start_coord_x=start_coord_x,
-        start_coord_y=start_coord_y,
-        w_unit=w_unit, h_unit=h_unit,
-        dws_array=dws_array, dhs_array=dhs_array),
-      tt=1000, name='transition');
+    lib.plot_texts(vTu_texts, 1000, 'transition');
+    lib.plot_lines(vTu_lines, 1000, 'bracket');
+    
     position_state = 1;
-
   } else {
-    lib.plot_texts(lib.text_table_to_list(
-        uTv_text_table,
-        start_coord_x=start_coord_x,
-        start_coord_y=start_coord_y,
-        w_unit=w_unit, h_unit=h_unit,
-        dws_array=dws_array, dhs_array=dhs_array),
-      tt=1000, name='transition');
+    lib.plot_texts(uTv_texts, 1000, 'transition');
+    lib.plot_lines(uTv_lines, 1000, 'bracket');
+
     position_state = 0;
   }
-
-};
+}
 
 
 return {
@@ -361,7 +490,6 @@ return {
   get_position: function(){return get_position();},
   set_position: function(pos){set_position(pos);},
   swap: function(){swap(scatter[0], scatter[1]);}
-};
-
+}
 
 }) ();
