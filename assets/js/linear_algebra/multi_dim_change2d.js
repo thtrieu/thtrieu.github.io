@@ -35,7 +35,7 @@ function select_svg(svg_id) {
 }
 
 
-function plot_project_u_onto_v(u, v, tt, name, visible, show_proj) {
+function plot_project_u_onto_v(u, v, tt, name, visible) {
   let lines = [];
   v.centroid_z = 1000;
   let uTv = lib.dot_product(u, v);
@@ -76,22 +76,22 @@ function plot_project_u_onto_v(u, v, tt, name, visible, show_proj) {
 }
 
 
-function hide(objs) {
+function hide(objs, op=0.0) {
   let r = [];
   objs.forEach(function(d) {
     let d_ = Object.assign({}, d);
-    d_.opacity = 0.0;
-    d_.text_opacity = 0.0;
+    d_.opacity = op;
+    d_.text_opacity = op;
     r.push(d_);
   })
   return r;
 }
 
 
-function plot(scatter, axis, axis2, tt, show_proj){
+function plot(scatter, axis, axis2, tt){
   let axis_cp = axis;
   if (show_proj) {
-    axis_cp = hide(axis_cp);
+    axis_cp = hide(axis, 0.2);
   }
   lib.plot_lines(axis_cp, tt, 'axis');
 
@@ -110,6 +110,9 @@ function plot(scatter, axis, axis2, tt, show_proj){
   
   let lines = [];
   points.forEach(function(d, i){
+    if (i == 0) {
+      return;
+    }
     lines.push(...lib.create_segments(d));
   });
   if (!show_proj) {
@@ -119,9 +122,9 @@ function plot(scatter, axis, axis2, tt, show_proj){
 
   let [u, v1, v2, v3] = points;
 
-  plot_project_u_onto_v(u, v1, tt, 'v1', true, show_proj);
-  plot_project_u_onto_v(u, v2, tt, 'v2', true, show_proj);
-  plot_project_u_onto_v(u, v3, tt, 'v3', false, show_proj);
+  plot_project_u_onto_v(u, v1, tt, 'v1', true);
+  plot_project_u_onto_v(u, v2, tt, 'v2', true);
+  plot_project_u_onto_v(u, v3, tt, 'v3', false);
 
   points.forEach(function(p, i){
     if (i == 0) {
@@ -143,11 +146,12 @@ function plot(scatter, axis, axis2, tt, show_proj){
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
 
-  plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj);
+  plot_v_perspective(u, v1, v2, v3, axis2, tt);
+  lib.sort();
 }
 
 
-function plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj) {
+function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
   axis2.forEach(function(d, i) {
     let axis_ord = Math.floor(i / (axis_len/unit));
     let v = [v1, v2, v3][axis_ord];
@@ -205,8 +209,11 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj) {
       uz_line = [{x:0, y:0, z:0}, components[2]];
 
   ux_line.color = v1.color-1;
+  ux_line.centroid_z = 1000;
   uy_line.color = v2.color-1;
+  uy_line.centroid_z = 1000;
   uz_line.color = v3.color-1;
+  uz_line.centroid_z = 1000;
   uz_line.opacity = 0.0;
 
   let u_lines = [ux_line, uy_line, uz_line];
@@ -280,8 +287,7 @@ function init(tt){
   plot(scatter,
        axis,
        axis2, 
-       tt,
-       show_proj);
+       tt);
 }
 
 
@@ -309,13 +315,14 @@ function dragged(){
 
 function dragged_right(){
   angle_z = lib.get_drag_angle_2d(origin2);
+  expectedScatter = scatter;
+  expectedAxis = axis;
   expectedAxis2 = lib.rotate_lines(axis2, 0, 0, angle_z);
   
-  plot(scatter,
-       axis, 
+  plot(expectedScatter,
+       expectedAxis, 
        expectedAxis2, 
-       0,
-       show_proj);
+       0);
 }
 
 
@@ -324,12 +331,12 @@ function dragged_left(){
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
   expectedAxis = lib.rotate_lines(axis, 0, 0, angle_z);
+  expectedAxis2 = axis2;
   
   plot(expectedScatter, 
        expectedAxis,
-       axis2, 
-       0,
-       show_proj);
+       expectedAxis2, 
+       0);
 }
 
 
@@ -342,12 +349,12 @@ function dragged_v_only(){
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
   expectedScatter[0] = scatter[0];
   expectedAxis = axis;
+  expectedAxis2 = axis2;
   
   plot(expectedScatter, 
        expectedAxis,
-       axis2, 
-       0,
-       show_proj);
+       expectedAxis2, 
+       0);
 }
 
 
@@ -371,12 +378,12 @@ function dragged_point(d, i){
       }
   });
   expectedAxis = axis;
+  expectedAxis2 = axis2;
 
   plot(expectedScatter, 
        expectedAxis,
-       axis2, 
-       0,
-       show_proj);
+       expectedAxis2, 
+       0);
 }
 
 
@@ -398,8 +405,7 @@ return {
     plot(scatter, 
          axis,
          axis2, 
-         500,
-         show_proj);
+         1000);
   },
 };
 

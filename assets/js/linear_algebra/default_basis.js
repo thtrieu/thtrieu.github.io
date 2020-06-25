@@ -1,4 +1,4 @@
-let multi_dim_change = (function() {
+let default_basis = (function() {
 
 let origin = [150, 140], 
   origin2 = [450, 140],
@@ -168,7 +168,7 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
   ]
   u = lib.add(components);
   u.color = 4;
-  u.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082, u\u1d40v\u2083]';
+  u.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082, u\u1d40v\u2083] = u';
   lib.plot_points([u], tt, null, null, null, 'u2', origin2);
 
   basis.x.color = v1.color;
@@ -251,21 +251,21 @@ function init(tt){
       color: 4
   },
       v1 = {
-      x: Math.sqrt(13/14)*1.5,
-      y: Math.sqrt(.5/14)*1.5, 
-      z: Math.sqrt(.5/14)*1.5, 
+      x: 1.0,
+      y: 0.,
+      z: 0., 
       color: 3,
   },
       v2 = {
-      x: -Math.sqrt(0.0)*1.5, 
-      y: -Math.sqrt(1.0)*1.5, 
-      z: -Math.sqrt(0.0)*1.5, 
+      x: 0., 
+      y: 1., 
+      z: 0., 
       color: 19,
   },
       v3 = {
-      x: Math.sqrt(0.5/14)*1.5, 
-      y: Math.sqrt(0.5/14)*1.5,  
-      z: Math.sqrt(13/14)*1.5,  
+      x: 0., 
+      y: 0.,  
+      z: 1.,  
       color: 9,
   };
 
@@ -331,29 +331,11 @@ function dragged_left(){
 }
 
 
-function dragged_v_only(){
-  if (!drag_on_left) {
-    return;
-  }
-  let [angle_x, angle_y] = lib.get_drag_angles();
-
-  expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
-  expectedScatter[0] = scatter[0];
-  expectedAxis = axis;
-  
-  plot(expectedScatter,
-       expectedAxis, 
-       axis2, 
-       0);
-}
-
-
 function dragged_point(d, i){
   if (!drag_on_left) {
     return;
   }
   if (i > 0) {
-    dragged_v_only();
     return;
   }
 

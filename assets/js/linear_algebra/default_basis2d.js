@@ -1,16 +1,16 @@
-let multi_dim_change = (function() {
+let default_basis2d = (function() {
 
 let origin = [150, 140], 
   origin2 = [450, 140],
   scale = 60, 
-  scatter = [], 
-  axis = [],
-  expectedAxis = [],
+  scatter = [],
+  axis = [], 
   axis2 = [],
+  expectedAxis = [],
   expectedAxis2 = [],
-  startAngleX = Math.PI/8 * 2.65,
-  startAngleY = -Math.PI/8,
-  startAngleZ = Math.PI/8 * 0.6,
+  startAngleX = Math.PI,
+  startAngleY = 0.,
+  startAngleZ = 0.,
   axis_len = 2,
   unit = axis_len/10,
   svg = null,
@@ -25,7 +25,7 @@ function select_svg(svg_id) {
     svg,
     origin, 
     scale,
-    is_2d=false);
+    is_2d=true);
 
   svg = svg.call(d3.drag()
            .on('drag', dragged)
@@ -35,13 +35,14 @@ function select_svg(svg_id) {
 }
 
 
-function plot_project_u_onto_v(u, v, tt, name, visible=true) {
+function plot_project_u_onto_v(u, v, tt, name, visible) {
   let lines = [];
-  let uTv = lib.dot_product(u, v)/lib.norm2(v);
+  v.centroid_z = 1000;
+  let uTv = lib.dot_product(u, v);
   let uTvv = {
       x: v.x * uTv,
       y: v.y * uTv,
-      z: v.z * uTv,
+      z: 0,
       color: v.color-1,
       tt: true
   }
@@ -50,8 +51,6 @@ function plot_project_u_onto_v(u, v, tt, name, visible=true) {
       {x: 0, y: 0, z: 0},
       uTvv
   ];
-  uTvv_line.text_color = 0;
-  uTvv_line.font_size = 15;
   uTvv_line.stroke_width = 2.0
   uTvv_line.centroid_z = 1000;
   if (!visible) {
@@ -92,13 +91,21 @@ function hide(objs, op=0.0) {
 function plot(scatter, axis, axis2, tt){
   let axis_cp = axis;
   if (show_proj) {
-    axis_cp = hide(axis_cp, 0.2);
+    axis_cp = hide(axis, 0.2);
   }
   lib.plot_lines(axis_cp, tt, 'axis');
 
   let points = [];
   scatter.forEach(function(d){
     points.push(Object.assign({}, d));
+  });
+
+  points.push({
+    x: 0,
+    y: 0,
+    z: 1,
+    opacity: 0,
+    color: 9
   });
   
   let lines = [];
@@ -117,7 +124,7 @@ function plot(scatter, axis, axis2, tt){
 
   plot_project_u_onto_v(u, v1, tt, 'v1', true);
   plot_project_u_onto_v(u, v2, tt, 'v2', true);
-  plot_project_u_onto_v(u, v3, tt, 'v3', true);
+  plot_project_u_onto_v(u, v3, tt, 'v3', false);
 
   points.forEach(function(p, i){
     if (i == 0) {
@@ -128,12 +135,17 @@ function plot(scatter, axis, axis2, tt){
       p.text = 'v\u2082';
     } else if (i == 3) {
       p.text = 'v\u2083';
+      p.text_opacity = 0.0;
     }
   })
+
+  // lib.plot_lines(axis, tt);
+
   lib.plot_points(points, tt,
                   drag_point_fn=dragged_point,
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
+
   plot_v_perspective(u, v1, v2, v3, axis2, tt);
   lib.sort();
 }
@@ -149,7 +161,6 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
       d.color = 'grey';
     }
   });
-
   lib.plot_lines(axis2, tt, 'axis2', null, null, null, origin2);
   basis = {
     x: lib.normalize(axis2[axis_len/unit * 0][1]),
@@ -159,16 +170,17 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
 
   let uTv1 = lib.dot_product(u, v1) / lib.norm2(v1),
       uTv2 = lib.dot_product(u, v2) / lib.norm2(v2),
-      uTv3 = lib.dot_product(u, v3) / lib.norm2(v3);
+      uTv3 = 1.0;
 
   let components = [
       lib.times(basis.x, uTv1),
       lib.times(basis.y, uTv2),
-      lib.times(basis.z, uTv3),
   ]
   u = lib.add(components);
-  u.color = 4;
-  u.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082, u\u1d40v\u2083]';
+  components.push(lib.times(basis.z, uTv3))
+
+  u.color = 4
+  u.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082] = u';
   lib.plot_points([u], tt, null, null, null, 'u2', origin2);
 
   basis.x.color = v1.color;
@@ -182,6 +194,7 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
   basis.z.color = v3.color;
   basis.z.r = 3;
   basis.z.text = 1;
+  basis.z.opacity = 0;
 
   let unit_marks = [basis.x, basis.y, basis.z] 
   if (!show_proj) {
@@ -201,6 +214,7 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
   uy_line.centroid_z = 1000;
   uz_line.color = v3.color-1;
   uz_line.centroid_z = 1000;
+  uz_line.opacity = 0.0;
 
   let u_lines = [ux_line, uy_line, uz_line];
   if (!show_proj) {
@@ -211,7 +225,7 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
       tt, 'u_lines', null, null, null, origin2);
 
   let x_dash_lines = lib.create_dash_segments(
-      lib.strip(u), lib.strip(components[0]), 0.05);
+      lib.strip(u), lib.strip(components[0]));
   if (!show_proj) {
     x_dash_lines = hide(x_dash_lines);
   }
@@ -220,7 +234,7 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
       tt, 'x_dash_lines', null, null, null, origin2);
 
   let y_dash_lines = lib.create_dash_segments(
-      lib.strip(u), lib.strip(components[1]), 0.05);
+      lib.strip(u), lib.strip(components[1]));
   if (!show_proj) {
     y_dash_lines = hide(y_dash_lines);
   }
@@ -229,10 +243,8 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
       tt, 'y_dash_lines', null, null, null, origin2);
 
   let z_dash_lines = lib.create_dash_segments(
-          lib.strip(u), lib.strip(components[2]), 0.05);
-  if (!show_proj) {
-    z_dash_lines = hide(z_dash_lines);
-  }
+          lib.strip(u), lib.strip(components[2]));
+  z_dash_lines = hide(z_dash_lines);
   lib.plot_lines(
       z_dash_lines,
       tt, 'z_dash_lines', null, null, null, origin2);
@@ -244,39 +256,33 @@ function init(tt){
   axis2 = lib.init_float_axis(axis_len=axis_len, unit=unit);
   scatter = [];
 
-  let u = {
-      x: 1,
-      y: 1, 
-      z: 0.8,
-      color: 4
-  },
-      v1 = {
-      x: Math.sqrt(13/14)*1.5,
-      y: Math.sqrt(.5/14)*1.5, 
-      z: Math.sqrt(.5/14)*1.5, 
-      color: 3,
-  },
-      v2 = {
-      x: -Math.sqrt(0.0)*1.5, 
-      y: -Math.sqrt(1.0)*1.5, 
-      z: -Math.sqrt(0.0)*1.5, 
-      color: 19,
-  },
-      v3 = {
-      x: Math.sqrt(0.5/14)*1.5, 
-      y: Math.sqrt(0.5/14)*1.5,  
-      z: Math.sqrt(13/14)*1.5,  
-      color: 9,
-  };
+  scatter.push({
+    x: -1.0,
+    y: -4.0/3, 
+    z: 0.,
+    color: 4,
+  });
 
-  scatter = [u, v1, v2, v3];
+  scatter.push({
+    x: 1.,
+    y: 0., 
+    z: 0.,
+    color: 3,
+  })
+
+  scatter.push({
+    x: 0.,
+    y: 1., 
+    z: 0.,
+    color: 19,
+  })
 
 
   alpha = startAngleX;
   beta = startAngleY;
 
   scatter = lib.rotate_points(scatter, alpha, beta, startAngleZ);
-  axis = lib.rotate_lines(axis2, alpha, beta, startAngleZ);
+  axis = lib.rotate_lines(axis, alpha, beta, startAngleZ);
   axis2 = lib.rotate_lines(axis2, alpha, beta, startAngleZ);
   plot(scatter,
        axis,
@@ -291,10 +297,10 @@ let drag_on_left = true;
 function drag_start(){
   if (lib.get_mouse_position().x < 300) {
     drag_on_left = true;
-    lib.drag_start();
+    lib.drag_start2d();
   } else {
     drag_on_left = false;
-    lib.drag_start(origin2);
+    lib.drag_start2d(origin2);
   }
 }
 
@@ -308,42 +314,28 @@ function dragged(){
 
 
 function dragged_right(){
-  let [angle_x, angle_y] = lib.get_drag_angles(origin2);
-  expectedAxis2 = lib.rotate_lines(axis2, angle_x, angle_y);
+  angle_z = lib.get_drag_angle_2d(origin2);
+  expectedScatter = scatter;
+  expectedAxis = axis;
+  expectedAxis2 = lib.rotate_lines(axis2, 0, 0, angle_z);
   
-  plot(scatter, 
-       axis,
+  plot(expectedScatter,
+       expectedAxis, 
        expectedAxis2, 
        0);
 }
 
 
 function dragged_left(){
-  let [angle_x, angle_y] = lib.get_drag_angles();
+  angle_z = lib.get_drag_angle_2d();
 
-  expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
-  expectedAxis = lib.rotate_lines(axis, angle_x, angle_y);
+  expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
+  expectedAxis = lib.rotate_lines(axis, 0, 0, angle_z);
+  expectedAxis2 = axis2;
   
   plot(expectedScatter, 
        expectedAxis,
-       axis2, 
-       0);
-}
-
-
-function dragged_v_only(){
-  if (!drag_on_left) {
-    return;
-  }
-  let [angle_x, angle_y] = lib.get_drag_angles();
-
-  expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
-  expectedScatter[0] = scatter[0];
-  expectedAxis = axis;
-  
-  plot(expectedScatter,
-       expectedAxis, 
-       axis2, 
+       expectedAxis2, 
        0);
 }
 
@@ -353,25 +345,25 @@ function dragged_point(d, i){
     return;
   }
   if (i > 0) {
-    dragged_v_only();
     return;
   }
 
-  let [angle_x, angle_y] = lib.get_drag_angles();
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
-        r = lib.rotate_point(d, angle_x, angle_y);
+        let r = lib.update_point_position_from_mouse(d);
+        r.x = Math.min(r.x, (300-origin[0])/scale);
         expectedScatter.push(r);
       } else {
         expectedScatter.push(d);
       }
   });
   expectedAxis = axis;
+  expectedAxis2 = axis2;
 
-  plot(expectedScatter,
-       expectedAxis, 
-       axis2, 
+  plot(expectedScatter, 
+       expectedAxis,
+       expectedAxis2, 
        0);
 }
 
