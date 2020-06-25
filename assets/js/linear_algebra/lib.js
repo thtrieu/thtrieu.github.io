@@ -778,23 +778,20 @@ function text_table_to_list(texts,
 }
 function text_matrix_to_list(coord_texts, coord,
                              size, brack_key) {
-    // print vector u: vec_texts = ['u =', 'v =', ...], coord_texts = [[u.x, u.y], [v.x, v.y],
-                  // coord = [x, y] coord to start printing, size = font_size;
+    // print vector u, v: vec_texts = ['u =', 'v =', ...], coord_texts = [[u.x, u.y], [v.x, v.y],
+                    // coord = [x, y] coord to start printing, size = font_size;
 
   let size_of_space = coord_texts.length,
       numb_of_vector =  coord_texts[0].length,
       matrix_w = (0.02 + 0.60 * numb_of_vector +
                   0.02 * (numb_of_vector - 1) * size/14),
-                // 0.02 from edges * 2; 0.02 between numbers, number: 0.60 
       matrix_h = (0.06 + 0.2 * size_of_space +
                   0.2 * (size_of_space - 1)) * size/14,
-                // 0.03 from edges * 2; 0.1 between numbers, number: 0.18 
       cols_list = [],
       rows_list = [],
       texts_list = [],
       lines_list = [];
-   
-  // text
+  // build texts list:
   if (size_of_space > 1){
     for (i = 1; i < size_of_space; i++) {
       rows_list.push(0.4 * size/14);
@@ -811,6 +808,7 @@ function text_matrix_to_list(coord_texts, coord,
       coord_texts, coord[0], (coord[1] - matrix_h/2 + 0.21 * size/14),
        1, 1, cols_list, rows_list);
 
+  // build lines list:
   lines_list = [
       [
         {x: coord[0], y: coord[1] - matrix_h/2, z: 0},

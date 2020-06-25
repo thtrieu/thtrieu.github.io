@@ -131,14 +131,14 @@ function plot(scatter, axis, tt){
           [start_coord_x, start_coord_y], 14, 5
           ),
       [lines_plus, texts_plus] = lib.text_matrix_to_list(
-          [[{text:'\uFE62', text_color: 0, key: 'fplus'}],
-           [{text:'\uFE62', text_color: 0, key: 'splus'}]], 
+          [[{text: '\uFE62', text_color: 0, key: 'fplus'}],
+           [{text: '\uFE62', text_color: 0, key: 'splus'}]], 
           [start_coord_x - 0.3 * w_unit, start_coord_y], 14, 5
           ),
       [lines_multi, texts_multi] = lib.text_matrix_to_list(
-          [[{text:'\u00D7', text_color: 0, key: 'fmulti'}],
-           [{text:'\u00D7', text_color: 0, key: 'smulti'}],
-           [{text:'\u00D7', text_color: 0, key: 'tmulti'}]], 
+          [[{text: '\u00D7', text_color: 0, key: 'fmulti'}],
+           [{text: '\u00D7', text_color: 0, key: 'smulti'}],
+           [{text: '\u00D7', text_color: 0, key: 'tmulti'}]], 
           [start_coord_x + 0.6 * w_unit, start_coord_y], 14, 5
           ),
       [lines_v, texts_v] =  lib.text_matrix_to_list(
@@ -148,11 +148,7 @@ function plot(scatter, axis, tt){
           [start_coord_x + 0.9 * w_unit, start_coord_y], 14, 15
           );
 
-  let uTv_texts = [{text: 'u\u1d40v =', x: start_coord_x - 0.6 * w_unit,
-                    y: start_coord_y + 0.9 * h_unit, text_color: 0, key: 'uTv_text'},
-                   {text: uTv.toFixed(3), x: start_coord_x + 0.4 * w_unit,
-                    y: start_coord_y + 0.9, text_color: 0, key: 'uTv_numb'},],
-      z_texts = [{text: u.coord.z.toFixed(2), x: start_coord_x,
+  let z_texts = [{text: u.coord.z.toFixed(2), x: start_coord_x,
                   y: start_coord_y + 0.3 * h_unit, key: 'zu', text_opacity: 0},
                  {text: v.coord.z.toFixed(2), x: start_coord_x + 0.9 * w_unit,
                   y: start_coord_y + 0.3 * h_unit, key: 'zv', text_opacity: 0}],
@@ -160,7 +156,11 @@ function plot(scatter, axis, tt){
                    y: start_coord_y + 0.65 * h_unit, z: 0},
                   {x: start_coord_x + 1.55 * w_unit,
                    y: start_coord_y + 0.65 * h_unit, z: 0,
-                   color: 0}];
+                   color: 0}],
+      uTv_texts = [{text: 'u\u1d40v =', x: start_coord_x - 0.6 * w_unit,
+                    y: start_coord_y + 0.9 * h_unit, text_color: 0, key: 'uTv_text'},
+                   {text: uTv.toFixed(3), x: start_coord_x + 0.4 * w_unit,
+                    y: start_coord_y + 0.9, text_color: 0, key: 'uTv_numb'},];
   
   big_line.stroke_width = 0.7;
 
@@ -180,8 +180,6 @@ function plot(scatter, axis, tt){
 
   lib.plot_texts(texts_to_show, tt, 'texts');
   lib.plot_lines(lines_to_show, tt, 'lines');
-
-  
   lib.sort();
 }
 
@@ -212,11 +210,22 @@ function init(tt){
   drag_end();
 }
 
+let drag_on_left = true; 
+
 function drag_start(){
   lib.drag_start();
+  if (lib.get_mouse_position().x < 300) {
+    drag_on_left = true;
+  } else {
+    drag_on_left = false;
+  }
 }
 
 function dragged(){
+  if (!drag_on_left) {
+    return;
+  }
+
   [angle_x, angle_y] = lib.get_drag_angles();
 
   expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
@@ -228,6 +237,10 @@ function dragged(){
 }
 
 function dragged_point_only(){
+  if (!drag_on_left) {
+    return;
+  }
+
   [angle_x, angle_y] = lib.get_drag_angles();
 
   expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
@@ -238,6 +251,10 @@ function dragged_point_only(){
 }
 
 function dragged_point(i){
+  if (!drag_on_left) {
+    return;
+  }
+
   [angle_x, angle_y] = lib.get_drag_angles();
 
   expectedScatter = [];
@@ -255,6 +272,10 @@ function dragged_point(i){
 }
 
 function drag_end(){
+  if (!drag_on_left) {
+    return;
+  }
+  
   scatter = expectedScatter;
   axis = expectedAxis;
 }
