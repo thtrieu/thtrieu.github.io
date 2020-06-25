@@ -276,7 +276,7 @@ function init(tt){
   beta = startAngleY;
 
   scatter = lib.rotate_points(scatter, alpha, beta, startAngleZ);
-  axis = lib.rotate_lines(axis2, alpha, beta, startAngleZ);
+  axis = lib.rotate_lines(axis, alpha, beta, startAngleZ);
   axis2 = lib.rotate_lines(axis2, alpha, beta, startAngleZ);
   plot(scatter,
        axis,
