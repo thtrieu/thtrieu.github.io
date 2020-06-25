@@ -91,7 +91,7 @@ function hide(objs, op=0.0) {
 function plot(scatter, axis, axis2, tt, show_proj){
   let axis_cp = axis;
   if (show_proj) {
-    axis_cp = hide(axis, 0.3);
+    axis_cp = hide(axis, 0.2);
   }
   lib.plot_lines(axis_cp, tt, 'axis');
 
@@ -147,6 +147,7 @@ function plot(scatter, axis, axis2, tt, show_proj){
                   drag_end_fn=drag_end);
 
   plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj);
+  lib.sort();
 }
 
 
@@ -208,8 +209,11 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj) {
       uz_line = [{x:0, y:0, z:0}, components[2]];
 
   ux_line.color = v1.color-1;
+  ux_line.centroid_z = 1000;
   uy_line.color = v2.color-1;
+  uy_line.centroid_z = 1000;
   uz_line.color = v3.color-1;
+  uz_line.centroid_z = 1000;
   uz_line.opacity = 0.0;
 
   let u_lines = [ux_line, uy_line, uz_line];
@@ -312,10 +316,12 @@ function dragged(){
 
 function dragged_right(){
   angle_z = lib.get_drag_angle_2d(origin2);
+  expectedScatter = scatter;
+  expectedAxis = axis;
   expectedAxis2 = lib.rotate_lines(axis2, 0, 0, angle_z);
   
-  plot(scatter,
-       axis, 
+  plot(expectedScatter,
+       expectedAxis, 
        expectedAxis2, 
        0,
        show_proj);
@@ -327,10 +333,11 @@ function dragged_left(){
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
   expectedAxis = lib.rotate_lines(axis, 0, 0, angle_z);
+  expectedAxis2 = axis2;
   
   plot(expectedScatter, 
        expectedAxis,
-       axis2, 
+       expectedAxis2, 
        0,
        show_proj);
 }
@@ -345,10 +352,11 @@ function dragged_v_only(){
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
   expectedScatter[0] = scatter[0];
   expectedAxis = axis;
+  expectedAxis2 = axis2;
   
   plot(expectedScatter, 
        expectedAxis,
-       axis2, 
+       expectedAxis2, 
        0,
        show_proj);
 }
@@ -374,10 +382,11 @@ function dragged_point(d, i){
       }
   });
   expectedAxis = axis;
+  expectedAxis2 = axis2;
 
   plot(expectedScatter, 
        expectedAxis,
-       axis2, 
+       expectedAxis2, 
        0,
        show_proj);
 }

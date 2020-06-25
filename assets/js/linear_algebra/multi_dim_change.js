@@ -37,7 +37,6 @@ function select_svg(svg_id) {
 
 function plot_project_u_onto_v(u, v, tt, name, visible=true) {
   let lines = [];
-  v.centroid_z = 1000;
   let uTv = lib.dot_product(u, v)/lib.norm2(v);
   let uTvv = {
       x: v.x * uTv,
@@ -93,7 +92,7 @@ function hide(objs, op=0.0) {
 function plot(scatter, axis, axis2, tt, show_proj){
   let axis_cp = axis;
   if (show_proj) {
-    axis_cp = hide(axis_cp, 0.3);
+    axis_cp = hide(axis_cp, 0.2);
   }
   lib.plot_lines(axis_cp, tt, 'axis');
 
@@ -131,15 +130,12 @@ function plot(scatter, axis, axis2, tt, show_proj){
       p.text = 'v\u2083';
     }
   })
-
-  // lib.plot_lines(axis, tt);
-
   lib.plot_points(points, tt,
                   drag_point_fn=dragged_point,
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
-
   plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj);
+  lib.sort();
 }
 
 
@@ -170,10 +166,10 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj) {
       lib.times(basis.y, uTv2),
       lib.times(basis.z, uTv3),
   ]
-  u = lib.add(components);
-  u.color = 4
-  u.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082, u\u1d40v\u2083]';
-  lib.plot_points([u], tt, null, null, null, 'u2', origin2);
+  let u_ = lib.add(components);
+  u_.color = 4
+  u_.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082, u\u1d40v\u2083]';
+  lib.plot_points([u_], tt, null, null, null, 'u2', origin2);
 
   basis.x.color = v1.color;
   basis.x.r = 3;
@@ -186,7 +182,6 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj) {
   basis.z.color = v3.color;
   basis.z.r = 3;
   basis.z.text = 1;
-  basis.z.opacity = 0;
 
   let unit_marks = [basis.x, basis.y, basis.z] 
   if (!show_proj) {
@@ -213,7 +208,7 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj) {
       tt, 'u_lines', null, null, null, origin2);
 
   let x_dash_lines = lib.create_dash_segments(
-      lib.strip(u), lib.strip(components[0]));
+      lib.strip(u), lib.strip(components[0]), 0.05);
   if (!show_proj) {
     x_dash_lines = hide(x_dash_lines);
   }
@@ -222,7 +217,7 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj) {
       tt, 'x_dash_lines', null, null, null, origin2);
 
   let y_dash_lines = lib.create_dash_segments(
-      lib.strip(u), lib.strip(components[1]));
+      lib.strip(u), lib.strip(components[1]), 0.05);
   if (!show_proj) {
     y_dash_lines = hide(y_dash_lines);
   }
@@ -231,7 +226,7 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj) {
       tt, 'y_dash_lines', null, null, null, origin2);
 
   let z_dash_lines = lib.create_dash_segments(
-          lib.strip(u), lib.strip(components[2]));
+          lib.strip(u), lib.strip(components[2]), 0.05);
   if (!show_proj) {
     z_dash_lines = hide(z_dash_lines);
   }
