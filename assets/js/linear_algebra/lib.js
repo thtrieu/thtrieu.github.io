@@ -786,8 +786,8 @@ function text_matrix_to_list(coord_texts, coord,
       matrix_w = (0.02 + 0.60 * numb_of_vector +
                   0.02 * (numb_of_vector - 1) * size/14),
                 // 0.02 from edges * 2; 0.02 between numbers, number: 0.60 
-      matrix_h = (0.06 + 0.20 * size_of_space +
-                  0.1 * (size_of_space - 1)) * size/14,
+      matrix_h = (0.06 + 0.2 * size_of_space +
+                  0.2 * (size_of_space - 1)) * size/14,
                 // 0.03 from edges * 2; 0.1 between numbers, number: 0.18 
       cols_list = [],
       rows_list = [],
@@ -797,7 +797,7 @@ function text_matrix_to_list(coord_texts, coord,
   // text
   if (size_of_space > 1){
     for (i = 1; i < size_of_space; i++) {
-      rows_list.push(0.3 * size/14);
+      rows_list.push(0.4 * size/14);
     }
   };
   
@@ -843,7 +843,6 @@ function text_matrix_to_list(coord_texts, coord,
     lines_list[i].key = 'bracket'.concat(brack_key - i);
     lines_list[i].stroke_width = size/14;
   }
-  console.log(lines_list);
   
   return [lines_list, texts_list];
 };
