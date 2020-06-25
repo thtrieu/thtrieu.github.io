@@ -560,9 +560,41 @@ So now, using $v_1, v_2, v_3$ and the dot product, we achieved the multi-dimensi
 
 Absolutely. Setting aside what we really mean by "correlation", this set of vectors needs to be pair-wise perpendicular for the views to not correlate. For example, -->
 
-*Interesting. This is like taking the 3 number lines that represents the world view of $v_1, v_2,$ and $v_3$ individually, placing them perpendicular to each other, so we get the coordinate axes of a new space. In this new space lives the new vector $u'$.*
+*Interesting. This is like taking the 3 number lines that represents the world view of $v_1, v_2,$ and $v_3$ and placing them perpendicular to each other, so we get the coordinate axes of a new space. In this new space lives the new vector $u'$.*
 
 Exactly! Let's take a fun example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
+
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_default_basis'> <div class='slider'></div></label>
+  <br/>
+<svg width="630" height="280" id="svg_default_basis"></svg>
+<br/> 
+<label class='switch show'> <input type='checkbox' id='show_hide_proj_basis'> <div class='slider show'></div></label> projection details.
+<br/>
+Try dragging $u$, $v_1$, $v_2$, $v_3$, the whole space, or click 
+<button id='init_default_basis'>reset</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/default_basis2d.js"></script>
+<script src="/assets/js/linear_algebra/default_basis.js"></script>
+<script>
+draw_on_svg('default_basis',
+            default_basis2d,
+            default_basis);
+
+d3.selectAll('#show_hide_proj_basis')
+  .on('click', function(){
+      let show_proj = !this.checked;
+      let is_3d = d3.selectAll('#switch_default_basis').node().checked;
+      default_basis2d.set_show_proj(show_proj);
+      default_basis.set_show_proj(show_proj);
+      if (is_3d) {
+        default_basis.replot();
+      } else {
+        default_basis2d.replot();
+      }
+  });
+</script>
 
 *It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system, because they are measuring $u$ in three perpendicular directions that coincide with the three coordinate axes.*
 
