@@ -915,6 +915,7 @@ return {
   times: times,
   strip: strip,
   text_matrix_to_list: text_matrix_to_list,
+  set_ranges: set_ranges,
 }
 
 };
