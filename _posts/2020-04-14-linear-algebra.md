@@ -5,7 +5,7 @@ title: Interactive Visualizations of Linear Algebra - Part 1
 
 <script src="/assets/js/linear_algebra/lib.js"></script>
 
-Sunday morning. Quy nhon, a peaceful small town by the ocean. In a busy coffee shop, two regular coffee buddies are chatting away on fun ideas. 
+Sunday morning's breezes. Quy nhon, a peaceful small town by the ocean. In a busy coffee shop, two regular coffee buddies are chatting away on fun ideas. 
 
 *"Linear Algebra?"* - said *Italica*, a student in Design who recently acquired an appetite for pretty illustrations of Math concepts.
 
@@ -489,11 +489,11 @@ That is the spirit! Although realistically, a single number isn't the best way t
 
 Further, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Prof. Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm that runs at the heart of the search engine itself. 
 
-*Wow, exciting stuff!*
+*Wow, I would have never imagined the simple ideas we talked about so far can turn into such exciting stuff!*
 
 <center><b>4. The coordinate system</b></center>
 
-That was a very nice discussion. For now, let's get back on track to our main discussion. Reducing $u$, living in a multi-dimensional space, to a single number $u^Tv$ is useful, but we want more. What people do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
+I know right? :) For now, let's get back on track to our main discussion. Reducing $u$, living in a multi-dimensional space, to a single number $u^Tv$ is useful, but we want more. What people do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
 
 
 <center class='js'>
@@ -515,7 +515,7 @@ draw_on_svg('many_perspective',
             many_perspective);
 </script>
 
-*So we are getting many numbers at once, that's kind of cumbersome right?*
+*So we are just essentially getting many numbers at once, that's kind of cumbersome right?*
 
 It will not be. Let's say we project $u$ onto three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$. This list of numbers is itself a vector $u'$ as well:
 
@@ -560,7 +560,7 @@ So now, using $v_1, v_2, v_3$ and the dot product, we achieved the multi-dimensi
 
 Absolutely. Setting aside what we really mean by "correlation", this set of vectors needs to be pair-wise perpendicular for the views to not correlate. For example, -->
 
-*Interesting. This is like taking the 3 number lines that represents the world view of $v_1, v_2,$ and $v_3$ as the three coordinate axes of a new space.*
+*Interesting. This is like using the 3 number lines that represents the world view of $v_1, v_2,$ and $v_3$ as the three coordinate axes of the new space.*
 
 Exactly! Let's take a fun example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
 
@@ -571,7 +571,7 @@ Exactly! Let's take a fun example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and
 <br/> 
 <label class='switch show'> <input type='checkbox' id='show_hide_proj_basis'> <div class='slider show'></div></label> projection details.
 <br/>
-Try dragging $u$, $v_1$, $v_2$, $v_3$, the whole space, or click 
+Try dragging $u$, the whole space, or click 
 <button id='init_default_basis'>reset</button>.
 </center>
 
@@ -596,14 +596,63 @@ d3.selectAll('#show_hide_proj_basis')
   });
 </script>
 
-*It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system, because they are measuring $u$ in three perpendicular directions that coincide with the three coordinate axes.*
+*It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system: they are measuring $u$ in three perpendicular directions that coincide with the three coordinate axes.*
 
-Nice observation. In fact with this observation, there is no longer need for coordinate systems. Instead, think of space as being "measured" by this set of vectors through dot products.
+Very acute observation. In fact with this observation, there is no longer need for coordinate systems. Instead, think of space as being "measured" by this set of vectors through dot products.
 
-*So this set of vectors, and dot product, is what gives any vector living in space a coordinate?*
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_basis_measure'> <div class='slider'></div></label>
+  <br/>
+<svg width="630" height="280" id="svg_basis_measure"></svg>
+<br/> 
+<label class='switch show'> <input type='checkbox' id='show_hide_proj_measure'> <div class='slider show'></div></label> projection details.
+<br/>
+Try dragging $u$, $v_1$, $v_2$, $v_3$, the whole space, or click 
+<button id='init_basis_measure'>reset</button>.
+</center>
 
-Exactly. Be aware that there can be many such sets. To get the position (coordinates) of a vector $u$ with respect to any of such set $ \\{ w_1, w_2, w_3 \\} $, simply project $u$ onto this set as shown earlier with $u$ and $ \\{ v_1, v_2, v_3 \\} $:
+<script src="/assets/js/linear_algebra/basis_measure2d.js"></script>
+<script src="/assets/js/linear_algebra/basis_measure.js"></script>
+<script>
+draw_on_svg('basis_measure',
+            basis_measure2d,
+            basis_measure);
+d3.selectAll('#show_hide_proj_measure')
+  .on('click', function(){
+      let show_proj = !this.checked;
+      let is_3d = d3.selectAll('#switch_basis_measure').node().checked;
+      basis_measure2d.set_show_proj(show_proj);
+      basis_measure.set_show_proj(show_proj);
+      if (is_3d) {
+        basis_measure.replot();
+      } else {
+        basis_measure2d.replot();
+      }
+  });
+</script>
 
+And so, there is no intrinsic coordinate to any vector, only its location relative to others. This simplified the whole picture because now there is coordinate system no more!
+
+*In other words: this set of $v$ vectors and dot product are what give any vector living in space a coordinate?*
+
+Exactly. Be aware that there can be many such sets. To get the position (coordinates) of a vector $u$ with respect to any of such set, simply project $u$ onto this set as discussed.
+
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_basis_rotate'> <div class='slider'></div></label>
+  <br/>
+<svg width="630" height="280" id="svg_basis_rotate"></svg>
+<br/>
+Try dragging $u$, $v_1$, $v_2$, $v_3$, the whole space, or click 
+<button id='init_basis_rotate'>reset</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/basis_rotate2d.js"></script>
+<script src="/assets/js/linear_algebra/basis_rotate.js"></script>
+<script>
+draw_on_svg('basis_rotate',
+            basis_rotate2d,
+            basis_rotate);
+</script>
 
 *It looks like the transformation from $u$ to $u'$ that I'm seeing here is rotation in 2-D and 3-D?*
 
