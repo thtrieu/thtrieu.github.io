@@ -658,9 +658,9 @@ draw_on_svg('basis_rotate',
             basis_rotate);
 </script>
 
-*It looks like the transformation from $u$ to $u'$ that I'm seeing here is rotation in 2-D and 3-D?*
+*It looks like for any set {$v_1$, $v_2$, $v_3$} shown above, the transformation from $u$ to $u'$ that I'm seeing here is a rotation?*
 
-That is right. It can be shown that rotation happens when each vector in the set $ \\{ w_1, w_2, w_3 \\} $ here has length $1$ and any pair of them are perpendicular. You can sort of see why this is the case through the above illustrations. We'll make this concrete very soon. People call such sets "orthonormal", where "ortho" stands for orthogonal and "normal" stands for length of $1$.
+That is right. It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 \\} $ has to has a length of $1$ and any pair of them must be perpendicular - which is what the illustration is set up to be. People call such sets "orthonormal", where "ortho" stands for orthogonal and "normal" stands for length of $1$.
 
 <center><b>5. Matrix multiplication</b></center>
 
