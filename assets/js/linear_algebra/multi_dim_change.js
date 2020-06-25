@@ -89,7 +89,7 @@ function hide(objs, op=0.0) {
 }
 
 
-function plot(scatter, axis, axis2, tt, show_proj){
+function plot(scatter, axis, axis2, tt){
   let axis_cp = axis;
   if (show_proj) {
     axis_cp = hide(axis_cp, 0.2);
@@ -115,9 +115,9 @@ function plot(scatter, axis, axis2, tt, show_proj){
 
   let [u, v1, v2, v3] = points;
 
-  plot_project_u_onto_v(u, v1, tt, 'v1', true, show_proj);
-  plot_project_u_onto_v(u, v2, tt, 'v2', true, show_proj);
-  plot_project_u_onto_v(u, v3, tt, 'v3', true, show_proj);
+  plot_project_u_onto_v(u, v1, tt, 'v1', true);
+  plot_project_u_onto_v(u, v2, tt, 'v2', true);
+  plot_project_u_onto_v(u, v3, tt, 'v3', true);
 
   points.forEach(function(p, i){
     if (i == 0) {
@@ -134,12 +134,12 @@ function plot(scatter, axis, axis2, tt, show_proj){
                   drag_point_fn=dragged_point,
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
-  plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj);
+  plot_v_perspective(u, v1, v2, v3, axis2, tt);
   lib.sort();
 }
 
 
-function plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj) {
+function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
   axis2.forEach(function(d, i) {
     let axis_ord = Math.floor(i / (axis_len/unit));
     let v = [v1, v2, v3][axis_ord];
@@ -166,10 +166,10 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj) {
       lib.times(basis.y, uTv2),
       lib.times(basis.z, uTv3),
   ]
-  let u_ = lib.add(components);
-  u_.color = 4
-  u_.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082, u\u1d40v\u2083]';
-  lib.plot_points([u_], tt, null, null, null, 'u2', origin2);
+  u = lib.add(components);
+  u.color = 4;
+  u.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082, u\u1d40v\u2083]';
+  lib.plot_points([u], tt, null, null, null, 'u2', origin2);
 
   basis.x.color = v1.color;
   basis.x.r = 3;
@@ -196,8 +196,11 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj) {
       uz_line = [{x:0, y:0, z:0}, components[2]];
 
   ux_line.color = v1.color-1;
+  ux_line.centroid_z = 1000;
   uy_line.color = v2.color-1;
+  uy_line.centroid_z = 1000;
   uz_line.color = v3.color-1;
+  uz_line.centroid_z = 1000;
 
   let u_lines = [ux_line, uy_line, uz_line];
   if (!show_proj) {
@@ -278,8 +281,7 @@ function init(tt){
   plot(scatter,
        axis,
        axis2, 
-       tt,
-       show_proj);
+       tt);
 }
 
 
@@ -312,8 +314,7 @@ function dragged_right(){
   plot(scatter, 
        axis,
        expectedAxis2, 
-       0,
-       show_proj);
+       0);
 }
 
 
@@ -326,8 +327,7 @@ function dragged_left(){
   plot(expectedScatter, 
        expectedAxis,
        axis2, 
-       0,
-       show_proj);
+       0);
 }
 
 
@@ -344,8 +344,7 @@ function dragged_v_only(){
   plot(expectedScatter,
        expectedAxis, 
        axis2, 
-       0,
-       show_proj);
+       0);
 }
 
 
@@ -373,8 +372,7 @@ function dragged_point(d, i){
   plot(expectedScatter,
        expectedAxis, 
        axis2, 
-       0,
-       show_proj);
+       0);
 }
 
 
@@ -396,8 +394,7 @@ return {
     plot(scatter, 
          axis,
          axis2, 
-         1000,
-         show_proj);
+         1000);
   },
 };
 

@@ -35,7 +35,7 @@ function select_svg(svg_id) {
 }
 
 
-function plot_project_u_onto_v(u, v, tt, name, visible, show_proj) {
+function plot_project_u_onto_v(u, v, tt, name, visible) {
   let lines = [];
   v.centroid_z = 1000;
   let uTv = lib.dot_product(u, v);
@@ -88,7 +88,7 @@ function hide(objs, op=0.0) {
 }
 
 
-function plot(scatter, axis, axis2, tt, show_proj){
+function plot(scatter, axis, axis2, tt){
   let axis_cp = axis;
   if (show_proj) {
     axis_cp = hide(axis, 0.2);
@@ -122,9 +122,9 @@ function plot(scatter, axis, axis2, tt, show_proj){
 
   let [u, v1, v2, v3] = points;
 
-  plot_project_u_onto_v(u, v1, tt, 'v1', true, show_proj);
-  plot_project_u_onto_v(u, v2, tt, 'v2', true, show_proj);
-  plot_project_u_onto_v(u, v3, tt, 'v3', false, show_proj);
+  plot_project_u_onto_v(u, v1, tt, 'v1', true);
+  plot_project_u_onto_v(u, v2, tt, 'v2', true);
+  plot_project_u_onto_v(u, v3, tt, 'v3', false);
 
   points.forEach(function(p, i){
     if (i == 0) {
@@ -146,12 +146,12 @@ function plot(scatter, axis, axis2, tt, show_proj){
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
 
-  plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj);
+  plot_v_perspective(u, v1, v2, v3, axis2, tt);
   lib.sort();
 }
 
 
-function plot_v_perspective(u, v1, v2, v3, axis2, tt, show_proj) {
+function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
   axis2.forEach(function(d, i) {
     let axis_ord = Math.floor(i / (axis_len/unit));
     let v = [v1, v2, v3][axis_ord];
@@ -287,8 +287,7 @@ function init(tt){
   plot(scatter,
        axis,
        axis2, 
-       tt,
-       show_proj);
+       tt);
 }
 
 
@@ -323,8 +322,7 @@ function dragged_right(){
   plot(expectedScatter,
        expectedAxis, 
        expectedAxis2, 
-       0,
-       show_proj);
+       0);
 }
 
 
@@ -338,8 +336,7 @@ function dragged_left(){
   plot(expectedScatter, 
        expectedAxis,
        expectedAxis2, 
-       0,
-       show_proj);
+       0);
 }
 
 
@@ -357,8 +354,7 @@ function dragged_v_only(){
   plot(expectedScatter, 
        expectedAxis,
        expectedAxis2, 
-       0,
-       show_proj);
+       0);
 }
 
 
@@ -387,8 +383,7 @@ function dragged_point(d, i){
   plot(expectedScatter, 
        expectedAxis,
        expectedAxis2, 
-       0,
-       show_proj);
+       0);
 }
 
 
@@ -410,8 +405,7 @@ return {
     plot(scatter, 
          axis,
          axis2, 
-         1000,
-         show_proj);
+         1000);
   },
 };
 
