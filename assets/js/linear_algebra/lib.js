@@ -843,7 +843,6 @@ function text_matrix_to_list(coord_texts, coord,
     lines_list[i].key = 'bracket'.concat(brack_key - i);
     lines_list[i].stroke_width = size/14;
   }
-  console.log(lines_list);
   
   return [lines_list, texts_list];
 };
