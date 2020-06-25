@@ -635,12 +635,16 @@ And so, there is no intrinsic coordinate to any vector, only its location relati
 
 *In other words: this set of $v$ vectors and dot product are what give any vector living in space a coordinate?*
 
-Exactly. Be aware that there can be many such sets. To get the position (coordinates) of a vector $u$ with respect to any of such set, simply project $u$ onto this set as discussed.
+Exactly. Be aware that there can be many such sets besides $\\{[1, 0, 0], [0, 1, 0], [0, 0, 1]\\}$. For example, rotating this set by any angle and we will obtain another valid set acting as coordinate system:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_basis_rotate'> <div class='slider'></div></label>
   <br/>
 <svg width="630" height="280" id="svg_basis_rotate"></svg>
+<br/>
+Here we added many vectors in grey to help with tracing the movement of $u'$.
+<br/>
+How does $u'$ move when {$v_1$, $v_2$, $v_3$} rotates?
 <br/>
 Try dragging $u$, $v_1$, $v_2$, $v_3$, the whole space, or click 
 <button id='init_basis_rotate'>reset</button>.

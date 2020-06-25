@@ -2,14 +2,14 @@ let basis_rotate = (function() {
 
 let origin = [150, 140], 
   origin2 = [450, 140],
-  scale = 100, 
+  scale = 120, 
   scatter = [],
   cloud = [],
   axis = [], 
   expectedScatter = [],
   expectedCloud = [],
   expectedAxis = [],
-  startAngleX = Math.PI/8 * 2.65,
+  startAngleX = Math.PI/8 * 1.7,
   startAngleY = -Math.PI/8,
   startAngleZ = Math.PI/8 * 0.6,
   axis_len = 1.2,
@@ -145,15 +145,15 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
                   tt, null, null, null, 'cloud2', origin2);
 
   basis.x.color = v1.color;
-  basis.x.r = 3;
+  basis.x.r = 4;
   basis.x.text = '[1, 0, 0]';
 
   basis.y.color = v2.color;
-  basis.y.r = 3;
+  basis.y.r = 4;
   basis.y.text = '[0, 1, 0]';
 
   basis.z.color = v3.color;
-  basis.z.r = 3;
+  basis.z.r = 4;
   basis.z.text = '[0, 0, 1]';
 
   let unit_marks = [basis.x, basis.y, basis.z] 
@@ -162,27 +162,54 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
 }
 
 
+function fibonacci_sphere(radius, n=50) {
+  let points = [];
+  let phi = Math.PI * (3 - Math.sqrt(5));
+
+  for (let i = 0; i < n; i++) {
+    let y = 1 - (i / (n-1)) * 2
+    let r = Math.sqrt(1 - y*y);
+
+    let theta = phi * i;
+    points.push({
+      x: Math.cos(theta) * r * radius,
+      y: y * radius,
+      z: Math.sin(theta) * r * radius,
+      color: 'grey'
+    });
+  }
+
+  return points;
+}
+
+
 function init(tt){
   axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
   scatter = [];
 
-  let u = {
-      x: 0.6,
-      y: 0.6, 
-      z: 0.6,
-      color: 4
-  },
-      v1 = {
+  let u = null;
+  let u_i = 24;
+  cloud = [];
+  fibonacci_sphere(0.5).forEach(function(p, i){
+    if (i == u_i) {
+      u = p;
+    } else {
+      cloud.push(p);
+    }
+  })
+  
+  u.color = 4;
+  let v1 = {
       x: 1.0,
       y: 0.0, 
       z: 0.0, 
-      color: 3,
+      color: 0,
   },
       v2 = {
       x: 0.0, 
       y: 1.0, 
       z: 0.0, 
-      color: 19,
+      color: 3,
   },
       v3 = {
       x: 0.0, 
@@ -192,18 +219,6 @@ function init(tt){
   };
 
   scatter = [u, v1, v2, v3];
-
-  cloud = [];
-  for (let i = 0; i < 10; i ++) {
-    cloud.push({
-      x: d3.randomUniform(-0.5, 0.5)(),
-      y: d3.randomUniform(-0.5, 0.5)(),
-      z: d3.randomUniform(-0.5, 0.5)(),
-      color: i * 2,
-      opacity: 0.5,
-      r: 4,
-    })
-  }
 
   alpha = startAngleX;
   beta = startAngleY;
@@ -236,15 +251,12 @@ function dragged(){
     [angle_x, angle_y] = lib.get_drag_angles();  
   } else {
     [angle_x, angle_y] = lib.get_drag_angles(origin2);
-  }
-
-  console.log(drag_on_left);
-  
+  }  
   expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
   expectedCloud = lib.rotate_points(cloud, angle_x, angle_y);
   expectedAxis = lib.rotate_lines(axis, angle_x, angle_y);
   
-  plot(expectedScatter, 
+  plot(expectedScatter,
        expectedCloud,
        expectedAxis,
        0);
@@ -285,7 +297,7 @@ function dragged_point(d, i){
         expectedScatter.push(d);
       }
   });
-  expectedCloud = cloud;
+  expectedCloud = lib.rotate_points(cloud, angle_x, angle_y);
   expectedAxis = axis;
 
   plot(expectedScatter,

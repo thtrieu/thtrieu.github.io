@@ -4,10 +4,8 @@ let origin = [150, 140],
   origin2 = [450, 140],
   scale = 100, 
   scatter = [],
-  cloud = [],
   axis = [], 
   expectedScatter = [],
-  expectedCloud = [],
   expectedAxis = [],
   startAngleX = Math.PI,
   startAngleY = 0.,
@@ -48,7 +46,9 @@ function hide(objs, op=0.0) {
 }
 
 
-function plot(scatter, cloud, axis, tt){
+function plot(scatter, axis, tt){
+
+  let cloud = round_cloud(scatter[0], 20);
 
   let basis = {
     ex: lib.normalize(axis[axis_len/unit * 0][1]),
@@ -184,51 +184,57 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
 }
 
 
+function round_cloud(u, n=20) {
+  let points = [];
+  let radius = lib.norm(u);
+  let a = Math.PI * 2 / (n+1);
+  let a0 = Math.atan2(u.y, u.x);
+  for (let i = 1; i <= n; i++) {
+    points.push({
+        x: Math.cos(a * i + a0) * radius,
+        y: Math.sin(a * i + a0) * radius,
+        z: 0,
+        color: 'grey',
+        opacity: 0.5
+    });
+  }
+  return points;
+}
+
+
 function init(tt){
   axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
   scatter = [];
 
-  scatter.push({
+  let u = {
     x: -0.5,
     y: -0.5, 
     z: 0.,
     color: 4,
-  });
+  };
 
-  scatter.push({
+  let v1 = {
     x: 1.,
     y: 0., 
     z: 0.,
-    color: 3,
-  })
+    color: 0,
+  };
 
-  scatter.push({
+  let v2 = {
     x: 0.,
     y: 1., 
     z: 0.,
-    color: 19,
-  })
+    color: 3,
+  };
 
-  cloud = [];
-  for (let i = 0; i < 10; i ++) {
-    cloud.push({
-      x: d3.randomUniform(-0.5, 0.5)(),
-      y: d3.randomUniform(-0.5, 0.5)(),
-      z: d3.randomUniform(-0.5, 0.5)(),
-      color: i * 2,
-      opacity: 0.5,
-      r: 4,
-    })
-  }
+  scatter = [u, v1, v2];
 
   alpha = startAngleX;
   beta = startAngleY;
 
   scatter = lib.rotate_points(scatter, alpha, beta, startAngleZ);
-  cloud = lib.rotate_points(cloud, alpha, beta, startAngleZ);
   axis = lib.rotate_lines(axis, alpha, beta, startAngleZ);
   plot(scatter,
-       cloud,
        axis,
        tt);
 }
@@ -255,11 +261,9 @@ function dragged(){
   }
   
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
-  expectedCloud = lib.rotate_points(cloud, 0, 0, angle_z);
   expectedAxis = lib.rotate_lines(axis, 0, 0, angle_z);
   
   plot(expectedScatter,
-       expectedCloud, 
        expectedAxis,
        0);
 }
@@ -270,11 +274,9 @@ function dragged_v_only(){
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
   expectedScatter[0] = scatter[0];
-  expectedCloud = cloud;
   expectedAxis = axis;
 
   plot(expectedScatter, 
-       expectedCloud,
        expectedAxis,
        0);
 }
@@ -299,11 +301,9 @@ function dragged_point(d, i){
         expectedScatter.push(d);
       }
   });
-  expectedCloud = cloud;
   expectedAxis = axis;
 
   plot(expectedScatter,
-       expectedCloud, 
        expectedAxis, 
        0);
 }
@@ -311,7 +311,6 @@ function dragged_point(d, i){
 
 function drag_end(){
   scatter = expectedScatter;
-  cloud = expectedCloud;
   axis = expectedAxis;
 }
 
@@ -321,8 +320,7 @@ return {
   select_svg: function(svg_id){select_svg(svg_id);},
   set_show_proj: function(s){show_proj = s;},
   replot: function(){
-    plot(scatter, 
-         cloud,
+    plot(scatter,
          axis,
          1000);
   },
