@@ -49,6 +49,9 @@ function hide(objs, op=0.0) {
 function plot(scatter, axis, tt){
 
   let cloud = round_cloud(scatter[0], 20);
+  for (let i = 0; i < 10; i++) {
+    cloud.push({x: 0, y: 0, z: 0, opacity: 0.0});
+  }
 
   let basis = {
     ex: lib.normalize(axis[axis_len/unit * 0][1]),
@@ -166,15 +169,12 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
                   tt, null, null, null, 'cloud2', origin2);
 
   basis.x.color = v1.color;
-  basis.x.r = 4;
   basis.x.text = '[1, 0]';
 
   basis.y.color = v2.color;
-  basis.y.r = 4;
   basis.y.text = '[0, 1]';
 
   basis.z.color = v3.color;
-  basis.z.r = 4;
   basis.z.text = '';
   basis.z.opacity = 0;
 

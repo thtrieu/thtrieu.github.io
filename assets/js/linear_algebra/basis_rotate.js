@@ -145,15 +145,12 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
                   tt, null, null, null, 'cloud2', origin2);
 
   basis.x.color = v1.color;
-  basis.x.r = 4;
   basis.x.text = '[1, 0, 0]';
 
   basis.y.color = v2.color;
-  basis.y.r = 4;
   basis.y.text = '[0, 1, 0]';
 
   basis.z.color = v3.color;
-  basis.z.r = 4;
   basis.z.text = '[0, 0, 1]';
 
   let unit_marks = [basis.x, basis.y, basis.z] 
@@ -162,7 +159,7 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
 }
 
 
-function fibonacci_sphere(radius, n=50) {
+function fibonacci_sphere(radius, n=30) {
   let points = [];
   let phi = Math.PI * (3 - Math.sqrt(5));
 
@@ -188,7 +185,7 @@ function init(tt){
   scatter = [];
 
   let u = null;
-  let u_i = 24;
+  let u_i = 6;
   cloud = [];
   fibonacci_sphere(0.5).forEach(function(p, i){
     if (i == u_i) {
