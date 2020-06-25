@@ -14,26 +14,23 @@ let origin = [150, 140],
     lib = null,
     position_state = 0;
 
-let row_width = 0.35,
+let row_width = 0.24,
     col_width = 0.6,
     w_unit = 1.0, h_unit = 1.0;
 
-    // dws_array = [0.5, 0.7, 0., 0.7],
-    // dhs_array = [0.4, 0.4, 0., 0.4];
-
 let start_coord_x=(340 - origin[0])/scale + 0.6 * w_unit,
     start_coord_y=(75 - origin[1])/scale + 0.2 * h_unit,
-    last_col_coord = start_coord_x + 1.2 * w_unit,
-    last_row_coord = start_coord_y + 0.7 * h_unit;
+    last_col_coord = start_coord_x + 1.25 * w_unit,
+    last_row_coord = start_coord_y + 0.56 * h_unit;
 
 let v_name = {text: 'v =', x: last_col_coord,
               y: start_coord_y - 0.4 * h_unit, key: 'v'},
     u_name = {text: 'u =', x: last_col_coord,
               y: start_coord_y - 0.4 * h_unit, key: 'u'},
     vT_name = {text: 'v\u1d40 =', x: start_coord_x - 0.6 * w_unit,
-               y: last_row_coord + 0.05, key: 'v' },
+               y: last_row_coord + 0.09, key: 'v' },
     uT_name = {text: 'u\u1d40 =', x: start_coord_x - 0.6 * w_unit,
-               y: last_row_coord + 0.05, key: 'u' };
+               y: last_row_coord + 0.09, key: 'u' };
                
 
 function select_svg(svg_id){
@@ -135,28 +132,27 @@ function plot(scatter, axis, tt){
                   drag_end_fn=drag_end
                   );
 
-  let [lines_vector_u, texts_vector_u] = lib.text_matrix_to_list(
-          [[u.coord.x.toFixed(2), u.coord.y.toFixed(2)]],
-          [last_col_coord, start_coord_y],
-          14, [['xu', 'yu']], 5
+  let [lines_u, texts_u] = lib.text_matrix_to_list(
+          [[{text: u.coord.x.toFixed(2), key: 'xu'}],
+           [{text: u.coord.y.toFixed(2), key: 'yu'}]],
+          [last_col_coord, start_coord_y], 14, 5
           ),
-      [lines_vector_v, texts_vector_v] = lib.text_matrix_to_list(
-          [[v.coord.x.toFixed(2), v.coord.y.toFixed(2)]],
-          [last_col_coord, start_coord_y],
-          14, [['xv', 'yv']], 15
+      [lines_v, texts_v] = lib.text_matrix_to_list(
+          [[{text: v.coord.x.toFixed(2), key: 'xv'}],
+           [{text: v.coord.y.toFixed(2), key: 'yv'}]],
+          [last_col_coord, start_coord_y], 14, 15
           ),
       [lines_uT, texts_uT] = lib.text_matrix_to_list(
-          [[u.coord.x.toFixed(2)], [u.coord.y.toFixed(2)]],
-          [start_coord_x, last_row_coord],
-          14, [['xu'], ['yu']], 5
+          [[{text: u.coord.x.toFixed(2), key: 'xu'},
+            {text: u.coord.y.toFixed(2), key: 'yu'}]],
+          [start_coord_x, last_row_coord], 14, 5
           ),
       [lines_vT, texts_vT] = lib.text_matrix_to_list(
-          [[v.coord.x.toFixed(2)],[v.coord.y.toFixed(2)]],
-          [start_coord_x, last_row_coord],
-          14, [['xv'], ['yv']], 15
+          [[{text: v.coord.x.toFixed(2), key: 'xv'},
+            {text: v.coord.y.toFixed(2), key: 'yv'}]],
+          [start_coord_x, last_row_coord], 14, 15
           );
 
-  
   let uTv_texts = [],
       uTv_lines = [],
       vTu_texts = [],
@@ -176,18 +172,19 @@ function plot(scatter, axis, tt){
                 };
 
   uTv_texts.push(...texts_uT);
-  uTv_texts.push(...texts_vector_v);
+  uTv_texts.push(...texts_v);
   uTv_texts.push(uT_name, v_name, zuT_text, zv_text);
 
   uTv_lines.push(...lines_uT);
-  uTv_lines.push(...lines_vector_v);
+  uTv_lines.push(...lines_v);
 
   vTu_texts.push(...texts_vT);
-  vTu_texts.push(...texts_vector_u);
+  vTu_texts.push(...texts_u);
   vTu_texts.push(vT_name, u_name, zvT_text, zu_text);
 
   vTu_lines.push(...lines_vT);
-  vTu_lines.push(...lines_vector_u);
+  vTu_lines.push(...lines_u);
+  console.log(uTv_texts, vTu_texts);
 
   if (position_state == 0) {
     lib.plot_texts(uTv_texts, tt, 'transition');
@@ -200,9 +197,9 @@ function plot(scatter, axis, tt){
   let dot_product_texts_at_bot = [
       {text: uTv.toFixed(3),
        x: last_col_coord,
-       y: last_row_coord + 0.05 * h_unit,
+       y: last_row_coord + 0.09 * h_unit,
        text_color: 0, text_opacity: 1,
-       font_size: 14, tt: 0, key: 'text_at_bot'}
+       font_size: 14, tt, key: 'text_at_bot'}
   ];
 
   lib.plot_texts(dot_product_texts_at_bot, tt, 'text_at_bot');
@@ -213,18 +210,12 @@ function plot(scatter, axis, tt){
        x: (v.x * uTv/2).toFixed(2),
        y: (v.y * uTv/2).toFixed(2),
        text_color: 0, text_opacity: 1,
-       font_size: 15, tt: 0, key: 'texts_in_blue_line'}
+       font_size: 15, tt, key: 'texts_in_blue_line'}
   ];
 
   lib.plot_texts(dot_product_texts, tt, 'texts_in_blue_line');
-  // let [lines_k, texts_k] = lib.text_matrix_to_list([[1],[2]], [1, 1], 14, [['x'],['y']], 3);
-  // lib.plot_texts(texts_k, tt, 'test');
-  // lib.plot_lines(lines_k, tt, 'test');
   lib.sort();
 }
-
-
-// why isn't it a function??
 
 function init(tt){
   axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
@@ -342,30 +333,27 @@ function set_position(pos){
 
 function swap(u, v){
   let uTv = lib.dot_product(u, v);
-      
-
-  let [lines_vector_u, texts_vector_u] = lib.text_matrix_to_list(
-          [[u.coord.x.toFixed(2), u.coord.y.toFixed(2)]],
-          [last_col_coord, start_coord_y],
-          14, [['xu', 'yu']], 5
+  let [lines_u, texts_u] = lib.text_matrix_to_list(
+          [[{text: u.coord.x.toFixed(2), key: 'xu'}],
+           [{text: u.coord.y.toFixed(2), key: 'yu'}]],
+          [last_col_coord, start_coord_y], 14, 5
           ),
-      [lines_vector_v, texts_vector_v] = lib.text_matrix_to_list(
-          [[v.coord.x.toFixed(2), v.coord.y.toFixed(2)]],
-          [last_col_coord, start_coord_y],
-          14, [['xv', 'yv']], 15
+      [lines_v, texts_v] = lib.text_matrix_to_list(
+          [[{text: v.coord.x.toFixed(2), key: 'xv'}],
+           [{text: v.coord.y.toFixed(2), key: 'yv'}]],
+          [last_col_coord, start_coord_y], 14, 15
           ),
       [lines_uT, texts_uT] = lib.text_matrix_to_list(
-          [[u.coord.x.toFixed(2)], [u.coord.y.toFixed(2)]],
-          [start_coord_x, last_row_coord],
-          14, [['xu'], ['yu']], 5
+          [[{text: u.coord.x.toFixed(2), key: 'xu'},
+            {text: u.coord.y.toFixed(2), key: 'yu'}]],
+          [start_coord_x, last_row_coord], 14, 5
           ),
       [lines_vT, texts_vT] = lib.text_matrix_to_list(
-          [[v.coord.x.toFixed(2)], [v.coord.y.toFixed(2)]],
-          [start_coord_x, last_row_coord],
-          14, [['xv'], ['yv']], 15
-          ),
-      
-      uTv_texts = [],
+          [[{text: v.coord.x.toFixed(2), key: 'xv'},
+            {text: v.coord.y.toFixed(2), key: 'yv'}]],
+          [start_coord_x, last_row_coord], 14, 15
+          );
+  let uTv_texts = [],
       uTv_lines = [],
       vTu_texts = [],
       vTu_lines = [];
@@ -384,16 +372,16 @@ function swap(u, v){
                 };
 
   uTv_texts.push(...texts_uT);
-  uTv_texts.push(...texts_vector_v);
+  uTv_texts.push(...texts_v);
   uTv_texts.push(uT_name, v_name, zuT_text, zv_text);
   uTv_lines.push(...lines_uT);
-  uTv_lines.push(...lines_vector_v);
+  uTv_lines.push(...lines_v);
   
   vTu_texts.push(...texts_vT);
-  vTu_texts.push(...texts_vector_u);
+  vTu_texts.push(...texts_u);
   vTu_texts.push(vT_name, u_name, zvT_text, zu_text);
   vTu_lines.push(...lines_vT);
-  vTu_lines.push(...lines_vector_u);
+  vTu_lines.push(...lines_u);
   
 
   if (position_state == 0) {
