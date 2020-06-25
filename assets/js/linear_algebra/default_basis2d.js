@@ -130,11 +130,11 @@ function plot(scatter, axis, axis2, tt){
     if (i == 0) {
       p.text = 'u';
     } else if (i == 1) {
-      p.text = 'v\u2081';
+      p.text = 'v\u2081 = [1, 0]';
     } else if (i == 2) {
-      p.text = 'v\u2082';
+      p.text = 'v\u2082 = [0, 1]';
     } else if (i == 3) {
-      p.text = 'v\u2083';
+      p.text = 'v\u2083 = [0, 0, 1]';
       p.text_opacity = 0.0;
     }
   })
