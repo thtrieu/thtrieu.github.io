@@ -659,7 +659,7 @@ draw_on_svg('basis_rotate',
 
 *It looks like for any set {$v_1$, $v_2$, $v_3$} shown above, $u'$ is moving around in the same sphere that also contains $u$?*
 
-That is right. In other words, the transformation preserves length of $u$. In Math, we call length-preserving transformations with a very familiar name: Rotation. 
+That is right. In other words, the transformation preserves length of $u$. In Math, we call length-preserving transformations with a very familiar and intuitive name: Rotation. 
 
 It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 \\} $ has to have a length of $1$ and any pair of them must be perpendicular - which is what the illustration is set up to be. People call such sets "orthonormal": "ortho" stands for orthogonal and "normal" stands for length of $1$.
 
