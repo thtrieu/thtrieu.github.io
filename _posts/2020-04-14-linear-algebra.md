@@ -278,7 +278,7 @@ You are right, a negative dot-product carries more information than just the len
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_dot_product_formula'> <div class='slider'></div></label>
   <br/>
-<svg width="600" height="350" id="svg_dot_product_formula"></svg>
+<svg width="600" height="250" id="svg_dot_product_formula"></svg>
 <br/>
 Try dragging vector $u$, $v$, the whole space, or click
 <button id='init_dot_product_formula'>reset</button>.

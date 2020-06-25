@@ -1,6 +1,6 @@
 let dot_product_formula = (function() {
 
-let origin = [300, 140], 
+let origin = [150, 140], 
     scale = 60, 
     scatter = [], 
     axis = [],
@@ -13,6 +13,17 @@ let origin = [300, 140],
     unit = axis_len/10,
     svg = null,
     lib = null;
+
+let w_unit = 1.0, h_unit = 1.0;
+
+let start_coord_x=(400 - origin[0])/scale,
+    start_coord_y=(125 - origin[1])/scale - 0.2 * h_unit;
+
+let u_cell = {text: 'u =', x: start_coord_x,
+              y: start_coord_y - 0.7 * h_unit, key: 'u'},
+    v_cell = {text: 'v =', x: start_coord_x + 0.9 * w_unit,
+              y: start_coord_y - 0.7 * h_unit, key: 'v'};
+
 
 function select_svg(svg_id) {
   svg = d3.select(svg_id);
@@ -113,55 +124,63 @@ function plot(scatter, axis, tt){
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
 
-  let texts_to_show = [
-      [
-          {text: 'u'}, {text: '= ['},  
-          {text: u.coord.x.toFixed(2), text_color: 8},
-          {text: ''}, {text: ''}, {text: ','},
-          {text: u.coord.y.toFixed(2), text_color: 8},
-          {text: ''}, {text: ''}, {text: ','},
-          {text: u.coord.z.toFixed(2), text_color: 8},
-          {text: ''}, {text: ''}, {text: ']'}
-      ], [
-          {text: 'v'}, {text: '= ['},
-          {text: ''}, {text: ''},
-          {text: v.coord.x.toFixed(2), text_color: 6},
-          {text: ','}, {text: ''}, {text: ''},
-          {text: v.coord.y.toFixed(2), text_color: 6},
-          {text: ','}, {text: ''}, {text: ''},
-          {text: v.coord.z.toFixed(2), text_color: 6},
-          {text: ']'}
-      ], [
-          {text: 'u\u1d40v', text_color: 0}, {text: '='},
-          {text: u.coord.x.toFixed(2), text_color: 8},
-          {text: '\u00d7'},
-          {text: v.coord.x.toFixed(2), text_color: 6},
-          {text: '+'},
-          {text: u.coord.y.toFixed(2), text_color: 8},
-          {text: '\u00d7'},
-          {text: v.coord.y.toFixed(2), text_color: 6},
-          {text: '+'},
-          {text: u.coord.z.toFixed(2), text_color: 8},
-          {text: '\u00d7'},
-          {text: v.coord.z.toFixed(2), text_color: 6},
-          {text: ''}
-      ], [
-          {text: ''}, {text: '='},
-          {text: uTv.toFixed(3), text_color: 0},
-          {text: ''}, {text: ''}, {text: ''},
-          {text: ''}, {text: ''}, {text: ''},
-          {text: ''}, {text: ''}, {text: ''},
-          {text: ''}, {text: ''},
-      ]
-  ];
- 
-  lib.plot_texts(lib.text_table_to_list(
-      texts_to_show, 
-      start_coord_x=-2.2, start_coord_y=2.2,
-      w_unit=0.24, h_unit=0.3,
-      dws_array=[1.7, 1.5, 2.4, 0.8, 2.4, 0.8, 2.4, 0.8, 2.4, 0.85, 2.4, 0.85, 2.4],
-      dhs_array=[1.0, 1.8, 1.0])
-  );
+  let [lines_u, texts_u] = lib.text_matrix_to_list(
+          [[{text: u.coord.x.toFixed(2), key: 'xu'}],
+           [{text: u.coord.y.toFixed(2), key: 'yu'}],
+           [{text: u.coord.z.toFixed(2), key: 'zu'}]], 
+          [start_coord_x, start_coord_y], 14, 5
+          ),
+      [lines_plus, texts_plus] = lib.text_matrix_to_list(
+          [[{text:'\uFE62', text_color: 0, key: 'fplus'}],
+           [{text:'\uFE62', text_color: 0, key: 'splus'}]], 
+          [start_coord_x - 0.3 * w_unit, start_coord_y], 14, 5
+          ),
+      [lines_multi, texts_multi] = lib.text_matrix_to_list(
+          [[{text:'\u00D7', text_color: 0, key: 'fmulti'}],
+           [{text:'\u00D7', text_color: 0, key: 'smulti'}],
+           [{text:'\u00D7', text_color: 0, key: 'tmulti'}]], 
+          [start_coord_x + 0.6 * w_unit, start_coord_y], 14, 5
+          ),
+      [lines_v, texts_v] =  lib.text_matrix_to_list(
+          [[{text: v.coord.x.toFixed(2), key: 'xv'}],
+           [{text: v.coord.y.toFixed(2), key: 'yv'}],
+           [{text: v.coord.z.toFixed(2), key: 'zv'}]], 
+          [start_coord_x + 0.9 * w_unit, start_coord_y], 14, 15
+          );
+
+  let uTv_texts = [{text: 'u\u1d40v =', x: start_coord_x - 0.6 * w_unit,
+                    y: start_coord_y + 0.9 * h_unit, text_color: 0, key: 'uTv_text'},
+                   {text: uTv.toFixed(3), x: start_coord_x + 0.4 * w_unit,
+                    y: start_coord_y + 0.9, text_color: 0, key: 'uTv_numb'},],
+      z_texts = [{text: u.coord.z.toFixed(2), x: start_coord_x,
+                  y: start_coord_y + 0.3 * h_unit, key: 'zu', text_opacity: 0},
+                 {text: v.coord.z.toFixed(2), x: start_coord_x + 0.9 * w_unit,
+                  y: start_coord_y + 0.3 * h_unit, key: 'zv', text_opacity: 0}],
+      big_line = [{x: start_coord_x - 0.1 * w_unit,
+                   y: start_coord_y + 0.65 * h_unit, z: 0},
+                  {x: start_coord_x + 1.55 * w_unit,
+                   y: start_coord_y + 0.65 * h_unit, z: 0,
+                   color: 0}];
+  
+  big_line.stroke_width = 0.7;
+
+  let texts_to_show = [];
+  texts_to_show.push(...texts_u);
+  texts_to_show.push(...texts_v);
+  texts_to_show.push(...texts_plus);
+  texts_to_show.push(...texts_multi);
+  texts_to_show.push(...z_texts);
+  texts_to_show.push(...uTv_texts);
+  texts_to_show.push(u_cell, v_cell);
+
+  let lines_to_show = [];
+  lines_to_show.push(...lines_u);
+  lines_to_show.push(...lines_v);
+  lines_to_show.push(big_line);
+
+  lib.plot_texts(texts_to_show, tt, 'texts');
+  lib.plot_lines(lines_to_show, tt, 'lines');
+
   
   lib.sort();
 }
