@@ -15,22 +15,20 @@ let origin = [150, 140],
     svg = null,
     position_state = 0;
 
-let row_width = 0.24,
-    col_width = 0.6,
-    w_unit = 1.0, h_unit = 1.0;
+let w_unit = 1.0, h_unit = 1.0;
 
-let start_coord_x=(340 - origin[0])/scale, 
+let start_coord_x=(380 - origin[0])/scale, 
     start_coord_y=(75 - origin[1])/scale,
     last_col_coord = start_coord_x + 1.85 * w_unit,
     last_row_coord = start_coord_y + 0.76 * h_unit;
 
-let v_name = {text: 'v =', x: last_col_coord,
-              y: start_coord_y - 0.5 * h_unit, key: 'v'},
-    u_name = {text: 'u =', x: last_col_coord,
-              y: start_coord_y - 0.5 * h_unit, key: 'u'},
-    vT_name = {text: 'v\u1d40 =', x: start_coord_x - 0.6 * w_unit,
+let v_cell = {text: 'v =', x: last_col_coord,
+              y: start_coord_y - 0.7 * h_unit, key: 'v'},
+    u_cell = {text: 'u =', x: last_col_coord,
+              y: start_coord_y - 0.7 * h_unit, key: 'u'},
+    vT_cell = {text: 'v\u1d40 =', x: start_coord_x - 0.6 * w_unit,
                y: last_row_coord + 0.09 * h_unit, key: 'v' },
-    uT_name = {text: 'u\u1d40 =', x: start_coord_x - 0.6 * w_unit,
+    uT_cell = {text: 'u\u1d40 =', x: start_coord_x - 0.6 * w_unit,
                y: last_row_coord + 0.09 * h_unit, key: 'u' };
 
 
@@ -163,14 +161,14 @@ function plot(scatter, axis, tt){
 
   uTv_texts.push(...texts_uT);
   uTv_texts.push(...texts_v);
-  uTv_texts.push(uT_name, v_name);
+  uTv_texts.push(uT_cell, v_cell);
 
   uTv_lines.push(...lines_uT);
   uTv_lines.push(...lines_v);
 
   vTu_texts.push(...texts_vT);
   vTu_texts.push(...texts_u);
-  vTu_texts.push(vT_name, u_name);
+  vTu_texts.push(vT_cell, u_cell);
 
   vTu_lines.push(...lines_vT);
   vTu_lines.push(...lines_u);
@@ -355,14 +353,14 @@ function swap(u, v){
 
   uTv_texts.push(...texts_uT);
   uTv_texts.push(...texts_v);
-  uTv_texts.push(uT_name, v_name);
+  uTv_texts.push(uT_cell, v_cell);
 
   uTv_lines.push(...lines_uT);
   uTv_lines.push(...lines_v);
 
   vTu_texts.push(...texts_vT);
   vTu_texts.push(...texts_u);
-  vTu_texts.push(vT_name, u_name);
+  vTu_texts.push(vT_cell, u_cell);
 
   vTu_lines.push(...lines_vT);
   vTu_lines.push(...lines_u);

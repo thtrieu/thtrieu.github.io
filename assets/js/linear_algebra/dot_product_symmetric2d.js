@@ -14,22 +14,20 @@ let origin = [150, 140],
     lib = null,
     position_state = 0;
 
-let row_width = 0.24,
-    col_width = 0.6,
-    w_unit = 1.0, h_unit = 1.0;
+let w_unit = 1.0, h_unit = 1.0;
 
-let start_coord_x=(340 - origin[0])/scale + 0.6 * w_unit,
+let start_coord_x=(380 - origin[0])/scale + 0.6 * w_unit,
     start_coord_y=(75 - origin[1])/scale + 0.2 * h_unit,
     last_col_coord = start_coord_x + 1.25 * w_unit,
     last_row_coord = start_coord_y + 0.56 * h_unit;
 
-let v_name = {text: 'v =', x: last_col_coord,
+let v_cell = {text: 'v =', x: last_col_coord,
               y: start_coord_y - 0.4 * h_unit, key: 'v'},
-    u_name = {text: 'u =', x: last_col_coord,
+    u_cell = {text: 'u =', x: last_col_coord,
               y: start_coord_y - 0.4 * h_unit, key: 'u'},
-    vT_name = {text: 'v\u1d40 =', x: start_coord_x - 0.6 * w_unit,
+    vT_cell = {text: 'v\u1d40 =', x: start_coord_x - 0.6 * w_unit,
                y: last_row_coord + 0.09, key: 'v' },
-    uT_name = {text: 'u\u1d40 =', x: start_coord_x - 0.6 * w_unit,
+    uT_cell = {text: 'u\u1d40 =', x: start_coord_x - 0.6 * w_unit,
                y: last_row_coord + 0.09, key: 'u' };
                
 
@@ -159,28 +157,28 @@ function plot(scatter, axis, tt){
       vTu_lines = [];
 
   let zv_text = {text: '', x: last_col_coord,
-                 y: start_coord_y + 0.525 * h_unit, text_opacity: 0, key: 'zv'
+                 y: start_coord_y + 0.3 * h_unit, text_opacity: 0, key: 'zv'
                 },
       zu_text = {text: '', x: last_col_coord,
-                  y: start_coord_y + 0.525 * h_unit, text_opacity: 0, key: 'zu'
+                 y: start_coord_y + 0.3 * h_unit, text_opacity: 0, key: 'zu'
                 },
       zvT_text = {text: '', x: start_coord_x + 0.6 * w_unit,
-                  y: last_row_coord, text_opacity: 0, key: 'zv'
+                  y: last_row_coord + 0.09 * h_unit, text_opacity: 0, key: 'zv'
                 },
       zuT_text = {text: '', x: start_coord_x + 0.6 * w_unit,
-                  y: last_row_coord, text_opacity: 0, key: 'zu'
+                  y: last_row_coord + 0.09 * h_unit, text_opacity: 0, key: 'zu'
                 };
 
   uTv_texts.push(...texts_uT);
   uTv_texts.push(...texts_v);
-  uTv_texts.push(uT_name, v_name, zuT_text, zv_text);
+  uTv_texts.push(uT_cell, v_cell, zuT_text, zv_text);
 
   uTv_lines.push(...lines_uT);
   uTv_lines.push(...lines_v);
 
   vTu_texts.push(...texts_vT);
   vTu_texts.push(...texts_u);
-  vTu_texts.push(vT_name, u_name, zvT_text, zu_text);
+  vTu_texts.push(vT_cell, u_cell, zvT_text, zu_text);
 
   vTu_lines.push(...lines_vT);
   vTu_lines.push(...lines_u);
@@ -373,13 +371,13 @@ function swap(u, v){
 
   uTv_texts.push(...texts_uT);
   uTv_texts.push(...texts_v);
-  uTv_texts.push(uT_name, v_name, zuT_text, zv_text);
+  uTv_texts.push(uT_cell, v_cell, zuT_text, zv_text);
   uTv_lines.push(...lines_uT);
   uTv_lines.push(...lines_v);
   
   vTu_texts.push(...texts_vT);
   vTu_texts.push(...texts_u);
-  vTu_texts.push(vT_name, u_name, zvT_text, zu_text);
+  vTu_texts.push(vT_cell, u_cell, zvT_text, zu_text);
   vTu_lines.push(...lines_vT);
   vTu_lines.push(...lines_u);
   
@@ -396,7 +394,6 @@ function swap(u, v){
     position_state = 0;
   }
 }
-
 
 return {
   init: function(tt=0){init(tt);},
