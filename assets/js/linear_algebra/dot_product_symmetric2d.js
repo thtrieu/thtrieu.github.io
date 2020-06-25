@@ -182,7 +182,6 @@ function plot(scatter, axis, tt){
 
   vTu_lines.push(...lines_vT);
   vTu_lines.push(...lines_u);
-  console.log(uTv_texts, vTu_texts);
 
   if (position_state == 0) {
     lib.plot_texts(uTv_texts, tt, 'transition');
