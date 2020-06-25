@@ -843,6 +843,7 @@ return {
   add: add,
   times: times,
   strip: strip,
+  set_ranges: set_ranges,
 }
 
 };
