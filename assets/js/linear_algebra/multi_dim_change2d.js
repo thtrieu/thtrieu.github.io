@@ -76,12 +76,12 @@ function plot_project_u_onto_v(u, v, tt, name, visible, show_proj) {
 }
 
 
-function hide(objs) {
+function hide(objs, op=0.0) {
   let r = [];
   objs.forEach(function(d) {
     let d_ = Object.assign({}, d);
-    d_.opacity = 0.0;
-    d_.text_opacity = 0.0;
+    d_.opacity = op;
+    d_.text_opacity = op;
     r.push(d_);
   })
   return r;
@@ -91,7 +91,7 @@ function hide(objs) {
 function plot(scatter, axis, axis2, tt, show_proj){
   let axis_cp = axis;
   if (show_proj) {
-    axis_cp = hide(axis_cp);
+    axis_cp = hide(axis, 0.3);
   }
   lib.plot_lines(axis_cp, tt, 'axis');
 
@@ -110,6 +110,9 @@ function plot(scatter, axis, axis2, tt, show_proj){
   
   let lines = [];
   points.forEach(function(d, i){
+    if (i == 0) {
+      return;
+    }
     lines.push(...lib.create_segments(d));
   });
   if (!show_proj) {
@@ -398,7 +401,7 @@ return {
     plot(scatter, 
          axis,
          axis2, 
-         500,
+         1000,
          show_proj);
   },
 };

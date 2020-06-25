@@ -517,7 +517,7 @@ draw_on_svg('many_perspective',
 
 *So we are getting many numbers at once, that's kind of cumbersome right?*
 
-It will not be. Let's say we project $u$ onto three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$. This list of numbers, as you pointed out earlier, is itself a vector $u'$ as well! So now, using $v_1, v_2, v_3$ and the dot product, we achieved the change in perspective from current $u$ to $u'$ in another space and coordinate:
+It will not be. Let's say we project $u$ onto three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$. This list of numbers, as you pointed out earlier, is itself a vector $u'$ as well! So now, using $v_1, v_2, v_3$ and the dot product, we achieved the change in perspective from one vector $u$ to another $u'$ in another space and coordinate:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_multi_dim_change'> <div class='slider'></div></label>
