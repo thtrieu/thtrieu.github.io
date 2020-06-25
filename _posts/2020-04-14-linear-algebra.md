@@ -642,9 +642,8 @@ Exactly. Be aware that there can be many such sets besides $\\{[1, 0, 0], [0, 1,
   <br/>
 <svg width="630" height="280" id="svg_basis_rotate"></svg>
 <br/>
+How does $u'$ move when {$v_1$, $v_2$, $v_3$} rotates?<br/>
 Here we added many vectors in grey to help with tracing the movement of $u'$.
-<br/>
-How does $u'$ move when {$v_1$, $v_2$, $v_3$} rotates?
 <br/>
 Try dragging $u$, $v_1$, $v_2$, $v_3$, the whole space, or click 
 <button id='init_basis_rotate'>reset</button>.
@@ -658,9 +657,11 @@ draw_on_svg('basis_rotate',
             basis_rotate);
 </script>
 
-*It looks like for any set {$v_1$, $v_2$, $v_3$} shown above, the transformation from $u$ to $u'$ that I'm seeing here is a rotation?*
+*It looks like for any set {$v_1$, $v_2$, $v_3$} shown above, $u'$ is moving around in the same sphere that also contains $u$?*
 
-That is right. It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 \\} $ has to has a length of $1$ and any pair of them must be perpendicular - which is what the illustration is set up to be. People call such sets "orthonormal", where "ortho" stands for orthogonal and "normal" stands for length of $1$.
+That is right. In other words, the transformation preserves length of $u$. In Math, we call length-preserving transformations with a very familiar name: Rotation. 
+
+It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 \\} $ has to have a length of $1$ and any pair of them must be perpendicular - which is what the illustration is set up to be. People call such sets "orthonormal": "ortho" stands for orthogonal and "normal" stands for length of $1$.
 
 <center><b>5. Matrix multiplication</b></center>
 
