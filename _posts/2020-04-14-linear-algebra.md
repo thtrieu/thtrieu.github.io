@@ -560,7 +560,7 @@ So now, using $v_1, v_2, v_3$ and the dot product, we achieved the multi-dimensi
 
 Absolutely. Setting aside what we really mean by "correlation", this set of vectors needs to be pair-wise perpendicular for the views to not correlate. For example, -->
 
-*Interesting. This is like taking the 3 number lines that represents the world view of $v_1, v_2,$ and $v_3$ and placing them perpendicular to each other, so we get the coordinate axes of a new space. In this new space lives the new vector $u'$.*
+*Interesting. This is like taking the 3 number lines that represents the world view of $v_1, v_2,$ and $v_3$ as the three coordinate axes of a new space.*
 
 Exactly! Let's take a fun example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
 

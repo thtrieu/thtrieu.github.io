@@ -168,7 +168,7 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
   ]
   u = lib.add(components);
   u.color = 4;
-  u.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082, u\u1d40v\u2083]';
+  u.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082, u\u1d40v\u2083] = u';
   lib.plot_points([u], tt, null, null, null, 'u2', origin2);
 
   basis.x.color = v1.color;
