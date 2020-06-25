@@ -46,10 +46,21 @@ function hide(objs, op=0.0) {
 }
 
 
+function round_to(x, n, tol=0.02) {
+  if (Math.abs(x - 0.0) < tol) {
+    return 0;
+  }
+  if (Math.abs(x - 1.0) < tol) {
+    return 1;
+  }
+  return x.toFixed(n);
+}
+
+
 function plot(scatter, axis, tt){
 
   let cloud = round_cloud(scatter[0], 20);
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 60; i++) {
     cloud.push({x: 0, y: 0, z: 0, opacity: 0.0});
   }
 
@@ -86,8 +97,8 @@ function plot(scatter, axis, tt){
   points.forEach(function(p, i){
     let coord = lib.dot_basis(p, basis);
     let txt = ' = ['.concat(
-        coord.x.toFixed(1), ', ',
-        coord.y.toFixed(1), ']'
+        round_to(coord.x, 1), ', ',
+        round_to(coord.y, 1), ']'
     );
     if (i == 0) {
       p.text = 'u';
@@ -157,7 +168,6 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
 
   u = compute_transformation(u, v1, v2, v3, basis);
   u.color = 4
-  // u.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082]';
   u.text = 'u\'';
   lib.plot_points([u], tt, null, null, null, 'u2', origin2);
 
@@ -221,8 +231,8 @@ function init(tt){
   scatter = [];
 
   let u = {
-    x: -0.5,
-    y: -0.5, 
+    x: -0.3,
+    y: -0.3, 
     z: 0.,
     color: 4,
   };
