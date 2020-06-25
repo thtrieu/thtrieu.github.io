@@ -776,6 +776,77 @@ function text_table_to_list(texts,
 
   return list_of_texts;
 }
+function text_matrix_to_list(coord_texts, coord,
+                             size, coord_keys, brack_key) {
+    // print vector u: vec_texts = ['u =', 'v =', ...], coord_texts = [[u.x, u.y], [v.x, v.y],
+                   //  keys = [[xu, yu,], [xv, yv] ...], 
+                  // coord = [x, y] coord to start printing, size = font_size;
+
+  let size_of_space = coord_texts[0].length,
+      numb_of_vector =  coord_texts.length,
+      matrix_w = 0.62 * size/14 * numb_of_vector,
+      matrix_h = 0.36 * size/14 * size_of_space,
+
+      texts_list = [],
+      lines_list = [],
+      
+      cols_list = [],
+      rows_list = [];
+  
+  // text
+  cols_list.push(coord[0]);
+  for (i = 1; i < numb_of_vector; i++) {
+    cols_list.push(cols_list[0] + 0.6 * size/14 * i);
+  }
+
+  rows_list.push(coord[1] - matrix_h/2 + 0.225 * size/14);
+  for (i = 1; i < size_of_space; i++) {
+    rows_list.push(rows_list[0] + 0.36 * size/14 * i);
+  }
+
+  for (i = 0; i < numb_of_vector; i++) {
+    for (j = 0; j < size_of_space; j++) {
+      texts_list.push({text: coord_texts[i][j], x: cols_list[i],
+                       y: rows_list[j], font_size: size,
+                       text_opacity: 1.0, key: coord_keys[i][j]});
+    }
+  };
+  
+  lines_list = [
+      [
+        {x: coord[0], y: coord[1] - matrix_h/2, z: 0},
+        {x: coord[0] + 0.1 * size/14, y: coord[1] - matrix_h/2,
+         z: 0, color: 'grey', tt: true}],
+      [
+        {x: coord[0], y: coord[1] -matrix_h/2, z: 0},
+        {x: coord[0], y: coord[1] + matrix_h/2,
+         z: 0, color: 'grey', tt: true}],
+      [
+        {x: coord[0], y: coord[1] + matrix_h/2, z: 0},
+        {x: coord[0] + 0.1 * size/14,
+         y: coord[1] + matrix_h/2, z: 0, color: 'grey', tt: true}],
+      [
+        {x: coord[0] + matrix_w - 0.1 * size/14,
+         y: coord[1] - matrix_h/2, z: 0},
+        {x: coord[0] + matrix_w,
+         y: coord[1] - matrix_h/2, z: 0, color: 'grey', tt: true}],
+      [
+        {x: coord[0] + matrix_w, y: coord[1] - matrix_h/2, z: 0},
+        {x: coord[0] + matrix_w,
+         y: coord[1] + matrix_h/2, z: 0, color: 'grey', tt: true}],
+      [
+        {x: coord[0] + matrix_w, y: coord[1] + matrix_h/2, z: 0},
+        {x: coord[0] + matrix_w - 0.1 * size/14,
+         y: coord[1] + matrix_h/2, z: 0, color: 'grey', tt: true}]
+  ];
+
+  for (i = 0; i < lines_list.length; i++) {
+    lines_list[i].key = 'bracket'.concat(brack_key - i);
+    lines_list[i].stroke_width = size/14;
+  }
+  
+  return [lines_list, texts_list];
+};
 
 function _add(v1, v2) {
   let r = Object.assign({}, v1);
@@ -843,6 +914,7 @@ return {
   add: add,
   times: times,
   strip: strip,
+  text_matrix_to_list: text_matrix_to_list,
 }
 
 };

@@ -36,80 +36,6 @@ let v_name = {text: 'v =', x: last_col_coord,
                y: last_row_coord + 0.05, key: 'u' };
                
 
-function text_matrix_to_list(coord_texts, coord,
-                                        size, coord_keys, brack_key) {
-    // print vector u: vec_texts = ['u =', 'v =', ...], coord_texts = [[u.x, u.y], [v.x, v.y],
-                   //  keys = [[xu, yu,], [xv, yv] ...], 
-                  // coord = [x, y] coord to start printing, size = font_size;
-
-  let size_of_space = coord_texts[0].length,
-      numb_of_vector =  coord_texts.length,
-      matrix_w = 0.62 * size/14 * numb_of_vector * w_unit,
-      matrix_h = 0.36 * size/14 * size_of_space  * h_unit,
-
-      texts_list = [],
-      lines_list = [],
-      
-      cols_list = [],
-      rows_list = [];
-  
-  // text
-  cols_list.push(coord[0]);
-  for (i = 1; i < numb_of_vector; i++) {
-    cols_list.push(cols_list[0] + 0.6 * size/14 * i * w_unit);
-  }
-
-  rows_list.push(coord[1] - matrix_h/2 + 0.225 * size/14 * h_unit);
-  for (i = 1; i < size_of_space; i++) {
-    rows_list.push(rows_list[0] + 0.36 * size/14 * i * h_unit);
-  }
-
-  for (i = 0; i < numb_of_vector; i++) {
-    for (j = 0; j < size_of_space; j++) {
-      texts_list.push({text: coord_texts[i][j], x: cols_list[i],
-                       y: rows_list[j], font_size: size,
-                       text_opacity: 1.0, key: coord_keys[i][j]});
-    }
-  }; 
-  console.log(texts_list);
-  
-  lines_list = [
-      [
-        {x: coord[0], y: coord[1] - matrix_h/2, z: 0},
-        {x: coord[0] + 0.1 * size/14 * w_unit, y: coord[1] - matrix_h/2,
-         z: 0, color: 'grey', tt: true}],
-      [
-        {x: coord[0], y: coord[1] -matrix_h/2, z: 0},
-        {x: coord[0], y: coord[1] + matrix_h/2,
-         z: 0, color: 'grey', tt: true}],
-      [
-        {x: coord[0], y: coord[1] + matrix_h/2, z: 0},
-        {x: coord[0] + 0.1 * size/14 * w_unit,
-         y: coord[1] + matrix_h/2, z: 0, color: 'grey', tt: true}],
-      [
-        {x: coord[0] + matrix_w - 0.1 * size/14 * w_unit,
-         y: coord[1] - matrix_h/2, z: 0},
-        {x: coord[0] + matrix_w,
-         y: coord[1] - matrix_h/2, z: 0, color: 'grey', tt: true}],
-      [
-        {x: coord[0] + matrix_w, y: coord[1] - matrix_h/2, z: 0},
-        {x: coord[0] + matrix_w,
-         y: coord[1] + matrix_h/2, z: 0, color: 'grey', tt: true}],
-      [
-        {x: coord[0] + matrix_w, y: coord[1] + matrix_h/2, z: 0},
-        {x: coord[0] + matrix_w - 0.1 * size/14 * w_unit,
-         y: coord[1] + matrix_h/2, z: 0, color: 'grey', tt: true}]
-  ];
-
-  for (i = 0; i < lines_list.length; i++) {
-    lines_list[i].key = 'bracket'.concat(brack_key - i);
-    lines_list[i].stroke_width = size/14;
-  }
-  
-  return [lines_list, texts_list];
-};
-
-
 function select_svg(svg_id){
   svg = d3.select(svg_id);
   lib = space_plot_lib(
@@ -209,22 +135,22 @@ function plot(scatter, axis, tt){
                   drag_end_fn=drag_end
                   );
 
-  let [lines_vector_u, texts_vector_u] = text_matrix_to_list(
+  let [lines_vector_u, texts_vector_u] = lib.text_matrix_to_list(
           [[u.coord.x.toFixed(2), u.coord.y.toFixed(2)]],
           [last_col_coord, start_coord_y],
           14, [['xu', 'yu']], 5
           ),
-      [lines_vector_v, texts_vector_v] = text_matrix_to_list(
+      [lines_vector_v, texts_vector_v] = lib.text_matrix_to_list(
           [[v.coord.x.toFixed(2), v.coord.y.toFixed(2)]],
           [last_col_coord, start_coord_y],
           14, [['xv', 'yv']], 15
           ),
-      [lines_uT, texts_uT] = text_matrix_to_list(
+      [lines_uT, texts_uT] = lib.text_matrix_to_list(
           [[u.coord.x.toFixed(2)], [u.coord.y.toFixed(2)]],
           [start_coord_x, last_row_coord],
           14, [['xu'], ['yu']], 5
           ),
-      [lines_vT, texts_vT] = text_matrix_to_list(
+      [lines_vT, texts_vT] = lib.text_matrix_to_list(
           [[v.coord.x.toFixed(2)],[v.coord.y.toFixed(2)]],
           [start_coord_x, last_row_coord],
           14, [['xv'], ['yv']], 15
@@ -291,7 +217,7 @@ function plot(scatter, axis, tt){
   ];
 
   lib.plot_texts(dot_product_texts, tt, 'texts_in_blue_line');
-  // let [lines_k, texts_k] = text_matrix_to_list([[1],[2]], [1, 1], 14, [['x'],['y']], 3);
+  // let [lines_k, texts_k] = lib.text_matrix_to_list([[1],[2]], [1, 1], 14, [['x'],['y']], 3);
   // lib.plot_texts(texts_k, tt, 'test');
   // lib.plot_lines(lines_k, tt, 'test');
   lib.sort();
@@ -314,7 +240,7 @@ function init(tt){
       x: 1/Math.sqrt(3),
       y: -Math.sqrt(2/3), 
       z: 0.,
-      color: 2,
+      color: 3,
   };
 
   scatter = [u, v];
@@ -418,22 +344,22 @@ function swap(u, v){
   let uTv = lib.dot_product(u, v);
       
 
-  let [lines_vector_u, texts_vector_u] = text_matrix_to_list(
+  let [lines_vector_u, texts_vector_u] = lib.text_matrix_to_list(
           [[u.coord.x.toFixed(2), u.coord.y.toFixed(2)]],
           [last_col_coord, start_coord_y],
           14, [['xu', 'yu']], 5
           ),
-      [lines_vector_v, texts_vector_v] = text_matrix_to_list(
+      [lines_vector_v, texts_vector_v] = lib.text_matrix_to_list(
           [[v.coord.x.toFixed(2), v.coord.y.toFixed(2)]],
           [last_col_coord, start_coord_y],
           14, [['xv', 'yv']], 15
           ),
-      [lines_uT, texts_uT] = text_matrix_to_list(
+      [lines_uT, texts_uT] = lib.text_matrix_to_list(
           [[u.coord.x.toFixed(2)], [u.coord.y.toFixed(2)]],
           [start_coord_x, last_row_coord],
           14, [['xu'], ['yu']], 5
           ),
-      [lines_vT, texts_vT] = text_matrix_to_list(
+      [lines_vT, texts_vT] = lib.text_matrix_to_list(
           [[v.coord.x.toFixed(2)], [v.coord.y.toFixed(2)]],
           [start_coord_x, last_row_coord],
           14, [['xv'], ['yv']], 15
