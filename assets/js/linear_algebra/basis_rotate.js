@@ -133,7 +133,8 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
 
   u = compute_transformation(u, v1, v2, v3, basis);
   u.color = 4;
-  u.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082, u\u1d40v\u2083]';
+  // u.text = 'u\' = [u\u1d40v\u2081, u\u1d40v\u2082, u\u1d40v\u2083]';
+  u.text = 'u\'';
   lib.plot_points([u], tt, null, null, null, 'u2', origin2);
 
   let cloud_rotated = [];
@@ -156,6 +157,19 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
   let unit_marks = [basis.x, basis.y, basis.z] 
   lib.plot_points(unit_marks, 
                   tt, null, null, null, 'basis2', origin2);
+
+  let lines = [];
+  let line_x = [{x: 0, y: 0, z:0},
+                lib.strip(basis.x)],
+      line_y = [{x: 0, y: 0, z:0},
+                lib.strip(basis.y)],
+      line_z = [{x: 0, y: 0, z:0},
+                lib.strip(basis.z)];
+  line_x.color = basis.x.color;
+  line_y.color = basis.y.color;
+  line_z.color = basis.z.color;
+  lib.plot_lines([line_x, line_y, line_z], 
+                 tt, 'axis2', null, null, null, origin2);
 }
 
 
