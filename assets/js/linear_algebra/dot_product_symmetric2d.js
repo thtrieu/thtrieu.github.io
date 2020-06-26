@@ -182,7 +182,7 @@ function plot(scatter, axis, tt){
 
   vTu_lines.push(...lines_vT);
   vTu_lines.push(...lines_u);
-  
+
   if (position_state == 0) {
     lib.plot_texts(uTv_texts, tt, 'transition');
     lib.plot_lines(uTv_lines, tt, 'bracket');

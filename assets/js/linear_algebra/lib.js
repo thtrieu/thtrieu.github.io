@@ -889,16 +889,27 @@ function strip(v) {
 }
 
 
+function cp_item(i) {
+  return Object.assign({}, i);
+}
+
+
+function cp_list(l) {
+  let r = [];
+  l.forEach(function(i) {r.push(cp_item(i));});
+  return r;
+}
+
+
 return {
+  set_ranges: set_ranges,
+  sort: sort,
   color: color,
-  normalize: normalize,
-  norm: norm,
-  norm2: norm2,
-  dot_product: dot_product,
   plot_points: plot_points,
   plot_lines: plot_lines,
   plot_texts: plot_texts,
   plot_images: plot_images,
+  dot_product: dot_product,
   dot_basis: dot_basis,
   rotate_point: rotate_point,
   rotate_points: rotate_points,
@@ -914,14 +925,16 @@ return {
   mouse_to_point_position: mouse_to_point_position,
   create_segments: create_segments,
   create_dash_segments: create_dash_segments,
-  distance: distance,
-  sort: sort,
   text_table_to_list: text_table_to_list,
+  text_matrix_to_list: text_matrix_to_list,
+  normalize: normalize,
+  norm: norm,
+  norm2: norm2,
+  distance: distance,
   add: add,
   times: times,
   strip: strip,
-  text_matrix_to_list: text_matrix_to_list,
-  set_ranges: set_ranges,
+  cp_list: cp_list,
 }
 
 };
