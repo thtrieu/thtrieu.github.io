@@ -185,14 +185,14 @@ function plot(scatter, axis, tt){
        x: v.x * uTv/2,
        y: v.y * uTv/2,
        text_color: 0, text_opacity: uTvv_opacity,
-       tt: tt, key: 'uTv_texts'},
+       key: 'uTv_texts'},
       {text: uTv.toFixed(3), text_color: 0,
        x: last_col_coord,
        y: last_row_coord + differ,
        text_opacity: uTvv_opacity, font_size: uTv_font_size, 
-       tt: tt, key: 'uTv'}
+       key: 'uTv'}
   ];
-  lib.plot_texts(uTv_texts, tt, 'uTv_texts');
+  lib.plot_texts(uTv_texts, 0, 'uTv_texts');
 
   lib.sort();
 }
