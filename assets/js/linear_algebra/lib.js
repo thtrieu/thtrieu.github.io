@@ -776,10 +776,10 @@ function text_table_to_list(texts,
 
   return list_of_texts;
 }
+
+
 function text_matrix_to_list(coord_texts, coord, size=14,
                              w_unit=0.6 , h_unit=0.23) {
-    // print vector u, v: vec_texts = ['u =', 'v =', ...], coord_texts = [[u.x, u.y], [v.x, v.y],
-                    // coord = [x, y] coord to start printing, size = font_size;
 
   let size_of_space = coord_texts.length,
       numb_of_vector =  coord_texts[0].length,
