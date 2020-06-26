@@ -821,17 +821,17 @@ function text_matrix_to_list(coord_texts, coord, size=14,
   lines_list = [
       [
         {x: coord[0], y: coord[1] - matrix_h/2},
-        {x: coord[0] + bracket_head,
+        {x: coord[0] + bracket_wings,
          y: coord[1] - matrix_h/2}],
       [
         {x: coord[0], y: coord[1] - matrix_h/2},
         {x: coord[0], y: coord[1] + matrix_h/2}],
       [
         {x: coord[0], y: coord[1] + matrix_h/2},
-        {x: coord[0] + bracket_head,
+        {x: coord[0] + bracket_wings,
          y: coord[1] + matrix_h/2}],
       [
-        {x: coord[0] + matrix_w - bracket_head,
+        {x: coord[0] + matrix_w - bracket_wings,
          y: coord[1] - matrix_h/2},
         {x: coord[0] + matrix_w,
          y: coord[1] - matrix_h/2}],
@@ -843,7 +843,7 @@ function text_matrix_to_list(coord_texts, coord, size=14,
       [
         {x: coord[0] + matrix_w,
          y: coord[1] + matrix_h/2},
-        {x: coord[0] + matrix_w - bracket_head,
+        {x: coord[0] + matrix_w - bracket_wings,
          y: coord[1] + matrix_h/2}]
   ];
 
