@@ -1,6 +1,6 @@
 let dot_product_formula2d = (function() {
 
-let origin = [300, 140], 
+let origin = [150, 140], 
     scale = 60, 
     scatter = [], 
     axis = [],
@@ -12,6 +12,17 @@ let origin = [300, 140],
     unit = axis_len/10,
     svg = null,
     lib = null;
+
+let w_unit = 1.0, h_unit = 1.0;
+
+let start_coord_x=(400 - origin[0])/scale,
+    start_coord_y=(125 - origin[1])/scale;
+
+let u_cell = {text: 'u =', x: start_coord_x,
+              y: start_coord_y - 0.45 * h_unit, key: 'u'},
+    v_cell = {text: 'v =', x: start_coord_x + 0.9 * w_unit,
+              y: start_coord_y - 0.45 * h_unit, key: 'v'};
+               
 
 function select_svg(svg_id) {
   svg = d3.select(svg_id);
@@ -112,46 +123,65 @@ function plot(scatter, axis, tt){
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
 
-  let texts_to_show = [
-      [
-          {text: 'u'}, {text: '= ['},  
-          {text: u.coord.x.toFixed(2), text_color: 8},
-          {text: ''}, {text: ''}, {text: ','},
-          {text: u.coord.y.toFixed(2), text_color: 8},
-          {text: ''}, {text: ''}, {text: ']'}
-      ], [
-          {text: 'v'}, {text: '= ['},
-          {text: ''}, {text: ''},
-          {text: v.coord.x.toFixed(2), text_color: 6},
-          {text: ','}, {text: ''}, {text: ''},
-          {text: v.coord.y.toFixed(2), text_color: 6},
-          {text: ']'}
-      ], [
-          {text: 'u\u1d40v', text_color: 0}, {text: '='},
-          {text: u.coord.x.toFixed(2), text_color: 8},
-          {text: '\u00d7'},
-          {text: v.coord.x.toFixed(2), text_color: 6},
-          {text: '+'},
-          {text: u.coord.y.toFixed(2), text_color: 8},
-          {text: '\u00d7'},
-          {text: v.coord.y.toFixed(2), text_color: 6},
-          {text: ''},
-      ], [
-          {text: ''}, {text: '='},
-          {text: uTv.toFixed(3), text_color: 0},
-          {text: ''}, {text: ''}, {text: ''},
-          {text: ''}, {text: ''}, {text: ''},
-          {text: ''}
-      ]
-  ];
+  let [lines_u, texts_u] = lib.text_matrix_to_list(
+          [[{text: u.coord.x.toFixed(2), key: 'xu'}],
+           [{text: u.coord.y.toFixed(2), key: 'yu'}]], 
+          [start_coord_x, start_coord_y], 14, 5
+          ),
+      [lines_plus, texts_plus] = lib.text_matrix_to_list(
+          [[{text: '\uFE62', text_color: 0, key: 'fplus'}]],
+          [start_coord_x - 0.3 * w_unit, start_coord_y], 14, 5
+          ),
+      [lines_multi, texts_multi] = lib.text_matrix_to_list(
+          [[{text: '\u00D7', text_color: 0, key: 'fmulti'}],
+           [{text: '\u00D7', text_color: 0, key: 'smulti'}]], 
+          [start_coord_x + 0.6 * w_unit, start_coord_y], 14, 5
+          ),
+      [lines_v, texts_v] =  lib.text_matrix_to_list(
+          [[{text: v.coord.x.toFixed(2), key: 'xv'}],
+           [{text: v.coord.y.toFixed(2), key: 'yv'}]], 
+          [start_coord_x + 0.9 * w_unit, start_coord_y], 14, 15
+          );
 
-  lib.plot_texts(lib.text_table_to_list(
-      texts_to_show,
-      start_coord_x=-2.2, start_coord_y=2.2,
-      w_unit=0.24, h_unit=0.3,
-      dws_array=[1.7, 1.5, 2.4, 0.8, 2.4, 0.8, 2.4, 0.8, 2.4],
-      dhs_array=[1.0, 1.8, 1.0])
-  );
+  let big_line = [{x: start_coord_x - 0.1 * w_unit,
+                   y: start_coord_y + 0.45 * h_unit, z: 0},
+                  {x: start_coord_x + 1.55 * w_unit,
+                   y: start_coord_y + 0.45 * h_unit, z: 0,
+                   color: 0}],
+      uTv_texts = [{text: 'u\u1d40v =', x: start_coord_x - 0.6 * w_unit,
+                    y: start_coord_y + 0.7 * h_unit, text_color: 0, key: 'uTv_text'},
+                   {text: uTv.toFixed(3), x: start_coord_x + 0.4 * w_unit,
+                    y: start_coord_y + 0.7, text_color: 0, key: 'uTv_numb'}],
+      hide_z_texts = [{text: '', x: start_coord_x,
+                       y: start_coord_y + 0.3 * h_unit, key: 'zu', text_opacity: 0},
+                      {text: '', x: start_coord_x + 0.9 * w_unit,
+                       y: start_coord_y + 0.3 * h_unit, key: 'zv', text_opacity: 0}],
+      hide_sign_texts = [{text:'\uFE62', x: start_coord_x - 0.3 * w_unit,
+                          y: start_coord_y + 0.3 * h_unit,
+                          text_color: 0, text_opacity: 0, key: 'splus'},
+                         {text:'\u00D7', x: start_coord_x + 0.6 * w_unit,
+                          y: start_coord_y + 0.3 * h_unit,
+                          text_color: 0, text_opacity: 0, key: 'tmulti'}];
+
+  big_line.stroke_width = 0.7;
+
+  let texts_to_show = [];
+  texts_to_show.push(...texts_u);
+  texts_to_show.push(...texts_v);
+  texts_to_show.push(...texts_plus);
+  texts_to_show.push(...texts_multi);
+  texts_to_show.push(...hide_z_texts);
+  texts_to_show.push(...hide_sign_texts);
+  texts_to_show.push(...uTv_texts);
+  texts_to_show.push(u_cell, v_cell);
+
+  let lines_to_show = [];  
+  lines_to_show.push(...lines_u);
+  lines_to_show.push(...lines_v);
+  lines_to_show.push(big_line);
+
+  lib.plot_texts(texts_to_show, tt, 'texts');
+  lib.plot_lines(lines_to_show, tt, 'lines');
 
   lib.sort();
 }
@@ -181,11 +211,22 @@ function init(tt){
   drag_end();
 }
 
+let drag_on_left = true; 
+
 function drag_start(){
   lib.drag_start2d();
+  if (lib.get_mouse_position().x < 300) {
+    drag_on_left = true;
+  } else {
+    drag_on_left = false;
+  }
 }
 
 function dragged(){
+  if (!drag_on_left) {
+    return;
+  }
+
   angle_z = lib.get_drag_angle_2d();
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
@@ -197,6 +238,10 @@ function dragged(){
 }
 
 function dragged_point_only(){
+  if (!drag_on_left) {
+    return;
+  }
+
   angle_z = lib.get_drag_angle_2d();
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
@@ -207,14 +252,19 @@ function dragged_point_only(){
 }
 
 function dragged_point(i){
+  if (!drag_on_left) {
+    return;
+  }
+
   expectedScatter = [];
   scatter.forEach(function(d, j){
-      if (j == i) {
-        expectedScatter.push(
-            lib.update_point_position_from_mouse(d));
-      } else {
-        expectedScatter.push(d);
-      }
+    if (j == i) {
+      r = lib.update_point_position_from_mouse(d);
+      r.x = Math.min(r.x, (300-origin[0])/scale);
+      expectedScatter.push(r);
+    } else {
+      expectedScatter.push(d);
+    }
   });
 
   plot(expectedScatter, 
@@ -223,6 +273,10 @@ function dragged_point(i){
 }
 
 function drag_end(){
+  if (!drag_on_left) {
+    return;
+  }
+  
   scatter = expectedScatter;
   axis = expectedAxis;
 }
