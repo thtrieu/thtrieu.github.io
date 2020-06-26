@@ -14,21 +14,24 @@ let origin = [150, 140],
     lib = null,
     position_state = 0;
 
-let w_unit = 1.0, h_unit = 1.0;
+let differ = 0.09,
+    text_above_matrix = 0.4,
+    col_unit = 0.6,
+    row_unit = 0.3;
 
-let start_coord_x=(380 - origin[0])/scale + 0.6 * w_unit,
-    start_coord_y=(75 - origin[1])/scale + 0.2 * h_unit,
-    last_col_coord = start_coord_x + 1.25 * w_unit,
-    last_row_coord = start_coord_y + 0.56 * h_unit;
+let start_coord_x=(380 - origin[0])/scale + 0.6 ,
+    start_coord_y=(75 - origin[1])/scale + 0.175,
+    last_col_coord = start_coord_x + 1.3,
+    last_row_coord = start_coord_y + 0.6;
 
 let v_cell = {text: 'v =', x: last_col_coord,
-              y: start_coord_y - 0.4 * h_unit, key: 'v'},
+              y: start_coord_y - text_above_matrix, key: 'v'},
     u_cell = {text: 'u =', x: last_col_coord,
-              y: start_coord_y - 0.4 * h_unit, key: 'u'},
-    vT_cell = {text: 'v\u1d40 =', x: start_coord_x - 0.6 * w_unit,
-               y: last_row_coord + 0.09, key: 'v' },
-    uT_cell = {text: 'u\u1d40 =', x: start_coord_x - 0.6 * w_unit,
-               y: last_row_coord + 0.09, key: 'u' };
+              y: start_coord_y - text_above_matrix, key: 'u'},
+    vT_cell = {text: 'v\u1d40 =', x: start_coord_x - col_unit,
+               y: last_row_coord + differ, key: 'v' },
+    uT_cell = {text: 'u\u1d40 =', x: start_coord_x - col_unit,
+               y: last_row_coord + differ, key: 'u' };
                
 
 function select_svg(svg_id){
@@ -133,22 +136,22 @@ function plot(scatter, axis, tt){
   let [lines_u, texts_u] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'}],
            [{text: u.coord.y.toFixed(2), key: 'yu'}]],
-          [last_col_coord, start_coord_y], 14, 5
+          [last_col_coord, start_coord_y], 14
           ),
       [lines_v, texts_v] = lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'}],
            [{text: v.coord.y.toFixed(2), key: 'yv'}]],
-          [last_col_coord, start_coord_y], 14, 15
+          [last_col_coord, start_coord_y], 14
           ),
       [lines_uT, texts_uT] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'},
             {text: u.coord.y.toFixed(2), key: 'yu'}]],
-          [start_coord_x, last_row_coord], 14, 5
+          [start_coord_x, last_row_coord], 14
           ),
       [lines_vT, texts_vT] = lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'},
             {text: v.coord.y.toFixed(2), key: 'yv'}]],
-          [start_coord_x, last_row_coord], 14, 15
+          [start_coord_x, last_row_coord], 14
           );
 
   let uTv_texts = [],
@@ -157,16 +160,16 @@ function plot(scatter, axis, tt){
       vTu_lines = [];
 
   let zv_text = {text: '', x: last_col_coord,
-                 y: start_coord_y + 0.3 * h_unit, text_opacity: 0, key: 'zv'
+                 y: start_coord_y + row_unit, text_opacity: 0, key: 'zv'
                 },
       zu_text = {text: '', x: last_col_coord,
-                 y: start_coord_y + 0.3 * h_unit, text_opacity: 0, key: 'zu'
+                 y: start_coord_y + row_unit, text_opacity: 0, key: 'zu'
                 },
-      zvT_text = {text: '', x: start_coord_x + 0.6 * w_unit,
-                  y: last_row_coord + 0.09 * h_unit, text_opacity: 0, key: 'zv'
+      zvT_text = {text: '', x: start_coord_x + col_unit,
+                  y: last_row_coord + differ, text_opacity: 0, key: 'zv'
                 },
-      zuT_text = {text: '', x: start_coord_x + 0.6 * w_unit,
-                  y: last_row_coord + 0.09 * h_unit, text_opacity: 0, key: 'zu'
+      zuT_text = {text: '', x: start_coord_x + col_unit,
+                  y: last_row_coord + differ, text_opacity: 0, key: 'zu'
                 };
 
   uTv_texts.push(...texts_uT);
@@ -194,7 +197,7 @@ function plot(scatter, axis, tt){
   let dot_product_texts_at_bot = [
       {text: uTv.toFixed(3),
        x: last_col_coord,
-       y: last_row_coord + 0.09 * h_unit,
+       y: last_row_coord + 0.09,
        text_color: 0, text_opacity: 1,
        font_size: 14, tt, key: 'text_at_bot'}
   ];
@@ -333,22 +336,22 @@ function swap(u, v){
   let [lines_u, texts_u] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'}],
            [{text: u.coord.y.toFixed(2), key: 'yu'}]],
-          [last_col_coord, start_coord_y], 14, 5
+          [last_col_coord, start_coord_y], 14
           ),
       [lines_v, texts_v] = lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'}],
            [{text: v.coord.y.toFixed(2), key: 'yv'}]],
-          [last_col_coord, start_coord_y], 14, 15
+          [last_col_coord, start_coord_y], 14
           ),
       [lines_uT, texts_uT] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'},
             {text: u.coord.y.toFixed(2), key: 'yu'}]],
-          [start_coord_x, last_row_coord], 14, 5
+          [start_coord_x, last_row_coord], 14
           ),
       [lines_vT, texts_vT] = lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'},
             {text: v.coord.y.toFixed(2), key: 'yv'}]],
-          [start_coord_x, last_row_coord], 14, 15
+          [start_coord_x, last_row_coord], 14
           );
   let uTv_texts = [],
       uTv_lines = [],
@@ -356,15 +359,15 @@ function swap(u, v){
       vTu_lines = [];
 
   let zv_text = {text: v.coord.z.toFixed(2), x: last_col_coord,
-                 y: start_coord_y + 0.525 * h_unit, text_opacity: 0, key: 'zv'
+                 y: start_coord_y + 0.525, text_opacity: 0, key: 'zv'
                 },
       zu_text =  {text: u.coord.z.toFixed(2), x: last_col_coord,
-                  y: start_coord_y + 0.525 * h_unit, text_opacity: 0, key: 'zu'
+                  y: start_coord_y + 0.525, text_opacity: 0, key: 'zu'
                 },
-      zvT_text = {text: v.coord.z.toFixed(2), x: start_coord_x + 0.6 * w_unit,
+      zvT_text = {text: v.coord.z.toFixed(2), x: start_coord_x + 0.6 ,
                   y: last_row_coord, text_opacity: 0, key: 'zv'
                 },
-      zuT_text = {text: u.coord.z.toFixed(2), x: start_coord_x + 0.6 * w_unit,
+      zuT_text = {text: u.coord.z.toFixed(2), x: start_coord_x + 0.6 ,
                   y: last_row_coord, text_opacity: 0, key: 'zu'
                 };
 

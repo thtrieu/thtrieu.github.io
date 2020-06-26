@@ -13,15 +13,19 @@ let origin = [150, 140],
     svg = null,
     lib = null;
 
-let w_unit = 1.0, h_unit = 1.0;
+let differ = 0.09,
+    text_above_matrix = 0.45,
+    col_unit = 0.6,
+    row_unit = 0.3;
 
 let start_coord_x=(400 - origin[0])/scale,
     start_coord_y=(125 - origin[1])/scale;
+    end_matrix_y = start_coord_y + 0.33;
 
 let u_cell = {text: 'u =', x: start_coord_x,
-              y: start_coord_y - 0.45 * h_unit, key: 'u'},
-    v_cell = {text: 'v =', x: start_coord_x + 0.9 * w_unit,
-              y: start_coord_y - 0.45 * h_unit, key: 'v'};
+              y: start_coord_y - text_above_matrix, key: 'u'},
+    v_cell = {text: 'v =', x: start_coord_x + col_unit * 1.5,
+              y: start_coord_y - text_above_matrix, key: 'v'};
                
 
 function select_svg(svg_id) {
@@ -126,42 +130,55 @@ function plot(scatter, axis, tt){
   let [lines_u, texts_u] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'}],
            [{text: u.coord.y.toFixed(2), key: 'yu'}]], 
-          [start_coord_x, start_coord_y], 14, 5
+          [start_coord_x, start_coord_y], 14
           ),
       [lines_plus, texts_plus] = lib.text_matrix_to_list(
-          [[{text: '\uFE62', text_color: 0, key: 'fplus'}]],
-          [start_coord_x - 0.3 * w_unit, start_coord_y], 14, 5
+          [[{text: '+', text_color: 0, key: 'fplus'}]],
+          [start_coord_x - col_unit * 0.5, start_coord_y], 14
           ),
       [lines_multi, texts_multi] = lib.text_matrix_to_list(
           [[{text: '\u00D7', text_color: 0, key: 'fmulti'}],
            [{text: '\u00D7', text_color: 0, key: 'smulti'}]], 
-          [start_coord_x + 0.6 * w_unit, start_coord_y], 14, 5
+          [start_coord_x + col_unit, start_coord_y], 14
           ),
       [lines_v, texts_v] =  lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'}],
            [{text: v.coord.y.toFixed(2), key: 'yv'}]], 
-          [start_coord_x + 0.9 * w_unit, start_coord_y], 14, 15
+          [start_coord_x + col_unit * 1.5, start_coord_y], 14
           );
 
-  let big_line = [{x: start_coord_x - 0.1 * w_unit,
-                   y: start_coord_y + 0.45 * h_unit, z: 0},
-                  {x: start_coord_x + 1.55 * w_unit,
-                   y: start_coord_y + 0.45 * h_unit, z: 0,
-                   color: 0}],
-      uTv_texts = [{text: 'u\u1d40v =', x: start_coord_x - 0.6 * w_unit,
-                    y: start_coord_y + 0.7 * h_unit, text_color: 0, key: 'uTv_text'},
-                   {text: uTv.toFixed(3), x: start_coord_x + 0.4 * w_unit,
-                    y: start_coord_y + 0.7, text_color: 0, key: 'uTv_numb'}],
+  let big_line = [{x: start_coord_x - 0.1,
+                   y: end_matrix_y + row_unit * 2/5},
+                  {x: start_coord_x + col_unit * 2.65,
+                   y: end_matrix_y + row_unit * 2/5,
+                   color: 0}
+                 ],
+      uTv_texts = [{text: 'u\u1d40v =',
+                    x: start_coord_x - col_unit,
+                    y: end_matrix_y + row_unit * 1.25,
+                    text_color: 0, key: 'uTv_text'},
+                   {text: uTv.toFixed(3),
+                    x: start_coord_x + col_unit * 2/3,
+                    y: end_matrix_y + row_unit * 1.25,
+                    text_color: 0, key: 'uTv_numb'}
+                  ],
       hide_z_texts = [{text: '', x: start_coord_x,
-                       y: start_coord_y + 0.3 * h_unit, key: 'zu', text_opacity: 0},
-                      {text: '', x: start_coord_x + 0.9 * w_unit,
-                       y: start_coord_y + 0.3 * h_unit, key: 'zv', text_opacity: 0}],
-      hide_sign_texts = [{text:'\uFE62', x: start_coord_x - 0.3 * w_unit,
-                          y: start_coord_y + 0.3 * h_unit,
+                       y: start_coord_y + row_unit,
+                       text_opacity: 0, key: 'zu'},
+                      {text: '',
+                       x: start_coord_x + col_unit * 1.5,
+                       y: start_coord_y + row_unit,
+                       text_opacity: 0, key: 'zv'}
+                     ],
+      hide_sign_texts = [{text:'+',
+                          x: start_coord_x - col_unit * 0.5,
+                          y: start_coord_y + row_unit,
                           text_color: 0, text_opacity: 0, key: 'splus'},
-                         {text:'\u00D7', x: start_coord_x + 0.6 * w_unit,
-                          y: start_coord_y + 0.3 * h_unit,
-                          text_color: 0, text_opacity: 0, key: 'tmulti'}];
+                         {text:'\u00D7',
+                          x: start_coord_x + col_unit,
+                          y: start_coord_y + row_unit,
+                          text_color: 0, text_opacity: 0, key: 'tmulti'}
+                        ];
 
   big_line.stroke_width = 0.7;
 
@@ -187,7 +204,7 @@ function plot(scatter, axis, tt){
 }
 
 function init(tt){
-  axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
+  axis = lib.init_float_axis(axis_len, unit);
   let u = {
       x: -1.0,
       y: -4.0/3, 

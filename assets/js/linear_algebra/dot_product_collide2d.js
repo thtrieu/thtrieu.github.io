@@ -14,17 +14,24 @@ let origin = [150, 140],
     lib = null,
     uTvv_opacity = 0;
 
-let w_unit = 1.0, h_unit = 1.0,
-    dws_array = [0.4, 0.7, 0.0, 0.7],
-    dhs_array = [0.4, 0.4, 0.0, 0.4];
+let differ = 0.09,
+    text_above_matrix = 0.4,
+    col_unit = 0.6,
+    row_unit = 0.3;
 
-let start_coord_x = (375 - origin[0])/scale + 0.7 * w_unit, 
-    start_coord_y = (75 - origin[1])/scale + 0.4 * h_unit;
+let start_coord_x=(380 - origin[0])/scale + 0.6,
+    start_coord_y=(75 - origin[1])/scale + 0.175,
+    last_col_coord = start_coord_x + 1.3,
+    last_row_coord = start_coord_y + 0.6;
 
-let bot_right_x = start_coord_x + dws_array.reduce(
-    function(total, d) {return total + d * w_unit;}, 0),
-    bot_right_y = start_coord_y + dhs_array.reduce(
-    function(total, d) {return total + d * h_unit;}, 0);
+let v_cell = {text: 'v =', x: last_col_coord,
+              y: start_coord_y - text_above_matrix, key: 'v'},
+    u_cell = {text: 'u =', x: last_col_coord,
+              y: start_coord_y - text_above_matrix, key: 'u'},
+    vT_cell = {text: 'v\u1d40 =', x: start_coord_x - col_unit,
+               y: last_row_coord + differ, key: 'v' },
+    uT_cell = {text: 'u\u1d40 =', x: start_coord_x - col_unit,
+               y: last_row_coord + differ, key: 'u' };
 
 
 function select_svg(svg_id){
@@ -131,37 +138,41 @@ function plot(scatter, axis, tt){
                          y: v.y * uTv/2,
                          tt: tt,
                          text_color: 0}];
-  lib.plot_texts(uTvv_line_text, tt=tt, name='uTvv_line_text');
+  lib.plot_texts(uTvv_line_text, tt, 'uTvv_line_text');
 
   // First we plot uT and v
-  let texts_to_show = [
-      [
-          {text: ''}, {text: ''}, {text: ''}, {text: ''}, 
-          {text: 'v', text_opacity: 0.7, key: 'v', tt: tt},
-      ], [
-          {text: ''}, {text: ''}, {text: ''}, {text: ''},
-          {text: v.coord.x.toFixed(2), text_opacity: 0.7, key: 'xv', tt: tt},
-      ], [
-          {text: ''}, {text: ''}, {text: ''}, {text: ''},
-          {text: v.coord.y.toFixed(2), text_opacity: 0.7, key: 'yv', tt: tt},
-      ], [
-          {text: ''}, {text: ''}, {text: ''}, {text: ''}, 
-          {text: '', key: 'zv', text_opacity: 0.0},
-      ], [
-          {text: 'u\u1d40', text_opacity: 0.7, key: 'u', tt: tt},
-          {text: u.coord.x.toFixed(2), text_opacity: 0.7, key: 'xu', tt: tt},
-          {text: u.coord.y.toFixed(2), text_opacity: 0.7, key: 'yu', tt: tt},
-          {text: '', key: 'zu', text_opacity: 0.0},
-          {text: ''}
-      ]
-  ];
-  lib.plot_texts(lib.text_table_to_list(
-      texts_to_show,
-      start_coord_x=start_coord_x, start_coord_y=start_coord_y,
-      w_unit=w_unit, h_unit=h_unit,
-      dws_array=dws_array,
-      dhs_array=dhs_array), tt=0, name='transition'
-  );
+  let [lines_v, texts_v] = lib.text_matrix_to_list(
+          [[{text: v.coord.x.toFixed(2), key: 'xv'}],
+           [{text: v.coord.y.toFixed(2), key: 'yv'}]],
+          [last_col_coord, start_coord_y], 14
+          ),
+      [lines_uT, texts_uT] = lib.text_matrix_to_list(
+          [[{text: u.coord.x.toFixed(2), key: 'xu'},
+            {text: u.coord.y.toFixed(2), key: 'yu'}]],
+          [start_coord_x, last_row_coord], 14
+          );
+
+  let texts_to_show = [],
+      lines_to_show = [];
+
+  let zv_text = {text: '', x: last_col_coord,
+                 y: start_coord_y + row_unit,
+                 text_opacity: 0, key: 'zv'
+                },
+      zuT_text = {text: '', x: start_coord_x + col_unit,
+                  y: last_row_coord + differ,
+                  text_opacity: 0, key: 'zu'
+                };
+
+  texts_to_show.push(...texts_uT);
+  texts_to_show.push(...texts_v);
+  texts_to_show.push(uT_cell, v_cell, zuT_text, zv_text);
+
+  lines_to_show.push(...lines_uT);
+  lines_to_show.push(...lines_v);
+
+  lib.plot_texts(texts_to_show, tt, 'texts_to_show');
+  lib.plot_lines(lines_to_show, tt, 'lines_to_show');
 
   // Finally we plot uTv and uTvv_line's computed text "uTv = ..."
   // Both share the same opacity uTvv_opacity. 
@@ -175,18 +186,19 @@ function plot(scatter, axis, tt){
        y: v.y * uTv/2,
        text_color: 0, text_opacity: uTvv_opacity,
        tt: tt, key: 'uTv_texts'},
-      {text: uTv.toFixed(3), text_color: 0, 
-       x: bot_right_x, y: bot_right_y,
+      {text: uTv.toFixed(3), text_color: 0,
+       x: last_col_coord,
+       y: last_row_coord + differ,
        text_opacity: uTvv_opacity, font_size: uTv_font_size, 
        tt: tt, key: 'uTv'}
   ];
-  lib.plot_texts(uTv_texts, tt=tt, name='uTv_texts');
+  lib.plot_texts(uTv_texts, tt, 'uTv_texts');
 
   lib.sort();
 }
 
 function init(tt){
-  axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
+  axis = lib.init_float_axis(axis_len, unit);
 
   let u = {
       x: -1.0,
@@ -205,8 +217,10 @@ function init(tt){
   scatter = [u, v];
   uTvv_opacity = 0;
 
-  expectedScatter = lib.rotate_points(scatter, startAngleX, startAngleY, startAngleZ);
-  expectedAxis = lib.rotate_lines(axis, startAngleX, startAngleY, startAngleZ);
+  expectedScatter = lib.rotate_points(scatter, startAngleX,
+                                      startAngleY, startAngleZ);
+  expectedAxis = lib.rotate_lines(axis, startAngleX,
+                                  startAngleY, startAngleZ);
   plot(expectedScatter, 
        expectedAxis, 
        tt);
@@ -293,51 +307,45 @@ function compute(u, v){
   // We make a copy of uT and v table
   // Then we plot them at the same place as the original text
   // with opacity 1.0
-  let animation_begin = [
-      [
-          {text: ''}, {text: ''}, {text: ''}, {text: ''}, 
-          {text: 'v', text_opacity: 0.7, key: 'vv'},
-      ], [
-          {text: ''}, {text: ''}, {text: ''}, {text: ''},
-          {text: v.coord.x.toFixed(2), text_opacity: 0.7, key: 'xvv'},
-      ], [
-          {text: ''}, {text: ''}, {text: ''}, {text: ''},
-          {text: v.coord.y.toFixed(2), text_opacity: 0.7, key: 'yvv'},
-      ], [
-          {text: ''}, {text: ''}, {text: ''}, {text: ''}, 
-          {text: '', key: 'zvv'},
-      ], [
-          {text: 'u\u1d40', text_opacity: 0.7, key: 'uu'},
-          {text: u.coord.x.toFixed(2), text_opacity: 0.7, key: 'xuu'},
-          {text: u.coord.y.toFixed(2), text_opacity: 0.7, key: 'yuu'},
-          {text: '', key: 'zuu'},
-          {text: ''}
-      ]
-  ];
+  
+  let [lines_v, texts_v] = lib.text_matrix_to_list(
+          [[{text: v.coord.x.toFixed(2), key: 'xvv'}],
+           [{text: v.coord.y.toFixed(2), key: 'yvv'}]],
+          [last_col_coord, start_coord_y], 14
+          ),
+      [lines_uT, texts_uT] = lib.text_matrix_to_list(
+          [[{text: u.coord.x.toFixed(2), key: 'xuu'},
+            {text: u.coord.y.toFixed(2), key: 'yuu'}]],
+          [start_coord_x, last_row_coord], 14
+          );
 
-  lib.plot_texts(lib.text_table_to_list(
-      animation_begin,
-      start_coord_x=start_coord_x, 
-      start_coord_y=start_coord_y,
-      w_unit=w_unit, h_unit=h_unit,
-      dws_array=dws_array,
-      dhs_array=dhs_array), tt=0, name='animation'
-  );
+  let animation_begin = [],
+      lines_to_show = [];
+
+  animation_begin.push(...texts_uT);
+  animation_begin.push(...texts_v);
+  animation_begin.push(uT_cell, v_cell);
+
+  lines_to_show.push(...lines_uT);
+  lines_to_show.push(...lines_v);
+
+  lib.plot_texts(animation_begin, 0, 'animation');
+  lib.plot_lines(lines_to_show, 0, 'lines_to_show')
 
   // Immediately after that, plot them at the bottom right corner
   // with the same name & key, now with opacity 0.0
   let animation_end = [
-          {text: v.coord.x.toFixed(2), text_opacity: 0,tt: 900, key: 'xvv'},
-          {text: v.coord.y.toFixed(2), text_opacity: 0,tt: 450, key: 'yvv'},
+          {text: v.coord.x.toFixed(2), text_opacity: 0, tt: 900, key: 'xvv'},
+          {text: v.coord.y.toFixed(2), text_opacity: 0, tt: 450, key: 'yvv'},
           {text: u.coord.x.toFixed(2), text_opacity: 0, tt: 900, key: 'xuu'},
           {text: u.coord.y.toFixed(2), text_opacity: 0, tt: 450, key: 'yuu'},
   ];
   for (i = 0; i < animation_end.length; i++) {
-      animation_end[i].x = bot_right_x;
-      animation_end[i].y = bot_right_y;
+      animation_end[i].x = last_col_coord;
+      animation_end[i].y = last_row_coord + differ;
   };
   
-  lib.plot_texts(animation_end, tt=0, name='animation');
+  lib.plot_texts(animation_end, 0, name='animation');
 
   // Finally plot the uTvv_line's computed text & uTv value
   // both share the same opacity 1.0
@@ -347,11 +355,11 @@ function compute(u, v){
                     text_opacity: 1, text_color: 0,
                     key: 'uTv_texts'},
                    {text: uTv.toFixed(3), text_color: 0, 
-                    x: bot_right_x, y: bot_right_y,
+                    x: last_col_coord, y: last_row_coord + differ,
                     text_opacity: 1, font_size: 15, 
                     key: 'uTv'}];
 
-  lib.plot_texts(uTv_texts, tt=1200, name='uTv_texts');
+  lib.plot_texts(uTv_texts, 1200, 'uTv_texts');
 
   // Set the global variable
   uTvv_opacity = 1.0;

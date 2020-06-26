@@ -786,72 +786,81 @@ function text_table_to_list(texts,
 
   return list_of_texts;
 }
-function text_matrix_to_list(coord_texts, coord,
-                             size, brack_key) {
+function text_matrix_to_list(coord_texts, coord, size=14,
+                             w_unit=0.6 , h_unit=0.23) {
     // print vector u, v: vec_texts = ['u =', 'v =', ...], coord_texts = [[u.x, u.y], [v.x, v.y],
                     // coord = [x, y] coord to start printing, size = font_size;
 
   let size_of_space = coord_texts.length,
       numb_of_vector =  coord_texts[0].length,
-      matrix_w = (0.02 + 0.60 * numb_of_vector +
-                  0.02 * (numb_of_vector - 1) * size/14),
-      matrix_h = (0.06 + 0.2 * size_of_space +
-                  0.2 * (size_of_space - 1)) * size/14,
+      bot_margin = 0.08 * size/14,
+      side_margin = 0.03 * size/14,
+      between_rows = 0.12 * size/14,
+      w_col = w_unit * size/14,
+      h_row = h_unit * size/14,
+      bracket_wings = 0.1 * size/14,
+
+      matrix_w = side_margin * 2 + w_col * numb_of_vector,
+
+      matrix_h = bot_margin + h_row * size_of_space +
+                  between_rows * (size_of_space - 1),
       cols_list = [],
       rows_list = [],
       texts_list = [],
       lines_list = [];
+
   // build texts list:
   if (size_of_space > 1){
     for (i = 1; i < size_of_space; i++) {
-      rows_list.push(0.4 * size/14);
+      rows_list.push((h_row + between_rows) * size/14);
     }
   };
   
   if (numb_of_vector > 1) {
     for (i = 1; i < numb_of_vector; i++) {
-    cols_list.push(0.60 * size/14);
+    cols_list.push(w_col * size/14);
     }
   };
    
   texts_list = text_table_to_list(
-      coord_texts, coord[0], (coord[1] - matrix_h/2 + 0.21 * size/14),
-       1, 1, cols_list, rows_list);
+      coord_texts, coord[0],
+      coord[1] - matrix_h/2 + h_row,
+      1, 1, cols_list, rows_list);
 
   // build lines list:
   lines_list = [
       [
-        {x: coord[0], y: coord[1] - matrix_h/2, z: 0},
-        {x: coord[0] + 0.1 * size/14, y: coord[1] - matrix_h/2,
-         z: 0, color: 'grey'}],
+        {x: coord[0], y: coord[1] - matrix_h/2},
+        {x: coord[0] + bracket_head,
+         y: coord[1] - matrix_h/2}],
       [
-        {x: coord[0], y: coord[1] -matrix_h/2, z: 0},
-        {x: coord[0], y: coord[1] + matrix_h/2,
-         z: 0, color: 'grey'}],
+        {x: coord[0], y: coord[1] - matrix_h/2},
+        {x: coord[0], y: coord[1] + matrix_h/2}],
       [
-        {x: coord[0], y: coord[1] + matrix_h/2, z: 0},
-        {x: coord[0] + 0.1 * size/14,
-         y: coord[1] + matrix_h/2, z: 0, color: 'grey'}],
+        {x: coord[0], y: coord[1] + matrix_h/2},
+        {x: coord[0] + bracket_head,
+         y: coord[1] + matrix_h/2}],
       [
-        {x: coord[0] + matrix_w - 0.1 * size/14,
-         y: coord[1] - matrix_h/2, z: 0},
+        {x: coord[0] + matrix_w - bracket_head,
+         y: coord[1] - matrix_h/2},
         {x: coord[0] + matrix_w,
-         y: coord[1] - matrix_h/2, z: 0, color: 'grey'}],
+         y: coord[1] - matrix_h/2}],
       [
-        {x: coord[0] + matrix_w, y: coord[1] - matrix_h/2, z: 0},
         {x: coord[0] + matrix_w,
-         y: coord[1] + matrix_h/2, z: 0, color: 'grey'}],
+         y: coord[1] - matrix_h/2},
+        {x: coord[0] + matrix_w,
+         y: coord[1] + matrix_h/2}],
       [
-        {x: coord[0] + matrix_w, y: coord[1] + matrix_h/2, z: 0},
-        {x: coord[0] + matrix_w - 0.1 * size/14,
-         y: coord[1] + matrix_h/2, z: 0, color: 'grey'}]
+        {x: coord[0] + matrix_w,
+         y: coord[1] + matrix_h/2},
+        {x: coord[0] + matrix_w - bracket_head,
+         y: coord[1] + matrix_h/2}]
   ];
 
   for (i = 0; i < lines_list.length; i++) {
-    lines_list[i].key = 'bracket'.concat(brack_key - i);
-    lines_list[i].stroke_width = size/14;
+    lines_list[i].stroke_width = 0.7 * size/14;
   }
-  
+
   return [lines_list, texts_list];
 };
 
