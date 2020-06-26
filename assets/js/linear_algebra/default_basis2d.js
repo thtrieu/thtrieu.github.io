@@ -5,9 +5,7 @@ let origin = [150, 140],
   scale = 60, 
   scatter = [],
   axis = [], 
-  axis2 = [],
   expectedAxis = [],
-  expectedAxis2 = [],
   startAngleX = Math.PI,
   startAngleY = 0.,
   startAngleZ = 0.,
@@ -88,12 +86,13 @@ function hide(objs, op=0.0) {
 }
 
 
-function plot(scatter, axis, axis2, tt){
-  let axis_cp = axis;
+function plot(scatter, axis, tt){
+  let axis1 = lib.cp_list(axis),
+      axis2 = lib.cp_list(axis);
   if (show_proj) {
-    axis_cp = hide(axis, 0.2);
+    axis1 = hide(axis1, 0.2);
   }
-  lib.plot_lines(axis_cp, tt, 'axis');
+  lib.plot_lines(axis1, tt, 'axis');
 
   let points = [];
   scatter.forEach(function(d){
@@ -253,7 +252,6 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
 
 function init(tt){
   axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
-  axis2 = lib.init_float_axis(axis_len=axis_len, unit=unit);
   scatter = [];
 
   scatter.push({
@@ -283,10 +281,8 @@ function init(tt){
 
   scatter = lib.rotate_points(scatter, alpha, beta, startAngleZ);
   axis = lib.rotate_lines(axis, alpha, beta, startAngleZ);
-  axis2 = lib.rotate_lines(axis2, alpha, beta, startAngleZ);
   plot(scatter,
        axis,
-       axis2, 
        tt);
 }
 
@@ -305,37 +301,14 @@ function drag_start(){
 }
 
 function dragged(){
-  if (drag_on_left) {
-    dragged_left();
-  } else {
-    dragged_right();
-  }
-}
-
-
-function dragged_right(){
-  angle_z = lib.get_drag_angle_2d(origin2);
-  expectedScatter = scatter;
-  expectedAxis = axis;
-  expectedAxis2 = lib.rotate_lines(axis2, 0, 0, angle_z);
-  
-  plot(expectedScatter,
-       expectedAxis, 
-       expectedAxis2, 
-       0);
-}
-
-
-function dragged_left(){
-  angle_z = lib.get_drag_angle_2d();
+  let angle_z = lib.get_drag_angle_2d(
+      drag_on_left ? origin : origin2);
 
   expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
   expectedAxis = lib.rotate_lines(axis, 0, 0, angle_z);
-  expectedAxis2 = axis2;
   
   plot(expectedScatter, 
        expectedAxis,
-       expectedAxis2, 
        0);
 }
 
@@ -359,22 +332,16 @@ function dragged_point(d, i){
       }
   });
   expectedAxis = axis;
-  expectedAxis2 = axis2;
 
   plot(expectedScatter, 
-       expectedAxis,
-       expectedAxis2, 
+       expectedAxis, 
        0);
 }
 
 
 function drag_end(){
-  if (drag_on_left) {
-    scatter = expectedScatter;
-    axis = expectedAxis;
-  } else {
-    axis2 = expectedAxis2;
-  }
+  scatter = expectedScatter;
+  axis = expectedAxis;
 }
 
 
@@ -385,7 +352,6 @@ return {
   replot: function(){
     plot(scatter, 
          axis,
-         axis2, 
          1000);
   },
 };

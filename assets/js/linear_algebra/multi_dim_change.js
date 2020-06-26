@@ -6,8 +6,6 @@ let origin = [150, 140],
   scatter = [], 
   axis = [],
   expectedAxis = [],
-  axis2 = [],
-  expectedAxis2 = [],
   startAngleX = Math.PI/8 * 2.65,
   startAngleY = -Math.PI/8,
   startAngleZ = Math.PI/8 * 0.6,
@@ -89,12 +87,13 @@ function hide(objs, op=0.0) {
 }
 
 
-function plot(scatter, axis, axis2, tt){
-  let axis_cp = axis;
+function plot(scatter, axis, tt){
+  let axis1 = lib.cp_list(axis),
+      axis2 = lib.cp_list(axis);
   if (show_proj) {
-    axis_cp = hide(axis_cp, 0.2);
+    axis1 = hide(axis1, 0.2);
   }
-  lib.plot_lines(axis_cp, tt, 'axis');
+  lib.plot_lines(axis1, tt, 'axis');
 
   let points = [];
   scatter.forEach(function(d){
@@ -241,7 +240,6 @@ function plot_v_perspective(u, v1, v2, v3, axis2, tt) {
 
 function init(tt){
   axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
-  axis2 = lib.init_float_axis(axis_len=axis_len, unit=unit);
   scatter = [];
 
   let u = {
@@ -277,10 +275,8 @@ function init(tt){
 
   scatter = lib.rotate_points(scatter, alpha, beta, startAngleZ);
   axis = lib.rotate_lines(axis, alpha, beta, startAngleZ);
-  axis2 = lib.rotate_lines(axis2, alpha, beta, startAngleZ);
   plot(scatter,
        axis,
-       axis2, 
        tt);
 }
 
@@ -298,43 +294,21 @@ function drag_start(){
   }
 }
 
+
 function dragged(){
-  if (drag_on_left) {
-    dragged_left();
-  } else {
-    dragged_right();
-  }
-}
-
-
-function dragged_right(){
-  let [angle_x, angle_y] = lib.get_drag_angles(origin2);
-  expectedAxis2 = lib.rotate_lines(axis2, angle_x, angle_y);
-  
-  plot(scatter, 
-       axis,
-       expectedAxis2, 
-       0);
-}
-
-
-function dragged_left(){
-  let [angle_x, angle_y] = lib.get_drag_angles();
+  let [angle_x, angle_y] = lib.get_drag_angles(
+      drag_on_left ? origin : origin2);
 
   expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
   expectedAxis = lib.rotate_lines(axis, angle_x, angle_y);
   
   plot(expectedScatter, 
        expectedAxis,
-       axis2, 
        0);
 }
 
 
 function dragged_v_only(){
-  if (!drag_on_left) {
-    return;
-  }
   let [angle_x, angle_y] = lib.get_drag_angles();
 
   expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
@@ -343,7 +317,6 @@ function dragged_v_only(){
   
   plot(expectedScatter,
        expectedAxis, 
-       axis2, 
        0);
 }
 
@@ -371,18 +344,13 @@ function dragged_point(d, i){
 
   plot(expectedScatter,
        expectedAxis, 
-       axis2, 
        0);
 }
 
 
 function drag_end(){
-  if (drag_on_left) {
-    scatter = expectedScatter;
-    axis = expectedAxis;
-  } else {
-    axis2 = expectedAxis2;
-  }
+  scatter = expectedScatter;
+  axis = expectedAxis;
 }
 
 
@@ -392,8 +360,7 @@ return {
   set_show_proj: function(s){show_proj = s;},
   replot: function(){
     plot(scatter, 
-         axis,
-         axis2, 
+         axis, 
          1000);
   },
 };
