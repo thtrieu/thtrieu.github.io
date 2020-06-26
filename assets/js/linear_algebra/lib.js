@@ -788,7 +788,7 @@ function text_matrix_to_list(coord_texts, coord, size=14,
       between_rows = 0.12 * size/14,
       w_col = w_unit * size/14,
       h_row = h_unit * size/14,
-      bracket_head = 0.1 * size/14,
+      bracket_wings = 0.1 * size/14,
 
       matrix_w = side_margin * 2 + w_col * numb_of_vector,
 

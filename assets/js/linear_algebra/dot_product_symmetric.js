@@ -15,21 +15,23 @@ let origin = [150, 140],
     svg = null,
     position_state = 0;
 
-let w_unit = 1.0, h_unit = 1.0;
+let differ = 0.09,
+    text_above_matrix = 0.7,
+    col_unit = 0.6;
 
 let start_coord_x=(380 - origin[0])/scale, 
     start_coord_y=(75 - origin[1])/scale,
-    last_col_coord = start_coord_x + 1.9 * w_unit,
-    last_row_coord = start_coord_y + 0.775 * h_unit;
+    last_col_coord = start_coord_x + 1.9,
+    last_row_coord = start_coord_y + 0.775;
 
 let v_cell = {text: 'v =', x: last_col_coord,
-              y: start_coord_y - 0.7 * h_unit, key: 'v'},
+              y: start_coord_y - text_above_matrix, key: 'v'},
     u_cell = {text: 'u =', x: last_col_coord,
-              y: start_coord_y - 0.7 * h_unit, key: 'u'},
-    vT_cell = {text: 'v\u1d40 =', x: start_coord_x - 0.6 * w_unit,
-               y: last_row_coord + 0.09 * h_unit, key: 'v' },
-    uT_cell = {text: 'u\u1d40 =', x: start_coord_x - 0.6 * w_unit,
-               y: last_row_coord + 0.09 * h_unit, key: 'u' };
+              y: start_coord_y - text_above_matrix, key: 'u'},
+    vT_cell = {text: 'v\u1d40 =', x: start_coord_x - col_unit,
+               y: last_row_coord + differ, key: 'v' },
+    uT_cell = {text: 'u\u1d40 =', x: start_coord_x - col_unit,
+               y: last_row_coord + differ, key: 'u' };
 
 
 function select_svg(svg_id) {  
@@ -183,7 +185,7 @@ function plot(scatter, axis, tt){
   let dot_product_texts_at_bot = [
       {text: uTv.toFixed(3),
        x: last_col_coord,
-       y: last_row_coord + 0.09 * h_unit,
+       y: last_row_coord + differ,
        text_color: 0, text_opacity: 1,
        font_size: 14, tt, key: 'text_at_bot'}
   ];

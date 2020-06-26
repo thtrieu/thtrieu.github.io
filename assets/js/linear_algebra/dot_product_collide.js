@@ -15,17 +15,18 @@ let origin = [150, 140],
     svg = null,
     uTvv_opacity = 0;
 
-let w_unit = 1.0, h_unit = 1.0;
+let differ = 0.09,
+    text_above_matrix = 0.7;
 
 let start_coord_x=(380 - origin[0])/scale, 
     start_coord_y=(75 - origin[1])/scale,
-    last_col_coord = start_coord_x + 1.9 * w_unit,
-    last_row_coord = start_coord_y + 0.775 * h_unit;
+    last_col_coord = start_coord_x + 1.9,
+    last_row_coord = start_coord_y + 0.775;
 
 let v_cell = {text: 'v =', x: last_col_coord,
-              y: start_coord_y - 0.7 * h_unit, key: 'v'},
-    uT_cell = {text: 'u\u1d40 =', x: start_coord_x - 0.6 * w_unit,
-               y: last_row_coord + 0.09 * h_unit, key: 'u' };
+              y: start_coord_y - text_above_matrix, key: 'v'},
+    uT_cell = {text: 'u\u1d40 =', x: start_coord_x - 0.6,
+               y: last_row_coord + differ, key: 'u' };
 
 
 function select_svg(svg_id) {  
@@ -121,8 +122,7 @@ function plot(scatter, axis, tt){
                       dragged_point_only();
                     }
                   },
-                  drag_start_fn=drag_start,
-                  drag_end_fn=drag_end);
+                  drag_start, drag_end);
 
   // Step 2: Plot the non-computed uTvv_line_text.
   let uTvv_line_text = [{text: 'u\u1d40v',
@@ -131,7 +131,7 @@ function plot(scatter, axis, tt){
                          z: v.z * uTv/2,
                          text_opacity: 1,
                          text_color: 0}];
-  lib.plot_texts(uTvv_line_text, tt=tt, name='uTvv_line_text');
+  lib.plot_texts(uTvv_line_text, tt, 'uTvv_line_text');
 
   // Step 3: Plot the uT and v tables.
   let [lines_v, texts_v] = lib.text_matrix_to_list(
@@ -174,18 +174,18 @@ function plot(scatter, axis, tt){
        key: 'uTv_texts'},
       {text: uTv.toFixed(3), text_color: 0, 
        x: last_col_coord,
-       y: last_row_coord + 0.09 * h_unit,
+       y: last_row_coord + differ,
        text_opacity: uTvv_opacity,
        font_size: uTv_font_size,
        key: 'uTv'}
   ];
 
-  lib.plot_texts(uTv_texts, tt=0, name='uTv_texts');
+  lib.plot_texts(uTv_texts, 0, name='uTv_texts');
   lib.sort();
 }
 
 function init(tt){
-  axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
+  axis = lib.init_float_axis(axis_len, unit);
   let u = {
       x: 0.8,
       y: 0.8, 
@@ -329,10 +329,10 @@ function compute(u, v){
   
   for (i = 0; i < animation_end.length; i++) {
       animation_end[i].x = last_col_coord;
-      animation_end[i].y = last_row_coord + 0.09 * h_unit;
+      animation_end[i].y = last_row_coord + differ;
 
   };
-  lib.plot_texts(animation_end, tt=0, name='animation');
+  lib.plot_texts(animation_end, 0, 'animation');
 
   // Step 4: plot computed uTvv_line's text and uTv value 
   let uTv_texts = [
@@ -344,13 +344,13 @@ function compute(u, v){
        key: 'uTv_texts'},
       {text: uTv.toFixed(3), text_color: 0, 
        x: last_col_coord,
-       y: last_row_coord + 0.09 * h_unit,
+       y: last_row_coord + differ,
        text_opacity: 1.0, 
        font_size: 15,
        key: 'uTv'}
   ];
 
-  lib.plot_texts(uTv_texts, tt=1200, name='uTv_texts');
+  lib.plot_texts(uTv_texts, 1200, 'uTv_texts');
   
   uTvv_opacity = 1;
 };
