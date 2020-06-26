@@ -19,8 +19,8 @@ let w_unit = 1.0, h_unit = 1.0;
 
 let start_coord_x=(380 - origin[0])/scale, 
     start_coord_y=(75 - origin[1])/scale,
-    last_col_coord = start_coord_x + 1.85 * w_unit,
-    last_row_coord = start_coord_y + 0.76 * h_unit;
+    last_col_coord = start_coord_x + 1.9 * w_unit,
+    last_row_coord = start_coord_y + 0.775 * h_unit;
 
 let v_cell = {text: 'v =', x: last_col_coord,
               y: start_coord_y - 0.7 * h_unit, key: 'v'},
@@ -132,32 +132,31 @@ function plot(scatter, axis, tt){
           [[{text: u.coord.x.toFixed(2), key: 'xu'}],
            [{text: u.coord.y.toFixed(2), key: 'yu'}],
            [{text: u.coord.z.toFixed(2), key: 'zu'}]],
-          [last_col_coord, start_coord_y], 14, 5
+          [last_col_coord, start_coord_y], 14
           ),
       [lines_v, texts_v] = lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'}],
            [{text: v.coord.y.toFixed(2), key: 'yv'}],
            [{text: v.coord.z.toFixed(2), key: 'zv'}]],
-          [last_col_coord, start_coord_y], 14, 15
+          [last_col_coord, start_coord_y], 14
           ),
       [lines_uT, texts_uT] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'},
             {text: u.coord.y.toFixed(2), key: 'yu'},
             {text: u.coord.z.toFixed(2), key: 'zu'}]],
-          [start_coord_x, last_row_coord], 14, 5
+          [start_coord_x, last_row_coord], 14
           ),
       [lines_vT, texts_vT] = lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'},
             {text: v.coord.y.toFixed(2), key: 'yv'},
             {text: v.coord.z.toFixed(2), key: 'zv'}]],
-          [start_coord_x, last_row_coord], 14, 15
+          [start_coord_x, last_row_coord], 14
           );
 
   let uTv_texts = [],
       uTv_lines = [],
       vTu_texts = [],
       vTu_lines = [];
-
 
   uTv_texts.push(...texts_uT);
   uTv_texts.push(...texts_v);
@@ -324,25 +323,25 @@ function swap(u, v){
           [[{text: u.coord.x.toFixed(2), key: 'xu'}],
            [{text: u.coord.y.toFixed(2), key: 'yu'}],
            [{text: u.coord.z.toFixed(2), key: 'zu'}]],
-          [last_col_coord, start_coord_y], 14, 5
+          [last_col_coord, start_coord_y], 14
           ),
       [lines_v, texts_v] = lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'}],
            [{text: v.coord.y.toFixed(2), key: 'yv'}],
            [{text: v.coord.z.toFixed(2), key: 'zv'}]],
-          [last_col_coord, start_coord_y], 14, 15
+          [last_col_coord, start_coord_y], 14
           ),
       [lines_uT, texts_uT] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'},
             {text: u.coord.y.toFixed(2), key: 'yu'},
             {text: u.coord.z.toFixed(2), key: 'zu'}]],
-          [start_coord_x, last_row_coord], 14, 5
+          [start_coord_x, last_row_coord], 14
           ),
       [lines_vT, texts_vT] = lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'},
             {text: v.coord.y.toFixed(2), key: 'yv'},
             {text: v.coord.z.toFixed(2), key: 'zv'}]],
-          [start_coord_x, last_row_coord], 14, 15
+          [start_coord_x, last_row_coord], 14
           );
 
   let uTv_texts = [],

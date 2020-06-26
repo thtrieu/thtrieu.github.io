@@ -17,9 +17,9 @@ let origin = [150, 140],
 let w_unit = 1.0, h_unit = 1.0;
 
 let start_coord_x=(380 - origin[0])/scale + 0.6 * w_unit,
-    start_coord_y=(75 - origin[1])/scale + 0.2 * h_unit,
-    last_col_coord = start_coord_x + 1.25 * w_unit,
-    last_row_coord = start_coord_y + 0.56 * h_unit;
+    start_coord_y=(75 - origin[1])/scale + 0.175 * h_unit,
+    last_col_coord = start_coord_x + 1.3 * w_unit,
+    last_row_coord = start_coord_y + 0.6 * h_unit;
 
 let v_cell = {text: 'v =', x: last_col_coord,
               y: start_coord_y - 0.4 * h_unit, key: 'v'},
@@ -133,22 +133,22 @@ function plot(scatter, axis, tt){
   let [lines_u, texts_u] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'}],
            [{text: u.coord.y.toFixed(2), key: 'yu'}]],
-          [last_col_coord, start_coord_y], 14, 5
+          [last_col_coord, start_coord_y], 14
           ),
       [lines_v, texts_v] = lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'}],
            [{text: v.coord.y.toFixed(2), key: 'yv'}]],
-          [last_col_coord, start_coord_y], 14, 15
+          [last_col_coord, start_coord_y], 14
           ),
       [lines_uT, texts_uT] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'},
             {text: u.coord.y.toFixed(2), key: 'yu'}]],
-          [start_coord_x, last_row_coord], 14, 5
+          [start_coord_x, last_row_coord], 14
           ),
       [lines_vT, texts_vT] = lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'},
             {text: v.coord.y.toFixed(2), key: 'yv'}]],
-          [start_coord_x, last_row_coord], 14, 15
+          [start_coord_x, last_row_coord], 14
           );
 
   let uTv_texts = [],
@@ -182,8 +182,7 @@ function plot(scatter, axis, tt){
 
   vTu_lines.push(...lines_vT);
   vTu_lines.push(...lines_u);
-  console.log(uTv_texts, vTu_texts);
-
+  
   if (position_state == 0) {
     lib.plot_texts(uTv_texts, tt, 'transition');
     lib.plot_lines(uTv_lines, tt, 'bracket');
@@ -334,22 +333,22 @@ function swap(u, v){
   let [lines_u, texts_u] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'}],
            [{text: u.coord.y.toFixed(2), key: 'yu'}]],
-          [last_col_coord, start_coord_y], 14, 5
+          [last_col_coord, start_coord_y], 14
           ),
       [lines_v, texts_v] = lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'}],
            [{text: v.coord.y.toFixed(2), key: 'yv'}]],
-          [last_col_coord, start_coord_y], 14, 15
+          [last_col_coord, start_coord_y], 14
           ),
       [lines_uT, texts_uT] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'},
             {text: u.coord.y.toFixed(2), key: 'yu'}]],
-          [start_coord_x, last_row_coord], 14, 5
+          [start_coord_x, last_row_coord], 14
           ),
       [lines_vT, texts_vT] = lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'},
             {text: v.coord.y.toFixed(2), key: 'yv'}]],
-          [start_coord_x, last_row_coord], 14, 15
+          [start_coord_x, last_row_coord], 14
           );
   let uTv_texts = [],
       uTv_lines = [],

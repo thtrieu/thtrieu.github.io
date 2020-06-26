@@ -17,7 +17,8 @@ let origin = [150, 140],
 let w_unit = 1.0, h_unit = 1.0;
 
 let start_coord_x=(400 - origin[0])/scale,
-    start_coord_y=(125 - origin[1])/scale - 0.2 * h_unit;
+    start_coord_y=(125 - origin[1])/scale - 0.175 * h_unit;
+    end_coord_y = start_coord_y + 0.505 * h_unit;
 
 let u_cell = {text: 'u =', x: start_coord_x,
               y: start_coord_y - 0.7 * h_unit, key: 'u'},
@@ -128,24 +129,24 @@ function plot(scatter, axis, tt){
           [[{text: u.coord.x.toFixed(2), key: 'xu'}],
            [{text: u.coord.y.toFixed(2), key: 'yu'}],
            [{text: u.coord.z.toFixed(2), key: 'zu'}]], 
-          [start_coord_x, start_coord_y], 14, 5
+          [start_coord_x, start_coord_y], 14
           ),
       [lines_plus, texts_plus] = lib.text_matrix_to_list(
           [[{text: '\uFE62', text_color: 0, key: 'fplus'}],
            [{text: '\uFE62', text_color: 0, key: 'splus'}]], 
-          [start_coord_x - 0.3 * w_unit, start_coord_y], 14, 5
+          [start_coord_x - 0.3 * w_unit, start_coord_y], 14
           ),
       [lines_multi, texts_multi] = lib.text_matrix_to_list(
           [[{text: '\u00D7', text_color: 0, key: 'fmulti'}],
            [{text: '\u00D7', text_color: 0, key: 'smulti'}],
            [{text: '\u00D7', text_color: 0, key: 'tmulti'}]], 
-          [start_coord_x + 0.6 * w_unit, start_coord_y], 14, 5
+          [start_coord_x + 0.6 * w_unit, start_coord_y], 14
           ),
       [lines_v, texts_v] =  lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'}],
            [{text: v.coord.y.toFixed(2), key: 'yv'}],
            [{text: v.coord.z.toFixed(2), key: 'zv'}]], 
-          [start_coord_x + 0.9 * w_unit, start_coord_y], 14, 15
+          [start_coord_x + 0.9 * w_unit, start_coord_y], 14
           );
 
   let z_texts = [{text: u.coord.z.toFixed(2), x: start_coord_x,
@@ -153,14 +154,14 @@ function plot(scatter, axis, tt){
                  {text: v.coord.z.toFixed(2), x: start_coord_x + 0.9 * w_unit,
                   y: start_coord_y + 0.3 * h_unit, key: 'zv', text_opacity: 0}],
       big_line = [{x: start_coord_x - 0.1 * w_unit,
-                   y: start_coord_y + 0.65 * h_unit, z: 0},
-                  {x: start_coord_x + 1.55 * w_unit,
-                   y: start_coord_y + 0.65 * h_unit, z: 0,
+                   y: end_coord_y + 0.12 * h_unit, z: 0},
+                  {x: start_coord_x + 1.6 * w_unit,
+                   y: end_coord_y + 0.12 * h_unit, z: 0,
                    color: 0}],
       uTv_texts = [{text: 'u\u1d40v =', x: start_coord_x - 0.6 * w_unit,
-                    y: start_coord_y + 0.9 * h_unit, text_color: 0, key: 'uTv_text'},
+                    y: end_coord_y + 0.37 * h_unit, text_color: 0, key: 'uTv_text'},
                    {text: uTv.toFixed(3), x: start_coord_x + 0.4 * w_unit,
-                    y: start_coord_y + 0.9, text_color: 0, key: 'uTv_numb'},];
+                    y: end_coord_y + 0.37 * h_unit, text_color: 0, key: 'uTv_numb'},];
   
   big_line.stroke_width = 0.7;
 
@@ -177,6 +178,7 @@ function plot(scatter, axis, tt){
   lines_to_show.push(...lines_u);
   lines_to_show.push(...lines_v);
   lines_to_show.push(big_line);
+  console.log(lines_to_show);
 
   lib.plot_texts(texts_to_show, tt, 'texts');
   lib.plot_lines(lines_to_show, tt, 'lines');
