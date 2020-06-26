@@ -194,16 +194,16 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
                   tt, null, null, null, 'basis2', origin2);
 
   let lines = [];
-  let line_x = [{x: 0, y: 0, z:0},
-                lib.strip(basis.x)],
-      line_y = [{x: 0, y: 0, z:0},
-                lib.strip(basis.y)],
-      line_z = [{x: 0, y: 0, z:0},
-                lib.strip(basis.z)];
-  line_x.color = basis.x.color;
-  line_y.color = basis.y.color;
-  line_z.opacity = 0.0;
-  lib.plot_lines([line_x, line_y, line_z], 
+  [basis.x, basis.y, basis.z].forEach(function(d, i) {
+    let color = d.color;
+    d = lib.strip(d);
+    d.color = color;
+    if (i == 2) {
+      d.opacity = 0;
+    }
+    lines.push(...lib.create_segments(d));
+  })
+  lib.plot_lines(lines, 
                  tt, 'axis2', null, null, null, origin2);
 }
 

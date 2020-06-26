@@ -169,16 +169,13 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
                   tt, null, null, null, 'basis2', origin2);
 
   let lines = [];
-  let line_x = [{x: 0, y: 0, z:0},
-                lib.strip(basis.x)],
-      line_y = [{x: 0, y: 0, z:0},
-                lib.strip(basis.y)],
-      line_z = [{x: 0, y: 0, z:0},
-                lib.strip(basis.z)];
-  line_x.color = basis.x.color;
-  line_y.color = basis.y.color;
-  line_z.color = basis.z.color;
-  lib.plot_lines([line_x, line_y, line_z], 
+  [basis.x, basis.y, basis.z].forEach(function(d) {
+    let color = d.color;
+    d = lib.strip(d);
+    d.color = color;
+    lines.push(...lib.create_segments(d));
+  })
+  lib.plot_lines(lines, 
                  tt, 'axis2', null, null, null, origin2);
 }
 
@@ -211,7 +208,7 @@ function init(tt){
   let u = null;
   let u_i = 6;
   cloud = [];
-  fibonacci_sphere(0.4).forEach(function(p, i){
+  fibonacci_sphere(0.35).forEach(function(p, i){
     if (i == u_i) {
       u = p;
     } else {
