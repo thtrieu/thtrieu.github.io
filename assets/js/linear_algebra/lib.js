@@ -246,6 +246,14 @@ function get_stroke_width(d){
   return 1.5;
 }
 
+
+function get_stroke_color(d) {
+  if (d.hasOwnProperty('stroke_color')) {
+    return d.stroke_color;
+  }
+}
+
+
 function get_width(d) {
   if (d.hasOwnProperty('width')) {
     return d.width;
@@ -453,6 +461,8 @@ function plot_points(data,
     .attr('cy', function(d){return project(d, with_origin).y})
     .attr('r', get_size)
     .attr('fill', get_color())
+    .attr('stroke', get_stroke_color)
+    .attr('stroke-width', get_stroke_width)
     .attr('opacity', get_opacity);
   points.exit().remove();
 
