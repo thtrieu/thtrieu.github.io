@@ -945,6 +945,7 @@ return {
   times: times,
   strip: strip,
   cp_list: cp_list,
+  cp_item: cp_item,
 }
 
 };
