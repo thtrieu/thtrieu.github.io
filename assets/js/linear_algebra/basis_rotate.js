@@ -6,6 +6,8 @@ let origin = [150, 140],
   scatter = [],
   cloud = [],
   axis = [], 
+  grid = [],
+  expectedGrid = [],
   expectedScatter = [],
   expectedCloud = [],
   expectedAxis = [],
@@ -47,7 +49,8 @@ function round_to(x, n, tol=0.02) {
 }
 
 
-function plot(scatter, cloud, axis, tt){
+function plot(scatter, grid, axis, tt){
+  lib.plot_lines(grid, tt, 'grid');
 
   let basis = {
     ex: lib.normalize(axis[axis_len/unit * 0][1]),
@@ -109,9 +112,8 @@ function plot(scatter, cloud, axis, tt){
                   drag_point_fn=dragged_point,
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
-  lib.plot_points(cloud, tt, null, null, null, 'cloud');
   
-  plot_v_perspective(u, cloud, v1, v2, v3, axis, tt);
+  plot_v_perspective(u, grid, v1, v2, v3, axis, tt);
   lib.sort();
 }
 
@@ -135,7 +137,17 @@ function compute_transformation(u, v1, v2, v3, basis) {
 }
 
 
-function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
+function compute_transformation_grid(grid, v1, v2, v3, basis) {
+  let lines = [];
+  grid.forEach(function(d) {
+    lines.push([compute_transformation(d[0], v1, v2, v3, basis),
+                compute_transformation(d[1], v1, v2, v3, basis)]);
+  })
+  return lines;
+}
+
+
+function plot_v_perspective(u, grid, v1, v2, v3, axis, tt) {
   let basis = {
     x: lib.normalize(axis[axis_len/unit * 0][1]),
     y: lib.normalize(axis[axis_len/unit * 1][1]),
@@ -147,13 +159,10 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
   u.text = 'u\'';
   lib.plot_points([u], tt, null, null, null, 'u2', origin2);
 
-  let cloud_rotated = [];
-  cloud.forEach(function(d){
-    cloud_rotated.push(
-        compute_transformation(d, v1, v2, v3, basis));
-  })
-  lib.plot_points(cloud_rotated, 
-                  tt, null, null, null, 'cloud2', origin2);
+  let grid2 = compute_transformation_grid(grid, v1, v2, v3, basis);
+  lib.plot_lines(grid2, tt, 'grid2', 
+                 null, null, null, origin2);
+
 
   basis.x.color = v1.color;
   basis.x.text = '[1, 0, 0]';
@@ -180,24 +189,49 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
 }
 
 
-function fibonacci_sphere(radius, n=80) {
+
+function round_cloud(radius, n=40) {
   let points = [];
-  let phi = Math.PI * (3 - Math.sqrt(5));
-
-  for (let i = 0; i < n; i++) {
-    let y = 1 - (i / (n-1)) * 2
-    let r = Math.sqrt(1 - y*y);
-
-    let theta = phi * i;
+  let a = Math.PI * 2 / n;
+  for (let i = 1; i <= n; i++) {
     points.push({
-      x: Math.cos(theta) * r * radius,
-      y: y * radius,
-      z: Math.sin(theta) * r * radius,
-      color: 'grey'
+        x: Math.cos(a * i) * radius,
+        y: Math.sin(a * i) * radius,
+        z: 0,
+        opacity: 0.2,
+        centroid_z: -1000,
     });
   }
-
   return points;
+}
+
+
+function sphere_grid(radius, n=2) {
+  let lines = [];
+  for (let i = 0; i < n; i++) {
+    let circle_points = round_cloud(radius);
+    let circle_lines = [];
+    for (let j = 0; j < circle_points.length-1; j++) {
+      circle_lines.push([circle_points[j], 
+                         circle_points[j+1]]);
+    }
+    circle_lines.push([
+        circle_points[circle_points.length-1],
+        circle_points[0]
+    ]);
+    circle_lines.forEach(function(d) {
+    })
+    if (i == n-1) {
+      circle_lines = lib.rotate_lines(
+          circle_lines, Math.PI/2, 0, 0);
+    } else {
+      circle_lines = lib.rotate_lines(
+          circle_lines, 0, Math.PI/(n-1)*i, 0);
+    }
+    lines.push(...circle_lines);
+  }
+
+  return lines;
 }
 
 
@@ -205,16 +239,15 @@ function init(tt){
   axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
   scatter = [];
 
-  let u = null;
-  let u_i = 6;
-  cloud = [];
-  fibonacci_sphere(0.35).forEach(function(p, i){
-    if (i == u_i) {
-      u = p;
-    } else {
-      cloud.push(p);
-    }
-  })
+  let u = {
+      x: 0.35,
+      y: 0.,
+      z: 0.,
+  }
+  grid = sphere_grid(0.34);
+
+  u = lib.rotate_point(u, startAngleX, 2*startAngleY, 2*startAngleZ);
+  grid = lib.rotate_lines(grid, startAngleX, 2*startAngleY, 2*startAngleZ);
   
   u.color = 4;
   let v1 = {
@@ -238,14 +271,23 @@ function init(tt){
 
   scatter = [u, v1, v2, v3];
 
-  alpha = startAngleX;
-  beta = startAngleY;
+  scatter = lib.rotate_points(scatter, startAngleX, startAngleY, startAngleZ);
+  grid = lib.rotate_lines(grid, startAngleX, startAngleY, startAngleZ);
+  axis = lib.rotate_lines(axis, startAngleX, startAngleY, startAngleZ);
 
-  scatter = lib.rotate_points(scatter, alpha, beta, startAngleZ);
-  cloud = lib.rotate_points(cloud, alpha, beta, startAngleZ);
-  axis = lib.rotate_lines(axis, alpha, beta, startAngleZ);
+
+  static_circle = {
+    x: 0, y: 0, z: 0,
+    r: 0.34 * scale,
+    color: 'none',
+    stroke_color: 'grey',
+    centroid_z: -1000
+  };
+  lib.plot_points([static_circle], tt, null, null, null, 'cloud');
+  lib.plot_points([static_circle], tt, null, null, null, 'cloud2', origin2);
+
   plot(scatter,
-       cloud,
+       grid,
        axis, 
        tt);
 }
@@ -271,11 +313,11 @@ function dragged(){
     [angle_x, angle_y] = lib.get_drag_angles(origin2);
   }  
   expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
-  expectedCloud = lib.rotate_points(cloud, angle_x, angle_y);
   expectedAxis = lib.rotate_lines(axis, angle_x, angle_y);
+  expectedGrid = lib.rotate_lines(grid, angle_x, angle_y);
   
   plot(expectedScatter,
-       expectedCloud,
+       expectedGrid,
        expectedAxis,
        0);
 }
@@ -286,11 +328,11 @@ function dragged_v_only(){
 
   expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
   expectedScatter[0] = scatter[0];
-  expectedCloud = cloud;
+  expectedGrid = grid;
   expectedAxis = axis;
   
   plot(expectedScatter,
-       expectedCloud,
+       expectedGrid,
        expectedAxis, 
        0);
 }
@@ -315,11 +357,11 @@ function dragged_point(d, i){
         expectedScatter.push(d);
       }
   });
-  expectedCloud = lib.rotate_points(cloud, angle_x, angle_y);
+  expectedGrid = lib.rotate_lines(grid, angle_x, angle_y);
   expectedAxis = axis;
 
   plot(expectedScatter,
-       expectedCloud,
+       expectedGrid,
        expectedAxis, 
        0);
 }
@@ -327,8 +369,8 @@ function dragged_point(d, i){
 
 function drag_end(){
   scatter = expectedScatter;
-  cloud = expectedCloud;
   axis = expectedAxis;
+  grid = expectedGrid;
 }
 
 
@@ -338,7 +380,7 @@ return {
   set_show_proj: function(s){show_proj = s;},
   replot: function(){
     plot(scatter, 
-         cloud,
+         grid,
          axis,
          1000);
   },

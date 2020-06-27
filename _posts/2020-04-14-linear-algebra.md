@@ -645,7 +645,7 @@ Exactly. Be aware that there can be many such sets besides $\\{[1, 0, 0], [0, 1,
 Try dragging $u$, {$v_1$, $v_2$, $v_3$}, the whole space, or click <button id='init_basis_rotate'>reset</button>. 
 <br/>
 How does $u'$ move when {$v_1$, $v_2$, $v_3$} rotates?<br/>
-Here we added many vectors in grey to help with tracing the movement of $u'$.
+Here we added a sphere to help with tracing the movement of $u'$.
 </center>
 
 <script src="/assets/js/linear_algebra/basis_rotate2d.js"></script>

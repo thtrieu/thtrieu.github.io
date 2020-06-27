@@ -59,10 +59,15 @@ function round_to(x, n, tol=0.02) {
 
 function plot(scatter, axis, tt){
 
-  let cloud = round_cloud(scatter[0], 20);
-  for (let i = 0; i < 60; i++) {
-    cloud.push({x: 0, y: 0, z: 0, opacity: 0.0});
-  }
+  cloud = [{
+    x: 0, y: 0, z: 0,
+    r: lib.norm(scatter[0]) * scale,
+    color: 'none',
+    stroke_color: 'grey',
+    centroid_z: -1000,
+    opacity: 0.8,
+    stroke_width: 1.7
+  }]
 
   let basis = {
     ex: lib.normalize(axis[axis_len/unit * 0][1]),
@@ -135,8 +140,9 @@ function plot(scatter, axis, tt){
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
   lib.plot_points(cloud, tt, null, null, null, 'cloud');
+  lib.plot_points(cloud, tt, null, null, null, 'cloud2', origin2);
 
-  plot_v_perspective(u, cloud, v1, v2, v3, axis, tt);
+  plot_v_perspective(u, v1, v2, v3, axis, tt);
   lib.sort();
 }
 
@@ -159,7 +165,7 @@ function compute_transformation(u, v1, v2, v3, basis) {
 }
 
 
-function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
+function plot_v_perspective(u, v1, v2, v3, axis, tt) {
   let basis = {
     x: lib.normalize(axis[axis_len/unit * 0][1]),
     y: lib.normalize(axis[axis_len/unit * 1][1]),
@@ -170,14 +176,6 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
   u.color = 4
   u.text = 'u\'';
   lib.plot_points([u], tt, null, null, null, 'u2', origin2);
-
-  let cloud_rotated = [];
-  cloud.forEach(function(d){
-    cloud_rotated.push(
-        compute_transformation(d, v1, v2, v3, basis));
-  })
-  lib.plot_points(cloud_rotated, 
-                  tt, null, null, null, 'cloud2', origin2);
 
   basis.x.color = v1.color;
   basis.x.text = '[1, 0]';
@@ -208,21 +206,46 @@ function plot_v_perspective(u, cloud, v1, v2, v3, axis, tt) {
 }
 
 
-function round_cloud(u, n=20) {
+function round_cloud(radius, n=40) {
   let points = [];
-  let radius = lib.norm(u);
-  let a = Math.PI * 2 / (n+1);
-  let a0 = Math.atan2(u.y, u.x);
+  let a = Math.PI * 2 / n;
   for (let i = 1; i <= n; i++) {
     points.push({
-        x: Math.cos(a * i + a0) * radius,
-        y: Math.sin(a * i + a0) * radius,
+        x: Math.cos(a * i) * radius,
+        y: Math.sin(a * i) * radius,
         z: 0,
-        color: 'grey',
-        opacity: 0.5
     });
   }
   return points;
+}
+
+
+function sphere_grid(radius, n=2) {
+  let lines = [];
+  for (let i = 0; i < n; i++) {
+    let circle_points = round_cloud(radius);
+    let circle_lines = [];
+    for (let j = 0; j < circle_points.length-1; j++) {
+      circle_lines.push([circle_points[j], 
+                         circle_points[j+1]]);
+    }
+    circle_lines.push([
+        circle_points[circle_points.length-1],
+        circle_points[0]
+    ]);
+    circle_lines.forEach(function(d) {
+      d.opacity = 0.0;
+    })
+    if (i == n-1) {
+      circle_lines = lib.rotate_lines(
+          circle_lines, Math.PI/2, 0, 0);
+    } else {
+      circle_lines = lib.rotate_lines(
+          circle_lines, 0, Math.PI/(n-1)*i, 0);
+    }
+    lines.push(...circle_lines);
+  }
+  return lines;
 }
 
 
@@ -250,6 +273,18 @@ function init(tt){
     z: 0.,
     color: 3,
   };
+
+  grid = sphere_grid(0.43);
+  lib.plot_lines(grid, tt, 'grid');
+
+  let cp_grid = [];
+  grid.forEach(function(d) {
+    let d_cp = [lib.cp_item(d[0]), lib.cp_item(d[1])];
+    d_cp.opacity = 0.0;
+    cp_grid.push(d_cp);
+  })
+  lib.plot_lines(cp_grid, tt, 'grid2', 
+                 null, null, null, origin2);
 
   scatter = [u, v1, v2];
 
@@ -319,7 +354,10 @@ function dragged_point(d, i){
   scatter.forEach(function(d, j){
       if (j == i) {
         let r = lib.update_point_position_from_mouse(d);
-        r.x = Math.min(r.x, (300-origin[0])/scale);
+        let norm = lib.norm(r);
+        if (norm > 1.2) {
+          r = lib.times(r, 1.2/norm);
+        }
         expectedScatter.push(r);
       } else {
         expectedScatter.push(d);
