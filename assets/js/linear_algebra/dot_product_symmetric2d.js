@@ -153,6 +153,19 @@ function plot(scatter, axis, tt){
             {text: v.coord.y.toFixed(2), key: 'yv'}]],
           [start_coord_x, last_row_coord], 14
           );
+  
+  lines_u.forEach(function(d,i) {
+    d.key = 'bracketu'.concat(i);
+  });
+  lines_uT.forEach(function(d,i) {
+    d.key = 'bracketu'.concat(i);
+  });
+  lines_v.forEach(function(d,i) {
+    d.key = 'bracketv'.concat(i);
+  });
+  lines_vT.forEach(function(d,i) {
+    d.key = 'bracketv'.concat(i);
+  });
 
   let uTv_texts = [],
       uTv_lines = [],
@@ -171,6 +184,21 @@ function plot(scatter, axis, tt){
       zuT_text = {text: '', x: start_coord_x + col_unit,
                   y: last_row_coord + differ, text_opacity: 0, key: 'zu'
                 };
+
+  lines_u.forEach(function(d,i) {
+    d.key = 'bracketu'.concat(i);
+  });
+
+  lines_uT.forEach(function(d,i) {
+    d.key = 'bracketu'.concat(i);
+  });
+
+  lines_v.forEach(function(d,i) {
+    d.key = 'bracketv'.concat(i);
+  });
+  lines_vT.forEach(function(d,i) {
+    d.key = 'bracketv'.concat(i);
+  });
 
   uTv_texts.push(...texts_uT);
   uTv_texts.push(...texts_v);
@@ -218,7 +246,7 @@ function plot(scatter, axis, tt){
 }
 
 function init(tt){
-  axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
+  axis = lib.init_float_axis(axis_len, unit);
 
   let u = {
       x: -1.0,
@@ -359,17 +387,30 @@ function swap(u, v){
       vTu_lines = [];
 
   let zv_text = {text: v.coord.z.toFixed(2), x: last_col_coord,
-                 y: start_coord_y + 0.525, text_opacity: 0, key: 'zv'
+                 y: start_coord_y + row_unit, text_opacity: 0, key: 'zv'
                 },
       zu_text =  {text: u.coord.z.toFixed(2), x: last_col_coord,
-                  y: start_coord_y + 0.525, text_opacity: 0, key: 'zu'
+                  y: start_coord_y + row_unit, text_opacity: 0, key: 'zu'
                 },
-      zvT_text = {text: v.coord.z.toFixed(2), x: start_coord_x + 0.6 ,
+      zvT_text = {text: v.coord.z.toFixed(2), x: start_coord_x + col_unit,
                   y: last_row_coord, text_opacity: 0, key: 'zv'
                 },
-      zuT_text = {text: u.coord.z.toFixed(2), x: start_coord_x + 0.6 ,
+      zuT_text = {text: u.coord.z.toFixed(2), x: start_coord_x + col_unit,
                   y: last_row_coord, text_opacity: 0, key: 'zu'
                 };
+                
+  lines_u.forEach(function(d,i) {
+    d.key = 'bracketu'.concat(i);
+  });
+  lines_uT.forEach(function(d,i) {
+    d.key = 'bracketu'.concat(i);
+  });
+  lines_v.forEach(function(d,i) {
+    d.key = 'bracketv'.concat(i);
+  });
+  lines_vT.forEach(function(d,i) {
+    d.key = 'bracketv'.concat(i);
+  });
 
   uTv_texts.push(...texts_uT);
   uTv_texts.push(...texts_v);

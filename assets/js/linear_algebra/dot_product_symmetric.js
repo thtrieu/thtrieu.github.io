@@ -160,6 +160,19 @@ function plot(scatter, axis, tt){
       vTu_texts = [],
       vTu_lines = [];
 
+  lines_u.forEach(function(d,i) {
+    d.key = 'bracketu'.concat(i);
+  });
+  lines_uT.forEach(function(d,i) {
+    d.key = 'bracketu'.concat(i);
+  });
+  lines_v.forEach(function(d,i) {
+    d.key = 'bracketv'.concat(i);
+  });
+  lines_vT.forEach(function(d,i) {
+    d.key = 'bracketv'.concat(i);
+  });
+
   uTv_texts.push(...texts_uT);
   uTv_texts.push(...texts_v);
   uTv_texts.push(uT_cell, v_cell);
@@ -206,7 +219,7 @@ function plot(scatter, axis, tt){
 }
 
 function init(tt){
-  axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
+  axis = lib.init_float_axis(axis_len, unit);
 
   let u = {
       x: 0.8,
@@ -351,6 +364,18 @@ function swap(u, v){
       vTu_texts = [],
       vTu_lines = [];
 
+  lines_u.forEach(function(d,i) {
+    d.key = 'bracketu'.concat(i);
+  });
+  lines_uT.forEach(function(d,i) {
+    d.key = 'bracketu'.concat(i);
+  });
+  lines_v.forEach(function(d,i) {
+    d.key = 'bracketv'.concat(i);
+  });
+  lines_vT.forEach(function(d,i) {
+    d.key = 'bracketv'.concat(i);
+  });
 
   uTv_texts.push(...texts_uT);
   uTv_texts.push(...texts_v);
