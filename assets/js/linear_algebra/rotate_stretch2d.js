@@ -1,4 +1,4 @@
-let basis_rotate2d = (function() {
+let rotate_stretch2d = (function() {
 
 let origin = [150, 140], 
   origin2 = [450, 140],

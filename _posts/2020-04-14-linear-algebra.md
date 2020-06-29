@@ -598,7 +598,7 @@ d3.selectAll('#show_hide_proj_basis')
 
 *It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system: they are measuring $u$ in three perpendicular directions that coincide with the three coordinate axes.*
 
-Very acute observation. In fact with this observation, there is no longer need for coordinate systems. Instead, think of space as being "measured" by this set of vectors through dot products.
+Nice observation! In fact with this observation, there is no longer need for coordinate systems. Instead, think of space as being "measured" by this set of vectors through dot products.
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_basis_measure'> <div class='slider'></div></label>
@@ -645,7 +645,7 @@ Exactly. Be aware that there can be many such sets besides $\\{[1, 0, 0], [0, 1,
 Try dragging $u$, {$v_1$, $v_2$, $v_3$}, the whole space, or click <button id='init_basis_rotate'>reset</button>. 
 <br/>
 How does $u'$ move when {$v_1$, $v_2$, $v_3$} rotates?<br/>
-Here we added a sphere to help with tracing the movement of $u'$.
+Here we added a sphere outline to help with tracing the movement of $u'$.
 </center>
 
 <script src="/assets/js/linear_algebra/basis_rotate2d.js"></script>
@@ -656,7 +656,7 @@ draw_on_svg('basis_rotate',
             basis_rotate);
 </script>
 
-*It looks like for any set {$v_1$, $v_2$, $v_3$} shown above, $u'$ is moving around in the same sphere that also contains $u$?*
+*It looks like $u'$ is moving around in the same sphere that also contains $u$?*
 
 That is right. In other words, the transformation preserves length of $u$. In Math, we call length-preserving transformations with a very familiar and intuitive name: Rotation. 
 
@@ -666,22 +666,47 @@ It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 
 
 *Okay, but what if the set $ \\{ v_1, v_2, v_3 \\} $ is not orthonormal?*
 
-You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result looks like $u$, except rotated by an angle. Let's extend this a bit by considering a simple case where the set $ \\{ v_1, v_2, v_3 \\} $ is only "ortho" but not "normal". We can see that the transformation can be broken down to first rotating, and then stretching on each axis individually, according to the length of $ v_1, v_2, v_3 $:
+You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result $u'$ looks like $u$, except rotated by an angle. Let's extend this a bit by considering a simple case where the set $ \\{ v_1, v_2, v_3 \\} $ is only "ortho" but not "normal". This time, we can see that the transformation can be broken down to (1) rotating and (2) stretching on each axis individually, according to the length of $ v_1, v_2, v_3 $:
 
-*Are you suggesting rotating and stretching are the two building blocks of **any** transformation done by dot-products?*
 
-That's a very quick jump ahead, but totally accurate :) In fact, rotation and stretching are not only two, but **the only two** building blocks. We'll soon see how this is the case, but first let's take it slow and enjoy ourselves some nice visualizations. Let's call the list of numbers $[u^T v_1, u^T v_2, u^T v_3]$ a new vector $u^\*$. This new vector is what $u$ looks like in the perspective of the skewed "coordinate system" $ \\{ v_1, v_2, v_3 \\} $:
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_rotate_stretch'> <div class='slider'></div></label>
+  <br/>
+<svg width="630" height="280" id="svg_rotate_stretch"></svg>
+<br/>
+Try dragging $u$, {$v_1$, $v_2$, $v_3$}, the whole space, or click <button id='init_rotate_stretch'>reset</button>. 
+<br/>
+How does $u'$ move when {$v_1$, $v_2$, $v_3$} rotates?<br/>
+Here we added a sphere outline to help with tracing the movement of $u'$.
+</center>
+
+<script src="/assets/js/linear_algebra/rotate_stretch2d.js"></script>
+<script src="/assets/js/linear_algebra/rotate_stretch.js"></script>
+<script>
+draw_on_svg('rotate_stretch',
+            rotate_stretch2d,
+            rotate_stretch);
+</script>
+
+
+*That makes sense. Are you suggesting rotating and stretching are the two building blocks of all transformation done by dot-products?*
+
+That's a very quick jump ahead, but totally accurate :) In fact, rotation and stretching are not only two, but **the only two** building blocks. We'll soon see how this is the case, but first let's take it slow and enjoy ourselves some nice visualizations. This time, the set $ \\{ v_1, v_2, v_3 \\} $  is allowed to be neither "ortho" nor "normal" as you suggested:
 
 Notation wise, if we stack $ \\{ v_1, v_2, v_3 \\} $ horizontally into a rectangle of numbers that we called the matrix $A$, we have just invented the matrix-vector multiplication using the "colliding" diagram:
 
+$$Vu = u'$$
 
-And so, the meaning of matrix-vector multiplication is really just projecting a vector onto the matrix rows. Let's go ahead and simultaneously project a bunch of vectors $ \\{ u_1, u_2, u_3, u_4 \\} $ onto the set $ \\{ v_1, v_2, v_3 \\} $:
+
+And so, the meaning of matrix-vector multiplication is really just projecting a vector onto the matrix rows. Let's go ahead and simultaneously project a bunch of vectors $ \\{ u_1, u_2, u_3, u_4 \\} $ onto the same set $ \\{ v_1, v_2, v_3 \\} $:
 
 And there it is, we reinvent the matrix-matrix multiplication!
 
+$$VU = U'$$
+
 *Ah, that's very neat. So multiplying matrices is essentially looking at a bunch of vectors from a new perspective?*
 
-Exactly. With matrix multiplication, we now have the power to look at vectors from many different perspectives. So far we have been transforming vectors in 3 dimensional space into another 3 dimensional space. But that does not have to be the case. Let's try something else:
+Exactly. With matrix multiplication, we now have the power to look at vectors from many different perspectives. So far we have been transforming vectors in 3 dimensional space into another 3 dimensional space. But that does not have to always be the case. Let's try something else:
 
 Here we have just turned a 3-dimensional vectors into a 2-dimensional vector.
 
@@ -689,9 +714,9 @@ Here we have just turned a 3-dimensional vectors into a 2-dimensional vector.
 
 Of course, we can certainly do so by projecting $u$, living in 2 dimensional space, onto a set of three vectors $v_1, v_2, v_3$:
 
-*That looks cool! It seems matrix-vector multiplication is characterized by its stretching/squishing space uniformly everywhere. Is this true?*
+*That looks cool! Although, now I'm seeing many different cases arise from matrix-vector multiplication. Is there an underlying characteristic of them all, in contrast to other type of transformation?*
 
-That is true. Let's take a moment to unpack what you really mean by "uniformly everywhere". First, we can study this stretching/squishing by looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers. Let's look at how different line segments change in terms of their length.
+We can start studying the question by first looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers $x \times y = z$. Let's look at how different line segments change in terms of their length.
 
 *It seems that they got scaled up/down by the same factor, regardless of their position and size.*
 
@@ -699,6 +724,12 @@ Yes. Equivalently speaking, any two segments equal in length before a transforma
 
 This property translates to higher dimensions as well. If two chunks of space are equal in volume before a matrix-vector multiplication, they are also equal in volume after said multiplication:
 
-*Oh that's an interesting way to describe it. This raises the question: how much bigger or smaller does the space get after a given transformation? In the 1-dimensional case, this factor is simply the number used to multiply. In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
+*Oh that's an interesting way to describe it.*
 
-You are asking all the right questions! The point of Linear Algebra is really studying these transformations inside-out, characterizing them, breaking them apart. Volume contraction or expansion is just one of these studies. The keyword for your question here is *Determinant of a Matrix*. But let's take a break here and grab a coffee? We'll come back with many more interesting findings :)
+Yes, this description is applicable for transformations between different number of dimensions as well (e.g. 2D to 3D and vice versa):
+
+While your observation cannot really say anything about how much scaled up, say, 2-D volumes (areas) are to 3-D volumes, because the comparison here is not meaningful.
+
+*Still, for transformations between spaces of the same dimension - when this comparison is meaningful, a question arises: How much bigger or smaller does the space get? In the 1-dimensional case, this factor is simply the number used to multiply. In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
+
+You are asking all the right questions! The point of Linear Algebra is really studying these transformations inside-out, characterizing them, breaking them apart. Volume contraction or expansion is just one of these studies. The keyword for your question here is *Determinant of a Matrix*. But let's take a break here? We'll come back with many more interesting findings :)

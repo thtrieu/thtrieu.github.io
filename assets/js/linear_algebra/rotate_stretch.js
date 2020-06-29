@@ -1,15 +1,19 @@
-let basis_rotate2d = (function() {
+let rotate_stretch = (function() {
 
 let origin = [150, 140], 
   origin2 = [450, 140],
-  scale = 100, 
+  scale = 120, 
   scatter = [],
+  cloud = [],
   axis = [], 
+  grid = [],
+  expectedGrid = [],
   expectedScatter = [],
+  expectedCloud = [],
   expectedAxis = [],
-  startAngleX = Math.PI,
-  startAngleY = 0.,
-  startAngleZ = 0.,
+  startAngleX = Math.PI/8 * 1.7,
+  startAngleY = -Math.PI/8,
+  startAngleZ = Math.PI/8 * 0.6,
   axis_len = 1.2,
   unit = axis_len/10,
   svg = null,
@@ -24,25 +28,13 @@ function select_svg(svg_id) {
     svg,
     origin, 
     scale,
-    is_2d=true);
+    is_2d=false);
 
   svg = svg.call(d3.drag()
            .on('drag', dragged)
            .on('start', drag_start)
            .on('end', drag_end))
            .append('g');  
-}
-
-
-function hide(objs, op=0.0) {
-  let r = [];
-  objs.forEach(function(d) {
-    let d_ = Object.assign({}, d);
-    d_.opacity = op;
-    d_.text_opacity = op;
-    r.push(d_);
-  })
-  return r;
 }
 
 
@@ -57,17 +49,10 @@ function round_to(x, n, tol=0.02) {
 }
 
 
-function plot(scatter, axis, tt){
-
-  cloud = [{
-    x: 0, y: 0, z: 0,
-    r: lib.norm(scatter[0]) * scale,
-    color: 'none',
-    stroke_color: 'grey',
-    centroid_z: -1000,
-    opacity: 0.8,
-    stroke_width: 1.7
-  }]
+function plot(scatter, grid, axis, tt){
+  let grid2 = lib.cp_list(grid);
+  grid2.push(...round_lines(0.5));
+  lib.plot_lines(grid2, tt, 'grid');
 
   let basis = {
     ex: lib.normalize(axis[axis_len/unit * 0][1]),
@@ -79,25 +64,13 @@ function plot(scatter, axis, tt){
   scatter.forEach(function(d){
     points.push(Object.assign({}, d));
   });
-
-  let v3_ = lib.cp_item(basis.ez);
-  v3_.opacity = 0.0;
-  v3_.color = 9;
-  points.push(v3_);
   
   let lines = [];
   points.forEach(function(d, i){
     if (i == 0) {
       return;
     }
-    if (i < 3) {
-      lines.push(...lib.create_segments(d));
-    } else {
-      lib.create_segments(d).forEach(function(s) {
-        s.opacity = 0.0;
-        lines.push(s);
-      })
-    }
+    lines.push(...lib.create_segments(d));
   });
   lib.plot_lines(lines, tt, 'arrow');
 
@@ -107,7 +80,8 @@ function plot(scatter, axis, tt){
     let coord = lib.dot_basis(p, basis);
     let txt = ' = ['.concat(
         round_to(coord.x, 1), ', ',
-        round_to(coord.y, 1), ']'
+        round_to(coord.y, 1), ', ',
+        round_to(coord.z, 1), ']',
     );
     if (i == 0) {
       p.text = 'u';
@@ -117,9 +91,7 @@ function plot(scatter, axis, tt){
       p.text = 'v\u2082';
     } else if (i == 3) {
       p.text = 'v\u2083';
-      p.text_opacity = 0.0;
     }
-
     if (i > 0) {
       p.text += txt;
     }
@@ -135,26 +107,23 @@ function plot(scatter, axis, tt){
 
   basis.ez.color = v3.color;
   basis.ez.r = 6;
-  basis.ez.opacity = 0.0;
-
+  basis.ez.opacity = 0.5;
 
   points.push(...[basis.ex, basis.ey, basis.ez]);
   lib.plot_points(points, tt,
                   drag_point_fn=dragged_point,
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
-  lib.plot_points(cloud, tt, null, null, null, 'cloud');
-  lib.plot_points(cloud, tt, null, null, null, 'cloud2', origin2);
-
-  plot_v_perspective(u, v1, v2, v3, axis, tt);
+  
+  plot_v_perspective(u, grid2, v1, v2, v3, axis, tt);
   lib.sort();
 }
 
 
 function compute_transformation(u, v1, v2, v3, basis) {
-  let uTv1 = lib.dot_product(u, v1) / lib.norm2(v1),
-      uTv2 = lib.dot_product(u, v2) / lib.norm2(v2),
-      uTv3 = 1.0;
+  let uTv1 = lib.dot_product(u, v1),
+      uTv2 = lib.dot_product(u, v2),
+      uTv3 = lib.dot_product(u, v3);
 
   let r = Object.assign({}, u);
   r.x = 0;
@@ -164,12 +133,23 @@ function compute_transformation(u, v1, v2, v3, basis) {
       r,
       lib.times(basis.x, uTv1),
       lib.times(basis.y, uTv2),
+      lib.times(basis.z, uTv3),
   ]
   return lib.add(components);
 }
 
 
-function plot_v_perspective(u, v1, v2, v3, axis, tt) {
+function compute_transformation_grid(grid, v1, v2, v3, basis) {
+  let lines = [];
+  grid.forEach(function(d) {
+    lines.push([compute_transformation(d[0], v1, v2, v3, basis),
+                compute_transformation(d[1], v1, v2, v3, basis)]);
+  })
+  return lines;
+}
+
+
+function plot_v_perspective(u, grid, v1, v2, v3, axis, tt) {
   let basis = {
     x: lib.normalize(axis[axis_len/unit * 0][1]),
     y: lib.normalize(axis[axis_len/unit * 1][1]),
@@ -177,37 +157,39 @@ function plot_v_perspective(u, v1, v2, v3, axis, tt) {
   };
 
   u = compute_transformation(u, v1, v2, v3, basis);
-  u.color = 4
+  u.color = 4;
   u.text = 'u\'';
   lib.plot_points([u], tt, null, null, null, 'u2', origin2);
 
+  let grid2 = compute_transformation_grid(grid, v1, v2, v3, basis);
+  lib.plot_lines(grid2, tt, 'grid2', 
+                 null, null, null, origin2);
+
+
   basis.x.color = v1.color;
-  basis.x.text = '[1, 0]';
+  basis.x.text = '[1, 0, 0]';
 
   basis.y.color = v2.color;
-  basis.y.text = '[0, 1]';
+  basis.y.text = '[0, 1, 0]';
 
   basis.z.color = v3.color;
-  basis.z.text = '';
-  basis.z.opacity = 0;
+  basis.z.text = '[0, 0, 1]';
 
   let unit_marks = [basis.x, basis.y, basis.z] 
   lib.plot_points(unit_marks, 
                   tt, null, null, null, 'basis2', origin2);
 
   let lines = [];
-  [basis.x, basis.y, basis.z].forEach(function(d, i) {
+  [basis.x, basis.y, basis.z].forEach(function(d) {
     let color = d.color;
     d = lib.strip(d);
     d.color = color;
-    if (i == 2) {
-      d.opacity = 0;
-    }
     lines.push(...lib.create_segments(d));
   })
   lib.plot_lines(lines, 
                  tt, 'axis2', null, null, null, origin2);
 }
+
 
 
 function round_cloud(radius, n=40) {
@@ -218,37 +200,46 @@ function round_cloud(radius, n=40) {
         x: Math.cos(a * i) * radius,
         y: Math.sin(a * i) * radius,
         z: 0,
+        opacity: 0.2,
+        centroid_z: -1000,
     });
   }
   return points;
 }
 
 
-function sphere_grid(radius, n=2) {
+function round_lines(radius) {
+  let circle_points = round_cloud(radius);
+  let circle_lines = [];
+  for (let j = 0; j < circle_points.length-1; j++) {
+    circle_lines.push([circle_points[j], 
+                       circle_points[j+1]]);
+  }
+  circle_lines.push([
+      circle_points[circle_points.length-1],
+      circle_points[0]
+  ]);
+  return circle_lines;
+}
+
+
+function sphere_grid(radius) {
   let lines = [];
-  for (let i = 0; i < n; i++) {
-    let circle_points = round_cloud(radius);
-    let circle_lines = [];
-    for (let j = 0; j < circle_points.length-1; j++) {
-      circle_lines.push([circle_points[j], 
-                         circle_points[j+1]]);
+  for (let i = 0; i < 3; i++) {
+    circle_lines = round_lines(radius);
+    if (i == 0) {
+      continue;
     }
-    circle_lines.push([
-        circle_points[circle_points.length-1],
-        circle_points[0]
-    ]);
-    circle_lines.forEach(function(d) {
-      d.opacity = 0.0;
-    })
-    if (i == n-1) {
+    if (i == 1) {
       circle_lines = lib.rotate_lines(
           circle_lines, Math.PI/2, 0, 0);
-    } else {
+    } else if (i == 2) {
       circle_lines = lib.rotate_lines(
-          circle_lines, 0, Math.PI/(n-1)*i, 0);
+          circle_lines, Math.PI, 0, 0);
     }
     lines.push(...circle_lines);
   }
+
   return lines;
 }
 
@@ -258,47 +249,55 @@ function init(tt){
   scatter = [];
 
   let u = {
-    x: -0.3,
-    y: -0.3, 
-    z: 0.,
-    color: 4,
-  };
+      x: 0.5,
+      y: 0.,
+      z: 0.,
+  }
+  grid = sphere_grid(0.5);
 
+  u = lib.rotate_point(u, startAngleX, 2*startAngleY, 2*startAngleZ);
+  grid = lib.rotate_lines(grid, startAngleX, 2*startAngleY, 2*startAngleZ);
+  
+  u.color = 4;
   let v1 = {
-    x: 1.,
-    y: 0., 
-    z: 0.,
-    color: 0,
+      x: 1.0,
+      y: 0.0, 
+      z: 0.0, 
+      color: 0,
+  },
+      v2 = {
+      x: 0.0, 
+      y: 2.0, 
+      z: 0.0, 
+      color: 3,
+  },
+      v3 = {
+      x: 0.0, 
+      y: 0.0,  
+      z: 1.0,  
+      color: 9,
   };
 
-  let v2 = {
-    x: 0.,
-    y: 1., 
-    z: 0.,
-    color: 3,
+  scatter = [u, v1, v2, v3];
+
+  scatter = lib.rotate_points(scatter, startAngleX, startAngleY, startAngleZ);
+  grid = lib.rotate_lines(grid, startAngleX, startAngleY, startAngleZ);
+  axis = lib.rotate_lines(axis, startAngleX, startAngleY, startAngleZ);
+
+  static_circle = {
+    x: 0, y: 0, z: 0,
+    r: 0.5 * scale,
+    color: 'none',
+    stroke_color: 'grey',
+    centroid_z: -1000,
+    opacity: 0.,
   };
+  lib.plot_points([static_circle], tt, null, null, null, 'cloud');
+  lib.plot_points([static_circle], tt, null, null, null, 'cloud2', origin2);
 
-  grid = sphere_grid(0.43);
-  lib.plot_lines(grid, tt, 'grid');
-
-  let cp_grid = [];
-  grid.forEach(function(d) {
-    let d_cp = [lib.cp_item(d[0]), lib.cp_item(d[1])];
-    d_cp.opacity = 0.0;
-    cp_grid.push(d_cp);
-  })
-  lib.plot_lines(cp_grid, tt, 'grid2', 
-                 null, null, null, origin2);
-
-  scatter = [u, v1, v2];
-
-  alpha = startAngleX;
-  beta = startAngleY;
-
-  scatter = lib.rotate_points(scatter, alpha, beta, startAngleZ);
-  axis = lib.rotate_lines(axis, alpha, beta, startAngleZ);
   plot(scatter,
-       axis,
+       grid,
+       axis, 
        tt);
 }
 
@@ -309,38 +308,41 @@ let drag_on_left = true;
 function drag_start(){
   if (lib.get_mouse_position().x < 300) {
     drag_on_left = true;
-    lib.drag_start2d();
+    lib.drag_start();
   } else {
     drag_on_left = false;
-    lib.drag_start2d(origin2);
+    lib.drag_start(origin2);
   }
 }
 
 function dragged(){
   if (drag_on_left) {
-    angle_z = lib.get_drag_angle_2d();  
+    [angle_x, angle_y] = lib.get_drag_angles();  
   } else {
-    angle_z = lib.get_drag_angle_2d(origin2);  
-  }
-  
-  expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
-  expectedAxis = lib.rotate_lines(axis, 0, 0, angle_z);
+    [angle_x, angle_y] = lib.get_drag_angles(origin2);
+  }  
+  expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
+  expectedAxis = lib.rotate_lines(axis, angle_x, angle_y);
+  expectedGrid = lib.rotate_lines(grid, angle_x, angle_y);
   
   plot(expectedScatter,
+       expectedGrid,
        expectedAxis,
        0);
 }
 
 
 function dragged_v_only(){
-  angle_z = lib.get_drag_angle_2d();
+  let [angle_x, angle_y] = lib.get_drag_angles();
 
-  expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
+  expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
   expectedScatter[0] = scatter[0];
+  expectedGrid = grid;
   expectedAxis = axis;
-
-  plot(expectedScatter, 
-       expectedAxis,
+  
+  plot(expectedScatter,
+       expectedGrid,
+       expectedAxis, 
        0);
 }
 
@@ -354,22 +356,21 @@ function dragged_point(d, i){
     return;
   }
 
+  let [angle_x, angle_y] = lib.get_drag_angles();
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
-        let r = lib.update_point_position_from_mouse(d);
-        let norm = lib.norm(r);
-        if (norm > 1.2) {
-          r = lib.times(r, 1.2/norm);
-        }
+        r = lib.rotate_point(d, angle_x, angle_y);
         expectedScatter.push(r);
       } else {
         expectedScatter.push(d);
       }
   });
+  expectedGrid = lib.rotate_lines(grid, angle_x, angle_y);
   expectedAxis = axis;
 
   plot(expectedScatter,
+       expectedGrid,
        expectedAxis, 
        0);
 }
@@ -378,6 +379,7 @@ function dragged_point(d, i){
 function drag_end(){
   scatter = expectedScatter;
   axis = expectedAxis;
+  grid = expectedGrid;
 }
 
 
@@ -386,7 +388,8 @@ return {
   select_svg: function(svg_id){select_svg(svg_id);},
   set_show_proj: function(s){show_proj = s;},
   replot: function(){
-    plot(scatter,
+    plot(scatter, 
+         grid,
          axis,
          1000);
   },
