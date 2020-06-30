@@ -552,8 +552,6 @@ d3.selectAll('#show_hide_proj')
   });
 </script>
 
-So now, using $v_1, v_2, v_3$ and the dot product, we achieved the multi-dimensional change in perspective from one vector $u$, to another $u'$ in another space and coordinate.
-
 <!-- *OK, this list of numbers is three different views of $u$ from three different $v$ vectors. But if $v_1 = v_2$, we are obtaining the same view twice. If $v_1$ and $v_2$ are almost aligned, the two views are also almost the same.*
 
 *So I guess my question is, if we are taking more than one view, shouldn't we select $ \\{ v_1, v_2, v_3 \\} $ such that these views don't correlate with each other as much as possible?*
@@ -562,7 +560,10 @@ Absolutely. Setting aside what we really mean by "correlation", this set of vect
 
 *Interesting. This is like using the 3 number lines that represents the world view of $v_1, v_2,$ and $v_3$ as the three coordinate axes of the new space.*
 
-Exactly! Let's take a fun example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
+
+Exactly! So now, using $v_1, v_2, v_3$ and the dot product, we achieved the multi-dimensional change in perspective from one vector $u$, to another $u'$ in another space and coordinate.
+
+Let's take a fun example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_default_basis'> <div class='slider'></div></label>
@@ -635,7 +636,7 @@ And so, there is no intrinsic coordinate to any vector, only its location relati
 
 *In other words: this set of $v$ vectors and dot product are what give any vector living in space a coordinate?*
 
-Exactly. Be aware that there can be many such sets besides $\\{[1, 0, 0], [0, 1, 0], [0, 0, 1]\\}$. For example, rotating this set by any angle and we will obtain another valid set acting as coordinate system:
+Yes, be aware that there can be many such sets besides $\\{[1, 0, 0], [0, 1, 0], [0, 0, 1]\\}$. For example, rotating this set by any angle and we will obtain another valid set acting as coordinate system:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_basis_rotate'> <div class='slider'></div></label>
@@ -714,7 +715,7 @@ Here we have just turned a 3-dimensional vectors into a 2-dimensional vector.
 
 Of course, we can certainly do so by projecting $u$, living in 2 dimensional space, onto a set of three vectors $v_1, v_2, v_3$:
 
-*That looks cool! Although, now I'm seeing many different cases arise from matrix-vector multiplication. Is there an underlying characteristic of them all, in contrast to other type of transformation?*
+*That looks cool! Although, now I'm seeing many different cases arise from matrix-vector multiplication. Is there an underlying characteristic that makes them different to other types of transformations?*
 
 We can start studying the question by first looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers $x \times y = z$. Let's look at how different line segments change in terms of their length.
 
@@ -728,8 +729,8 @@ This property translates to higher dimensions as well. If two chunks of space ar
 
 Yes, this description is applicable for transformations between different number of dimensions as well (e.g. 2D to 3D and vice versa):
 
-While your observation cannot really say anything about how much scaled up, say, 2-D volumes (areas) are to 3-D volumes, because the comparison here is not meaningful.
+In these cases, it is meaningless to say how much scaled up a chunk of space in 2-D is to another in 3-D, or vice versa.
 
-*Still, for transformations between spaces of the same dimension - when this comparison is meaningful, a question arises: How much bigger or smaller does the space get? In the 1-dimensional case, this factor is simply the number used to multiply. In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
+*Still, for transformations between spaces of the same dimension - when this comparison is meaningful, a question arises: How much bigger or smaller does the space get? In the 1-dimensional case $x \times \alpha = y$, this factor is simply $\alpha$. In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
 
-You are asking all the right questions! The point of Linear Algebra is really studying these transformations inside-out, characterizing them, breaking them apart. Volume contraction or expansion is just one of these studies. The keyword for your question here is *Determinant of a Matrix*. But let's take a break here? We'll come back with many more interesting findings :)
+You are asking all the right questions! The point of Linear Algebra is really studying these transformations inside-out, characterizing them, breaking them apart, or undoing them entirely. Volume contraction or expansion is just one of these studies. The keyword for your question here is *Determinant of a Matrix*. But let's take a break here? We'll come back with many more interesting findings :)
