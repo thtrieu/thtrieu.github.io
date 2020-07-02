@@ -234,16 +234,17 @@ function get_opacity(d) {
 
 
 function get_stroke_width(d){
+  let r = 1.5;
   if (d.hasOwnProperty('stroke_width')) {
-    return d.stroke_width;
+    r = d.stroke_width;
+  } else if (is_2d) {
+  } else if (d.centroid.z != undefined) {
+    r = z_to_stroke_width_scale(d.centroid.z)
   }
-  if (is_2d) {
-    return 1.5;
+  if (d.hasOwnProperty('stroke_width_factor')) {
+    r *= d.stroke_width_factor;
   }
-  if (d.centroid.z != undefined) {
-    return z_to_stroke_width_scale(d.centroid.z)
-  }
-  return 1.5;
+  return r;
 }
 
 
@@ -864,6 +865,32 @@ function text_matrix_to_list(coord_texts, coord, size=14,
   return [lines_list, texts_list];
 };
 
+
+function create_circle_lines(radius, n=40) {
+  let points = [];
+  let a = Math.PI * 2 / n;
+  for (let i = 1; i <= n; i++) {
+    points.push({
+        x: Math.cos(a * i) * radius,
+        y: Math.sin(a * i) * radius,
+        z: 0,
+        opacity: 0.2,
+        centroid_z: -1000,
+    });
+  }
+  let lines = [];
+  for (let j = 0; j < points.length-1; j++) {
+    lines.push([points[j], 
+                points[j+1]]);
+  }
+  lines.push([
+      points[points.length-1],
+      points[0]
+  ]);
+  return lines;
+}
+
+
 function _add(v1, v2) {
   let r = Object.assign({}, v1);
   r.x += v2.x;
@@ -946,6 +973,7 @@ return {
   strip: strip,
   cp_list: cp_list,
   cp_item: cp_item,
+  create_circle_lines: create_circle_lines,
 }
 
 };
