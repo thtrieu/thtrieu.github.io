@@ -3,13 +3,11 @@ let scaled1d = (function() {
 let origin = [300, 120],
     scale = 60, 
     scatter = [], 
-    axis = [],
-    expectedAxis = [],
+    expectedScatter = [],
     startAngleX = Math.PI,
     startAngleY = 0., 
     startAngleZ = 0.,
-    axis_len = 4,
-    unit = axis_len/15,
+    ruler_len = 4,
     svg = null,
     lib = null;
 
@@ -31,7 +29,7 @@ function select_svg(svg_id) {
 }
 
 
-function plot(scatter, axis, tt){
+function plot(scatter, tt){
   let points = [];
   scatter.forEach(function(d,i) {
     points.push(d);
@@ -60,22 +58,22 @@ function plot(scatter, axis, tt){
       point_A1 = {
           x: point_A.x * scaler_point.x,
           y: 1.5, z: 0,
-          r: 4, color: 0
+          r: 5, color: 0
       },
       point_B1 = {
           x: point_B.x * scaler_point.x,
           y: 1.5, z: 0,
-          r: 4, color: 0
+          r: 5, color: 0
       },
       point_C1 = {
           x: point_C.x * scaler_point.x,
           y: 1.5, z: 0,
-          r: 4, color: 4
+          r: 5, color: 4
       },
       point_D1 = {
           x: point_D.x * scaler_point.x,
           y: 1.5, z: 0,
-          r: 4, color: 4
+          r: 5, color: 4
       };
   
   reflect_points.push(point_A1, point_B1, point_C1, point_D1);
@@ -108,7 +106,7 @@ function plot(scatter, axis, tt){
   }
 
   lib.plot_lines(lines, tt, 'lines');
-  lib.plot_texts(texts, tt, 'text_in_axis');
+  lib.plot_texts(texts, tt, 'text_in_ruler');
   lib.plot_points(reflect_points, tt,
                   null,  null, null,
                   'reflect_points');
@@ -116,23 +114,23 @@ function plot(scatter, axis, tt){
 
 function init(tt){
   rulers = [];
-    // set up the rulers.
+  // set up the rulers.
   rulers.push([
       {x: 4.5, y: 1.5, z: 0, r: 0},
       {x: -4.5, y: 1.5, z: 0, r: 0}
-      ]);
+  ]);
   rulers.push([
       {x: 4.5, y: 0, z: 0, r: 0},
       {x: -4.5, y: 0, z: 0, r: 0}
-      ]);
+  ]);
   rulers.push([
       {x: 2, y: -1.5, z: 0, r: 0},
       {x: -2, y: -1.5, z: 0, r: 0}
-      ]);
+  ]);
   lib.plot_lines(rulers, 0, 'rulers');
 
   let rulers_texts = [];
-  for (let i = -axis_len; i <= axis_len; i += 1) {
+  for (let i = -ruler_len; i <= ruler_len; i++) {
     rulers_texts.push({
         text: i.toFixed(1),
         x: i - 0.2, y: 0.3,
@@ -140,7 +138,7 @@ function init(tt){
         font_size: 12,
         text_opacity: 0.7});
   }
-  for (let i = -axis_len; i <= axis_len; i += 1) {
+  for (let i = -ruler_len; i <= ruler_len; i++) {
     rulers_texts.push({
         text: i.toFixed(1),
         x: i - 0.2, y: 1.8,
@@ -148,7 +146,7 @@ function init(tt){
         font_size: 12,
         text_opacity: 0.7});
   }
-  for (let i = -axis_len/2; i <= axis_len/2; i += 1) {
+  for (let i = -ruler_len/2; i <= ruler_len/2; i++) {
     rulers_texts.push({
         text: i.toFixed(1),
         x: i - 0.2, y: -1.2,
@@ -156,42 +154,42 @@ function init(tt){
         font_size: 12,
         text_opacity: 1});
   }
+
+  rulers_texts.push(...[{
+      text: 'x',
+      x: -4.85, y: 0
+    },{
+      text: 'y',
+      x: -4.85, y: 1.5
+  }])
+
   lib.plot_texts(rulers_texts, 0, 'rulers_texts');
 
-
-  scatter = [];
-  scatter.push({
-      x: 2, y: 1.5,
-      z: 0, r: 4,
-      color: 6      
-    });
-  scatter.push({
-      x: 1, y: 0,
-      z: 0, r: 4,
-      color: 0
-    });
-  scatter.push({
-      x: 2, y: 0,
-      z: 0, r: 4,
-      color: 0,
-    });
-  scatter.push({
-      x: -2,
-      y: 0,
-      z: 0,
-      color: 4,
-      r: 4
-    });
-  scatter.push({
-      x: 0, y: 0,
-      z: 0, r: 4,
-      color: 4
-    });
+  scatter = [{
+        x: 1, y: 1.5,
+        z: 0, r: 5,
+        color: 6      
+    }, {
+        x: 1, y: 0,
+        z: 0, r: 5,
+        color: 0
+    }, {
+        x: 2, y: 0,
+        z: 0, r: 5,
+        color: 0,
+    }, {
+        x: -2, y: 0,
+        z: 0, r: 5,
+        color: 4
+    }, {
+        x: 0, y: 0,
+        z: 0, r: 5,
+        color: 4
+  }];
 
   expectedScatter = lib.rotate_points(scatter, startAngleX,
                                       startAngleY, startAngleZ);
-  plot(expectedScatter,
-       [], tt);
+  plot(expectedScatter, tt);
   drag_end();
 }
 
@@ -202,8 +200,7 @@ function drag_start(){
 
 
 function dragged(){
-  plot(expectedScatter, 
-        [], 0);
+  plot(expectedScatter, 0);
 }
 
 
@@ -234,8 +231,7 @@ function dragged_point(d, i){
       }
   });
 
-  plot(expectedScatter, 
-       [], 0);
+  plot(expectedScatter, 0);
 }
 
 
