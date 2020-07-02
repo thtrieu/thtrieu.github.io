@@ -716,7 +716,22 @@ Of course, we can certainly do so by projecting $u$, living in 2 dimensional spa
 
 *That looks cool! Although, now I'm seeing many different cases arise from matrix-vector multiplication. Is there an underlying characteristic that makes them different to other types of transformations?*
 
-We can start studying the question by first looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers $x \times y = z$. Let's look at how different line segments change in terms of their length.
+We can start studying the question by first looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers $x \times \alpha = y$. Let's look at how different line segments change in terms of their length.
+
+<center class='js'>
+  <br/>
+<svg width="630" height="280" id="svg_scaled1d"></svg>
+<br/>
+Try dragging $\alpha$, or points on the $x$ ruler, or click 
+<button id='init_scaled1d'>reset</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/scaled1d.js"></script>
+<script>
+draw_on_svg('scaled1d',
+            scaled1d);
+</script>
+
 
 *It seems that they got scaled up/down by the same factor, regardless of their position and size.*
 
