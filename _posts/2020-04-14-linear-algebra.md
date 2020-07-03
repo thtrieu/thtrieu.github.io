@@ -667,7 +667,7 @@ It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 
 
 *Okay, but what if the set $ \\{ v_1, v_2, v_3 \\} $ is not orthonormal?*
 
-You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result $u'$ looks like $u$, except rotated by an angle. Let's extend this a bit by considering a simple case where the set $ \\{ v_1, v_2, v_3 \\} $ is only "ortho" but not "normal". This time, we can see that the transformation can be broken down to (1) rotating and (2) stretching on each axis individually, according to the length of $ v_1, v_2, v_3 $:
+You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result $u'$ looks like $u$, except rotated by an angle. Let's extend this a bit by considering a simple case where the set $ \\{ v_1, v_2, v_3 \\} $ is only "ortho" but not "normal". This time, we can see that the transformation can be broken down to (1) rotating and then (2) stretching on each axis individually, according to the length of $ v_1, v_2, v_3 $:
 
 
 <center class='js'>
