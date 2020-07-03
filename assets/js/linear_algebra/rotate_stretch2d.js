@@ -121,7 +121,6 @@ function plot(scatter, axis, tt){
 
   [v1, v2, v3].forEach(function(v, i) {
     let v_ = lib.normalize(v);
-    v_.r = 6;
     v_.text = v.name + ' = 1'; 
     v_.text_opacity_factor = 0.5;
     if (i == 2) {
@@ -129,7 +128,6 @@ function plot(scatter, axis, tt){
       v_.text_opacity = 0.0;
     }
     v_.z -= 1/scale;
-    v_.size_factor = 1.2;
     v_.opacity_factor = 0.5;
     points.push(v_);
   })

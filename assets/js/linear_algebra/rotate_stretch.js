@@ -120,8 +120,6 @@ function plot(scatter, grid, axis, tt){
     v_.text = v.name + ' = 1'; 
     v_.text_opacity_factor = 0.5;
     v_.z -= 1/scale;
-    v_.r = 6;
-    v_.size_factor = 1.2;
     v_.opacity_factor = 0.5;
     points.push(v_);
   });

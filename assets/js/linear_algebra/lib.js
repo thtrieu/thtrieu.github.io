@@ -448,7 +448,8 @@ function plot_points(data,
                   .call(d3.drag()
                           .on('drag', drag_point_fn)
                           .on('start', drag_start_fn)
-                          .on('end', drag_end_fn));
+                          .on('end', drag_end_fn))
+                  .on('dblclick', function(){});
 
   points
     .enter()
