@@ -1,6 +1,6 @@
 let scaled1d = (function() {
 
-let origin = [300, 120],
+let origin = [300, 75],
     scale = 60, 
     scatter = [], 
     expectedScatter = [],
@@ -9,7 +9,8 @@ let origin = [300, 120],
     startAngleZ = 0.,
     ruler_len = 4,
     svg = null,
-    lib = null;
+    lib = null,
+    spacing = 1.;
 
 
 function select_svg(svg_id) {
@@ -57,22 +58,22 @@ function plot(scatter, tt){
   let reflect_points = [],
       point_A1 = {
           x: point_A.x * scaler_point.x,
-          y: 1.5, z: 0,
+          y: spacing, z: 0,
           r: 5, color: 0
       },
       point_B1 = {
           x: point_B.x * scaler_point.x,
-          y: 1.5, z: 0,
+          y: spacing, z: 0,
           r: 5, color: 0
       },
       point_C1 = {
           x: point_C.x * scaler_point.x,
-          y: 1.5, z: 0,
+          y: spacing, z: 0,
           r: 5, color: 4
       },
       point_D1 = {
           x: point_D.x * scaler_point.x,
-          y: 1.5, z: 0,
+          y: spacing, z: 0,
           r: 5, color: 4
       };
   
@@ -102,7 +103,7 @@ function plot(scatter, tt){
 
   lines.push(lineAB, lineCD, lineAB1, lineCD1);
   for (i = 0; i < lines.length; i++) {
-    lines[i].stroke_width = 2;
+    lines[i].stroke_width = 3;
   }
 
   lib.plot_lines(lines, tt, 'lines');
@@ -116,16 +117,16 @@ function init(tt){
   rulers = [];
   // set up the rulers.
   rulers.push([
-      {x: 4.5, y: 1.5, z: 0, r: 0},
-      {x: -4.5, y: 1.5, z: 0, r: 0}
+      {x: 4.5, y: spacing, z: 0, r: 0},
+      {x: -4.5, y: spacing, z: 0, r: 0}
   ]);
   rulers.push([
       {x: 4.5, y: 0, z: 0, r: 0},
       {x: -4.5, y: 0, z: 0, r: 0}
   ]);
   rulers.push([
-      {x: 2, y: -1.5, z: 0, r: 0},
-      {x: -2, y: -1.5, z: 0, r: 0}
+      {x: 2, y: -spacing, z: 0, r: 0},
+      {x: -2, y: -spacing, z: 0, r: 0}
   ]);
   lib.plot_lines(rulers, 0, 'rulers');
 
@@ -134,23 +135,21 @@ function init(tt){
     rulers_texts.push({
         text: i.toFixed(1),
         x: i - 0.2, y: 0.3,
-        z: 0, color: 'grey',
-        font_size: 12,
-        text_opacity: 0.7});
+        z: 0, text_color: 'grey',
+        font_size: 12});
   }
   for (let i = -ruler_len; i <= ruler_len; i++) {
     rulers_texts.push({
         text: i.toFixed(1),
-        x: i - 0.2, y: 1.8,
-        z: 0, color: 'grey',
-        font_size: 12,
-        text_opacity: 0.7});
+        x: i - 0.2, y: spacing + 0.3,
+        z: 0, text_color: 'grey',
+        font_size: 12});
   }
   for (let i = -ruler_len/2; i <= ruler_len/2; i++) {
     rulers_texts.push({
         text: i.toFixed(1),
-        x: i - 0.2, y: -1.2,
-        z: 0, color: 'grey',
+        x: i - 0.2, y: -spacing + 0.3,
+        z: 0, text_color: 'grey',
         font_size: 12,
         text_opacity: 1});
   }
@@ -160,13 +159,13 @@ function init(tt){
       x: -4.85, y: 0
     },{
       text: 'y',
-      x: -4.85, y: 1.5
+      x: -4.85, y: 1.
   }])
 
   lib.plot_texts(rulers_texts, 0, 'rulers_texts');
 
   scatter = [{
-        x: 1, y: 1.5,
+        x: 1, y: 1.,
         z: 0, r: 5,
         color: 6      
     }, {
