@@ -110,10 +110,12 @@ function plot(scatter, axis, tt){
     } else if (i == 2) {
       p.name = '|v\u2082|';
     } else if (i == 3) {
-      p.name = '|v\u2083|';    
+      p.name = '|v\u2083|';
+      p.text_opacity = 0.0
     }
-    if (0 < i && i < 3) {
-      p.text = p.name + ' = ' + txt;
+    p.text = p.name;
+    if (0 < i && i < 4) {
+      p.text += ' = ' + txt;
     }
   });
 
@@ -275,16 +277,6 @@ function init(tt){
   lib.plot_lines(grid, tt, 'grid');
   lib.plot_lines(grid2, tt, 'grid2',
                  null, null, null, origin2);
-
-  // let cp_grid = [];
-  // grid.forEach(function(d) {
-  //   let d_cp = [lib.cp_item(d[0]), lib.cp_item(d[1])];
-  //   d_cp.opacity = 0.0;
-  //   cp_grid.push(d_cp);
-  // })
-  // lib.plot_lines(cp_grid, tt, 'grid2', 
-  //                null, null, null, origin2);
-
   scatter = [u, v1, v2];
 
   alpha = startAngleX;

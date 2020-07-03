@@ -107,8 +107,9 @@ function plot(scatter, grid, axis, tt){
     } else if (i == 3) {
       p.name = '|v\u2083|';
     }
+    p.text = p.name;
     if (i > 0) {
-      p.text = p.name + ' = ' + txt;
+      p.text += ' = ' + txt;
     }
   });
 
