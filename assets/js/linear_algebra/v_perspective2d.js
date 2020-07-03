@@ -50,8 +50,8 @@ function plot(scatter, axis, tt){
       y: v.y/v_norm,
       z: 0.0,
       color: 3,
-      r: 6,
-      opacity: 0.6,
+      size_factor: 1.5,
+      opacity_factor: 0.5,
       centroid_z: -1000,
       text_opacity: 0.5
   }

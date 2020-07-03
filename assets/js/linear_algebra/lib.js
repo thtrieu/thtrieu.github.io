@@ -172,16 +172,17 @@ function set_ranges(axis_len) {
 
 
 function get_size(d) {
+  let r = 4.5;
   if (d.hasOwnProperty('r')) {
-    return d.r;
+    r = d.r;
+  } else if (is_2d) {
+  } else if (d.centroid.z != undefined) {
+    r = z_to_size_scale(d.centroid.z);
   }
-  if (is_2d) {
-    return 4.5;
+  if (d.hasOwnProperty('size_factor')) {
+    r *= d.size_factor;
   }
-  if (d.centroid.z != undefined) {
-    return z_to_size_scale(d.centroid.z);
-  }
-  return 4.5;
+  return r;
 }
 
 
@@ -220,16 +221,17 @@ function get_txt_opacity(d) {
 }
 
 function get_opacity(d) {
+  r = 1.0;
   if (d.hasOwnProperty('opacity')) {
-    return d.opacity;
+    r = d.opacity;
+  } else if (is_2d) {
+  } else if (d.centroid.z != undefined) {
+    r = z_to_opacity_scale(d.centroid.z)
   }
-  if (is_2d) {
-    return 1.0;
+  if (d.hasOwnProperty('opacity_factor')) {
+    r *= d.opacity_factor;
   }
-  if (d.centroid.z != undefined) {
-    return z_to_opacity_scale(d.centroid.z)
-  }
-  return 1.0;
+  return r;
 }
 
 

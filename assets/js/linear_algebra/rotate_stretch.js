@@ -91,6 +91,7 @@ function plot(scatter, grid, axis, tt){
     let seg = [map.map(d[0]), 
                map.map(d[1])];
     seg.color = 6;
+    seg.stroke_width_factor = 0.8;
     ellipse_shadow.push(seg);
   })
   lib.plot_lines(ellipse_shadow, tt, 'ellipse_shadow', 
@@ -119,7 +120,8 @@ function plot(scatter, grid, axis, tt){
     v_.text = v.name + ' = 1'; 
     v_.z -= 1/scale;
     v_.r = 6;
-    v_.opacity = 0.5;
+    v_.size_factor = 1.2;
+    v_.opacity_factor = 0.5;
     points.push(v_);
   });
 

@@ -126,17 +126,16 @@ function plot(scatter, axis, tt){
   })
 
   basis.ex.color = v1.color;
-  basis.ex.r = 6;
-  basis.ex.opacity = 0.5;
+  basis.ex.size_factor = 1.4;
+  basis.ex.opacity_factor = 0.5;
 
   basis.ey.color = v2.color;
-  basis.ey.r = 6;
-  basis.ey.opacity = 0.5;
+  basis.ey.size_factor = 1.4;
+  basis.ey.opacity_factor = 0.5;
 
   basis.ez.color = v3.color;
-  basis.ez.r = 6;
+  basis.ez.size_factor = 1.4;
   basis.ez.opacity = 0.0;
-
 
   points.push(...[basis.ex, basis.ey, basis.ez]);
   lib.plot_points(points, tt,

@@ -51,10 +51,11 @@ function plot(scatter, axis, tt){
   let v_norm = Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
 
   let v_ = lib.normalize(v);
-  v_.r = 7;
-  v_.opacity = 0.5;
+  v_.size_factor = 1.5;
+  v_.opacity_factor = 0.5;
+  v_.z -= 1/scale;
   v_.centroid_z = -1000;
-  v_.text = '|v| = 1.00';
+  v_.text = '|v| = 1';
   v_.text_opacity = 0.5;
 
   let uTv = lib.dot_product(u, v);
