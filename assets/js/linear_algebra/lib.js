@@ -862,7 +862,7 @@ function text_matrix_to_list(coord_texts, coord, size=14,
   ];
 
   for (i = 0; i < lines_list.length; i++) {
-    lines_list[i].stroke_width = 0.7 * size/14;
+    lines_list[i].stroke_width = 1.2 * size/14;
   }
 
   return [lines_list, texts_list];
