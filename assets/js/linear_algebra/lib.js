@@ -698,7 +698,7 @@ function update_point_position_from_mouse(d, with_origin=null){
 }
 
 
-function distance(u, v) {
+function distance(from, to) {
   let d = {
           x: to.x - from.x,
           y: to.y - from.y,
