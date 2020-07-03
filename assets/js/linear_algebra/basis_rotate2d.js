@@ -103,12 +103,18 @@ function plot(scatter, axis, tt){
 
   let [u, v1, v2, v3] = points;
 
+  let sync = 0;
   points.forEach(function(p, i){
     let coord = lib.dot_basis(p, basis);
-    let txt = ' = ['.concat(
+    let txt = '['.concat(
         round_to(coord.x, 1), ', ',
         round_to(coord.y, 1), ']'
     );
+    if (i == 1 && txt == '[1, 0]') {
+      sync += 1;
+    } else if (i == 2 && txt == '[0, 1]') {
+      sync += 1;
+    }
     if (i == 0) {
       p.text = 'u';
     } else if (i == 1) {
@@ -121,21 +127,35 @@ function plot(scatter, axis, tt){
     }
 
     if (i > 0) {
-      p.text += txt;
+      p.text = txt + '=' + p.text;
+    }
+    if (i == 3) {
+      p.text = '';
     }
   })
+
+  let u_prime_name = 'u\'';
+  if (sync == 2) {
+    u_prime_name += ' = u';
+  }
 
   basis.ex.color = v1.color;
   basis.ex.size_factor = 1.4;
   basis.ex.opacity_factor = 0.5;
+  basis.ex.text = '[1, 0]';
+  basis.ex.text_opacity_factor = 0.5;
 
   basis.ey.color = v2.color;
   basis.ey.size_factor = 1.4;
   basis.ey.opacity_factor = 0.5;
+  basis.ey.text = '[0, 1]';
+  basis.ey.text_opacity_factor = 0.5;
 
   basis.ez.color = v3.color;
   basis.ez.size_factor = 1.4;
   basis.ez.opacity = 0.0;
+  basis.ez.text = '[0, 0, 1]';
+  basis.ez.text_opacity = 0.0;
 
   points.push(...[basis.ex, basis.ey, basis.ez]);
   lib.plot_points(points, tt,
@@ -145,7 +165,7 @@ function plot(scatter, axis, tt){
   lib.plot_points(cloud, tt, null, null, null, 'cloud');
   lib.plot_points(cloud, tt, null, null, null, 'cloud2', origin2);
 
-  plot_v_perspective(u, v1, v2, v3, axis, tt);
+  plot_v_perspective(u, u_prime_name, v1, v2, v3, axis, tt);
   lib.sort();
 }
 
@@ -168,7 +188,7 @@ function compute_transformation(u, v1, v2, v3, basis) {
 }
 
 
-function plot_v_perspective(u, v1, v2, v3, axis, tt) {
+function plot_v_perspective(u, u_prime_name, v1, v2, v3, axis, tt) {
   let basis = {
     x: lib.normalize(axis[axis_len/unit * 0][1]),
     y: lib.normalize(axis[axis_len/unit * 1][1]),
@@ -177,7 +197,7 @@ function plot_v_perspective(u, v1, v2, v3, axis, tt) {
 
   u = compute_transformation(u, v1, v2, v3, basis);
   u.color = 4
-  u.text = 'u\'';
+  u.text = u_prime_name;
   lib.plot_points([u], tt, null, null, null, 'u2', origin2);
 
   basis.x.color = v1.color;
