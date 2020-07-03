@@ -1,7 +1,7 @@
 let rotate_stretch2d = (function() {
 
 let origin = [150, 140], 
-    origin2 = [450, 140],
+    origin2 = [480, 140],
     scale = 100, 
     scatter = [],
     axis = [], 
@@ -303,21 +303,21 @@ function hide(objs, op=0.0) {
 }
 
 
-let drag_on_top = true;
+let drag_on_left = true;
 
 
 function drag_start(){
-  if (lib.get_mouse_position().y < 300) {
-    drag_on_top = true;
+  if (lib.get_mouse_position().x < 300) {
+    drag_on_left = true;
     lib.drag_start2d();
   } else {
-    drag_on_top = false;
+    drag_on_left = false;
     lib.drag_start2d(origin2);
   }
 }
 
 function dragged(){
-  if (drag_on_top) {
+  if (drag_on_left) {
     angle_z = lib.get_drag_angle_2d();  
   } else {
     angle_z = lib.get_drag_angle_2d(origin2);  

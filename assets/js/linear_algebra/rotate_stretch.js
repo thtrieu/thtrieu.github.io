@@ -1,7 +1,7 @@
 let rotate_stretch = (function() {
 
 let origin = [150, 140], 
-    origin2 = [450, 140],
+    origin2 = [480, 140],
     scale = 100, 
     scatter = [],
     cloud = [],
@@ -417,7 +417,8 @@ function dragged_point(d, i){
     return;
   }
 
-  let [angle_x, angle_y] = lib.get_drag_angles();
+  let [angle_x, angle_y] = lib.get_drag_angles(
+      drag_on_left ? origin : origin2);
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
