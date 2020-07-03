@@ -208,16 +208,17 @@ function get_font_family(d) {
 
 
 function get_txt_opacity(d) {
+  r = 1.0;
   if (d.hasOwnProperty('text_opacity')){
-    return d.text_opacity;
+    r = d.text_opacity;
+  } else if (is_2d) {
+  } else if (d.centroid.z != undefined) {
+    r = z_to_txt_opacity_scale(d.centroid.z);
   }
-  if (is_2d) {
-    return 1.0;
+  if (d.hasOwnProperty('text_opacity_factor')) {
+    r *= d.text_opacity_factor;
   }
-  if (d.centroid.z != undefined) {
-    return z_to_txt_opacity_scale(d.centroid.z);
-  }
-  return 1.0;
+  return r;
 }
 
 function get_opacity(d) {

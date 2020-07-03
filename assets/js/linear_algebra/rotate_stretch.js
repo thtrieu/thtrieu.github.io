@@ -118,6 +118,7 @@ function plot(scatter, grid, axis, tt){
     let v_ = lib.normalize(v);
     v_.text_opacity = 0.5;
     v_.text = v.name + ' = 1'; 
+    v_.text_opacity_factor = 0.5;
     v_.z -= 1/scale;
     v_.r = 6;
     v_.size_factor = 1.2;

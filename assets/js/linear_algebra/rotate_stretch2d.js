@@ -123,7 +123,7 @@ function plot(scatter, axis, tt){
     let v_ = lib.normalize(v);
     v_.r = 6;
     v_.text = v.name + ' = 1'; 
-    v_.text_opacity = 0.5;
+    v_.text_opacity_factor = 0.5;
     if (i == 2) {
       v_.opacity = 0.0;
       v_.text_opacity = 0.0;

@@ -56,7 +56,7 @@ function plot(scatter, axis, tt){
   v_.z -= 1/scale;
   v_.centroid_z = -1000;
   v_.text = '|v| = 1';
-  v_.text_opacity = 0.5;
+  v_.text_opacity_factor = 0.5;
 
   let uTv = lib.dot_product(u, v);
   let uTvv = {x: v_.x * uTv,
