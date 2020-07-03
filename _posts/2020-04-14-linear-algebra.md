@@ -526,7 +526,9 @@ It will not be. Let's say we project $u$ onto three vectors $ \\{ v_1, v_2, v_3 
 <br/> 
 <label class='switch show'> <input type='checkbox' id='show_hide_proj'> <div class='slider show'></div></label> projection details.
 <br/>
-Try dragging $u$, $v_1$, $v_2$, $v_3$, the whole space, or click 
+Here we sync the two coordinate systems for easy comparison between $u$ and $u'$.
+<br/>
+Try dragging $u$, {$v_1$, $v_2$, $v_3$}, the whole space, or click 
 <button id='init_multi_dim_change'>reset</button>.
 </center>
 
@@ -659,7 +661,7 @@ draw_on_svg('basis_rotate',
 
 *It looks like $u'$ is moving around in the same sphere that also contains $u$?*
 
-That is right. In other words, the transformation preserves length of $u$. In Math, we call length-preserving transformations with a very familiar and intuitive name: Rotation. 
+That is right. We call such transformations with a very familiar and intuitive name: Rotation. 
 
 It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 \\} $ has to have a length of $1$ and any pair of them must be perpendicular - which is what the illustration is set up to be. People call such sets "orthonormal": "ortho" stands for orthogonal and "normal" stands for length of $1$.
 
