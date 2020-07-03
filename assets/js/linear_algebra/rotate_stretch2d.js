@@ -1,21 +1,21 @@
 let rotate_stretch2d = (function() {
 
-let origin = [300, 150], 
-  origin2 = [300, 450],
-  scale = 100, 
-  scatter = [],
-  axis = [], 
-  expectedScatter = [],
-  expectedAxis = [],
-  startAngleX = Math.PI,
-  startAngleY = 0.,
-  startAngleZ = 0.,
-  axis_len = 1.2,
-  radius = 0.5,
-  unit = axis_len/10,
-  svg = null,
-  lib = null,
-  show_proj = true;
+let origin = [150, 140], 
+    origin2 = [450, 140],
+    scale = 100, 
+    scatter = [],
+    axis = [], 
+    expectedScatter = [],
+    expectedAxis = [],
+    startAngleX = Math.PI,
+    startAngleY = 0.,
+    startAngleZ = 0.,
+    axis_len = 1.2,
+    radius = 0.5,
+    unit = axis_len/10,
+    svg = null,
+    lib = null,
+    show_proj = true;
 
 
 function select_svg(svg_id) {
@@ -359,6 +359,9 @@ function stretch_point(d, i){
       if (j == i) {
         d.x = p.x;
         d.y = p.y;
+      }
+      if (lib.norm(d) > 1.5) {
+        d = lib.times(d, 1.5/lib.norm(d));
       }
       expectedScatter.push(d);
   });

@@ -1,24 +1,24 @@
 let rotate_stretch = (function() {
 
-let origin = [300, 150], 
-  origin2 = [300, 450],
-  scale = 100, 
-  scatter = [],
-  cloud = [],
-  axis = [], 
-  grid = [],
-  expectedGrid = [],
-  expectedScatter = [],
-  expectedCloud = [],
-  expectedAxis = [],
-  startAngleX = Math.PI/8 * 1.7,
-  startAngleY = -Math.PI/8,
-  startAngleZ = Math.PI/8 * 0.6,
-  axis_len = 1.2,
-  unit = axis_len/10,
-  radius = 0.5,
-  svg = null,
-  lib = null;
+let origin = [150, 140], 
+    origin2 = [450, 140],
+    scale = 100, 
+    scatter = [],
+    cloud = [],
+    axis = [], 
+    grid = [],
+    expectedGrid = [],
+    expectedScatter = [],
+    expectedCloud = [],
+    expectedAxis = [],
+    startAngleX = Math.PI/8 * 1.7,
+    startAngleY = -Math.PI/8,
+    startAngleZ = Math.PI/8 * 0.6,
+    axis_len = 1.2,
+    unit = axis_len/10,
+    radius = 0.5,
+    svg = null,
+    lib = null;
 
 
 function select_svg(svg_id) {
@@ -392,6 +392,9 @@ function stretch_point(d, i){
         d.x = p.x;
         d.y = p.y;
         d.z = p.z;
+      }
+      if (lib.norm(d) > 1.5) {
+        d = lib.times(d, 1.5/lib.norm(d));
       }
       expectedScatter.push(d);
   });

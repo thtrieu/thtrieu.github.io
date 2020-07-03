@@ -675,7 +675,7 @@ You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_rotate_stretch'> <div class='slider'></div></label>
   <br/>
-<svg width="630" height="600" id="svg_rotate_stretch"></svg>
+<svg width="630" height="280" id="svg_rotate_stretch"></svg>
 <br/>
 Try dragging $u$, {$v_1$, $v_2$, $v_3$}, the whole space, or click <button id='init_rotate_stretch'>reset</button>. 
 <br/>
