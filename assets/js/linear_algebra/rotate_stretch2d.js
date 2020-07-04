@@ -85,7 +85,7 @@ function plot(scatter, axis, tt){
 
   let circle_shadow = lib.create_circle_lines(lib.norm(u));
   circle_shadow.forEach(function(d) {
-    d.color = 6;
+    d.color = 1;
   })
 
   let ellipse_shadow = [];
@@ -330,6 +330,9 @@ function dragged(){
 }
 
 
+let is_rotating_v = false;
+
+
 function dragged_v_only(){
   angle_z = lib.get_drag_angle_2d();
 
@@ -352,6 +355,13 @@ function stretch_point(d, i){
     y: d_.y * d_Tm,
     z: 0,
   }
+
+  if (lib.distance(p, m) > 0.1) {
+    is_rotating_v = true;
+    lib.drag_start2d();
+    return; 
+  }
+
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
@@ -374,7 +384,11 @@ function stretch_point(d, i){
 
 function dragged_point(d, i){
   if (0 < i && i < 3) {
-    stretch_point(d, i);
+    if (!is_rotating_v) {
+      stretch_point(d, i);
+    } else {
+      dragged_v_only();
+    }
     return;
   }
   else if (i > 2) {
@@ -404,8 +418,10 @@ function dragged_point(d, i){
 
 
 function drag_end(){
+  console.log('end');
   scatter = expectedScatter;
   axis = expectedAxis;
+  is_rotating_v = false;
 }
 
 

@@ -77,7 +77,7 @@ function plot(scatter, grid, axis, tt){
   // A constant:
   let circle_shadow = lib.create_circle_lines(radius);
   circle_shadow.forEach(function(d) {
-    d.color = 6;
+    d.color = 1;
   })
   lib.plot_lines(circle_shadow, tt, 'circle_shadow');
 
@@ -90,8 +90,7 @@ function plot(scatter, grid, axis, tt){
   circle_shadow.forEach(function(d, i) {
     let seg = [map.map(d[0]), 
                map.map(d[1])];
-    seg.color = 6;
-    seg.stroke_width_factor = 0.8;
+    seg.color = 1;
     ellipse_shadow.push(seg);
   })
   lib.plot_lines(ellipse_shadow, tt, 'ellipse_shadow', 
@@ -260,8 +259,8 @@ function schur_2_3(v1, v2, v3) {
 }
 
 
-function circle_to_ellipse_shadow_map(v1, v2, v3) {
-  let schur = schur_2_3(v1, v2, v3);
+function circle_to_ellipse_shadow_map(v01, v02, v03) {
+  let schur = schur_2_3(v01, v02, v03);
   let U = cholesky_U(schur.S);
   let w = inv_up_triangle(U);
 
@@ -372,6 +371,10 @@ function dragged_v_only() {
 }
 
 
+
+let is_rotating_v = false;
+
+
 function stretch_point(d, i){
   let d_2d = {x: d.x, y: d.y, z: 0.},
       d_2d_ = lib.normalize(d_2d),
@@ -384,6 +387,15 @@ function stretch_point(d, i){
     y: d.y * r,
     z: d.z * r,
   }
+
+  let diff = Math.sqrt((p.x-m.x)*(p.x-m.x) +
+                       (p.y-m.y)*(p.y-m.y));
+  if (diff > 0.1) {
+    is_rotating_v = true;
+    lib.drag_start();
+    return; 
+  }
+
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
@@ -408,7 +420,11 @@ function stretch_point(d, i){
 
 function dragged_point(d, i){
   if (1 <= i && i <= 3) {
-    stretch_point(d, i);
+    if (!is_rotating_v) {
+      stretch_point(d, i);
+    } else {
+      dragged_v_only();
+    }
     return;
   } else if (i >= 4) {
     dragged_v_only();
@@ -440,6 +456,7 @@ function drag_end(){
   scatter = expectedScatter;
   axis = expectedAxis;
   grid = expectedGrid;
+  is_rotating_v = false;
 }
 
 
