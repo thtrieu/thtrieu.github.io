@@ -48,7 +48,6 @@ function plot(scatter, axis, tt){
       y: v.y/v_norm,
       z: 0.0,
       color: 3,
-      size_factor: 1.5,
       opacity_factor: 0.5,
       centroid_z: -1000,
       text: '|v| = 1',
@@ -200,6 +199,10 @@ function dragged_point_only(){
        0);
 }
 
+
+let is_rotating_points = false;
+
+
 function stretch_point(d, i){
   let d_ = lib.normalize(d);
       m = lib.mouse_to_point_position();
@@ -208,6 +211,14 @@ function stretch_point(d, i){
     x: d_.x * d_Tm,
     y: d_.y * d_Tm,
     z: 0,
+  }
+  let diff = Math.sqrt((p.x-m.x)*(p.x-m.x) +
+                       (p.y-m.y)*(p.y-m.y));
+  if (diff > 0.2) {
+    drag_end();
+    is_rotating_points = true;
+    lib.drag_start2d();
+    return; 
   }
   expectedScatter = [];
   scatter.forEach(function(d, j){
@@ -223,9 +234,14 @@ function stretch_point(d, i){
        0);
 }
 
+
 function dragged_point(d, i){
   if (i == 1) {
-    stretch_point(d, i);
+    if (is_rotating_points) {
+      dragged_point_only();
+    } else {
+      stretch_point(d, i);
+    }
     return;
   } else if (i == 2) {
     dragged_point_only();
@@ -250,6 +266,7 @@ function dragged_point(d, i){
 function drag_end(){
   scatter = expectedScatter;
   axis = expectedAxis;
+  is_rotating_points = false;
 }
 
 
