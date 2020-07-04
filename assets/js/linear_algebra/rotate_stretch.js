@@ -391,6 +391,7 @@ function stretch_point(d, i){
   let diff = Math.sqrt((p.x-m.x)*(p.x-m.x) +
                        (p.y-m.y)*(p.y-m.y));
   if (diff > 0.1) {
+    drag_end();
     is_rotating_v = true;
     lib.drag_start();
     return; 

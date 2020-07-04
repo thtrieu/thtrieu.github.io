@@ -357,10 +357,11 @@ function stretch_point(d, i){
   }
 
   if (lib.distance(p, m) > 0.1) {
+    drag_end();
     is_rotating_v = true;
     lib.drag_start2d();
     return; 
-  }
+  };
 
   expectedScatter = [];
   scatter.forEach(function(d, j){
