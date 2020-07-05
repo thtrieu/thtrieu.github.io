@@ -376,7 +376,7 @@ $$u^Tv = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \left|v\right|$$
   <br/>
 <svg width="600" height="280" id="svg_dot_product_correct"></svg>
 <br/> 
-Try dragging $u$, $v$, or any of the other lines/points, or click
+Try stretching/rotating $v$, move $u$, or click
 <button id='init_dot_product_correct'>reset</button>.
 <br/>
 Notice when $|v|=1$, $u^Tv$ coincides with the projection (shaded blue).
@@ -412,7 +412,7 @@ In the current space and coordinate system, $u$ is a vector of certain location.
   <br/>
 <svg width="630" height="280" id="svg_v_perspective"></svg>
 <br/> 
-Try dragging $u$, $v$, the whole space, or click 
+Try stretching/rotating $v$, move $u$, or click
 <button id='init_v_perspective'>reset</button>.
 <br/>
 When does $u'$ stay the same?
@@ -677,7 +677,7 @@ You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \
   <br/>
 <svg width="630" height="280" id="svg_rotate_stretch"></svg>
 <br/>
-Try dragging $u$, {$v_1$, $v_2$, $v_3$}, the whole space, or click <button id='init_rotate_stretch'>reset</button>. 
+Try to move $u$, stretch/rotate {$v_1$, $v_2$, $v_3$}, the whole space, or click <button id='init_rotate_stretch'>reset</button>. 
 <br/>
 Notice now the sphere that contains $u'$ got stretched to an ellipsoid.
 </center>
