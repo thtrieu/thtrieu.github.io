@@ -46,7 +46,6 @@ function plot(scatter, axis, tt){
   let v_norm = Math.sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
 
   let v_ = lib.normalize(v);
-  v_.size_factor = 1.5;
   v_.opacity_factor = 0.5;
   v_.centroid_z = -1000;
   v_.text_opacity = 0.5;
@@ -254,6 +253,8 @@ function dragged(){
        0);
 }
 
+let is_rotating_points = false;
+
 
 function dragged_point_only(){
   if (!drag_on_left) {
@@ -281,6 +282,14 @@ function stretch_point(d, i){
     y: d.y * r,
     z: d.z * r,
   }
+  let diff = Math.sqrt((p.x-m.x)*(p.x-m.x) +
+                       (p.y-m.y)*(p.y-m.y));
+  if (diff > 0.2) {
+    drag_end();
+    is_rotating_points = true;
+    lib.drag_start();
+    return; 
+  }
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
@@ -302,7 +311,11 @@ function dragged_point(d, i){
     return;
   }
   if (i == 1) {
-    stretch_point(d, i);
+    if (is_rotating_points) {
+      dragged_point_only();
+    } else {
+      stretch_point(d, i);
+    }
     return;
   } else if (i == 2) {
     dragged_point_only();
@@ -330,6 +343,7 @@ function drag_end(){
   }
   scatter = expectedScatter;
   axis = expectedAxis;
+  is_rotating_points = false;
 }
 
 
@@ -339,6 +353,3 @@ return {
 };
 
 })();
-
-
-

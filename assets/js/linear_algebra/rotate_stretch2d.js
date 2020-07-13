@@ -4,7 +4,7 @@ let origin = [150, 140],
     origin2 = [480, 140],
     scale = 100, 
     scatter = [],
-    axis = [], 
+    axis = [],
     expectedScatter = [],
     expectedAxis = [],
     startAngleX = Math.PI,
@@ -51,7 +51,7 @@ function plot(scatter, axis, tt){
   let basis = {
     ex: lib.normalize(axis[axis_len/unit * 0][1]),
     ey: lib.normalize(axis[axis_len/unit * 1][1]),
-    ez: lib.normalize(axis[axis_len/unit * 2][1]),
+    ez: lib.normalize3d(axis[axis_len/unit * 2][1]),
   };
 
   let points = [];
@@ -59,10 +59,10 @@ function plot(scatter, axis, tt){
     points.push(Object.assign({}, d));
   });
 
-  let v3_ = lib.cp_item(basis.ez);
-  v3_.opacity = 0.0;
-  v3_.color = 9;
-  points.push(v3_);
+  // let v3_ = lib.cp_item(basis.ez);
+  // v3_.opacity = 0.0;
+  // v3_.color = 9;
+  // points.push(v3_);
   
   let lines = [];
   points.forEach(function(d, i){
@@ -120,7 +120,7 @@ function plot(scatter, axis, tt){
   });
 
   [v1, v2, v3].forEach(function(v, i) {
-    let v_ = lib.normalize(v);
+    let v_ = (i < 2) ? lib.normalize(v) : lib.normalize3d(v);
     v_.text = v.name + ' = 1'; 
     v_.text_opacity_factor = 0.5;
     if (i == 2) {
@@ -244,7 +244,7 @@ function sphere_grid(radius, n=2) {
 }
 
 
-function init(tt){
+function init(tt, data=null){
   axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
   scatter = [];
 
@@ -269,6 +269,14 @@ function init(tt){
     color: 3,
   };
 
+  let v3 = {
+    x: 0.,
+    y: 0., 
+    z: 1.,
+    color: 9,
+    opacity: 0.0,
+  };
+
   let grid = lib.create_circle_lines(0.5);
   grid.push(...lib.create_circle_lines(0.5));
   grid = hide(grid);
@@ -276,7 +284,7 @@ function init(tt){
   lib.plot_lines(grid, tt, 'grid');
   lib.plot_lines(grid2, tt, 'grid2',
                  null, null, null, origin2);
-  scatter = [u, v1, v2];
+  scatter = [u, v1, v2, v3];
 
   alpha = startAngleX;
   beta = startAngleY;
@@ -419,7 +427,6 @@ function dragged_point(d, i){
 
 
 function drag_end(){
-  console.log('end');
   scatter = expectedScatter;
   axis = expectedAxis;
   is_rotating_v = false;
@@ -427,7 +434,8 @@ function drag_end(){
 
 
 return {
-  init: function(tt=0){init(tt);},
+  data: function(){return {scatter: scatter, axis: axis};},
+  init: function(tt=0, data=null){init(tt, data);},
   select_svg: function(svg_id){select_svg(svg_id);}
 };
 

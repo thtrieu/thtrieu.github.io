@@ -123,6 +123,26 @@ function normalize(v) {
   return r;
 }
 
+function normalize3d(v) {
+  let v_norm = Math.sqrt(v.x*v.x+v.y*v.y+v.z*v.z);
+  let r = Object.assign({}, v);
+  r.x = v.x/v_norm;
+  r.y = v.y/v_norm;
+  r.z = v.z/v_norm;
+  return r;
+}
+
+
+function get_delay(delay) {
+  function duration(d) {
+    if (d.hasOwnProperty('delay')) {
+      return d.delay;
+    }
+    return delay;
+  }
+  return delay;
+}
+
 
 function get_duration(tt) {
   function duration(d) {
@@ -343,6 +363,26 @@ function plot_lines(data,
                     drag_start_fn=null,
                     drag_end_fn=null,
                     with_origin=null){
+  _plot_lines({
+      data: data,
+      tt: tt,
+      name: name,
+      drag_line_fn: drag_line_fn,
+      drag_start_fn: drag_start_fn,
+      drag_end_fn: drag_end_fn,
+      with_origin: with_origin
+  })
+}
+
+
+function _plot_lines({data,
+                      delay=0,
+                      tt=0,
+                      name='line',
+                      drag_line_fn=null,
+                      drag_start_fn=null,
+                      drag_end_fn=null,
+                      with_origin=null}={}) {
   add_keys(name, data);
 
   let lines = svg
@@ -358,7 +398,9 @@ function plot_lines(data,
       .append('line')
       .attr('class', '_3d ' + name)
       .merge(lines)
-      .transition().duration(get_duration(tt))
+      .transition()
+      .delay(get_delay(delay))
+      .duration(get_duration(tt))
       .each(function(d){
         d.centroid = {
           x: (d[1].x+d[0].x)/2.,
@@ -413,7 +455,9 @@ function plot_lines(data,
           d.text_position = project(d[1], with_origin);
         }
       })
-      .transition().duration(get_duration(tt))
+      .transition()
+      .delay(get_delay(delay))
+      .duration(get_duration(tt))
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
       .attr('font-family', get_font_family)
@@ -440,6 +484,28 @@ function plot_points(data,
                      drag_end_fn=null,
                      name='point',
                      with_origin=null){
+  _plot_points({data: data,
+                tt: tt,
+                drag_point_fn: drag_point_fn,
+                drag_start_fn: drag_start_fn,
+                drag_end_fn: drag_end_fn,
+                name: name,
+                with_origin: with_origin
+              });
+}
+
+
+function _plot_points({data, 
+                       tt=0,
+                       delay=0,
+                       drag_point_fn=null,
+                       drag_start_fn=null,
+                       drag_end_fn=null,
+                       dblclick_fn=null,
+                       name='point',
+                       with_origin=null,
+
+                      }={}){
   add_keys(name, data);
 
   let points = svg.selectAll('circle.' + name)
@@ -449,14 +515,16 @@ function plot_points(data,
                           .on('drag', drag_point_fn)
                           .on('start', drag_start_fn)
                           .on('end', drag_end_fn))
-                  .on('dblclick', function(){});
+                  .on('dblclick', function(d, i) {dblclick_fn(i);});
 
   points
     .enter()
     .append('circle')
     .attr('class', '_3d ' + name)
     .merge(points)
-    .transition().duration(get_duration(tt))
+    .transition()
+    .delay(get_delay(delay))
+    .duration(get_duration(tt))
     .each(function(d){
         d.centroid = {x: d.x, 
                       y: d.y, 
@@ -480,7 +548,9 @@ function plot_points(data,
       .attr('class', '_3d ' + name)
       .attr('dx', '.4em')
       .merge(text)
-      .transition().duration(get_duration(tt))
+      .transition()
+      .delay(get_delay(delay))
+      .duration(get_duration(tt))
       .each(function(d){
           d.centroid = {x: d.x, 
                         y: d.y, 
@@ -577,31 +647,37 @@ function dot_basis(d, basis){
 }
 
 
-function rotate_lines(l, rx=0, ry=0, rz=0){
+function rotate_lines(l, rx=0, ry=0, rz=0, reverse=false){
   let result = [];
   l.forEach(function(d){
     let s = Object.assign({}, d);
-    s[0] = rotate_point(d[0], rx, ry, rz);
-    s[1] = rotate_point(d[1], rx, ry, rz);
+    s[0] = rotate_point(d[0], rx, ry, rz, reverse);
+    s[1] = rotate_point(d[1], rx, ry, rz, reverse);
     result.push(s);
   })
   return result;
 }
 
 
-function rotate_points(g, rx=0, ry=0, rz=0){
+function rotate_points(g, rx=0, ry=0, rz=0, reverse=false){
   let result = [];
   g.forEach(function(d){
-    result.push(rotate_point(d, rx, ry, rz));
+    result.push(rotate_point(d, rx, ry, rz, reverse));
   })
   return result;
 }
 
 
-function rotate_point(p, rx=0, ry=0, rz=0){
-  p = rotate_x(p, rx);
-  p = rotate_y(p, ry);
-  p = rotate_z(p, rz);
+function rotate_point(p, rx=0, ry=0, rz=0, reverse=false){
+  if (!reverse) {
+    p = rotate_x(p, rx);
+    p = rotate_y(p, ry);
+    p = rotate_z(p, rz);
+  } else {
+    p = rotate_z(p, rz);
+    p = rotate_y(p, ry);
+    p = rotate_x(p, rx);
+  }
   return p;
 }
 
@@ -942,16 +1018,30 @@ function cp_list(l) {
 }
 
 
+function wait(time) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+        resolve();
+    }, time);
+  });
+}
+
+
 return {
   set_ranges: set_ranges,
   sort: sort,
   color: color,
   plot_points: plot_points,
+  _plot_points: _plot_points,
   plot_lines: plot_lines,
+  _plot_lines: _plot_lines,
   plot_texts: plot_texts,
   plot_images: plot_images,
   dot_product: dot_product,
   dot_basis: dot_basis,
+  rotate_x: rotate_x,
+  rotate_y: rotate_y,
+  rotate_z: rotate_z,
   rotate_point: rotate_point,
   rotate_points: rotate_points,
   rotate_lines: rotate_lines,
@@ -969,6 +1059,7 @@ return {
   text_table_to_list: text_table_to_list,
   text_matrix_to_list: text_matrix_to_list,
   normalize: normalize,
+  normalize3d: normalize3d,
   norm: norm,
   norm2: norm2,
   distance: distance,
@@ -978,6 +1069,7 @@ return {
   cp_list: cp_list,
   cp_item: cp_item,
   create_circle_lines: create_circle_lines,
+  wait: wait,
 }
 
 };

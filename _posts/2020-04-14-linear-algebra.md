@@ -168,17 +168,19 @@ Drag or <button id='init_point_coord_lines'>shuffle</button>
 </script>
 
 <script>
-function draw_on_svg(svg_id, fn_2d, fn_3d) {
-  let is_3d = false;
+function draw_on_svg(svg_id, fn_2d, fn_3d=null) {
+  let is_3d = false,
+      data_2d = null,
+      data_3d = null;
   fn_2d.select_svg('#svg_' + svg_id);
-  fn_2d.init();
+  fn_2d.init(0);
 
   d3.selectAll('#init_' + svg_id)
     .on('click', function(){
       if (is_3d) {
-        fn_3d.init(tt=1000);
+        fn_3d.init(1000);
       } else {
-        fn_2d.init(tt=1000);
+        fn_2d.init(1000);
       }
     });
 
@@ -186,11 +188,13 @@ function draw_on_svg(svg_id, fn_2d, fn_3d) {
     .on('click', function(){
       is_3d = this.checked;
       if (is_3d) {
+        data_2d = fn_2d.hasOwnProperty('data') ? fn_2d.data() : null;
         fn_3d.select_svg('#svg_' + svg_id);
-        fn_3d.init(tt=1000);
+        fn_3d.init(1000, data_2d);
       } else {
+        data_3d = fn_3d.hasOwnProperty('data') ? fn_3d.data() : null;
         fn_2d.select_svg('#svg_' + svg_id);
-        fn_2d.init(tt=1000);
+        fn_2d.init(1000, data_3d);
       }
     })
 }
@@ -376,7 +380,7 @@ $$u^Tv = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \left|v\right|$$
   <br/>
 <svg width="600" height="280" id="svg_dot_product_correct"></svg>
 <br/> 
-Try dragging $u$, $v$, or any of the other lines/points, or click
+Try stretching/rotating $v$, move $u$, or click
 <button id='init_dot_product_correct'>reset</button>.
 <br/>
 Notice when $|v|=1$, $u^Tv$ coincides with the projection (shaded blue).
@@ -412,7 +416,7 @@ In the current space and coordinate system, $u$ is a vector of certain location.
   <br/>
 <svg width="630" height="280" id="svg_v_perspective"></svg>
 <br/> 
-Try dragging $u$, $v$, the whole space, or click 
+Try stretching/rotating $v$, move $u$, or click
 <button id='init_v_perspective'>reset</button>.
 <br/>
 When does $u'$ stay the same?
@@ -677,9 +681,11 @@ You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \
   <br/>
 <svg width="630" height="280" id="svg_rotate_stretch"></svg>
 <br/>
-Try dragging $u$, {$v_1$, $v_2$, $v_3$}, the whole space, or click <button id='init_rotate_stretch'>reset</button>. 
+Try to move $u$, stretch/rotate {$v_1$, $v_2$, $v_3$}, the whole space, or click <button id='init_rotate_stretch'>reset</button>. 
 <br/>
 Notice now the sphere that contains $u'$ got stretched to an ellipsoid.
+<br/>
+Double-clicking any of the 3 axes in $u'$ space to hide them before trying to rotate/stretch $v$s.
 </center>
 
 <script src="/assets/js/linear_algebra/rotate_stretch2d.js"></script>
