@@ -123,6 +123,15 @@ function normalize(v) {
   return r;
 }
 
+function normalize3d(v) {
+  let v_norm = Math.sqrt(v.x*v.x+v.y*v.y+v.z*v.z);
+  let r = Object.assign({}, v);
+  r.x = v.x/v_norm;
+  r.y = v.y/v_norm;
+  r.z = v.z/v_norm;
+  return r;
+}
+
 
 function get_delay(delay) {
   function duration(d) {
@@ -506,7 +515,7 @@ function _plot_points({data,
                           .on('drag', drag_point_fn)
                           .on('start', drag_start_fn)
                           .on('end', drag_end_fn))
-                  .on('dblclick', function(d, i) {dblclick_fn();});
+                  .on('dblclick', function(d, i) {dblclick_fn(i);});
 
   points
     .enter()
@@ -1050,6 +1059,7 @@ return {
   text_table_to_list: text_table_to_list,
   text_matrix_to_list: text_matrix_to_list,
   normalize: normalize,
+  normalize3d: normalize3d,
   norm: norm,
   norm2: norm2,
   distance: distance,
