@@ -685,7 +685,7 @@ Try to move $u$, stretch/rotate {$v_1$, $v_2$, $v_3$}, the whole space, or click
 <br/>
 Notice now the sphere that contains $u'$ got stretched to an ellipsoid.
 <br/>
-Double-clicking the any of the 3 axes in $u'$ space to hide them before trying to rotate/stretch $v$s.
+Double-clicking any of the 3 axes in $u'$ space to hide them before trying to rotate/stretch $v$s.
 </center>
 
 <script src="/assets/js/linear_algebra/rotate_stretch2d.js"></script>
