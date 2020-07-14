@@ -1,4 +1,4 @@
-let scaled1d = (function() {
+let scale_equivariance = (function() {
 
 let origin = [300, 75],
     scale = 60, 
@@ -170,7 +170,7 @@ function init(tt){
   scatter = [{
         x: 1, y: 1.,
         z: 0, r: 5,
-        color: c0    
+        color: c0     
     }, {
         x: 1, y: 0,
         z: 0, r: 5,
@@ -180,7 +180,7 @@ function init(tt){
         z: 0, r: 5,
         color: c1,
     }, {
-        x: -2, y: 0,
+        x: -1, y: 0,
         z: 0, r: 5,
         color: c2
     }, {
@@ -207,31 +207,35 @@ function dragged(){
 
 
 function dragged_point(d, i){
-  expectedScatter = [];
-  scatter.forEach(function(d, j){
-      if (j == i) {
-        let r = lib.update_point_position_from_mouse(d);
-        if (j == 0) {
-          if (r.x < -2) {
-          r.x = -2;}
-          else if (r.x > 2){
-          r.x = 2;}
-        }
-        
-        if (r.x < -4.5) {
-          r.x = -4.5;
-        } else if (r.x > 4.5){
-          r.x = 4.5;
-        }
+  expectedScatter = lib.cp_list(scatter);
 
-        r.x = r.x;
-        r.y = d.y;
-        r.z = d.z;
-        expectedScatter.push(r);
-      } else {
-        expectedScatter.push(d);
-      }
-  });
+  let p = scatter[i];
+  let r = lib.update_point_position_from_mouse(p);
+  if (i == 0) {
+    if (r.x < -2) {
+    r.x = -2;}
+    else if (r.x > 2){
+    r.x = 2;}
+  }
+  
+  if (r.x < -4.5) {
+    r.x = -4.5;
+  } else if (r.x > 4.5){
+    r.x = 4.5;
+  }
+  r.y = p.y;
+  r.z = p.z;
+  expectedScatter[i] = r;
+
+  if (i != 0) {
+    let dx = r.x - p.x;
+    let j = (i + 2) % 4;
+    if (j == 0) {
+      j = 4;
+    }
+    expectedScatter[j].x += dx;
+  }
+
 
   plot(expectedScatter, 0);
 }

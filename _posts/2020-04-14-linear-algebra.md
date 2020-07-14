@@ -762,20 +762,22 @@ draw_on_svg('scaled1d',
 
 *They got scaled up/down by the same factor $\alpha$, regardless of their position and size.*
 
-Yes. Equivalently speaking, any two segments equal in length before a transformation will still be equal in length after the transformation. 
+That's right. Equivalently speaking, any two segments equal in length before a transformation will still be equal in length after the transformation. 
 
 <center class='js'>
   <br/>
-<svg width="630" height="180" id="svg_scaled1d"></svg>
+<svg width="630" height="180" id="svg_scale_equivariance"></svg>
 <br/>
 Try dragging $\alpha$, or points on the $x$ ruler, or click 
-<button id='init_scaled1d'>reset</button>.
+<button id='init_scale_equivariance'>reset</button>.
+<br/>
+Notice the blue and green segments are always equal on $x$ and $y$ number lines.
 </center>
 
-<script src="/assets/js/linear_algebra/scaled1d.js"></script>
+<script src="/assets/js/linear_algebra/scale_equivariance.js"></script>
 <script>
-draw_on_svg('scaled1d',
-            scaled1d);
+draw_on_svg('scale_equivariance',
+            scale_equivariance);
 </script>
 
 This property translates to higher dimensions as well. If two chunks of space are equal in volume before a matrix-vector multiplication, they are also equal in volume after said multiplication:
