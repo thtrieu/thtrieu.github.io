@@ -567,6 +567,58 @@ function _plot_points({data,
 }
 
 
+function _plot_polygons({data, 
+                         tt=0,
+                         delay=0,
+                         drag_poly_fn=null,
+                         drag_start_fn=null,
+                         drag_end_fn=null,
+                         dblclick_fn=null,
+                         name='polygon',
+                         with_origin=null,
+                        }={}){
+  add_keys(name, data);
+
+  let polys = svg.selectAll('polygon.' + name)
+                 .data(data, function(d){ return d.key; })
+                 .each(function(d){})
+                 .call(d3.drag()
+                         .on('drag', drag_poly_fn)
+                         .on('start', drag_start_fn)
+                         .on('end', drag_end_fn))
+                 .on('dblclick', function(d, i) {dblclick_fn(i);});
+
+  polys
+    .enter()
+    .append('polygon')
+    .attr('class', '_3d ' + name)
+    .merge(polys)
+    .transition()
+    .delay(get_delay(delay))
+    .duration(get_duration(tt))
+    .each(function(d){
+      let p = d.reduce(function(sum, m) {
+        return add([sum, m]);
+      }, {x:0, y:0, z:0});
+      d.centroid = {x: p.x/d.length, 
+                    y: p.y/d.length, 
+                    z: p.z/d.length};
+    })
+    .attr('points', function(d) { 
+      return d.map(function(d) {
+        let p = project(d, with_origin);
+        return [p.x, p.y].join(',');
+      }).join(' ');
+    })
+    .attr('fill', get_color())
+    .attr('stroke', get_stroke_color)
+    .attr('stroke-width', get_stroke_width)
+    .attr('opacity', get_opacity);
+  polys.exit().remove();
+}
+
+
+
 function plot_texts(data, tt, name='text', with_origin=null){
   add_keys(name, data);
 
@@ -654,6 +706,27 @@ function rotate_lines(l, rx=0, ry=0, rz=0, reverse=false){
     s[0] = rotate_point(d[0], rx, ry, rz, reverse);
     s[1] = rotate_point(d[1], rx, ry, rz, reverse);
     result.push(s);
+  })
+  return result;
+}
+
+
+function rotate_polygon(d, rx=0, ry=0, rz=0, reverse=false){
+  let s = [];
+  for (let k in d) {
+    s[k] = d[k];
+  }
+  d.forEach(function(x, i) {
+    s[i] = rotate_point(x, rx, ry, rz, reverse);
+  });
+  return s;
+}
+
+
+function rotate_polygons(p, rx=0, ry=0, rz=0, reverse=false){
+  let result = [];
+  p.forEach(function(d){
+    result.push(rotate_polygon(d, rx, ry, rz, reverse));
   })
   return result;
 }
@@ -1036,6 +1109,7 @@ return {
   plot_lines: plot_lines,
   _plot_lines: _plot_lines,
   plot_texts: plot_texts,
+  _plot_polygons: _plot_polygons,
   plot_images: plot_images,
   dot_product: dot_product,
   dot_basis: dot_basis,
@@ -1044,6 +1118,8 @@ return {
   rotate_z: rotate_z,
   rotate_point: rotate_point,
   rotate_points: rotate_points,
+  rotate_polygon: rotate_polygon,
+  rotate_polygons: rotate_polygons,
   rotate_lines: rotate_lines,
   init_axis: init_axis,
   init_float_axis: init_float_axis,
