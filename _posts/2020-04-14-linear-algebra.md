@@ -768,11 +768,11 @@ This property translates to higher dimensions as well. If two chunks of space ar
   <label class='switch'> <input type='checkbox' id='switch_multidim_equivolume'> <div class='slider'></div></label>
   <br/>
 <svg width="630" height="280" id="svg_multidim_equivolume"></svg>
-<br/> 
-Here we sync the two coordinate systems for easy comparison between $u$ and $u'$.
 <br/>
-Try dragging $u$, {$v_1$, $v_2$, $v_3$}, the whole space, or click 
+Try dragging the boxes, $v_1$, $v_2$, $v_3$, the whole space, or click 
 <button id='init_multidim_equivolume'>reset</button>.
+<br/> 
+Notice the two boxes are equal in volume both before and after transformation.
 </center>
 
 <script src="/assets/js/linear_algebra/multidim_equivolume2d.js"></script>

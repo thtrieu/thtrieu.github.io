@@ -36,8 +36,8 @@ function select_svg(svg_id) {
 
 
 function plot(scatter, axis, polys, tt){
-  polys.forEach(function(d) {
-    d.opacity_factor = 0.5;
+  polys.forEach(function(d, i) {
+    d.opacity_factor = 0.5 + Math.floor((i % 6)/2)/7.;
   })
   lib._plot_polygons({
       data: polys,
@@ -105,10 +105,10 @@ function plot_v_perspective(polys, v1, v2, v3, axis2, tt) {
   };
 
   let polys_ = [];
-  polys.forEach(function(p) {
+  polys.forEach(function(p, i) {
     let p_ = p.map(function(u){return transform(u, basis, v1, v2, v3);});
     p_.color = p.color;
-    p_.opacity_factor = 0.5;
+    p_.opacity_factor = p.opacity_factor;
     polys_.push(p_);
   })
   lib._plot_polygons({data: polys_,
@@ -158,32 +158,33 @@ function init(tt){
 
 
   let w = 0.5;
-  let shift_v = {x: w, y: -1.5*w, z: 0};
-  let poly1 = [[{x: 0, y: 0, z: 0}, 
-                {x: w, y: 0, z: 0}, 
-                {x: w, y: w, z: 0}, 
-                {x: 0, y: w, z: 0}],
-               [{x: 0, y: 0, z: w}, 
-                {x: w, y: 0, z: w}, 
-                {x: w, y: w, z: w}, 
-                {x: 0, y: w, z: w}],
-               [{x: 0, z: 0, y: 0}, 
-                {x: w, z: 0, y: 0}, 
-                {x: w, z: w, y: 0}, 
-                {x: 0, z: w, y: 0}],
-               [{x: 0, z: 0, y: w}, 
-                {x: w, z: 0, y: w}, 
-                {x: w, z: w, y: w}, 
-                {x: 0, z: w, y: w}],
-               [{z: 0, y: 0, x: 0}, 
-                {z: w, y: 0, x: 0}, 
-                {z: w, y: w, x: 0}, 
-                {z: 0, y: w, x: 0}],
-               [{z: 0, y: 0, x: w}, 
-                {z: w, y: 0, x: w}, 
-                {z: w, y: w, x: w}, 
-                {z: 0, y: w, x: w}],
-              ];
+  let shift_v = {x: w, y: -2*w, z: 0.5*w};
+  let poly1 = [
+      [{x: 0, y: 0, z: 0}, 
+      {x: w, y: 0, z: 0}, 
+      {x: w, y: w, z: 0}, 
+      {x: 0, y: w, z: 0}],
+      [{x: 0, y: 0, z: w}, 
+      {x: w, y: 0, z: w}, 
+      {x: w, y: w, z: w}, 
+      {x: 0, y: w, z: w}],
+      [{x: 0, z: 0, y: 0}, 
+      {x: w, z: 0, y: 0}, 
+      {x: w, z: w, y: 0}, 
+      {x: 0, z: w, y: 0}],
+      [{x: 0, z: 0, y: w}, 
+      {x: w, z: 0, y: w}, 
+      {x: w, z: w, y: w}, 
+      {x: 0, z: w, y: w}],
+      [{z: 0, y: 0, x: 0}, 
+      {z: w, y: 0, x: 0}, 
+      {z: w, y: w, x: 0}, 
+      {z: 0, y: w, x: 0}],
+      [{z: 0, y: 0, x: w}, 
+      {z: w, y: 0, x: w}, 
+      {z: w, y: w, x: w}, 
+      {z: 0, y: w, x: w}],
+  ];
   let poly2 = [
       shift(poly1[0], shift_v),
       shift(poly1[1], shift_v),
