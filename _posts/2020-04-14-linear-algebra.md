@@ -701,6 +701,25 @@ draw_on_svg('rotate_stretch',
 
 That's a very quick jump ahead, but totally accurate :) In fact, rotation and stretching are not only two, but **the only two** building blocks. We'll soon see how this is the case, but first let's take it slow and enjoy ourselves some nice visualizations. This time, the set $ \\{ v_1, v_2, v_3 \\} $  is allowed to be neither "ortho" nor "normal" as you suggested:
 
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_general_transform'> <div class='slider'></div></label>
+  <br/>
+<svg width="630" height="280" id="svg_general_transform"></svg>
+<br/>
+Try dragging $u$, {$v_1$, $v_2$, $v_3$}, the whole space, or click <button id='init_general_transform'>reset</button>. 
+<br/>
+Notice now the sphere that contains $u'$ got stretched to an ellipsoid.
+</center>
+
+<script src="/assets/js/linear_algebra/general_transform2d.js"></script>
+<script src="/assets/js/linear_algebra/general_transform.js"></script>
+<script>
+draw_on_svg('general_transform',
+            general_transform2d,
+            general_transform);
+</script>
+
+
 Notation wise, if we stack $ \\{ v_1, v_2, v_3 \\} $ horizontally into a rectangle of numbers that we called the matrix $A$, we have just invented the matrix-vector multiplication using the "colliding" diagram:
 
 $$Vu = u'$$
