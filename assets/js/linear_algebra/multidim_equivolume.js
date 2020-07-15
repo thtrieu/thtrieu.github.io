@@ -157,7 +157,7 @@ function plot_v_perspective(polys, v1, v2, v3, axis2, tt) {
   let poly1 = polys_.slice(0, 6),
       poly2 = polys_.slice(6, 12);
 
-  let d = abs_det(v1, v2, v3).toFixed(1);s
+  let d = abs_det(v1, v2, v3).toFixed(1);
   let text1 = text_of(poly1, d+'m\u00b3'),
       text2 = text_of(poly2, d+'m\u00b3');
 
@@ -236,7 +236,7 @@ function init(tt){
   let poly2 = [];
   poly1.forEach(function(d) {
     let p = lib.cp_list(d);
-    p = lib.rotate_polygon(p, Math.PI/3);
+    // p = lib.rotate_polygon(p, Math.PI/3);
     poly2.push(shift(p, shift_v));
   })
 

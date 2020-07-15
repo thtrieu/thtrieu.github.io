@@ -220,7 +220,7 @@ function init(tt){
                {x: w, y: 0, z: 0}, 
                {x: w, y: w, z: 0}, 
                {x: 0, y: w, z: 0}];
-  let poly2 = lib.rotate_polygon(poly1, 0, 0, Math.PI/3);
+  let poly2 = lib.rotate_polygon(poly1, 0, 0, 0);
   poly2 = shift(poly2, {x: 2*w, y: 1.5*w, z: 0.0});
   poly1.color = 1;
   poly2.color = 1;
