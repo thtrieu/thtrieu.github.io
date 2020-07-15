@@ -804,7 +804,22 @@ draw_on_svg('multidim_equivolume',
 
 *Oh that's an interesting way to describe it.*
 
-This description is not only equivalent, but also more general. It is applicable for transformations between different number of dimensions as well (e.g. 2D to 3D and vice versa):
+This description is not only equivalent, but also more general. It is applicable for transformations between different number of dimensions as well. In the following example, the two chunks are equal in **volume**. After the transformation, they are equal in **area**:
+
+<center class='js'>
+<svg width="630" height="280" id="svg_equivolume_3d2d"></svg>
+<br/>
+Try dragging the boxes, $v_1$, $v_2$, the whole space, or click 
+<button id='init_equivolume_3d2d'>reset</button>.
+<br/> 
+Notice the two boxes are equal in volume before transformation, and equal in area after.
+</center>
+
+<script src="/assets/js/linear_algebra/equivolume_3d2d.js"></script>
+<script>
+draw_on_svg('equivolume_3d2d',
+            equivolume_3d2d);
+</script>
 
 
 In these cases, it is meaningless to say how much scaled up a chunk of space in 2-D is to another in 3-D, or vice versa.
