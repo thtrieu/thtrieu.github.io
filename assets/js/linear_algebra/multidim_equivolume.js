@@ -277,7 +277,6 @@ function dragged_point(d, i){
               y: (new_mouse.y - mouse_start.y)/scale,
               z: 0};
 
-  let [angle_x, angle_y] = lib.get_drag_angles();
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {

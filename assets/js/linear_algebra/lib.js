@@ -791,6 +791,14 @@ function drag_start(){
 }
 
 
+function shift_point_accord_to_mouse(p) {
+  let r = cp_item(p);
+  r.x += (d3.event.x - mx)/scale;
+  r.y += (d3.event.y - my)/scale;
+  return r;
+}
+
+
 function get_drag_angles(){
   dx = d3.event.x - mx;
   dy = d3.event.y - my;
@@ -1128,6 +1136,7 @@ return {
   drag_start2d: drag_start2d,
   get_drag_angle_2d: get_drag_angle_2d,
   get_mouse_position: getMouse,
+  shift_point_accord_to_mouse: shift_point_accord_to_mouse,
   update_point_position_from_mouse: update_point_position_from_mouse,
   mouse_to_point_position: mouse_to_point_position,
   create_segments: create_segments,

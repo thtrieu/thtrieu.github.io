@@ -170,12 +170,10 @@ function dragged_point_only(){
 }
 
 function dragged_point(i){
-  [angle_x, angle_y] = lib.get_drag_angles();
-
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
-        expectedScatter.push(lib.rotate_point(d, angle_x, angle_y));
+        expectedScatter.push(lib.shift_point_accord_to_mouse(d));
       } else {
         expectedScatter.push(d);
       }
