@@ -826,4 +826,4 @@ In these cases, however, it is meaningless to compare the volume of the original
 
 *Still, for transformations between spaces of the same dimension - when this comparison is meaningful, a question arises: How much bigger or smaller does the space get? In the 1-dimensional case $x \times \alpha = y$, this factor is simply $\alpha$. In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
 
-You are asking all the right questions! The point of Linear Algebra is really studying these transformations inside-out, characterizing them, breaking them apart, or undoing them entirely. Volume contraction or expansion is just one of these studies. The keyword for your question here is *Determinant of a Matrix*. But let's take a break here? We'll come back with many more interesting findings :)
+We can do so by first setting the original box to have a volume of $1$, then compute the volume of the resulting box after transformation. We have not discussed, however, exactly how to do the second step. The keyword for our answer here is *Determinant of $V$*. But first let's take a break here? We'll come back with many more interesting findings.
