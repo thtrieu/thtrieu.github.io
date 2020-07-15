@@ -180,6 +180,7 @@ function init(tt){
   poly1.color = 1;
   poly2.color = 1;
 
+  // poly2 = lib.rotate_polygon(poly2, 0, 0, Math.PI/3);
   polys = [poly1, poly2];
 
   scatter = lib.rotate_points(scatter, startAngleX, startAngleY, startAngleZ);
