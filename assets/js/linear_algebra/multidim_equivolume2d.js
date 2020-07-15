@@ -36,9 +36,19 @@ function select_svg(svg_id) {
 }
 
 
-function plot(scatter, axis, polys, tt){
-  polys[0].centroid_z = -100;
-  polys[1].centroid_z = -100;
+function plot(scatter, axis, polys_original, tt){
+  let polys = [];
+  for (let i = 0; i < 12; ++i) {
+    let p = polys_original[Math.floor(i/6)];
+    let p_ = lib.cp_list(p);
+    p_.centroid_z = -100;
+    p_.color = p.color;
+    if (![0, 6].includes(i)) {
+      p_.opacity = 0.0;
+      p_.centroid_z -= 100;
+    }
+    polys.push(p_);
+  }
   lib._plot_polygons({
       data: polys,
       drag_poly_fn: dragged_polygon,
@@ -116,15 +126,16 @@ function plot_v_perspective(polys, v1, v2, v3, axis2, tt) {
     z: lib.normalize(axis2[axis_len/unit * 2][1]),
   };
 
-  let [poly1, poly2] = polys;
-  let poly1_ = poly1.map(function(u){return transform(u, basis, v1, v2, v3);});
-  let poly2_ = poly2.map(function(u){return transform(u, basis, v1, v2, v3);});
-  poly1_.color = poly1.color;
-  poly1_.centroid_z = -100;
-  poly2_.color = poly2.color;
-  poly2_.centroid_z = -100;
+  let polys_ = [];
+  polys.forEach(function(p, i) {
+    let p_ = p.map(function(u){return transform(u, basis, v1, v2, v3);});
+    p_.color = p.color;
+    p_.opacity = p.opacity;
+    p_.centroid_z = -100;
+    polys_.push(p_);
+  })
 
-  lib._plot_polygons({data: [poly1_, poly2_],
+  lib._plot_polygons({data: polys_,
                       tt: tt, 
                       with_origin: origin2, 
                       name: 'polygons2'});
@@ -145,16 +156,18 @@ function init(tt){
   scatter = [];
 
   scatter.push({
-    x: 1/Math.sqrt(3),
-    y: -Math.sqrt(2/3), 
+    x: 1,
+    y: 0, 
     z: 0.,
+    centroid_z: 100,
     color: 3,
   })
 
   scatter.push({
-    x: Math.sqrt(13/14),
-    y: Math.sqrt(1/14), 
+    x: 0,
+    y: 1, 
     z: 0.,
+    centroid_z: 100,
     color: 19,
   })
 
@@ -210,7 +223,6 @@ function dragged(){
 
 
 function dragged_polygon(d, i){
-
   let new_mouse = lib.get_mouse_position();
   let diff = {x: (new_mouse.x - mouse_start.x)/scale,
               y: (new_mouse.y - mouse_start.y)/scale,
@@ -219,7 +231,7 @@ function dragged_polygon(d, i){
   expectedScatter = scatter;
   expectedPolys = [];
   polys.forEach(function(d, j){
-      if (j == i) {
+      if (j == Math.floor(i/6)) {
         let r = shift(d, diff);
         r.color = d.color;
         expectedPolys.push(r);

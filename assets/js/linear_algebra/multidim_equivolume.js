@@ -132,21 +132,21 @@ function init(tt){
   scatter = [];
 
   let v1 = lib.normalize({
-      x: Math.sqrt(13/14)*1.5,
-      y: Math.sqrt(.5/14)*1.5, 
-      z: Math.sqrt(.5/14)*1.5, 
+      x: 1,
+      y: 0, 
+      z: 0, 
       color: 3,
   }),
       v2 = lib.normalize({
-      x: -Math.sqrt(0.0)*1.5, 
-      y: -Math.sqrt(1.0)*1.5, 
-      z: -Math.sqrt(0.0)*1.5, 
+      x: 0, 
+      y: 1, 
+      z: 0, 
       color: 19,
   }),
       v3 = lib.normalize({
-      x: Math.sqrt(0.5/14)*1.5, 
-      y: Math.sqrt(0.5/14)*1.5,  
-      z: Math.sqrt(13/14)*1.5,  
+      x: 0, 
+      y: 0,  
+      z: 1,
       color: 9,
   });
 
@@ -158,7 +158,7 @@ function init(tt){
 
 
   let w = 0.5;
-  let shift_v = {x: w, y: -2*w, z: 0.5*w};
+  let shift_v = {x: 2.5*w, y: -2*w, z: 0.5*w};
   let poly1 = [
       [{x: 0, y: 0, z: 0}, 
       {x: w, y: 0, z: 0}, 
