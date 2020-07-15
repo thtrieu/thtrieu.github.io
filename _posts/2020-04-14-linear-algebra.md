@@ -743,7 +743,7 @@ Of course, we can certainly do so by projecting $u$, living in 2 dimensional spa
 
 *That looks cool! Although, now I'm seeing many different cases arise from matrix-vector multiplication. Is there an underlying characteristic that makes them different to other types of transformations?*
 
-We can start studying the question by first looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers $\alpha x = y$. Let's look at how different line segments change in terms of their length.
+We can start studying the question by first looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers $\alpha x = y$. Let's look at how different line segments change in terms of their lengths.
 
 <center class='js'>
   <br/>
@@ -760,9 +760,9 @@ draw_on_svg('scaled1d',
 </script>
 
 
-*They got scaled up/down by the same factor $\alpha$, regardless of their position and size.*
+*Their lengths got scaled up/down by the same factor $\alpha$, regardless of position and size.*
 
-That's right. Equivalently speaking, any two segments equal in length before a transformation will still be equal in length after the transformation. 
+That's right. Equivalently speaking, any two segments equal in length **before** a transformation will still be equal in length **after** the transformation. 
 
 <center class='js'>
   <br/>
@@ -782,9 +782,30 @@ draw_on_svg('scale_equivariance',
 
 This property translates to higher dimensions as well. If two chunks of space are equal in volume before a matrix-vector multiplication, they are also equal in volume after said multiplication:
 
+
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_multidim_equivolume'> <div class='slider'></div></label>
+  <br/>
+<svg width="630" height="280" id="svg_multidim_equivolume"></svg>
+<br/>
+Try dragging the boxes, $v_1$, $v_2$, $v_3$, the whole space, or click 
+<button id='init_multidim_equivolume'>reset</button>.
+<br/> 
+Notice the two boxes are equal in volume both before and after transformation.
+</center>
+
+<script src="/assets/js/linear_algebra/multidim_equivolume2d.js"></script>
+<script src="/assets/js/linear_algebra/multidim_equivolume.js"></script>
+<script>
+draw_on_svg('multidim_equivolume',
+            multidim_equivolume2d,
+            multidim_equivolume);
+</script>
+
 *Oh that's an interesting way to describe it.*
 
-Yes, this description is applicable for transformations between different number of dimensions as well (e.g. 2D to 3D and vice versa):
+This description is not only equivalent, but also more general. It is applicable for transformations between different number of dimensions as well (e.g. 2D to 3D and vice versa):
+
 
 In these cases, it is meaningless to say how much scaled up a chunk of space in 2-D is to another in 3-D, or vice versa.
 

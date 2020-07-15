@@ -13,7 +13,7 @@ let origin = [300, 75],
     spacing = 1.,
     c1 = 0,
     c2 = 3,
-    c0 = 4;
+    c0 = 'grey';
 
 
 function select_svg(svg_id) {
@@ -136,22 +136,22 @@ function init(tt){
   let rulers_texts = [];
   for (let i = -ruler_len; i <= ruler_len; i++) {
     rulers_texts.push({
-        text: i.toFixed(1),
-        x: i - 0.2, y: 0.3,
+        text: i.toFixed(0),
+        x: i - 0.15, y: 0.3,
         z: 0, text_color: 'grey',
         font_size: 12});
   }
   for (let i = -ruler_len; i <= ruler_len; i++) {
     rulers_texts.push({
-        text: i.toFixed(1),
-        x: i - 0.2, y: spacing + 0.3,
+        text: i.toFixed(0),
+        x: i - 0.15, y: spacing + 0.3,
         z: 0, text_color: 'grey',
         font_size: 12});
   }
   for (let i = -ruler_len/2; i <= ruler_len/2; i++) {
     rulers_texts.push({
-        text: i.toFixed(1),
-        x: i - 0.2, y: -spacing + 0.3,
+        text: i.toFixed(0),
+        x: i - 0.15, y: -spacing + 0.3,
         z: 0, text_color: 'grey',
         font_size: 12,
         text_opacity: 1});

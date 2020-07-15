@@ -192,7 +192,8 @@ function dragged(){
 function dragged_point_only(){
   angle_z = lib.get_drag_angle_2d();
 
-  expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
+  expectedScatter = lib.cp_list(scatter);
+  expectedScatter[1] = lib.update_point_position_from_mouse(scatter[1]);
   
   plot(expectedScatter, 
        expectedAxis, 

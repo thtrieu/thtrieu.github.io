@@ -156,9 +156,8 @@ let is_rotating_points = false;
 
 
 function dragged_point_only(){
-  [angle_x, angle_y] = lib.get_drag_angles();
-
-  expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
+  expectedScatter = lib.cp_list(scatter);
+  expectedScatter[1] = lib.shift_point_accord_to_mouse(scatter[1]);
   
   plot(expectedScatter, 
        expectedAxis, 
@@ -214,12 +213,11 @@ function dragged_point(d, i){
     dragged_point_only();
     return;
   }
-  [angle_x, angle_y] = lib.get_drag_angles();
 
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
-        expectedScatter.push(lib.rotate_point(d, angle_x, angle_y));
+        expectedScatter.push(lib.shift_point_accord_to_mouse(d));
       } else {
         expectedScatter.push(d);
       }
