@@ -453,7 +453,7 @@ An example of Image Captioning.
 
 *So this is how Facebook AI put captions on the photos uploaded to the site?*
 
-Yep. Take Google Translate as another example. Linear Algebra is used to represent the changes of the perspective that turn one sentence in one language to another.
+Yep. Take Google Translate as another example. Linear Algebra is used to represent the changes of perspective that turn one sentence in one language to another.
 
 <center class='js'>
 <svg width="630" height="150" id="svg_translation_perspective"></svg>
@@ -493,7 +493,7 @@ That is the spirit! Although realistically, a single number isn't the best way t
 
 Further, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Prof. Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm that runs at the heart of the search engine itself. 
 
-*Wow, I would have never imagined the simple ideas we talked about so far can turn into such exciting stuff!*
+*Wow, I would have never imagined such simple ideas are so central to so many powerful tech!*
 
 <center><b>4. The coordinate system</b></center>
 
@@ -519,9 +519,9 @@ draw_on_svg('many_perspective',
             many_perspective);
 </script>
 
-*So we are just essentially getting many numbers at once, that's kind of cumbersome right?*
+*So we are just essentially getting many numbers at once right?*
 
-It will not be. Let's say we project $u$ onto three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$. This list of numbers is itself a vector $u'$ as well:
+Right, but there's more to it than that. Let's say we project $u$ onto three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$. This list of numbers is itself a vector $u'$ as well:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_multi_dim_change'> <div class='slider'></div></label>
@@ -780,7 +780,7 @@ draw_on_svg('scale_equivariance',
             scale_equivariance);
 </script>
 
-This property translates to higher dimensions as well. If two chunks of space are equal in volume before a matrix-vector multiplication, they are also equal in volume after said multiplication:
+This property translates to higher dimensions as well. If two chunks of space are equal before a matrix-vector multiplication, they are also equal after said multiplication:
 
 
 <center class='js'>
@@ -791,7 +791,9 @@ This property translates to higher dimensions as well. If two chunks of space ar
 Try dragging the boxes, $v_1$, $v_2$, $v_3$, the whole space, or click 
 <button id='init_multidim_equivolume'>reset</button>.
 <br/> 
-Notice the two boxes are equal in volume both before and after transformation.
+Notice the two boxes are equal in area/volume both before and after transformation.
+<br/> 
+When does the resulting boxes got squashed to zero in area/volume?
 </center>
 
 <script src="/assets/js/linear_algebra/multidim_equivolume2d.js"></script>
@@ -802,17 +804,15 @@ draw_on_svg('multidim_equivolume',
             multidim_equivolume);
 </script>
 
-*Oh that's an interesting way to describe it.*
+*Oh that's an interesting way to describe it!*
 
-This description is not only equivalent, but also more general. It is applicable for transformations between different number of dimensions as well. In the following example, the two chunks are equal in **volume**. After the transformation, they are equal in **area**:
+Note that this description is not only equivalent, but also more general. It is applicable for transformations between different number of dimensions as well:
 
 <center class='js'>
 <svg width="630" height="280" id="svg_equivolume_3d2d"></svg>
 <br/>
 Try dragging the boxes, $v_1$, $v_2$, the whole space, or click 
 <button id='init_equivolume_3d2d'>reset</button>.
-<br/> 
-Notice the two boxes are equal in volume before transformation, and equal in area after.
 </center>
 
 <script src="/assets/js/linear_algebra/equivolume_3d2d.js"></script>
@@ -822,7 +822,7 @@ draw_on_svg('equivolume_3d2d',
 </script>
 
 
-In these cases, it is meaningless to say how much scaled up a chunk of space in 2-D is to another in 3-D, or vice versa.
+In these cases, however, it is meaningless to compare the volume of the original box and the area of the resulting polygon.
 
 *Still, for transformations between spaces of the same dimension - when this comparison is meaningful, a question arises: How much bigger or smaller does the space get? In the 1-dimensional case $x \times \alpha = y$, this factor is simply $\alpha$. In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
 
