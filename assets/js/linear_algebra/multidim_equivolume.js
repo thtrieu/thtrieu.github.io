@@ -35,6 +35,37 @@ function select_svg(svg_id) {
 }
 
 
+function abs_det(v1, v2, v3) {
+  let A = v2.y * v3.z - v2.z * v3.y,
+      B = - (v2.x * v3.z - v2.z * v3.x),
+      C =  v2.x * v3.y - v2.y * v3.x;
+  return Math.abs(v1.x * A + v1.y * B + v1.z * C);
+}
+
+
+function text_of(polygon, text) {
+  let r = {x:1000, 
+           y:1000, 
+           z:-1000};
+  let corner_count = 0;
+
+  for (let i = 0; i < polygon.length; i++) {
+    let face = polygon[i];
+    for (let j = 0; j < face.length; j++) {
+      let corner = face[j];
+      corner_count += 1;
+      r.x = Math.min(r.x, corner.x);
+      r.y = Math.min(r.y, corner.y);
+      r.z = Math.max(r.z, corner.z);
+    }
+  }
+
+  r.text = text;
+  r.font_size_factor = 0.9;
+  return r;
+}
+
+
 function plot(scatter, axis, polys, tt){
   polys.forEach(function(d, i) {
     d.opacity_factor = 0.5 + Math.floor((i % 6)/2)/7.;
@@ -46,6 +77,14 @@ function plot(scatter, axis, polys, tt){
       drag_end_fn: drag_end,
       tt: tt
   });
+
+  let poly1 = polys.slice(0, 6),
+      poly2 = polys.slice(6, 12);
+
+  let text1 = text_of(poly1, '1.0m\u00b3'),
+      text2 = text_of(poly2, '1.0m\u00b3');
+
+  lib.plot_texts([text1, text2], tt);
 
   let axis1 = lib.cp_list(axis),
       axis2 = lib.cp_list(axis);
@@ -115,6 +154,14 @@ function plot_v_perspective(polys, v1, v2, v3, axis2, tt) {
                       tt: tt, 
                       with_origin: origin2, 
                       name: 'polygons2'});
+  let poly1 = polys_.slice(0, 6),
+      poly2 = polys_.slice(6, 12);
+
+  let d = abs_det(v1, v2, v3).toFixed(1);s
+  let text1 = text_of(poly1, d+'m\u00b3'),
+      text2 = text_of(poly2, d+'m\u00b3');
+
+  lib.plot_texts([text1, text2], tt, 'text2', origin2);
 }
 
 
@@ -158,7 +205,7 @@ function init(tt){
 
 
   let w = 0.5;
-  let shift_v = {x: 2.5*w, y: -2*w, z: 0.5*w};
+  let shift_v = {x: 2*w, y: -2*w, z: 0.5*w};
   let poly1 = [
       [{x: 0, y: 0, z: 0}, 
       {x: w, y: 0, z: 0}, 
@@ -185,14 +232,13 @@ function init(tt){
       {z: w, y: w, x: w}, 
       {z: 0, y: w, x: w}],
   ];
-  let poly2 = [
-      shift(poly1[0], shift_v),
-      shift(poly1[1], shift_v),
-      shift(poly1[2], shift_v),
-      shift(poly1[3], shift_v),
-      shift(poly1[4], shift_v),
-      shift(poly1[5], shift_v),
-  ];
+
+  let poly2 = [];
+  poly1.forEach(function(d) {
+    let p = lib.cp_list(d);
+    p = lib.rotate_polygon(p, Math.PI/3);
+    poly2.push(shift(p, shift_v));
+  })
 
   polys = poly1.concat(poly2);
   polys.forEach(function(d) {

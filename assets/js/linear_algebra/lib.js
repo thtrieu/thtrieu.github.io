@@ -207,16 +207,17 @@ function get_size(d) {
 
 
 function get_txt_size(d) {
+  r = 14;
   if (d.hasOwnProperty('font_size')) {
     return d.font_size + 'px';
+  } else if (is_2d) {
+  } else if (d.centroid.z != undefined) {
+    r = z_to_txt_size_scale(d.centroid.z);
   }
-  if (is_2d) {
-    return '14px';
+  if (d.hasOwnProperty('font_size_factor')) {
+    r *= d.font_size_factor;
   }
-  if (d.centroid.z != undefined) {
-    return z_to_txt_size_scale(d.centroid.z) + 'px';
-  }
-  return '14px';
+  return r + 'px';
 }
 
 

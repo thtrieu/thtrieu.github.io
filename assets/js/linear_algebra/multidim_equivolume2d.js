@@ -36,6 +36,34 @@ function select_svg(svg_id) {
 }
 
 
+function abs_det(v1, v2) {
+  return Math.abs(v1.x * v2.y - v1.y * v2.x);
+}
+
+
+function text_of(polygon, text) {
+  let r = {x:1000, 
+           y:1000, 
+           z:-1000};
+  let corner_count = 0;
+
+  for (let i = 0; i < polygon.length; i++) {
+    let face = polygon[i];
+    for (let j = 0; j < face.length; j++) {
+      let corner = face[j];
+      corner_count += 1;
+      r.x = Math.min(r.x, corner.x);
+      r.y = Math.min(r.y, corner.y);
+      r.z = Math.max(r.z, corner.z);
+    }
+  }
+
+  r.text = text;
+  r.font_size_factor = 0.9;
+  return r;
+}
+
+
 function plot(scatter, axis, polys_original, tt){
   let polys = [];
   for (let i = 0; i < 12; ++i) {
@@ -56,6 +84,14 @@ function plot(scatter, axis, polys_original, tt){
       drag_end_fn: drag_end,
       tt: tt
   })
+
+  let poly1 = [polys[0]],
+      poly2 = [polys[6]];
+
+  let text1 = text_of(poly1, '1.0m\u00b2'),
+      text2 = text_of(poly2, '1.0m\u00b2');
+
+  lib.plot_texts([text1, text2], tt);
 
   // Copy axis into two copies.
   let axis1 = lib.cp_list(axis),
@@ -139,6 +175,14 @@ function plot_v_perspective(polys, v1, v2, v3, axis2, tt) {
                       tt: tt, 
                       with_origin: origin2, 
                       name: 'polygons2'});
+  let poly1 = polys_.slice(0, 6),
+      poly2 = polys_.slice(6, 12);
+
+  let d = abs_det(v1, v2).toFixed(1);
+  let text1 = text_of(poly1, d+'m\u00b2'),
+      text2 = text_of(poly2, d+'m\u00b2');
+
+  lib.plot_texts([text1, text2], tt, 'text2', origin2);
 }
 
 
@@ -176,11 +220,11 @@ function init(tt){
                {x: w, y: 0, z: 0}, 
                {x: w, y: w, z: 0}, 
                {x: 0, y: w, z: 0}];
-  let poly2 = shift(poly1, {x: 2*w, y: 1.5*w, z: 0.0});
+  let poly2 = lib.rotate_polygon(poly1, 0, 0, Math.PI/3);
+  poly2 = shift(poly2, {x: 2*w, y: 1.5*w, z: 0.0});
   poly1.color = 1;
   poly2.color = 1;
 
-  // poly2 = lib.rotate_polygon(poly2, 0, 0, Math.PI/3);
   polys = [poly1, poly2];
 
   scatter = lib.rotate_points(scatter, startAngleX, startAngleY, startAngleZ);
