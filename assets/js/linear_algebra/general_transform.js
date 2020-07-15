@@ -307,7 +307,6 @@ function multiply_matrices(m1, m2) {
     };
     result_matrix.push(temp_list);
   }
-  console.log(result_matrix);
   return result_matrix;
 }
 
@@ -449,7 +448,6 @@ function dragged_all_v() {
        expectedAxis, 
        0);
 }
-
 
 
 let is_rotating_v = false;
