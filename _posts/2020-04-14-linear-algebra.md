@@ -5,7 +5,7 @@ title: Interactive Visualizations of Linear Algebra - Part 1
 
 <script src="/assets/js/linear_algebra/lib.js"></script>
 
-Sunday morning's breezes. Quy nhon, a peaceful small town by the ocean. In a busy coffee shop, two regular coffee buddies are chatting away on fun ideas. 
+Sunday morning's breezes. Quy nhon, a quiet small town by the ocean. In a busy coffee shop, two regular coffee buddies are chatting away on fun ideas. 
 
 *"Linear Algebra?"* - said *Italica*, a student in Design who recently acquired an appetite for pretty illustrations of Math concepts.
 
@@ -253,7 +253,7 @@ draw_on_svg('point_arrow_location',
 
 *Right, so now what does a vector do?*
 
-A vector itself does not do much. You start to have fun when there is more than one :) Dot product between two vectors is a simple and important concept. Below, you can see the dot product of two vectors $u$ and $v$, denoted $u^Tv$, is the **length of the projection** of $u$ onto $v$.
+A vector itself does not do much. You start to have fun when there is more than one :) Dot product between two vectors is a simple and important concept. Below, you can see the dot product of two vectors $u$ and $v$, denoted $v^Tu$, is the **length of the projection** of $u$ onto $v$.
 
 
 <center class='js'>
@@ -264,7 +264,7 @@ A vector itself does not do much. You start to have fun when there is more than 
 Try dragging vector $u$, $v$, the whole space, or click
 <button id='init_dot_product_project'>reset</button>.
 <br/>
-Can you make $u^Tv$ negative?
+Can you make $v^Tu$ negative?
 </center>
 
 <script src="/assets/js/linear_algebra/dot_product_project2d.js"></script>
@@ -275,7 +275,7 @@ draw_on_svg('dot_product_project',
             dot_product_project)
 </script>
 
-*Projection length is not very accurate right? Length cannot be negative, while in the illustration above the number can sometimes be negative. And why don't we just call it "projection"?*
+*Length cannot be negative, how come in the illustration above $v^Tu$ is sometimes negative? And why don't we just call it "projection"?*
 
 You are right, a negative dot-product carries more information than just the length of projection. Which is, $u$ and $v$ are roughly opposite in direction. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between $u$ and $v$ and then add them up!
 
@@ -298,7 +298,7 @@ draw_on_svg('dot_product_formula',
 
 *Oh, that's surprisingly simple!*
 
-Indeed it is. Let's look at a very useful diagram for this formula. It represents the formula by showing $u$ and $v$ colliding into a single number (their dot product $u^Tv$).
+Indeed it is. Let's look at a very useful diagram for this formula. It represents the formula by showing $u$ and $v$ colliding into a single number (their dot product $v^Tu$).
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_dot_product_collide'> <div class='slider'></div></label>
@@ -306,7 +306,7 @@ Indeed it is. Let's look at a very useful diagram for this formula. It represent
 <svg width="600" height="280" id="svg_dot_product_collide"></svg>
 <br/>
 Try dragging vector $u$, $v$, the whole space. Click
-<button id='init_dot_product_collide'>reset</button> or <button id='but_dot_product_collide_compute'>compute $u^Tv$</button>.
+<button id='init_dot_product_collide'>reset</button> or <button id='but_dot_product_collide_compute'>compute $v^Tu$</button>.
 </center>
 
 <script src="/assets/js/linear_algebra/dot_product_collide2d.js"></script>
@@ -330,11 +330,11 @@ draw_on_svg('dot_product_collide',
 </script>
 
 
-*Looks like this diagram explains the notation $u^Tv$ very well: $u^T$ is $u$ lying down, while $v$ is standing, and $u^Tv$ is the collision of $u^T$ and $v$.*
+*Looks like this diagram explains the notation $v^Tu$ very well: $u^T$ is $u$ lying down, while $v$ is standing, and $v^Tu$ is the collision of $u^T$ and $v$.*
 
 That's exactly what it is :) The $^T$ operation here is called "transpose". Transposing flips the vector so it lies down. This diagram will become very helpful later on, so hang on to that for a little while.
 
-*So since this operation is symmetric between $u$ and $v$, it should give the same result as projecting v onto u, i.e. $u^Tv = v^Tu$, right?*
+*So since this operation is symmetric between $u$ and $v$, it should give the same result as projecting v onto u, i.e. $v^Tu = v^Tu$, right?*
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_dot_product_symmetric'> <div class='slider'></div></label>
@@ -343,7 +343,7 @@ That's exactly what it is :) The $^T$ operation here is called "transpose". Tran
 <br/>
 
 Try dragging vector $u$, $v$, the whole space. Click
-<button id='init_dot_product_symmetric'>reset</button> or <button id='but_dot_product_symmetric_swap'>swap $u^Tv \leftrightarrow v^Tu$</button>.
+<button id='init_dot_product_symmetric'>reset</button> or <button id='but_dot_product_symmetric_swap'>swap $v^Tu \leftrightarrow v^Tu$</button>.
 </center>
 
 <script src="/assets/js/linear_algebra/dot_product_symmetric2d.js"></script>
@@ -370,10 +370,12 @@ draw_on_svg('dot_product_symmetric',
 
 </script>
 
-Great observation. Well, I cheated a bit in the explanation so far :) "Projection of $u$ onto $v$" is almost, but not quite, the correct interpretation of dot product! It is only correct when length of $v$ (denoted $\|v\|$) is 1 - which is what I sneakily set it to be so far. The correct formula 
+*The illustration says projection of $u$ and $v$ onto each other isn't symmetric, although the colliding diagram is. So what's wrong?*
+
+You caught the right hint! This is because "Projection of $u$ onto $v$" is only a half of the interpretation of dot product. It is only correct when length of $v$ (denoted $\|v\|$) is 1 - which is what I set it to be so far. The correct formula 
 here takes into account $|v|$ as well:
 
-$$u^Tv = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \left|v\right|$$
+$$v^Tu = \left|v\right| \times \textrm{Projection of}\ u\ \textrm{onto}\ v$$
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_dot_product_correct'> <div class='slider'></div></label>
@@ -383,7 +385,7 @@ $$u^Tv = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \left|v\right|$$
 Try stretching/rotating $v$, move $u$, or click
 <button id='init_dot_product_correct'>reset</button>.
 <br/>
-Notice when $|v|=1$, $u^Tv$ coincides with the projection (shaded blue).
+Notice when $|v|=1$, $v^Tu$ coincides with the projection (shaded blue).
 </center>
 
 <script src="/assets/js/linear_algebra/dot_product_correct2d.js"></script>
@@ -394,7 +396,7 @@ draw_on_svg('dot_product_correct',
             dot_product_correct);
 </script>
 
-So dot product not only projects $u$ onto $v$'s direction, it also scales the result by $\|v\|$. Now with this new interpretation, $u^Tv = v^Tu$ indeed!
+So dot product not only projects $u$ onto $v$'s direction, it also scales the result by $\|v\|$. Now with this new interpretation, $v^Tu = u^Tv$ indeed!
 
 <!-- = \textrm{Projection of}\ u\ \textrm{onto}\ v \times \textrm{length of}\ v = \textrm{Projection of}\ v\ \textrm{onto}\ u \times \textrm{length of}\ u$$ -->
 
@@ -408,7 +410,7 @@ That's the right way to think about it :) The dot product here is simply the pro
 
 That's a good question. One of the understanding here is that projecting $u$ onto $v$ is essentially applying a **change in perspective**.
 
-In the current space and coordinate system, $u$ is a vector of certain location. The question is, what does $u$ look like in *another space and/or coordinate system?* In particular, how does $u$ look like from $v$'s perspective? One answer is that in $v$'s view, $u'=u^Tv$ is what $u$ looks like:
+In the current space and coordinate system, $u$ is a vector of certain location. The question is, what does $u$ look like in *another space and/or coordinate system?* In particular, how does $u$ look like from $v$'s perspective? One answer is that in $v$'s view, $u'=v^Tu$ is what $u$ looks like:
 
 
 <center class='js'>
@@ -453,7 +455,7 @@ An example of Image Captioning.
 
 *So this is how Facebook AI put captions on the photos uploaded to the site?*
 
-Yep. Take Google Translate as another example. Linear Algebra is used to represent the changes of the perspective that turn one sentence in one language to another.
+Yep. Take Google Translate as another example. Linear Algebra is used to represent the changes of perspective that turn one sentence in one language to another.
 
 <center class='js'>
 <svg width="630" height="150" id="svg_translation_perspective"></svg>
@@ -493,11 +495,11 @@ That is the spirit! Although realistically, a single number isn't the best way t
 
 Further, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Prof. Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm that runs at the heart of the search engine itself. 
 
-*Wow, I would have never imagined the simple ideas we talked about so far can turn into such exciting stuff!*
+*Wow, I would have never imagined such simple ideas are so central to so many powerful tech!*
 
 <center><b>4. The coordinate system</b></center>
 
-I know right? :) For now, let's get back on track to our main discussion. Reducing $u$, living in a multi-dimensional space, to a single number $u^Tv$ is useful, but we want more. What people do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
+I know right? :) For now, let's get back on track to our main discussion. Reducing $u$, living in a multi-dimensional space, to a single number $v^Tu$ is useful, but we want more. What people do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
 
 
 <center class='js'>
@@ -519,9 +521,9 @@ draw_on_svg('many_perspective',
             many_perspective);
 </script>
 
-*So we are just essentially getting many numbers at once, that's kind of cumbersome right?*
+*So we are just essentially getting many numbers at once right?*
 
-It will not be. Let's say we project $u$ onto three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[u^Tv_1, u^Tv_2, u^Tv_3]$. This list of numbers is itself a vector $u'$ as well:
+Right, but there's more to it than that. Let's say we project $u$ onto three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[v^Tu_1, v^Tu_2, v^Tu_3]$. This list of numbers is itself a vector $u'$ as well:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_multi_dim_change'> <div class='slider'></div></label>
@@ -828,7 +830,7 @@ draw_on_svg('scale_equivariance',
             scale_equivariance);
 </script>
 
-This property translates to higher dimensions as well. If two chunks of space are equal in volume before a matrix-vector multiplication, they are also equal in volume after said multiplication:
+This property translates to higher dimensions as well. If two chunks of space are equal before a matrix-vector multiplication, they are also equal after said multiplication:
 
 
 <center class='js'>
@@ -839,7 +841,9 @@ This property translates to higher dimensions as well. If two chunks of space ar
 Try dragging the boxes, $v_1$, $v_2$, $v_3$, the whole space, or click 
 <button id='init_multidim_equivolume'>reset</button>.
 <br/> 
-Notice the two boxes are equal in volume both before and after transformation.
+Notice the two boxes are equal in area/volume both before and after transformation.
+<br/> 
+When does the resulting boxes got squashed to zero in area/volume?
 </center>
 
 <script src="/assets/js/linear_algebra/multidim_equivolume2d.js"></script>
@@ -850,17 +854,15 @@ draw_on_svg('multidim_equivolume',
             multidim_equivolume);
 </script>
 
-*Oh that's an interesting way to describe it.*
+*Oh that's an interesting way to describe it!*
 
-This description is not only equivalent, but also more general. It is applicable for transformations between different number of dimensions as well. In the following example, the two chunks are equal in **volume**. After the transformation, they are equal in **area**:
+Note that this description is not only equivalent, but also more general. It is applicable for transformations between different number of dimensions as well:
 
 <center class='js'>
 <svg width="630" height="280" id="svg_equivolume_3d2d"></svg>
 <br/>
 Try dragging the boxes, $v_1$, $v_2$, the whole space, or click 
 <button id='init_equivolume_3d2d'>reset</button>.
-<br/> 
-Notice the two boxes are equal in volume before transformation, and equal in area after.
 </center>
 
 <script src="/assets/js/linear_algebra/equivolume_3d2d.js"></script>
@@ -870,8 +872,12 @@ draw_on_svg('equivolume_3d2d',
 </script>
 
 
-In these cases, it is meaningless to say how much scaled up a chunk of space in 2-D is to another in 3-D, or vice versa.
+In these cases, however, it is meaningless to compare the volume of the original box and the area of the resulting polygon.
 
-*Still, for transformations between spaces of the same dimension - when this comparison is meaningful, a question arises: How much bigger or smaller does the space get? In the 1-dimensional case $x \times \alpha = y$, this factor is simply $\alpha$. In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
+*Still, for transformations between spaces of the same dimension - when this comparison is meaningful, a question arises: How much bigger or smaller does the space get?*
 
-You are asking all the right questions! The point of Linear Algebra is really studying these transformations inside-out, characterizing them, breaking them apart, or undoing them entirely. Volume contraction or expansion is just one of these studies. The keyword for your question here is *Determinant of a Matrix*. But let's take a break here? We'll come back with many more interesting findings :)
+That's the right question! Volume contraction or expansion is one of the main concern to Linear Algebra. In the 1-dimensional case $\alpha x = y$, this factor is simply $\alpha$. 
+
+*In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
+
+We can do so by first setting the original box to have a volume of $1$, then compute the volume of the resulting box after transformation. We have not discussed, however, exactly how to do the second step. The keyword for our answer here is *Determinant of $V$*. But first let's take a break here? We'll come back with many more interesting findings.

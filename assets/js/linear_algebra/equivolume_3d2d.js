@@ -196,14 +196,12 @@ function init(tt){
       {z: w, y: w, x: w}, 
       {z: 0, y: w, x: w}],
   ];
-  let poly2 = [
-      shift(poly1[0], shift_v),
-      shift(poly1[1], shift_v),
-      shift(poly1[2], shift_v),
-      shift(poly1[3], shift_v),
-      shift(poly1[4], shift_v),
-      shift(poly1[5], shift_v),
-  ];
+  let poly2 = [];
+  poly1.forEach(function(d) {
+    let p = lib.cp_list(d);
+    // p = lib.rotate_polygon(p, Math.PI/3);
+    poly2.push(shift(p, shift_v));
+  })
 
   polys = poly1.concat(poly2);
   polys.forEach(function(d) {

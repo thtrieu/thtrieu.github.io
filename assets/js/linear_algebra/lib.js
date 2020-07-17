@@ -134,15 +134,25 @@ function normalize3d(v) {
 
 
 function get_delay(delay) {
-  function duration(d) {
+  function delay_fn(d) {
     if (d.hasOwnProperty('delay')) {
       return d.delay;
     }
     return delay;
   }
-  return delay;
+  return delay_fn;
 }
 
+
+function get_ease(ease) {
+  function ease_fn(d) {
+    if (d.hasOwnProperty('ease')) {
+      return d.ease;
+    }
+    return ease;
+  }
+  return ease_fn;
+}
 
 function get_duration(tt) {
   function duration(d) {
@@ -207,16 +217,17 @@ function get_size(d) {
 
 
 function get_txt_size(d) {
+  r = 14;
   if (d.hasOwnProperty('font_size')) {
     return d.font_size + 'px';
+  } else if (is_2d) {
+  } else if (d.centroid.z != undefined) {
+    r = z_to_txt_size_scale(d.centroid.z);
   }
-  if (is_2d) {
-    return '14px';
+  if (d.hasOwnProperty('font_size_factor')) {
+    r *= d.font_size_factor;
   }
-  if (d.centroid.z != undefined) {
-    return z_to_txt_size_scale(d.centroid.z) + 'px';
-  }
-  return '14px';
+  return r + 'px';
 }
 
 
@@ -619,7 +630,12 @@ function _plot_polygons({data,
 
 
 
-function plot_texts(data, tt, name='text', with_origin=null){
+function _plot_texts({data, 
+                      tt=0, 
+                      delay=0,
+                      ease=d3.easeCubic,
+                      name='text', 
+                      with_origin=null}={}){
   add_keys(name, data);
 
   let text = svg
@@ -636,7 +652,10 @@ function plot_texts(data, tt, name='text', with_origin=null){
                         y: d.y,
                         z: d.z};
       })
-      .transition().duration(get_duration(tt))
+      .transition()
+      .ease(ease)
+      .duration(get_duration(tt))
+      .delay(get_delay(delay))
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
       .attr('font-family', get_font_family)
@@ -645,6 +664,14 @@ function plot_texts(data, tt, name='text', with_origin=null){
       .attr('opacity', get_txt_opacity)
       .text(function(d){ return d.text; });
   text.exit().remove();
+}
+
+
+function plot_texts(data, tt, name='text', with_origin=null){
+  _plot_texts({data: data,
+               tt: tt,
+               name: name,
+               with_origin: with_origin});
 }
 
 
@@ -1130,6 +1157,7 @@ return {
   plot_lines: plot_lines,
   _plot_lines: _plot_lines,
   plot_texts: plot_texts,
+  _plot_texts: _plot_texts,
   _plot_polygons: _plot_polygons,
   plot_images: plot_images,
   dot_product: dot_product,

@@ -342,7 +342,7 @@ function init(tt){
       x: radius + 1.5/scale,
       y: 0.,
       z: 0.,
-      r: 4
+      // r: 4
   }
   grid = sphere_grid(radius);
 
