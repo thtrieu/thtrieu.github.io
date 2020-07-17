@@ -2,7 +2,7 @@ let multidim_equivolume2d = (function() {
 
 let origin = [150, 140], 
   origin2 = [450, 140],
-  scale = 60, 
+  scale = 40, 
   scatter = [],
   axis = [], 
   polys = [],
@@ -12,7 +12,7 @@ let origin = [150, 140],
   startAngleX = Math.PI,
   startAngleY = 0.,
   startAngleZ = 0.,
-  axis_len = 2,
+  axis_len = 3,
   unit = axis_len/10,
   svg = null,
   lib = null,
@@ -42,8 +42,8 @@ function abs_det(v1, v2) {
 
 
 function text_of(polygon, text) {
-  let r = {x:1000, 
-           y:1000, 
+  let r = {x:0, 
+           y:0, 
            z:-1000};
   let corner_count = 0;
 
@@ -52,14 +52,18 @@ function text_of(polygon, text) {
     for (let j = 0; j < face.length; j++) {
       let corner = face[j];
       corner_count += 1;
-      r.x = Math.min(r.x, corner.x);
-      r.y = Math.min(r.y, corner.y);
+      r.x += corner.x;
+      r.y += corner.y;
       r.z = Math.max(r.z, corner.z);
     }
   }
 
   r.text = text;
   r.font_size_factor = 0.9;
+  r.x /= corner_count;
+  r.x -= 17/scale;
+  r.y /= corner_count;
+  r.text_color = 0;
   return r;
 }
 
@@ -188,7 +192,6 @@ function plot_v_perspective(polys, v1, v2, v3, axis2, tt) {
 
 function shift(poly, v) {
   return poly.reduce(function(sum, d) {
-    // shift poly 1 by `shift`.
     sum.push(lib.add([d, v]));
     return sum;
   }, []);
@@ -215,7 +218,7 @@ function init(tt){
     color: 19,
   })
 
-  let w = 0.5
+  let w = 0.95;
   let poly1 = [{x: 0, y: 0, z: 0}, 
                {x: w, y: 0, z: 0}, 
                {x: w, y: w, z: 0}, 

@@ -2,7 +2,7 @@ let multidim_equivolume = (function() {
 
 let origin = [150, 140], 
   origin2 = [450, 140],
-  scale = 60, 
+  scale = 40, 
   scatter = [], 
   axis = [],
   polys = [],
@@ -12,7 +12,7 @@ let origin = [150, 140],
   startAngleX = Math.PI/8 * 2.65,
   startAngleY = -Math.PI/8,
   startAngleZ = Math.PI/8 * 0.6,
-  axis_len = 2,
+  axis_len = 3,
   unit = axis_len/10,
   svg = null,
   lib = null;
@@ -43,9 +43,10 @@ function abs_det(v1, v2, v3) {
 }
 
 
+
 function text_of(polygon, text) {
-  let r = {x:1000, 
-           y:1000, 
+  let r = {x:0, 
+           y:0, 
            z:-1000};
   let corner_count = 0;
 
@@ -54,14 +55,18 @@ function text_of(polygon, text) {
     for (let j = 0; j < face.length; j++) {
       let corner = face[j];
       corner_count += 1;
-      r.x = Math.min(r.x, corner.x);
-      r.y = Math.min(r.y, corner.y);
+      r.x += corner.x;
+      r.y += corner.y;
       r.z = Math.max(r.z, corner.z);
     }
   }
 
   r.text = text;
   r.font_size_factor = 0.9;
+  r.text_color = 0;
+  r.x /= corner_count;
+  r.x -= 17/scale;
+  r.y /= corner_count;
   return r;
 }
 
@@ -204,7 +209,7 @@ function init(tt){
   beta = startAngleY;
 
 
-  let w = 0.5;
+  let w = 0.9;
   let shift_v = {x: 2*w, y: -2*w, z: 0.5*w};
   let poly1 = [
       [{x: 0, y: 0, z: 0}, 
