@@ -335,17 +335,24 @@ function compute(u, v){
   // Immediately after that, plot them at the bottom right corner
   // with the same name & key, now with opacity 0.0
   let animation_end = [
-          {text: v.coord.x.toFixed(2), text_opacity: 0, tt: 900, key: 'xvv'},
-          {text: v.coord.y.toFixed(2), text_opacity: 0, tt: 450, key: 'yvv'},
-          {text: u.coord.x.toFixed(2), text_opacity: 0, tt: 900, key: 'xuu'},
-          {text: u.coord.y.toFixed(2), text_opacity: 0, tt: 450, key: 'yuu'},
+          {text: v.coord.x.toFixed(2), text_opacity: 0.5, tt: 600, key: 'xvv'},
+          {text: v.coord.y.toFixed(2), text_opacity: 0.5, tt: 300, key: 'yvv'},
+          {text: u.coord.x.toFixed(2), text_opacity: 0.5, tt: 600, key: 'xuu'},
+          {text: u.coord.y.toFixed(2), text_opacity: 0.5, tt: 300, key: 'yuu'},
   ];
   for (i = 0; i < animation_end.length; i++) {
-      animation_end[i].x = last_col_coord;
-      animation_end[i].y = last_row_coord + differ;
+    animation_end[i].x = last_col_coord;
+    animation_end[i].y = last_row_coord + differ;
   };
   
-  lib.plot_texts(animation_end, 0, name='animation');
+  lib._plot_texts({data: animation_end, ease: d3.easeLinear, name:'animation'});
+
+  animation_end.forEach(function(t){
+    t.delay = t.tt;
+    t.tt = 0;
+    t.text_opacity = 0;
+  })
+  lib._plot_texts({data: animation_end, name: 'animation'});
 
   // Finally plot the uTvv_line's computed text & uTv value
   // both share the same opacity 1.0
@@ -359,7 +366,7 @@ function compute(u, v){
                     text_opacity: 1, font_size: 15, 
                     key: 'uTv'}];
 
-  lib.plot_texts(uTv_texts, 1200, 'uTv_texts');
+  lib.plot_texts(uTv_texts, 600, 'uTv_texts');
 
   // Set the global variable
   uTvv_opacity = 1.0;

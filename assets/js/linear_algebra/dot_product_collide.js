@@ -318,12 +318,12 @@ function compute(u, v){
 
 
   let animation_end = [
-          {text: v.coord.x.toFixed(2), text_opacity: 0, tt: 900, key: 'xvv'},
-          {text: v.coord.y.toFixed(2), text_opacity: 0, tt: 600, key: 'yvv'},
-          {text: v.coord.z.toFixed(2), text_opacity: 0, tt: 300, key: 'zvv'},
-          {text: u.coord.x.toFixed(2), text_opacity: 0, tt: 900, key: 'xuu'},
-          {text: u.coord.y.toFixed(2), text_opacity: 0, tt: 600, key: 'yuu'},
-          {text: u.coord.z.toFixed(2), text_opacity: 0, tt: 300, key: 'zuu'},
+          {text: v.coord.x.toFixed(2), text_opacity: 0.5, tt: 900, key: 'xvv'},
+          {text: v.coord.y.toFixed(2), text_opacity: 0.5, tt: 600, key: 'yvv'},
+          {text: v.coord.z.toFixed(2), text_opacity: 0.5, tt: 300, key: 'zvv'},
+          {text: u.coord.x.toFixed(2), text_opacity: 0.5, tt: 900, key: 'xuu'},
+          {text: u.coord.y.toFixed(2), text_opacity: 0.5, tt: 600, key: 'yuu'},
+          {text: u.coord.z.toFixed(2), text_opacity: 0.5, tt: 300, key: 'zuu'},
   ];
   
   for (i = 0; i < animation_end.length; i++) {
@@ -331,7 +331,14 @@ function compute(u, v){
       animation_end[i].y = last_row_coord + differ;
 
   };
-  lib.plot_texts(animation_end, 0, 'animation');
+  lib._plot_texts({data: animation_end, ease: d3.easeLinear, name:'animation'});
+
+  animation_end.forEach(function(t){
+    t.delay = t.tt;
+    t.tt = 0;
+    t.text_opacity = 0;
+  })
+  lib._plot_texts({data: animation_end, name: 'animation'});
 
   // Step 4: plot computed uTvv_line's text and uTv value 
   let uTv_texts = [
@@ -349,7 +356,7 @@ function compute(u, v){
        key: 'uTv'}
   ];
 
-  lib.plot_texts(uTv_texts, 1200, 'uTv_texts');
+  lib.plot_texts(uTv_texts, 900, 'uTv_texts');
   
   uTvv_opacity = 1;
 };
