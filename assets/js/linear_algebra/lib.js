@@ -951,21 +951,26 @@ function text_table_to_list(texts,
 
 
 function text_matrix_to_list(coord_texts, coord, size=14,
-                             w_unit=0.6 , h_unit=0.23) {
+                             w_unit= 0.25, h_unit=0.13) {
 
   let size_of_space = coord_texts.length,
       numb_of_vector =  coord_texts[0].length,
-      bot_margin = 0.08 * size/14,
-      side_margin = 0.03 * size/14,
-      between_rows = 0.12 * size/14,
+      head_margin = 0.07* size/14,
+      bot_margin = 0.08* size/14,
+      left_margin = 0.03* size/14,
+      right_margin = 0.4* size/14,
+      between_rows = 0.18* size/14,
+      between_cols = 0.35* size/14,
       w_col = w_unit * size/14,
       h_row = h_unit * size/14,
       bracket_wings = 0.1 * size/14,
+      stroke_width = 1.2,
 
-      matrix_w = side_margin * 2 + w_col * numb_of_vector,
+      matrix_w = left_margin + right_margin + w_col * numb_of_vector +
+                 between_cols * (numb_of_vector - 1),
 
-      matrix_h = bot_margin + h_row * size_of_space +
-                  between_rows * (size_of_space - 1),
+      matrix_h = head_margin + bot_margin + h_row * size_of_space +
+                 between_rows * (size_of_space - 1),
       cols_list = [],
       rows_list = [],
       texts_list = [],
@@ -974,21 +979,29 @@ function text_matrix_to_list(coord_texts, coord, size=14,
   // build texts list:
   if (size_of_space > 1){
     for (i = 1; i < size_of_space; i++) {
-      rows_list.push((h_row + between_rows) * size/14);
+      rows_list.push((h_row + between_rows));
     }
+    // rows_list.push(h_row);
   };
   
   if (numb_of_vector > 1) {
     for (i = 1; i < numb_of_vector; i++) {
-    cols_list.push(w_col * size/14);
+    cols_list.push(w_col + between_cols);
     }
+    // cols_list.push(w_col);
   };
-   
-  texts_list = text_table_to_list(
-      coord_texts, coord[0],
-      coord[1] - matrix_h/2 + h_row,
-      1, 1, cols_list, rows_list);
 
+  for (i = 0; i < size_of_space; i++) {
+    for (j = 0; j < numb_of_vector; j++) {
+      coord_texts[i][j].font_size = size;
+    }
+  }
+  
+  texts_list = text_table_to_list(
+      coord_texts, coord[0]  + left_margin,
+      coord[1] - matrix_h/2 + h_row + head_margin,
+      1, 1, cols_list, rows_list);
+  
   // build lines list:
   lines_list = [
       [
@@ -1020,7 +1033,7 @@ function text_matrix_to_list(coord_texts, coord, size=14,
   ];
 
   for (i = 0; i < lines_list.length; i++) {
-    lines_list[i].stroke_width = 1.2 * size/14;
+    lines_list[i].stroke_width = stroke_width;
   }
 
   return [lines_list, texts_list];

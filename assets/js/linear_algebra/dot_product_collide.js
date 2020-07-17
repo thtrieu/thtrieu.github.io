@@ -15,13 +15,16 @@ let origin = [150, 140],
     svg = null,
     uTvv_opacity = 0;
 
-let differ = 0.09,
+let w_unit = 0.22,
+    h_unit = 0.13,
+    size = 14,
+    differ = 0.09,
     text_above_matrix = 0.7;
 
 let start_coord_x=(380 - origin[0])/scale, 
     start_coord_y=(75 - origin[1])/scale,
-    last_col_coord = start_coord_x + 1.9,
-    last_row_coord = start_coord_y + 0.775;
+    last_col_coord = start_coord_x + 1.79,
+    last_row_coord = start_coord_y + 0.67;
 
 let v_cell = {text: 'v =', x: last_col_coord,
               y: start_coord_y - text_above_matrix, key: 'v'},
@@ -138,13 +141,13 @@ function plot(scatter, axis, tt){
           [[{text: v.coord.x.toFixed(2), key: 'xv'}],
            [{text: v.coord.y.toFixed(2), key: 'yv'}],
            [{text: v.coord.z.toFixed(2), key: 'zv'}]],
-          [last_col_coord, start_coord_y], 14
+          [last_col_coord, start_coord_y], size, w_unit, h_unit
           ),
       [lines_uT, texts_uT] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'},
             {text: u.coord.y.toFixed(2), key: 'yu'},
             {text: u.coord.z.toFixed(2), key: 'zu'}]],
-          [start_coord_x, last_row_coord], 14
+          [start_coord_x, last_row_coord], size, w_unit, h_unit
           );
 
   let texts_to_show = [],
@@ -294,13 +297,13 @@ function compute(u, v){
           [[{text: v.coord.x.toFixed(2), key: 'xvv'}],
            [{text: v.coord.y.toFixed(2), key: 'yvv'}],
            [{text: v.coord.z.toFixed(2), key: 'zvv'}]],
-          [last_col_coord, start_coord_y], 14
+          [last_col_coord, start_coord_y], size, w_unit, h_unit
           ),
       [lines_uT, texts_uT] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xuu'},
             {text: u.coord.y.toFixed(2), key: 'yuu'},
             {text: u.coord.z.toFixed(2), key: 'zuu'}]],
-          [start_coord_x, last_row_coord], 14
+          [start_coord_x, last_row_coord], size, w_unit, h_unit
           );
 
   let animation_begin = [],

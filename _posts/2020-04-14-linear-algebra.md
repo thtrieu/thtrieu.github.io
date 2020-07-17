@@ -722,11 +722,59 @@ draw_on_svg('general_transform',
 
 Notation wise, if we stack $ \\{ v_1, v_2, v_3 \\} $ horizontally into a rectangle of numbers that we called the matrix $A$, we have just invented the matrix-vector multiplication using the "colliding" diagram:
 
+<center class='js'>
+  <br/>
+<svg width="600" height="300" id="svg_matrix_vector_multiply"></svg>
+<br/>
+Try dragging $\alpha$, or points on the $x$ ruler, or click 
+<button id='init_matrix_vector_multiply'>reset</button> or <button id='but_matrix_vector_multiply_compute'>compute</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/matrix_vector_multiply.js"></script>
+<script>
+d3.selectAll('#but_matrix_vector_multiply_compute')
+  .on('click', function(){
+        matrix_vector_multiply.compute();
+  });
+
+draw_on_svg('matrix_vector_multiply',
+            matrix_vector_multiply);
+</script>
+
 $$Vu = u'$$
 
 
 And so, the meaning of matrix-vector multiplication is really just projecting a vector onto the matrix rows. Let's go ahead and simultaneously project a bunch of vectors $ \\{ u_1, u_2, u_3, u_4 \\} $ onto the same set $ \\{ v_1, v_2, v_3 \\} $:
 
+<!-- <center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_dot_product_collide'> <div class='slider'></div></label>
+  <br/>
+<svg width="600" height="280" id="svg_dot_product_collide"></svg>
+<br/>
+Try dragging vector $u$, $v$, the whole space. Click
+<button id='init_dot_product_collide'>reset</button> or <button id='but_dot_product_collide_compute'>compute $u^Tv$</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/dot_product_collide2d.js"></script>
+<script src="/assets/js/linear_algebra/dot_product_collide.js"></script>
+<script>
+
+d3.selectAll('#but_dot_product_collide_compute')
+  .on('click', function(){
+      let is_3d = d3.selectAll('#switch_dot_product_collide').node().checked;
+      if (is_3d) {
+        dot_product_collide.compute();
+      } else {
+        dot_product_collide2d.compute(); 
+      }
+  });
+
+draw_on_svg('dot_product_collide',
+            dot_product_collide2d,
+            dot_product_collide);
+
+</script>
+ -->
 And there it is, we reinvent the matrix-matrix multiplication!
 
 $$VU = U'$$
