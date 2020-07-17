@@ -62,37 +62,37 @@ function init_axis(axis_len=13) {
 
 function _create_axis_float(
     axis, name, ord, axis_len=2, unit=0.2) {
-  d3.range(0, axis_len, unit).forEach(
-      function(d){
-        let text = '';
-        if (d == axis_len-unit) {
-          text = name
-        }
-        let p1 = [0, 0, 0],
-            p2 = [0, 0, 0];
-        p1[ord] = d;
-        p2[ord] = d+unit;
-        let segment = [
-          {x: p1[0], y:p1[1], z:p1[2]},
-          {x: p2[0], y:p2[1], z:p2[2]}
-        ]
-        if (is_2d && ord == 2) {
-          text = '';
-          segment.opacity = 0.0;
-          segment.text_opacity = 0.0;
-        }
-        axis.push(segment); 
-        if (text == '') {
-          return;
-        }
-        if (d == axis_len-unit) {
-          segment[1].text = text;
-        }
-        else {
-          segment[0].text = text
-        }
-      }
-  );
+  // d3.range(0, axis_len, unit).forEach(
+  for (let i = 0; i < axis_len/unit; i++) { 
+    let d = i * unit;                          
+    let text = '';
+    if (i == axis_len/unit - 1) {
+      text = name
+    }
+    let p1 = [0, 0, 0],
+        p2 = [0, 0, 0];
+    p1[ord] = d;
+    p2[ord] = d+unit;
+    let segment = [
+      {x: p1[0], y:p1[1], z:p1[2]},
+      {x: p2[0], y:p2[1], z:p2[2]}
+    ]
+    if (is_2d && ord == 2) {
+      text = '';
+      segment.opacity = 0.0;
+      segment.text_opacity = 0.0;
+    }
+    axis.push(segment); 
+    if (text == '') {
+      continue;
+    }
+    if (i == axis_len/unit - 1) {
+      segment[1].text = text;
+    }
+    else {
+      segment[0].text = text
+    }
+  };
 }
 
 function init_float_axis(axis_len=2.0, unit=0.2) {
