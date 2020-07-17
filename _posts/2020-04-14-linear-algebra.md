@@ -372,7 +372,7 @@ draw_on_svg('dot_product_symmetric',
 
 *The illustration says projection of $u$ and $v$ onto each other isn't symmetric, although the colliding diagram is. So what's wrong?*
 
-You caught the right hint! This is because "Projection of $u$ onto $v$" is only a half of the interpretation of dot product. It is only correct when length of $v$ (denoted $\|v\|$) is 1 - which is what I set it to be so far. The correct formula 
+You caught the flaw in my explanation! This is because "Projection of $u$ onto $v$" is only half the picture of dot product. It is correct only when length of $v$ (denoted $\|v\|$) is 1 - which is what I set it to be so far. The correct formula 
 here takes into account $|v|$ as well:
 
 $$v^Tu = \left|v\right| \times \textrm{Projection of}\ u\ \textrm{onto}\ v$$
@@ -828,8 +828,31 @@ In these cases, however, it is meaningless to compare the volume of the original
 
 *Still, for transformations between spaces of the same dimension - when this comparison is meaningful, a question arises: How much bigger or smaller does the space get?*
 
-That's the right question! Volume contraction or expansion is one of the main concern to Linear Algebra. In the 1-dimensional case $\alpha x = y$, this factor is simply $\alpha$. 
+That's the right question! Volume contraction or expansion is one of the main concern to Linear Algebra. How much contraction/expansion tells us about many things: whether the transformation flips the space around, or whether it is undo-able, etc. 
+
+In the 1-dimensional case $\alpha x = y$, this factor is simply $\alpha$. If $\alpha = 0$, the transformation is impossible to be undone, i.e. find $x$ given $y = \alpha x = 0$. 
 
 *In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
 
-We can do so by first setting the original box to have a volume of $1$, then compute the volume of the resulting box after transformation. We have not discussed, however, exactly how to do the second step. The keyword for our answer here is *Determinant of $V$*. But first let's take a break here? We'll come back with many more interesting findings.
+We can do so by first setting the original box to have a volume of $1$, then compute the volume of the resulting box after transformation. 
+
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_find_det'> <div class='slider'></div></label>
+  <br/>
+<svg width="630" height="280" id="svg_find_det"></svg>
+<br/>
+Try dragging the boxes, $v_1$, $v_2$, $v_3$, the whole space, or click 
+<button id='init_find_det'>reset</button>.
+<br/> The question here is, how do we find $X$ given the matrix $V$?
+</center>
+
+<script src="/assets/js/linear_algebra/find_det2d.js"></script>
+<script src="/assets/js/linear_algebra/find_det.js"></script>
+<script>
+draw_on_svg('find_det',
+            find_det2d,
+            find_det);
+</script>
+
+
+We have not discussed, however, exactly how to do the second step. The keyword for our answer here is *Determinant of $V$*. But first let's take a break here? We'll come back with many more interesting findings.
