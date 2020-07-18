@@ -675,7 +675,7 @@ It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 
 
 *Okay, but what if the set $ \\{ v_1, v_2, v_3 \\} $ is not orthonormal?*
 
-You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result $u'$ looks like $u$, except rotated by an angle. Let's extend this a bit by considering a simple case where the set $ \\{ v_1, v_2, v_3 \\} $ is only "ortho" but not "normal". This time, we can see that the transformation can be broken down to (1) rotating and then (2) stretching on each axis individually, according to the length of $ v_1, v_2, v_3 $:
+You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result $u'$ looks like $u$, except rotated by an angle. Let's extend this a bit by considering a simple case where the set $ \\{ v_1, v_2, v_3 \\} $ is only "ortho" but not "normal": 
 
 
 <center class='js'>
@@ -697,6 +697,9 @@ draw_on_svg('rotate_stretch',
             rotate_stretch2d,
             rotate_stretch);
 </script>
+
+This time, we can see that the transformation from $u$ to $u'$ can be broken down to **(1) rotating**, just like previously done, ignoring the lengths of $v$'s,
+and then **(2) stretching** on each axis individually, according to the length of $ v_1, v_2, v_3 $.
 
 
 *That makes sense. Are you suggesting rotating and stretching are the two building blocks of all transformation done by dot-products?*
@@ -724,8 +727,8 @@ draw_on_svg('general_transform',
 
 Notation wise, if we stack $ \\{ v_1, v_2, v_3 \\} $ horizontally into a rectangle of numbers that we called the matrix $A$, we have just invented the matrix-vector multiplication using the "colliding" diagram:
 
-$$Vu = u'$$
 
+Compactly written, $Vu = u'$.
 
 And so, the meaning of matrix-vector multiplication is really just projecting a vector onto the matrix rows. Let's go ahead and simultaneously project a bunch of vectors $ \\{ u_1, u_2, u_3, u_4 \\} $ onto the same set $ \\{ v_1, v_2, v_3 \\} $:
 
@@ -737,13 +740,42 @@ $$VU = U'$$
 
 Exactly. With matrix multiplication, we now have the power to look at vectors from many different perspectives. So far we have been transforming vectors in 3 dimensional space into another 3 dimensional space. But that does not have to always be the case. Let's try something else:
 
-Here we have just turned a 3-dimensional vectors into a 2-dimensional vector.
+<center class='js'>
+<svg width="630" height="280" id="svg_transform_3d2d"></svg>
+<br/>
+Try dragging $u_1$, $u_2$, $u_3$, $v_1$, $v_2$, the whole space, or click 
+<button id='init_transform_3d2d'>reset</button>.
+</center>
 
-*So we have just discarded some information from $u$ by turning a list of 3 numbers into a list of 2 numbers right? I wonder if, in a reversed manner, we can add more information?*
+<script src="/assets/js/linear_algebra/transform_3d2d.js"></script>
+<script>
+draw_on_svg('transform_3d2d',
+            transform_3d2d);
+</script>
 
-Of course, we can certainly do so by projecting $u$, living in 2 dimensional space, onto a set of three vectors $v_1, v_2, v_3$:
 
-*That looks cool! Although, now I'm seeing many different cases arise from matrix-vector multiplication. Is there an underlying characteristic that makes them different to other types of transformations?*
+Here we have just turned 3-dimensional vectors into a 2-dimensional vectors. This is done by using only $v_1$ and $v_2$.
+
+*In a reversed manner, if we use 3 vectors $v$ in 2-D spaces, we will be able to achieve 2D to 3D transformation right?*
+
+Yep!
+
+<center class='js'>
+<svg width="630" height="280" id="svg_transform_2d3d"></svg>
+<br/>
+Try dragging $u_1$, $u_2$, $u_3$, $v_1$, $v_2$, $v_3$ the whole space, or click 
+<button id='init_transform_2d3d'>reset</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/transform_2d3d.js"></script>
+<script>
+draw_on_svg('transform_2d3d',
+            transform_2d3d);
+</script>
+
+Although, the resulting vectors in 3-D is still restricted on a 2-D surface. We'll explore the tools to show that this is the case, and to precisely identify this surface given $V$ very soon!
+
+*Is there an underlying characteristic that makes all these transformations done by dot-product, different to other types of transformations?*
 
 We can start studying the question by first looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers $\alpha x = y$. Let's look at how different line segments change in terms of their lengths.
 
@@ -828,13 +860,13 @@ In these cases, however, it is meaningless to compare the volume of the original
 
 *Still, for transformations between spaces of the same dimension - when this comparison is meaningful, a question arises: How much bigger or smaller does the space get?*
 
-That's the right question! Volume contraction or expansion is one of the main concern to Linear Algebra. How much contraction/expansion tells us about many things: whether the transformation flips the space around, or whether it is undo-able, etc. 
+That's the right question! Volume contraction or expansion is one of the main concern to Linear Algebra. How much contraction/expansion tells us many things: whether the transformation flips the space around, or whether it is undo-able, etc. 
 
-In the 1-dimensional case $\alpha x = y$, this factor is simply $\alpha$. If $\alpha = 0$, the transformation is impossible to be undone, i.e. find $x$ given $y = \alpha x = 0$. 
+In the 1-dimensional case $\alpha x = y$, this factor is simply $\alpha$. If $\alpha < 0$, the space is flipped, if $\alpha = 0$, the transformation is impossible to be undone, i.e. it is impossible to find $x$ given $y = \alpha x = 0$. 
 
 *In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
 
-We can do so by first setting the original box to have a volume of $1$, then compute the volume of the resulting box after transformation. 
+We can do so by first setting the original box to have a volume of $1$, then compute the volume of the resulting box after transformation. In other words, find $X$:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_find_det'> <div class='slider'></div></label>
