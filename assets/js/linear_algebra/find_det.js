@@ -159,7 +159,7 @@ function plot_v_perspective(polys, v1, v2, v3, axis2, tt) {
                       name: 'polygons2'});
   let poly1 = polys_.slice(0, 6);
 
-  let d = 'X';
+  let d = '\u03b1 ';
   let text1 = text_of(poly1, d+'m\u00b3');
 
   lib.plot_texts([text1], tt, 'text2', origin2);
