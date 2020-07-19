@@ -370,7 +370,7 @@ draw_on_svg('dot_product_symmetric',
 
 </script>
 
-*The illustration says projection of $u$ and $v$ onto each other isn't symmetric, although the colliding diagram is. So what's wrong?*
+*But here, the illustration says projection of $u$ and $v$ onto each other isn't symmetric, although the colliding diagram is. So what's wrong?*
 
 You caught the flaw in my explanation! This is because "Projection of $u$ onto $v$" is only half the picture of dot product. It is correct only when length of $v$ (denoted $\|v\|$) is 1 - which is what I set it to be so far. The correct formula 
 here takes into account $|v|$ as well:
@@ -465,7 +465,7 @@ An example of Translation.
 
 <script src="/assets/js/linear_algebra/translation_perspective.js"></script>
 
-*Okay, let me try to connect the dots here. So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=u^T v$, is the number that represents the caption text?*
+*Okay, let me try to connect the dots here. So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=v^T u$, is the number that represents the caption text?*
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_cat_text'> <div class='slider'></div></label>
@@ -495,7 +495,7 @@ That is the spirit! Although realistically, a single number isn't the best way t
 
 Further, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Prof. Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm that runs at the heart of the search engine itself. 
 
-*Wow, I would have never imagined such simple ideas are so central to so many powerful tech!*
+*That's surprising, such simple ideas are central to so many powerful tech!*
 
 <center><b>4. The coordinate system</b></center>
 
@@ -698,7 +698,7 @@ draw_on_svg('rotate_stretch',
             rotate_stretch);
 </script>
 
-This time, we can see that the transformation from $u$ to $u'$ can be broken down to **(1) rotating**, just like previously done, ignoring the lengths of $v$'s,
+This time, we can see that the transformation from $u$ to $u'$ is equivalent to two steps: **(1) rotating**, just like previously done, ignoring the lengths of $v$'s,
 and then **(2) stretching** on each axis individually, according to the length of $ v_1, v_2, v_3 $.
 
 
@@ -754,7 +754,7 @@ draw_on_svg('transform_3d2d',
 </script>
 
 
-Here we have just turned 3-dimensional vectors into a 2-dimensional vectors. This is done by using only $v_1$ and $v_2$.
+Here we have just turned 3-dimensional vectors into 2-dimensional vectors. This is done by using only $v_1$ and $v_2$ to project $u$ onto.
 
 *In a reversed manner, if we use 3 vectors $v$ in 2-D spaces, we will be able to achieve 2D to 3D transformation right?*
 
@@ -773,7 +773,7 @@ draw_on_svg('transform_2d3d',
             transform_2d3d);
 </script>
 
-Although, the resulting vectors in 3-D is still restricted on a 2-D surface. We'll explore the tools to show that this is the case, and to precisely identify this surface given $V$ very soon!
+Although, the resulting vectors will still be restricted on a 2-D surface embedded in 3-D space. We'll explore the tools to show that this is always the case, and to precisely identify this surface given $V$ very soon!
 
 *Is there an underlying characteristic that makes all these transformations done by dot-product, different to other types of transformations?*
 
@@ -838,7 +838,7 @@ draw_on_svg('multidim_equivolume',
             multidim_equivolume);
 </script>
 
-*Oh that's an interesting way to describe it!*
+*Nice, but why do we need this second description?*
 
 Note that this description is not only equivalent, but also more general. It is applicable for transformations between different number of dimensions as well:
 
@@ -862,11 +862,11 @@ In these cases, however, it is meaningless to compare the volume of the original
 
 That's the right question! Volume contraction or expansion is one of the main concern to Linear Algebra. How much contraction/expansion tells us many things: whether the transformation flips the space around, or whether it is undo-able, etc. 
 
-In the 1-dimensional case $\alpha x = y$, this factor is simply $\alpha$. If $\alpha < 0$, the space is flipped, if $\alpha = 0$, the transformation is impossible to be undone, i.e. it is impossible to find $x$ given $y = \alpha x = 0$. 
+In the 1-dimensional case $\alpha x = y$, the answer is simply $\alpha$. If $\alpha < 0$, the space is flipped, if $\alpha = 0$, the transformation is impossible to be undone, i.e. it is impossible to find $x$ given $y = \alpha x = 0$. 
 
-*In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
+*In N-dimensional space, however, how do we get such "$\alpha$" factor from an N-by-N matrix?*
 
-We can do so by first setting the original box to have a volume of $1$, then compute the volume of the resulting box after transformation. In other words, find $X$:
+We can do so by first setting the original box to have a volume of $1$, then compute the volume of the resulting box after transformation. In other words, given $V$, find $\alpha$:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_find_det'> <div class='slider'></div></label>
@@ -875,7 +875,7 @@ We can do so by first setting the original box to have a volume of $1$, then com
 <br/>
 Try dragging the boxes, $v_1$, $v_2$, $v_3$, the whole space, or click 
 <button id='init_find_det'>reset</button>.
-<br/> The question here is, how do we find $X$ given the matrix $V$?
+<br/> The question here is, how do we find $\alpha$ given the matrix $V$?
 </center>
 
 <script src="/assets/js/linear_algebra/find_det2d.js"></script>
@@ -886,5 +886,6 @@ draw_on_svg('find_det',
             find_det);
 </script>
 
+*Then when $\alpha < 0$, the space is flipped, when $\alpha = 0$, the transformation is not invertible?*
 
-We have not discussed, however, exactly how to do the second step. The keyword for our answer here is *Determinant of $V$*. But first let's take a break here? We'll come back with many more interesting findings.
+Exactly. We have not discussed, however, exactly how to do the second step. The keyword for our answer here is *Determinant of $V$*. But first let's take a break here? We'll come back with many more interesting findings.
