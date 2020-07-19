@@ -69,27 +69,46 @@ function plot(scatter, axis, tt){
       ez: axis[1/unit - 1 + axis_len/unit * 2][1],
   };
 
-  let uTv = lib.dot_product(u, v);
-  
+  let uTv = lib.dot_product(u, v),
+      norm2u = lib.norm2(u);
+
   let uTvv = {
       x: v.x * uTv,
       y: v.y * uTv,
       z: v.z * uTv,
       r: 1.8,
       color: 'grey'
-  }
+  },  uTvu = {
+      x: u.x * uTv / norm2u,
+      y: u.y * uTv / norm2u,
+      z: u.z * uTv / norm2u,
+      r: 1.8,
+      color: 'grey'
+  };
 
   let uTvv_line = [
       {x: 0, y: 0, z: 0},
-      {x: uTvv.x, y: uTvv.y, z: uTvv.z,
-       tt: true}
-  ]
+      {x: uTvv.x, y: uTvv.y, z: uTvv.z}
+  ],
+      uTvu_line = [
+      {x: 0, y: 0, z: 0},
+      {x: uTvu.x, y: uTvu.y, z: uTvu.z}
+  ];
   uTvv_line.color = 0
   uTvv_line.centroid_z = 1000;
+  uTvu_line.color = 0
+  uTvu_line.centroid_z = 1000;
 
   lines.push(uTvv_line);
+  lines.push(uTvu_line);
 
   lib.create_dash_segments(u, uTvv).forEach(
+      function(d) {
+        d.centroid_z = -900;
+        lines.push(d);
+      }
+  )
+  lib.create_dash_segments(v, uTvu).forEach(
       function(d) {
         d.centroid_z = -900;
         lines.push(d);
@@ -116,6 +135,7 @@ function plot(scatter, axis, tt){
   })
 
   points.push(uTvv);
+  points.push(uTvu);
 
   lib.plot_lines(lines, tt, 'arrow');
   lib.plot_points(points, tt,
@@ -206,7 +226,7 @@ function plot(scatter, axis, tt){
   lib.plot_texts(dot_product_texts_at_bot, tt, 'text_at_bot');
 
   let dot_product_texts = [     
-    {text:'u\u1d40v = '.concat(uTv.toFixed(3)),
+    {text:'v\u1d40u',
      x: (v.x * uTv/2).toFixed(2),
      y: (v.y * uTv/2).toFixed(2),
      text_color: 0, text_opacity: 1,

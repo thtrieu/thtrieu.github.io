@@ -24,6 +24,7 @@ let start_coord_x=(380 - origin[0])/scale + 0.6 ,
     last_col_coord = start_coord_x + 1.3,
     last_row_coord = start_coord_y + 0.6;
 
+
 let v_cell = {text: 'v =', x: last_col_coord,
               y: start_coord_y - text_above_matrix, key: 'v'},
     u_cell = {text: 'u =', x: last_col_coord,
@@ -99,21 +100,44 @@ function plot(scatter, axis, tt){
       color: 'grey'
   };
 
+  let unorm2 = lib.norm2(u);
+  let uTvu = lib.times(u, uTv/unorm2);
+  uTvu.r = 1.8;
+  uTvu.color = 'grey';
+
+
   points.push(uTvv);
+  points.push(uTvu);
   uTvv.centroid_z = 1000;
+  uTvu.centroid_z = 1000;
 
   let uTvv_line = [
       {x: 0, y: 0, z: 0},
-      {x: uTvv.x, y: uTvv.y, z: 0,
-       tt:true}
+      {x: uTvv.x, y: uTvv.y, z: 0}
   ];
 
   uTvv_line.color = 0;
   uTvv_line.centroid_z = 1000;
 
+  let uTvu_line = [
+      {x: 0, y: 0, z: 0},
+      {x: uTvu.x, y: uTvu.y, z: 0}
+  ];
+
+  uTvu_line.color = 0;
+  uTvu_line.centroid_z = 1000;
+
   lines.push(uTvv_line);
+  lines.push(uTvu_line);
 
   lib.create_dash_segments(u, uTvv).forEach(
+      function(d) {
+        d.centroid_z = -900;
+        lines.push(d);
+      }
+  );
+
+  lib.create_dash_segments(v, uTvu).forEach(
       function(d) {
         d.centroid_z = -900;
         lines.push(d);
@@ -234,11 +258,11 @@ function plot(scatter, axis, tt){
 
 
   let dot_product_texts = [
-      {text:'u\u1d40v = '.concat(uTv.toFixed(3)),
+      {text:'v\u1d40u',
        x: (v.x * uTv/2).toFixed(2),
        y: (v.y * uTv/2).toFixed(2),
        text_color: 0, text_opacity: 1,
-       font_size: 15, tt, key: 'texts_in_blue_line'}
+       font_size: 15, tt, key: 'uTv_blue_text'},
   ];
 
   lib.plot_texts(dot_product_texts, tt, 'texts_in_blue_line');
