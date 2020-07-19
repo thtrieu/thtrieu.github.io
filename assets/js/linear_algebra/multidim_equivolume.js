@@ -114,8 +114,142 @@ function plot(scatter, axis, polys, tt){
                   drag_point_fn=dragged_point,
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
+
+
+  let o = {x: 0, y: 0, z: 0};
+  let red_line = [o, o];
+  red_line.opacity = 0.0;
+  lib.plot_lines([red_line], tt, 'red_line');
+
+
+  let red_plane = [o, o, o, o];
+  red_plane.opacity = 0.0;
+  if (abs_det(v1, v2, v3) < 1e-2) {
+    red_plane = get_red_plane(v1, v2, v3);
+  }
+  lib._plot_polygons({
+      data: [red_plane],
+      tt: 0,
+      name: 'red_plane'
+  });
+
   plot_v_perspective(polys, v1, v2, v3, axis2, tt);
   lib.sort();
+}
+
+
+function cross_product(v1, v2) {
+  return {
+    x: v1.y*v2.z - v1.z*v2.y,
+    y: v1.z*v2.x - v1.x*v2.z,
+    z: v1.x*v2.y - v1.y*v2.x
+  };
+}
+
+
+// function cut_by_z(square, n=10) {
+//   let [a, b, c, d] = square;
+//   let min_z = Math.min(a.z, b.z, c.z, d.z),
+//       max_z = Math.max(a.z, b.z, c.z, d.z);
+
+//   let min_corner = null,
+//       max_corner = null,
+//       side_corner1 = null,
+//       size_corder2 = null;
+
+//   if (a.z == min_z) {
+//       min_corner = a;
+//       max_corner = c;
+//       side_corner1 = b;
+//       side_corner2 = d;
+//   } else if (b.z == min_z) {
+//       min_corner = b;
+//       max_corner = d;
+//       side_corner1 = a;
+//       side_corner2 = c;
+//   } else if (c.z == min_z) {
+//       min_corner = c;
+//       max_corner = a;
+//       side_corner1 = b;
+//       side_corner2 = d;
+//   } else if (d.z == min_z) {
+//       min_corner = d;
+//       max_corner = b;
+//       side_corner1 = a;
+//       side_corner2 = c;
+//   }
+
+//   let zinc = (max_z-min_z)/n;
+
+//   let polygons = [];
+//   for (let z = min_z; z <= max_z; z += zinc) {
+//     let [z0, z1] = [z, z+zinc];
+//     let poly = [];
+//     if z_is_in(z0, min_corner, side_corner1) {
+//       poly.push(z_intersect(z0, min_corner, side_corner1));
+//     }
+//     if z_is_in(z0, side_corner1, max_corner) {
+//       poly.push(z_intersect(z0, side_corner1, max_corner));
+//     }
+
+//     if z_is_in(side_corner1.z, {z: z0}, {z: z1}) {
+//       poly.push(side_corner1);
+//     }
+
+//     if z_is_in(z1, min_corner, side_corner1) {
+//       poly.push(z_intersect(z1, min_corner, side_corner1));
+//     }
+//     if z_is_in(z1, side_corner1, max_corner) {
+//       poly.push(z_intersect(z1, side_corner1, max_corner));
+//     }
+
+//     //=============
+
+//     if z_is_in(z1, max_corner, side_corner2) {
+//       poly.push(z_intersect(z1, max_corner, side_corner2));
+//     }
+//     if z_is_in(z1, side_corner2, min_corner) {
+//       poly.push(z_intersect(z1, side_corner2, min_corner));
+//     }
+
+//     if z_is_in(side_corner2.z, {z: z0}, {z: z1}) {
+//       poly.push(side_corner2);
+//     }
+
+//     if z_is_in(z0, max_corner, side_corner2) {
+//       poly.push(z_intersect(z0, max_corner, side_corner2));
+//     }
+//     if z_is_in(z0, side_corner2, min_corner) {
+//       poly.push(z_intersect(z0, side_corner2, min_corner));
+//     }
+
+//     polygons.push(poly);
+//   }
+//   return polygons;
+// }
+
+
+// function z_is_in(z, a, b) {
+//   return (a.z <= z && z < b.z);
+// }
+
+// function z_intersect(z, p1, p2) {
+
+// }
+
+
+function get_red_plane(v1, v2, v3) {
+  let n = lib.normalize(cross_product(v1, v2));
+  let v1_ = lib.normalize(v1);
+  let a = lib.times(v1_, axis_len);
+  let b = lib.times(a, -1);
+  let c = lib.times(cross_product(v1_, n), axis_len);
+  let d = lib.times(c, -1);
+
+  let red_plane = [a, c, b, d];
+  red_plane.color = 'grey';
+  red_plane.opacity = 0.3;
+  return red_plane;
 }
 
 
@@ -319,6 +453,25 @@ function dragged_polygon(d, i){
 }
 
 
+function project(r, r1, r2) {
+  let e1 = lib.normalize(r1),
+      e2 = lib.normalize( // norm(r2 - e1 * e1Tr2)
+          lib.add([
+              r2,
+              lib.times(e1, -lib.dot_product(e1, r2))
+          ]));
+  let d = lib.add([
+    lib.times(e1, lib.dot_product(e1, r)),
+    lib.times(e2, lib.dot_product(e2, r))
+  ]);
+  let p = lib.cp_item(r);
+  p.x = d.x;
+  p.y = d.y;
+  p.z = d.z;
+  return p;
+}
+
+
 function dragged_point(d, i){
   if (!drag_on_left) {
     return;
@@ -335,6 +488,14 @@ function dragged_point(d, i){
         let r = lib.cp_item(d);
         r.x += diff.x;
         r.y += diff.y;
+
+        let r1 = scatter[(i+1)%3],
+            r2 = scatter[(i+2)%3];
+
+        p = project(r, r1, r2);
+        if (lib.distance(r, p) < 0.1) {
+          r = p;
+        }
         expectedScatter.push(r);
       } else {
         expectedScatter.push(d);

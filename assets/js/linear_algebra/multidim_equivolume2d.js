@@ -133,6 +133,31 @@ function plot(scatter, axis, polys_original, tt){
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
 
+
+  let o = {x: 0, y: 0, z: 0};
+  let max_x = Math.max(0, v1.x, v2.x),
+      min_x = Math.min(0, v1.x, v2.x);
+  let max_v = (v1.x == max_x)? v1 : (v2.x > 0)? v2 : o,
+      min_v = (v1.x == min_x)? v1 : (v2.x < 0)? v2 : o;
+  let red_line = [min_v, max_v];
+  red_line.text = '';
+  red_line.color = 'grey';
+  red_line.stroke_width = 4;
+  red_line.opacity = 0.0;
+  if (abs_det(v1, v2) < 1e-2) {
+    red_line.opacity = 0.3;
+  }
+  lib.plot_lines([red_line], tt, 'red_line');
+
+
+  let red_plane = [[o, o, o]];
+  red_plane.opacity = 0.0;
+  lib._plot_polygons({
+      data: [red_plane], 
+      tt: tt, 
+      name: 'red_plane'
+  });
+
   plot_v_perspective(polys, v1, v2, v3, axis2, tt);
   lib.sort();
 }
@@ -303,6 +328,16 @@ function dragged_point(d, i){
       if (j == i) {
         let r = lib.update_point_position_from_mouse(d);
         r.x = Math.min(r.x, (300-origin[0])/scale);
+        if (i == 0) {
+          r_ = scatter[1];
+        } else {
+          r_ = scatter[0];
+        }
+        if (abs_det(r, r_) < 8e-2) {
+          let p = lib.dot_product(r, r_)/lib.norm2(r_);
+          r.x = r_.x * p;
+          r.y = r_.y * p;
+        }
         expectedScatter.push(r);
       } else {
         expectedScatter.push(d);
