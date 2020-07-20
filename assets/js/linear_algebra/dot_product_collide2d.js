@@ -16,13 +16,16 @@ let origin = [150, 140],
 
 let differ = 0.09,
     text_above_matrix = 0.4,
+    w_unit = 0.22,
+    h_unit = 0.13,
+    size = 14,
     col_unit = 0.6,
     row_unit = 0.3;
 
-let start_coord_x=(380 - origin[0])/scale + 0.6,
-    start_coord_y=(75 - origin[1])/scale + 0.175,
-    last_col_coord = start_coord_x + 1.3,
-    last_row_coord = start_coord_y + 0.6;
+let start_coord_x=(380 - origin[0])/scale + 0.57,
+    start_coord_y=(75 - origin[1])/scale + 0.155,
+    last_col_coord = start_coord_x + 1.22,
+    last_row_coord = start_coord_y + 0.515;
 
 let v_cell = {text: 'v =', x: last_col_coord,
               y: start_coord_y - text_above_matrix, key: 'v'},
@@ -317,7 +320,7 @@ function compute(u, v){
           [[{text: v.coord.x.toFixed(2), key: 'xvv'},
             {text: v.coord.y.toFixed(2), key: 'yvv'}]],
           [start_coord_x, last_row_coord], 14
-          );
+    );
 
   let animation_begin = [],
       lines_to_show = [];

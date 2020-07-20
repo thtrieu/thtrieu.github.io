@@ -16,12 +16,15 @@ let origin = [150, 140],
 
 let differ = 0.09,
     text_above_matrix = 0.7,
+    w_unit = 0.22,
+    h_unit = 0.13,
+    size = 14,
     col_unit = 0.6,
     row_unit = 0.3;
 
 let start_coord_x=(400 - origin[0])/scale,
-    start_coord_y=(125 - origin[1])/scale - 0.175;
-    end_matrix_y = start_coord_y + 0.505;
+    start_coord_y=(125 - origin[1])/scale - 0.155;
+    end_matrix_y = start_coord_y + 0.455;
 
 let u_cell = {text: 'u =', x: start_coord_x,
               y: start_coord_y - text_above_matrix, key: 'u'},
@@ -131,24 +134,24 @@ function plot(scatter, axis, tt){
           [[{text: u.coord.x.toFixed(2), key: 'xu'}],
            [{text: u.coord.y.toFixed(2), key: 'yu'}],
            [{text: u.coord.z.toFixed(2), key: 'zu'}]], 
-          [start_coord_x, start_coord_y], 14
+          [start_coord_x, start_coord_y], size, w_unit, h_unit
           ),
       [lines_plus, texts_plus] = lib.text_matrix_to_list(
           [[{text: '+', text_color: 0, key: 'fplus'}],
            [{text: '+', text_color: 0, key: 'splus'}]], 
-          [start_coord_x - col_unit/2, start_coord_y], 14
+          [start_coord_x - col_unit/2, start_coord_y], size, w_unit, h_unit
           ),
       [lines_multi, texts_multi] = lib.text_matrix_to_list(
           [[{text: '\u00D7', text_color: 0, key: 'fmulti'}],
            [{text: '\u00D7', text_color: 0, key: 'smulti'}],
            [{text: '\u00D7', text_color: 0, key: 'tmulti'}]], 
-          [start_coord_x + col_unit, start_coord_y], 14
+          [start_coord_x + col_unit, start_coord_y], size, w_unit, h_unit
           ),
       [lines_v, texts_v] =  lib.text_matrix_to_list(
           [[{text: v.coord.x.toFixed(2), key: 'xv'}],
            [{text: v.coord.y.toFixed(2), key: 'yv'}],
            [{text: v.coord.z.toFixed(2), key: 'zv'}]], 
-          [start_coord_x + col_unit * 1.5, start_coord_y], 14
+          [start_coord_x + col_unit * 1.5, start_coord_y], size, w_unit, h_unit
           );
 
   let z_texts = [{text: u.coord.z.toFixed(2),
