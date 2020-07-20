@@ -728,23 +728,31 @@ draw_on_svg('general_transform',
 Notation wise, if we stack $ \\{ v_1, v_2, v_3 \\} $ horizontally into a rectangle of numbers that we called the matrix $A$, we have just invented the matrix-vector multiplication using the "colliding" diagram:
 
 <center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_matrix_vector_multiply'> <div class='slider'></div></label>
   <br/>
-<svg width="600" height="300" id="svg_matrix_vector_multiply"></svg>
+<svg width="630" height="280" id="svg_matrix_vector_multiply"></svg>
 <br/>
-Try dragging $\alpha$, or points on the $x$ ruler, or click 
-<button id='init_matrix_vector_multiply'>reset</button> or <button id='but_matrix_vector_multiply_compute'>compute</button>.
+Try dragging $u$, $V$, the whole space, or click <button id='init_matrix_vector_multiply'>reset</button> or <button id='but_matrix_vector_multiply_compute'>compute</button>.
 </center>
 
 <script src="/assets/js/linear_algebra/matrix_vector_multiply.js"></script>
+<script src="/assets/js/linear_algebra/matrix_vector_multiply2d.js"></script>
 <script>
 d3.selectAll('#but_matrix_vector_multiply_compute')
   .on('click', function(){
-        matrix_vector_multiply.compute();
+    let is_3d = d3.selectAll('#switch_matrix_vector_multiply').node().checked;
+    if (is_3d){
+      matrix_vector_multiply.compute();  
+    } else {
+      matrix_vector_multiply2d.compute();
+    }
   });
 
 draw_on_svg('matrix_vector_multiply',
+            matrix_vector_multiply2d,
             matrix_vector_multiply);
 </script>
+
 
 $$Vu = u'$$
 
@@ -755,24 +763,22 @@ And so, the meaning of matrix-vector multiplication is really just projecting a 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_matrices_multiply'> <div class='slider'></div></label>
   <br/>
-<svg width="600" height="280" id="svg_matrices_multiply"></svg>
+<svg width="630" height="280" id="svg_matrices_multiply"></svg>
 <br/>
-Try dragging vector $u$, $v$, the whole space. Click
-<button id='init_matrices_multiply'>reset</button> or <button id='but_matrices_multiply_compute'>compute $u^Tv$</button>.
+Try dragging $U$, $V$, the whole space, or click <button id='init_matrices_multiply'>reset</button> or <button id='but_matrices_multiply_compute'>compute</button>.
 </center>
 
-<script src="/assets/js/linear_algebra/matrices_multiply2d.js"></script>
 <script src="/assets/js/linear_algebra/matrices_multiply.js"></script>
+<script src="/assets/js/linear_algebra/matrices_multiply2d.js"></script>
 <script>
-
 d3.selectAll('#but_matrices_multiply_compute')
   .on('click', function(){
-      let is_3d = d3.selectAll('#switch_matrices_multiply').node().checked;
-      if (is_3d) {
-        matrices_multiply.compute();
-      } else {
-        matrices_multiply2d.compute(); 
-      }
+    let is_3d = d3.selectAll('#switch_matrices_multiply').node().checked;
+    if (is_3d){
+      matrices_multiply.compute();  
+    } else {
+      matrices_multiply2d.compute();
+    }
   });
 
 draw_on_svg('matrices_multiply',
@@ -780,6 +786,8 @@ draw_on_svg('matrices_multiply',
             matrices_multiply);
 
 </script>
+
+
 
 And there it is, we reinvent the matrix-matrix multiplication!
 

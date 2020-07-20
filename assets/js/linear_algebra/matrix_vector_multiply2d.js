@@ -1,4 +1,4 @@
-let matrix_vector_multiply = (function() {
+let matrix_vector_multiply2d = (function() {
 
 let origin = [150, 140], 
     scale = 60, 
@@ -6,9 +6,9 @@ let origin = [150, 140],
     axis = [],
     expectedAxis = [],
     expectedScatter = [],
-    startAngleX = Math.PI/8 * 2.65,
-    startAngleY = -Math.PI/8,
-    startAngleZ = Math.PI/8 * 0.6,
+    startAngleX = Math.PI,
+    startAngleY = 0,
+    startAngleZ = 0,
     axis_len = 2,
     unit = axis_len/10,
     uTvv_opacity = 0,
@@ -18,13 +18,12 @@ let origin = [150, 140],
 let differ = 0.09,
     size = 14,
     text_from_matrix = 0.55,
-    matrix_above_matrix = 1;
+    matrix_above_matrix = 1 - (0.155* 2 * size/14);
 
-let start_coord_x = (origin[0] + 50) /scale,
-    start_coord_y = (origin[1] - 140) /scale,
-    last_col_coord = start_coord_x + 2,
-    u_cell = {text: 'u =',
-              x: last_col_coord - text_from_matrix,
+let start_coord_x = (origin[0] + 50) /scale + 0.6 * size/14,
+    start_coord_y = (origin[1] - 140) /scale - 0.155 * size/14,
+    last_col_coord = start_coord_x + (2 - 0.6 * size/14),
+    u_cell = {text: 'u =', x: last_col_coord - text_from_matrix,
               y: start_coord_y - matrix_above_matrix + differ,
               font_size: size, key: 'u'},
     V_cell = {text: 'V =',
@@ -39,7 +38,7 @@ function select_svg(svg_id) {
     svg,
     origin,
     scale,
-    is_2d=false); 
+    is_2d=true); 
 
   svg = svg.call(d3.drag()
            .on('drag', dragged)
@@ -59,9 +58,9 @@ function plot(scatter, axis, tt){
       v2 = scatter[3],
 
       basis = {
-      ex: axis[1/unit - 1 + axis_len/unit * 0][1], 
-      ey: axis[1/unit - 1 + axis_len/unit * 1][1], 
-      ez: axis[1/unit - 1 + axis_len/unit * 2][1],
+          ex: axis[1/unit - 1 + axis_len/unit * 0][1], 
+          ey: axis[1/unit - 1 + axis_len/unit * 1][1], 
+          ez: axis[1/unit - 1 + axis_len/unit * 2][1],
       },
       points = [];
 
@@ -77,6 +76,7 @@ function plot(scatter, axis, tt){
       point.text = 'v\u2082';
     } else if (i == 3) {
       point.text = 'v\u2083';
+      point.text_opacity = 0;
     }
     points.push(point);
   })
@@ -90,33 +90,59 @@ function plot(scatter, axis, tt){
   // Step 2: Plot the V and u tables.
   let [lines_u, texts_u] = lib.text_matrix_to_list(
           [[{text: u.coord.x.toFixed(2), key: 'xu'}],
-           [{text: u.coord.y.toFixed(2), key: 'yu'}],
-           [{text: u.coord.z.toFixed(2), key: 'zu'}]],
-          [last_col_coord, start_coord_y - matrix_above_matrix], size
-          ),
+           [{text: u.coord.y.toFixed(2), key: 'yu'}]
+          ],
+          [last_col_coord, start_coord_y - matrix_above_matrix],
+          size),
+
       [lines_V, texts_V] = lib.text_matrix_to_list(
           [
             [{text: v0.coord.x.toFixed(2), key: 'xv0'},
-            {text: v0.coord.y.toFixed(2), key: 'yv0'},
-            {text: v0.coord.z.toFixed(2), key: 'zv0'}],
+             {text: v0.coord.y.toFixed(2), key: 'yv0'}],
 
             [{text: v1.coord.x.toFixed(2), key: 'xv1'},
-            {text: v1.coord.y.toFixed(2), key: 'yv1'},
-            {text: v1.coord.z.toFixed(2), key: 'zv1'}],
-            
-            [{text: v2.coord.x.toFixed(2), key: 'xv2'},
-            {text: v2.coord.y.toFixed(2), key: 'yv2'},
-            {text: v2.coord.z.toFixed(2), key: 'zv2'}], 
+             {text: v1.coord.y.toFixed(2), key: 'yv1'}]
           ],
-          [start_coord_x, start_coord_y], size
-          );
+          [start_coord_x, start_coord_y], size),
+  
+      texts_zV = [{text: ' ', text_opacity: 0, key: 'zv0'},
+                  {text: ' ', text_opacity: 0, key: 'zv1'}],
+  
+      texts_zu = {text: ' ', text_opacity: 0, key: 'zu'},
+
+      texts_v2 = [{text: ' ', text_opacity: 0, key: 'xv2'},
+                  {text: ' ', text_opacity: 0, key: 'yv2'},
+                  {text: ' ', text_opacity: 0, key: 'zv2'}];
+  
+  texts_zV.forEach(function(d, i){
+    d.x = texts_V[i * 2 + 1].x;
+    d.y = texts_V[i * 2 + 1].y;
+  });
+
+  texts_zu.x = texts_u[texts_u.length-1].x;
+  texts_zu.y = texts_u[texts_u.length-1].y;
+
+  for (i = 0; i < texts_v2.length - 1; i++) {
+    texts_v2[i].x = texts_V[i + 2].x;
+    texts_v2[i].y = texts_V[i + 2].y;
+  };
+  texts_v2[texts_v2.length-1].x = texts_V[texts_V.length-1].x;
+  texts_v2[texts_v2.length-1].y = texts_V[texts_V.length-1].y;
+  
+  texts_v2.forEach(function(d, i){
+    d.text_opacity = 0;
+    d.font_size =  1;
+  })
+  
 
   let texts_to_show = [],
       lines_to_show = [];
 
   texts_to_show.push(...texts_u);
   texts_to_show.push(...texts_V);
-  texts_to_show.push(u_cell, V_cell);
+  texts_to_show.push(...texts_zV);
+  texts_to_show.push(...texts_v2);
+  texts_to_show.push(texts_zu, u_cell, V_cell);
 
   lines_to_show.push(...lines_V);
   lines_to_show.push(...lines_u);
@@ -131,27 +157,31 @@ function plot(scatter, axis, tt){
 
       [lines_result, texts_result] = lib.text_matrix_to_list(
           [[{text: uTv0.toFixed(2), text_opacity: 0, key: 'uTv0'}],
-           [{text: uTv1.toFixed(2), text_opacity: 0, key: 'uTv1'}],
-           [{text: uTv2.toFixed(2), text_opacity: 0, key: 'uTv2'}]],
-          [last_col_coord, start_coord_y], size);
+           [{text: uTv1.toFixed(2), text_opacity: 0, key: 'uTv1'}]],
+          [last_col_coord, start_coord_y], size),
+      texts_uTv2 = {text: uTv2.toFixed(2), text_opacity: 0, key: 'uTv2'};
+
+  texts_uTv2.x = texts_result[1].x;
+  texts_uTv2.y = texts_result[1].y;
 
   lines_result.forEach(function(d){
     d.color = 'white';
   })
-
   texts_result.forEach(function(d){
     d.font_size = 1;
   })
   if (uTvv_opacity == 1) {
     texts_result.forEach(function(d){
-      d.font_size = size;
-      d.text_opacity = 1;
-      d.text_color = 0;
-      })
-      lines_result.forEach(function(d){
-        d.color = 'grey';
+    d.font_size = size;
+    d.text_opacity = 1;
+    d.text_color = 0;
+    })
+    lines_result.forEach(function(d){
+      d.color = 'grey';
     })
   }
+
+  texts_result.push(texts_uTv2);
 
   lib.plot_texts(texts_result, 0, 'texts_result');
   lib.plot_lines(lines_result, 0, 'lines_result');
@@ -164,20 +194,15 @@ function init(tt){
 
   let u = {x: d3.randomUniform(-axis_len, axis_len)() * 0.8,
            y: d3.randomUniform(-axis_len, axis_len)() * 0.8,
-           z: d3.randomUniform(-axis_len, axis_len)() * 0.8,
-           color: 0, r: 5},
+           z: 0, color: 0, r: 5},
       v0 = {x: d3.randomUniform(-axis_len, axis_len)() * 0.8,
             y: d3.randomUniform(-axis_len, axis_len)() * 0.8,
-            z: d3.randomUniform(-axis_len, axis_len)() * 0.8,
-            color: 'grey', r: 5},
+            z: 0, color: 'grey', r: 5},
       v1 = {x: d3.randomUniform(-axis_len, axis_len)() * 0.8,
             y: d3.randomUniform(-axis_len, axis_len)() * 0.8,
-            z: d3.randomUniform(-axis_len, axis_len)() * 0.8,
-            color: 'grey', r: 5},
-      v2 = {x: d3.randomUniform(-axis_len, axis_len)() * 0.8,
-            y: d3.randomUniform(-axis_len, axis_len)() * 0.8,
-            z: d3.randomUniform(-axis_len, axis_len)() * 0.8,
-            color: 'grey', r: 5};
+            z: 0, color: 'grey', r: 5},
+      v2 = {x: 0, y: 0,
+            z: 0, color: 'grey', r: 0};
 
   scatter = [u, v0, v1, v2];
 
@@ -185,6 +210,7 @@ function init(tt){
       scatter, startAngleX, startAngleY, startAngleZ);
   expectedAxis = lib.rotate_lines(
       axis, startAngleX, startAngleY, startAngleZ);
+
   uTvv_opacity = 0;
 
   plot(expectedScatter, 
@@ -211,23 +237,11 @@ function dragged(){
   if (!drag_on_left) {
     return;
   }
-  [angle_x, angle_y] = lib.get_drag_angles();
 
-  expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
-  expectedAxis = lib.rotate_lines(axis, angle_x, angle_y);
-  
-  plot(expectedScatter, 
-       expectedAxis, 
-       0);
-}
+  angle_z = lib.get_drag_angle_2d();
 
-function dragged_point_only(){
-  if (!drag_on_left) {
-    return;
-  }
-  [angle_x, angle_y] = lib.get_drag_angles();
-
-  expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
+  expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
+  expectedAxis = lib.rotate_lines(axis, 0, 0, angle_z);
   
   plot(expectedScatter, 
        expectedAxis, 
@@ -266,33 +280,23 @@ function drag_end(){
 }
 
 
-function compute(u, v0, v1, v2){
+function compute(u, v0, v1){
   let uTv0 = lib.dot_product(u, v0),
       uTv1 = lib.dot_product(u, v1),
-      uTv2 = lib.dot_product(u, v2),
       time_unit = 300;
-  
+
   // // Step 1: Plot the copy of V and u tables.
 
   let [lines_uu, texts_uu] = lib.text_matrix_to_list(
         [[{text: u.coord.x.toFixed(2), key: 'xuu'}],
-         [{text: u.coord.y.toFixed(2), key: 'yuu'}],
-         [{text: u.coord.z.toFixed(2), key: 'zuu'}]],
+         [{text: u.coord.y.toFixed(2), key: 'yuu'}],],
         [last_col_coord, start_coord_y - matrix_above_matrix], size
         ),
-
       [lines_V, texts_V] = lib.text_matrix_to_list(
         [[{text: v0.coord.x.toFixed(2), key: 'xvv0'},
-          {text: v0.coord.y.toFixed(2), key: 'yvv0'},
-          {text: v0.coord.z.toFixed(2), key: 'zvv0'}
-         ],
-          [{text: v1.coord.x.toFixed(2), key: 'xvv1'},
-          {text: v1.coord.y.toFixed(2), key: 'yvv1'},
-          {text: v1.coord.z.toFixed(2), key: 'zvv1'}
-         ],
-          [{text: v2.coord.x.toFixed(2), key: 'xvv2'},
-          {text: v2.coord.y.toFixed(2), key: 'yvv2'},
-          {text: v2.coord.z.toFixed(2), key: 'zvv2'}]
+          {text: v0.coord.y.toFixed(2), key: 'yvv0'}],
+         [{text: v1.coord.x.toFixed(2), key: 'xvv1'},
+          {text: v1.coord.y.toFixed(2), key: 'yvv1'}]
         ],
 
         [start_coord_x, start_coord_y], size
@@ -300,8 +304,7 @@ function compute(u, v0, v1, v2){
 
   let [lines_result, texts_result] = lib.text_matrix_to_list(
         [[{text: uTv0.toFixed(2), text_opacity: 1, tt: time_unit * 3, text_color: 0, key: 'uTv0'}],
-         [{text: uTv1.toFixed(2), text_opacity: 1, tt: time_unit * 4, text_color: 0, key: 'uTv1'}],
-         [{text: uTv2.toFixed(2), text_opacity: 1, tt: time_unit * 5, text_color: 0, key: 'uTv2'}]],
+         [{text: uTv1.toFixed(2), text_opacity: 1, tt: time_unit * 4, text_color: 0, key: 'uTv1'}]],
         [last_col_coord, start_coord_y], size,
       ),
       result_points = [];
@@ -313,26 +316,22 @@ function compute(u, v0, v1, v2){
   }
 
   let animation_begin0 = [],
-      animation_begin1 = [],
-      animation_begin2 = [];
+      animation_begin1 = [];
 
-  for (i = 0; i < 3; i ++) {
-    animation_begin0.push(texts_V[0*3+i]);
-    animation_begin1.push(texts_V[1*3+i]);
-    animation_begin2.push(texts_V[2*3+i]);
+  for (i = 0; i < 2; i ++) {
+    animation_begin0.push(texts_V[0*2+i]);
+    animation_begin1.push(texts_V[1*2+i]);
   }
 
   lib.plot_texts(animation_begin0, 0, 'animation0');
   lib.plot_texts(animation_begin1, 0, 'animation1');
-  lib.plot_texts(animation_begin2, 0, 'animation2');
   lib.plot_texts(texts_uu, 0, 'texts_uu');
 
   // step 2: moving the copy to the result place:
 
   let animation_end0 = [
-          {text: v0.coord.x.toFixed(2), text_opacity: 1, tt: time_unit * 3, font_size: size, key: 'xvv0'},
-          {text: v0.coord.y.toFixed(2), text_opacity: 1, tt: time_unit * 2, font_size: size, key: 'yvv0'},
-          {text: v0.coord.z.toFixed(2), text_opacity: 1, tt: time_unit * 1, font_size: size, key: 'zvv0'},
+          {text: v0.coord.x.toFixed(2), text_opacity: 1, tt: time_unit * 2, font_size: size, key: 'xvv0'},
+          {text: v0.coord.y.toFixed(2), text_opacity: 1, tt: time_unit * 1, font_size: size, key: 'yvv0'}
   ];
   
   animation_end0.forEach(function(d){
@@ -341,13 +340,12 @@ function compute(u, v0, v1, v2){
   });
   
   texts_uu.forEach(function(d){
-    d.x = result_points[2].x;
-    d.y = result_points[2].y;
+    d.x = result_points[1].x;
+    d.y = result_points[1].y;
   })
 
-  texts_uu[0].tt =  time_unit * 5;
-  texts_uu[1].tt =  time_unit * 4;
-  texts_uu[2].tt =  time_unit * 3;
+  texts_uu[0].tt =  time_unit * 3;
+  texts_uu[1].tt =  time_unit * 2;
 
   lib.plot_lines(lines_result, 0, 'lines_result');
 
@@ -365,45 +363,27 @@ function compute(u, v0, v1, v2){
   delay_plotting(texts_uu, 'texts_uu');
 
   let animation_end1 = [
-          {text: v1.coord.x.toFixed(2), text_opacity: 1, tt: time_unit * 4, font_size: size, key: 'xvv1'},
-          {text: v1.coord.y.toFixed(2), text_opacity: 1, tt: time_unit * 3, font_size: size, key: 'yvv1'},
-          {text: v1.coord.z.toFixed(2), text_opacity: 1, tt: time_unit * 2, font_size: size, key: 'zvv1'}
+          {text: v1.coord.x.toFixed(2), text_opacity: 1, tt: time_unit * 3, font_size: size, key: 'xvv1'},
+          {text: v1.coord.y.toFixed(2), text_opacity: 1, tt: time_unit * 2, font_size: size, key: 'yvv1'}
   ];
   animation_end1.forEach(function(d){
     d.x = result_points[1].x;
     d.y = result_points[1].y;
   });
-
   animation_end1.forEach(function(d){
       d.delay = time_unit;
     });
 
   delay_plotting(animation_end1, 'animation1');
 
-  let animation_end2 = [
-          {text: v2.coord.x.toFixed(2), text_opacity: 1, tt: time_unit * 5, font_size: size, key: 'xvv2'},
-          {text: v2.coord.y.toFixed(2), text_opacity: 1, tt: time_unit * 4, font_size: size, key: 'yvv2'},
-          {text: v2.coord.z.toFixed(2), text_opacity: 1, tt: time_unit * 3, font_size: size, key: 'zvv2'},
-  ];
-
-  animation_end2.forEach(function(d){
-    d.x = result_points[2].x;
-    d.y = result_points[2].y;
-  });
-
-  animation_end2.forEach(function(d){
-      d.delay = time_unit;
-    });
-
-  delay_plotting(animation_end2, 'animation2');
-
-  // // Step 4: plot compute uTvv_line's text and uTv value
+  // // Step 4: plot compute uTvv_line's text and uTv value 
   texts_result.forEach(function(d){
       d.delay = d.tt - time_unit*2.5;
       d.tt = time_unit*3;
       d.text_opacity = 1;
     });
   lib._plot_texts({data: texts_result, name:'texts_result'});
+
   uTvv_opacity = 1;
 };
 
@@ -411,10 +391,8 @@ return {
   init: function(tt=0){init(tt);},
   select_svg: function(svg_id){select_svg(svg_id);},
   compute: function(){compute(scatter[0], scatter[1],
-                              scatter[2], scatter[3]);}
+                              scatter[2]);}
 };
 
+
 })();
-
-
-
