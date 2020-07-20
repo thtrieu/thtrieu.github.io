@@ -125,7 +125,10 @@ function plot_v_perspective(us, v1, v2, v3, axis3d, tt) {
       data: u_plane,
       tt: tt,
       name: 'u_plane',
-      with_origin: origin2
+      with_origin: origin2,
+      drag_point_fn: dragged,
+      drag_start_fn: drag_start,
+      drag_end_fn: drag_end
   });
 }
 

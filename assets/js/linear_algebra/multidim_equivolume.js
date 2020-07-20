@@ -132,7 +132,10 @@ function plot(scatter, axis, polys, tt){
   lib._plot_polygons({
       data: v_plane,
       tt: 0,
-      name: 'v_plane'
+      name: 'v_plane',
+      drag_point_fn: dragged,
+      drag_start_fn: drag_start,
+      drag_end_fn: drag_end
   });
 
   plot_v_perspective(polys, v1, v2, v3, axis2, tt);
