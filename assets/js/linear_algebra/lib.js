@@ -1135,6 +1135,108 @@ function wait(time) {
 }
 
 
+function cross_product(v1, v2) {
+  return {
+    x: v1.y*v2.z - v1.z*v2.y,
+    y: v1.z*v2.x - v1.x*v2.z,
+    z: v1.x*v2.y - v1.y*v2.x
+  };
+}
+
+
+function between(z, z1, z2) {
+  return ((z1 <= z && z < z2) ||
+          (z1 >= z && z > z2));
+}
+
+
+function intersect(z, p0, p1) {
+  let t = (z - p0.z) / (p1.z - p0.z);
+  return {
+    x: p0.x + (p1.x - p0.x) * t,
+    y: p0.y + (p1.y - p0.y) * t,
+    z: z
+  };
+}
+
+
+function sweep(band, segment) {
+  let [z0, z1] = band,
+      [p0, p1] = segment;
+
+  let r = [];
+  if (between(p0.z, z0, z1)) {
+    r.push(p0);
+    r.push(intersect(z1, p0, p1));
+  } else if (between(p1.z, z0, z1)) {
+    r.push(intersect(z0, p0, p1));
+    r.push(p1);
+  } else if (between(z0, p0.z, p1.z) &&
+             between(z1, p0.z, p1.z)) {
+    r.push(intersect(z0, p0, p1));
+    r.push(intersect(z1, p0, p1));
+  }
+  return r;
+}
+
+
+function sweep_square(square, n=64) {
+  let [a, b, c, d] = square.sort(
+      function(x, y) {return x.z-y.z;});
+
+  let zinc = (d.z-a.z)/n;
+
+  let polygons = [];
+  for (let z = a.z-zinc/2; z < d.z+zinc/2; z += zinc) {
+    let [z0, z1] = [z, z+zinc];
+    let poly = [];
+    poly.push(...sweep([z0, z1], [a, b]));
+    poly.push(...sweep([z0, z1], [b, d]));
+    poly.push(...sweep([z1, z0], [d, c]));
+    poly.push(...sweep([z1, z0], [c, a]));
+    poly.color = 'grey';
+    poly.opacity_factor = 0.5;
+    polygons.push(poly);
+  }
+  return polygons;
+}
+
+
+function get_square_plane(v1, v2, v3, axis_len, e1) {
+  let len = Math.max(
+      axis_len, 
+      norm(v1) * Math.sqrt(2), 
+      norm(v2) * Math.sqrt(2), 
+      norm(v3) * Math.sqrt(2));
+  let n = normalize(cross_product(v1, v2));
+  let a = times(e1, len);
+  let b = times(a, -1);
+  let c = times(cross_product(e1, n), len);
+  let d = times(c, -1);
+  return sweep_square([a, b, c, d]);
+}
+
+
+function project_v_v1v2(v, v1, v2) {
+  let e1 = normalize(v1),
+      e2 = normalize( // norm(v2 - e1 * e1Tv2)
+          add([
+              v2,
+              times(e1, -dot_product(e1, v2))
+          ]));
+  let d = add([
+    times(e1, dot_product(e1, v)),
+    times(e2, dot_product(e2, v))
+  ]);
+  let p = cp_item(v);
+  p.x = d.x;
+  p.y = d.y;
+  p.z = d.z;
+  return p;
+}
+
+
+
 return {
   set_ranges: set_ranges,
   sort: sort,
@@ -1183,6 +1285,8 @@ return {
   cp_item: cp_item,
   create_circle_lines: create_circle_lines,
   wait: wait,
+  get_square_plane: get_square_plane,
+  project_v_v1v2: project_v_v1v2
 }
 
 };
