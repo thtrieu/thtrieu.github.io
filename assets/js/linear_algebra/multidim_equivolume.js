@@ -15,8 +15,7 @@ let origin = [150, 140],
   axis_len = 3,
   unit = axis_len/10,
   svg = null,
-  lib = null,
-  is_mouseover = false;
+  lib = null;
 
 
 function select_svg(svg_id) {
@@ -29,12 +28,9 @@ function select_svg(svg_id) {
     is_2d=false);
 
   svg = svg.call(d3.drag()
-                   .on('drag', dragged)
-                   .on('start', drag_start)
-                   .on('end', drag_end))
-           .on('dblclick', function() {
-              if (!is_mouseover) init(1000);
-            })
+           .on('drag', dragged)
+           .on('start', drag_start)
+           .on('end', drag_end))
            .append('g');  
 }
 
@@ -84,8 +80,6 @@ function plot(scatter, axis, polys, tt){
       drag_poly_fn: dragged_polygon,
       drag_start_fn: drag_start,
       drag_end_fn: drag_end,
-      mouseover_fn: mouseover,
-      mouseout_fn: mouseout,
       tt: tt
   });
 
@@ -116,15 +110,10 @@ function plot(scatter, axis, polys, tt){
       p.text = 'v\u2083';
     }
   })
-  lib._plot_points({
-      data: points, tt: tt,
-      drag_point_fn: dragged_point,
-      drag_start_fn: drag_start,
-      drag_end_fn: drag_end,
-      dblclick_fn: dblclick,
-      mouseover_fn: mouseover,
-      mouseout_fn: mouseout,
-  });
+  lib.plot_points(points, tt,
+                  drag_point_fn=dragged_point,
+                  drag_start_fn=drag_start,
+                  drag_end_fn=drag_end);
 
 
   let o = {x: 0, y: 0, z: 0};
@@ -206,14 +195,11 @@ function plot_v_perspective(polys, v1, v2, v3, axis2, tt) {
 
 
 function shift(poly, v) {
-  let shifted = [];
-  for (let k in poly) {
-    shifted[k] = poly[k];
-  }
-  poly.forEach(function(d, i) {
-    shifted[i] = lib.add([d, v]);
-  });
-  return shifted
+  return poly.reduce(function(sum, d) {
+    // shift poly 1 by `shift`.
+    sum.push(lib.add([d, v]));
+    return sum;
+  }, []);
 }
 
 
@@ -226,21 +212,18 @@ function init(tt){
       y: 0, 
       z: 0, 
       color: 3,
-      instruction: 'Drag this point'
   }),
       v2 = lib.normalize({
       x: 0, 
       y: 1, 
       z: 0, 
-      color: 3,
-      instruction: 'Drag this point'
+      color: 19,
   }),
       v3 = lib.normalize({
       x: 0, 
       y: 0,  
       z: 1,
-      color: 3,
-      instruction: 'Drag this point'
+      color: 9,
   });
 
   scatter = [v1, v2, v3];
@@ -281,10 +264,9 @@ function init(tt){
 
   let poly2 = [];
   poly1.forEach(function(d) {
-    d.instruction = 'Drag this box';
-    let p = shift(lib.cp_list(d), shift_v);
-    p.instruction = 'Drag this box';
-    poly2.push(p);
+    let p = lib.cp_list(d);
+    // p = lib.rotate_polygon(p, Math.PI/3);
+    poly2.push(shift(p, shift_v));
   })
 
   polys = poly1.concat(poly2);
@@ -299,54 +281,6 @@ function init(tt){
        axis,
        polys,
        tt);
-}
-
-
-function dblclick(i) {
-  lib._plot_texts({
-      name: 'instruction',
-      data: [{
-          text: 'wowowoowow', 
-          x: (300-origin[0])/scale, 
-          y: (296-origin[1])/scale, 
-          z: 0, 
-          text_anchor: 'middle',
-          font_size: 12
-      }],
-  });
-}
-
-
-
-function mouseover(d, i) {
-  is_mouseover = true; 
-  lib._plot_texts({
-      name: 'instruction',
-      data: [{
-          text: d.instruction, 
-          x: (300-origin[0])/scale, 
-          y: (296-origin[1])/scale, 
-          z: 0, 
-          text_anchor: 'middle',
-          font_size: 12
-      }],
-  });
-}
-
-
-function mouseout(d, i) {
-  is_mouseover = false;
-  lib._plot_texts({
-      data: [{
-          text: 'Drag to rotate, double click to reset', 
-          x: (300-origin[0])/scale, 
-          y: (296-origin[1])/scale, 
-          z: 0, 
-          text_anchor: 'middle',
-          font_size: 12
-      }],
-      name: 'instruction'
-  });
 }
 
 

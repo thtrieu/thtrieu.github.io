@@ -15,8 +15,7 @@ let origin = [150, 140],
   axis_len = 3,
   unit = axis_len/10,
   svg = null,
-  lib = null,
-  is_mouseover = false;
+  lib = null;
 
 
 function select_svg(svg_id) {
@@ -29,12 +28,9 @@ function select_svg(svg_id) {
     is_2d=false);
 
   svg = svg.call(d3.drag()
-                   .on('drag', dragged)
-                   .on('start', drag_start)
-                   .on('end', drag_end))
-           .on('dblclick', function() {
-              if (!is_mouseover) init(1000);
-            })
+           .on('drag', dragged)
+           .on('start', drag_start)
+           .on('end', drag_end))
            .append('g');  
 }
 
@@ -84,18 +80,14 @@ function plot(scatter, axis, polys, tt){
       drag_poly_fn: dragged_polygon,
       drag_start_fn: drag_start,
       drag_end_fn: drag_end,
-      mouseover_fn: mouseover,
-      mouseout_fn: mouseout,
       tt: tt
   });
 
-  let poly1 = polys.slice(0, 6),
-      poly2 = polys.slice(6, 12);
+  let poly1 = polys.slice(0, 6);
 
-  let text1 = text_of(poly1, '1.0m\u00b3'),
-      text2 = text_of(poly2, '1.0m\u00b3');
+  let text1 = text_of(poly1, '1.0m\u00b3');
 
-  lib.plot_texts([text1, text2], tt);
+  lib.plot_texts([text1], tt);
 
   let axis1 = lib.cp_list(axis),
       axis2 = lib.cp_list(axis);
@@ -116,39 +108,10 @@ function plot(scatter, axis, polys, tt){
       p.text = 'v\u2083';
     }
   })
-  lib._plot_points({
-      data: points, tt: tt,
-      drag_point_fn: dragged_point,
-      drag_start_fn: drag_start,
-      drag_end_fn: drag_end,
-      dblclick_fn: dblclick,
-      mouseover_fn: mouseover,
-      mouseout_fn: mouseout,
-  });
-
-
-  let o = {x: 0, y: 0, z: 0};
-  let v_line = [o, o];
-  v_line.opacity = 0.0;
-  lib.plot_lines([v_line], tt, 'v_line');
-
-
-  let v_plane = [[o, o, o, o]];
-  if (abs_det(v1, v2, v3) < 1e-2) {
-    let e1 = lib.normalize(
-        lib.project_v_v1v2(axis[0][1], v1, v2));
-    v_plane = lib.get_square_plane(
-        v1, v2, v3, axis_len, e1);
-  }
-  lib._plot_polygons({
-      data: v_plane,
-      tt: 0,
-      name: 'v_plane',
-      drag_point_fn: dragged,
-      drag_start_fn: drag_start,
-      drag_end_fn: drag_end
-  });
-
+  lib.plot_points(points, tt,
+                  drag_point_fn=dragged_point,
+                  drag_start_fn=drag_start,
+                  drag_end_fn=drag_end);
   plot_v_perspective(polys, v1, v2, v3, axis2, tt);
   lib.sort();
 }
@@ -204,14 +167,11 @@ function plot_v_perspective(polys, v1, v2, v3, axis2, tt) {
 
 
 function shift(poly, v) {
-  let shifted = [];
-  for (let k in poly) {
-    shifted[k] = poly[k];
-  }
-  poly.forEach(function(d, i) {
-    shifted[i] = lib.add([d, v]);
-  });
-  return shifted
+  return poly.reduce(function(sum, d) {
+    // shift poly 1 by `shift`.
+    sum.push(lib.add([d, v]));
+    return sum;
+  }, []);
 }
 
 
@@ -224,21 +184,18 @@ function init(tt){
       y: 0, 
       z: 0, 
       color: 3,
-      instruction: 'Drag this point'
   }),
       v2 = lib.normalize({
       x: 0, 
       y: 1, 
       z: 0, 
-      color: 3,
-      instruction: 'Drag this point'
+      color: 19,
   }),
       v3 = lib.normalize({
       x: 0, 
       y: 0,  
       z: 1,
-      color: 3,
-      instruction: 'Drag this point'
+      color: 9,
   });
 
   scatter = [v1, v2, v3];
@@ -277,10 +234,6 @@ function init(tt){
       {z: 0, y: w, x: w}],
   ];
 
-  poly1.forEach(function(d) {
-    d.instruction = 'Drag this box';
-  })
-
   polys = poly1;
   polys.forEach(function(d) {
     d.color = 1;
@@ -293,54 +246,6 @@ function init(tt){
        axis,
        polys,
        tt);
-}
-
-
-function dblclick(i) {
-  lib._plot_texts({
-      name: 'instruction',
-      data: [{
-          text: 'wowowoowow', 
-          x: (300-origin[0])/scale, 
-          y: (296-origin[1])/scale, 
-          z: 0, 
-          text_anchor: 'middle',
-          font_size: 12
-      }],
-  });
-}
-
-
-
-function mouseover(d, i) {
-  is_mouseover = true; 
-  lib._plot_texts({
-      name: 'instruction',
-      data: [{
-          text: d.instruction, 
-          x: (300-origin[0])/scale, 
-          y: (296-origin[1])/scale, 
-          z: 0, 
-          text_anchor: 'middle',
-          font_size: 12
-      }],
-  });
-}
-
-
-function mouseout(d, i) {
-  is_mouseover = false;
-  lib._plot_texts({
-      data: [{
-          text: 'Drag to rotate, double click to reset', 
-          x: (300-origin[0])/scale, 
-          y: (296-origin[1])/scale, 
-          z: 0, 
-          text_anchor: 'middle',
-          font_size: 12
-      }],
-      name: 'instruction'
-  });
 }
 
 
@@ -403,7 +308,6 @@ function dragged_polygon(d, i){
 }
 
 
-
 function dragged_point(d, i){
   if (!drag_on_left) {
     return;
@@ -420,14 +324,6 @@ function dragged_point(d, i){
         let r = lib.cp_item(d);
         r.x += diff.x;
         r.y += diff.y;
-
-        let r1 = scatter[(i+1)%3],
-            r2 = scatter[(i+2)%3];
-
-        p = lib.project_v_v1v2(r, r1, r2);
-        if (lib.distance(r, p) < 0.1) {
-          r = p;
-        }
         expectedScatter.push(r);
       } else {
         expectedScatter.push(d);

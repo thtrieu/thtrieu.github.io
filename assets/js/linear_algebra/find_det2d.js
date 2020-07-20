@@ -75,7 +75,7 @@ function plot(scatter, axis, polys_original, tt){
     let p_ = lib.cp_list(p);
     p_.centroid_z = -100;
     p_.color = p.color;
-    if (![0, 6].includes(i)) {
+    if (![0].includes(i)) {
       p_.opacity = 0.0;
       p_.centroid_z -= 100;
     }
@@ -90,7 +90,6 @@ function plot(scatter, axis, polys_original, tt){
   })
 
   let poly1 = [polys[0]];
-
   let text1 = text_of(poly1, '1.0m\u00b2');
 
   lib.plot_texts([text1], tt);
@@ -130,30 +129,6 @@ function plot(scatter, axis, polys_original, tt){
                   drag_point_fn=dragged_point,
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
-
-
-  let o = {x: 0, y: 0, z: 0};
-  let max_x = Math.max(0, v1.x, v2.x),
-      min_x = Math.min(0, v1.x, v2.x);
-  let max_v = (v1.x == max_x)? v1 : (v2.x > 0)? v2 : o,
-      min_v = (v1.x == min_x)? v1 : (v2.x < 0)? v2 : o;
-  let v_line = [min_v, max_v];
-  v_line.text = '';
-  v_line.color = 'grey';
-  v_line.stroke_width = 4;
-  v_line.opacity = 0.0;
-  if (abs_det(v1, v2) < 1e-2) {
-    v_line.opacity = 0.3;
-  }
-  lib.plot_lines([v_line], tt, 'v_line');
-
-  let v_plane = [o, o, o];
-  v_plane.opacity = 0.0;
-  lib._plot_polygons({
-      data: [v_plane], 
-      tt: tt, 
-      name: 'v_plane'
-  });
 
   plot_v_perspective(polys, v1, v2, v3, axis2, tt);
   lib.sort();
@@ -235,7 +210,7 @@ function init(tt){
     y: 1, 
     z: 0.,
     centroid_z: 100,
-    color: 3,
+    color: 19,
   })
 
   let w = 0.95;
@@ -320,16 +295,6 @@ function dragged_point(d, i){
       if (j == i) {
         let r = lib.update_point_position_from_mouse(d);
         r.x = Math.min(r.x, (300-origin[0])/scale);
-        if (i == 0) {
-          r_ = scatter[1];
-        } else {
-          r_ = scatter[0];
-        }
-        if (abs_det(r, r_) < 8e-2) {
-          let p = lib.dot_product(r, r_)/lib.norm2(r_);
-          r.x = r_.x * p;
-          r.y = r_.y * p;
-        }
         expectedScatter.push(r);
       } else {
         expectedScatter.push(d);
