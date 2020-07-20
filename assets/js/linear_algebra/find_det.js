@@ -112,6 +112,30 @@ function plot(scatter, axis, polys, tt){
                   drag_point_fn=dragged_point,
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
+
+
+  let o = {x: 0, y: 0, z: 0};
+  let v_line = [o, o];
+  v_line.opacity = 0.0;
+  lib.plot_lines([v_line], tt, 'v_line');
+
+
+  let v_plane = [[o, o, o, o]];
+  if (abs_det(v1, v2, v3) < 1e-2) {
+    let e1 = lib.normalize(
+        lib.project_v_v1v2(axis[0][1], v1, v2));
+    v_plane = lib.get_square_plane(
+        v1, v2, v3, axis_len, e1);
+  }
+  lib._plot_polygons({
+      data: v_plane,
+      tt: 0,
+      name: 'v_plane',
+      drag_point_fn: dragged,
+      drag_start_fn: drag_start,
+      drag_end_fn: drag_end
+  });
+
   plot_v_perspective(polys, v1, v2, v3, axis2, tt);
   lib.sort();
 }
@@ -234,7 +258,7 @@ function init(tt){
       {z: 0, y: w, x: w}],
   ];
 
-  polys = poly1;
+  polys = poly1
   polys.forEach(function(d) {
     d.color = 1;
   })
@@ -308,6 +332,7 @@ function dragged_polygon(d, i){
 }
 
 
+
 function dragged_point(d, i){
   if (!drag_on_left) {
     return;
@@ -324,6 +349,14 @@ function dragged_point(d, i){
         let r = lib.cp_item(d);
         r.x += diff.x;
         r.y += diff.y;
+
+        let r1 = scatter[(i+1)%3],
+            r2 = scatter[(i+2)%3];
+
+        p = lib.project_v_v1v2(r, r1, r2);
+        if (lib.distance(r, p) < 0.1) {
+          r = p;
+        }
         expectedScatter.push(r);
       } else {
         expectedScatter.push(d);
