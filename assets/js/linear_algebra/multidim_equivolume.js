@@ -117,20 +117,20 @@ function plot(scatter, axis, polys, tt){
 
 
   let o = {x: 0, y: 0, z: 0};
-  let red_line = [o, o];
-  red_line.opacity = 0.0;
-  lib.plot_lines([red_line], tt, 'red_line');
+  let v_line = [o, o];
+  v_line.opacity = 0.0;
+  lib.plot_lines([v_line], tt, 'v_line');
 
 
-  let red_plane = [o, o, o, o];
-  red_plane.opacity = 0.0;
+  let v_plane = [[o, o, o, o]];
   if (abs_det(v1, v2, v3) < 1e-2) {
-    red_plane = get_red_plane(v1, v2, v3);
+    square = get_square_plane(v1, v2, v3);
+    v_plane = sweep_square(square);
   }
   lib._plot_polygons({
-      data: [red_plane],
+      data: v_plane,
       tt: 0,
-      name: 'red_plane'
+      name: 'v_plane'
   });
 
   plot_v_perspective(polys, v1, v2, v3, axis2, tt);
@@ -147,109 +147,73 @@ function cross_product(v1, v2) {
 }
 
 
-// function cut_by_z(square, n=10) {
-//   let [a, b, c, d] = square;
-//   let min_z = Math.min(a.z, b.z, c.z, d.z),
-//       max_z = Math.max(a.z, b.z, c.z, d.z);
-
-//   let min_corner = null,
-//       max_corner = null,
-//       side_corner1 = null,
-//       size_corder2 = null;
-
-//   if (a.z == min_z) {
-//       min_corner = a;
-//       max_corner = c;
-//       side_corner1 = b;
-//       side_corner2 = d;
-//   } else if (b.z == min_z) {
-//       min_corner = b;
-//       max_corner = d;
-//       side_corner1 = a;
-//       side_corner2 = c;
-//   } else if (c.z == min_z) {
-//       min_corner = c;
-//       max_corner = a;
-//       side_corner1 = b;
-//       side_corner2 = d;
-//   } else if (d.z == min_z) {
-//       min_corner = d;
-//       max_corner = b;
-//       side_corner1 = a;
-//       side_corner2 = c;
-//   }
-
-//   let zinc = (max_z-min_z)/n;
-
-//   let polygons = [];
-//   for (let z = min_z; z <= max_z; z += zinc) {
-//     let [z0, z1] = [z, z+zinc];
-//     let poly = [];
-//     if z_is_in(z0, min_corner, side_corner1) {
-//       poly.push(z_intersect(z0, min_corner, side_corner1));
-//     }
-//     if z_is_in(z0, side_corner1, max_corner) {
-//       poly.push(z_intersect(z0, side_corner1, max_corner));
-//     }
-
-//     if z_is_in(side_corner1.z, {z: z0}, {z: z1}) {
-//       poly.push(side_corner1);
-//     }
-
-//     if z_is_in(z1, min_corner, side_corner1) {
-//       poly.push(z_intersect(z1, min_corner, side_corner1));
-//     }
-//     if z_is_in(z1, side_corner1, max_corner) {
-//       poly.push(z_intersect(z1, side_corner1, max_corner));
-//     }
-
-//     //=============
-
-//     if z_is_in(z1, max_corner, side_corner2) {
-//       poly.push(z_intersect(z1, max_corner, side_corner2));
-//     }
-//     if z_is_in(z1, side_corner2, min_corner) {
-//       poly.push(z_intersect(z1, side_corner2, min_corner));
-//     }
-
-//     if z_is_in(side_corner2.z, {z: z0}, {z: z1}) {
-//       poly.push(side_corner2);
-//     }
-
-//     if z_is_in(z0, max_corner, side_corner2) {
-//       poly.push(z_intersect(z0, max_corner, side_corner2));
-//     }
-//     if z_is_in(z0, side_corner2, min_corner) {
-//       poly.push(z_intersect(z0, side_corner2, min_corner));
-//     }
-
-//     polygons.push(poly);
-//   }
-//   return polygons;
-// }
+function between(z, z1, z2) {
+  return ((z1 <= z && z < z2) ||
+          (z1 >= z && z > z2));
+}
 
 
-// function z_is_in(z, a, b) {
-//   return (a.z <= z && z < b.z);
-// }
+function intersect(z, p0, p1) {
+  let t = (z - p0.z) / (p1.z - p0.z);
+  return {
+    x: p0.x + (p1.x - p0.x) * t,
+    y: p0.y + (p1.y - p0.y) * t,
+    z: z
+  };
+}
 
-// function z_intersect(z, p1, p2) {
 
-// }
+function sweep(band, segment) {
+  let [z0, z1] = band,
+      [p0, p1] = segment;
+
+  let r = [];
+  if (between(p0.z, z0, z1)) {
+    r.push(p0);
+    r.push(intersect(z1, p0, p1));
+  } else if (between(p1.z, z0, z1)) {
+    r.push(intersect(z0, p0, p1));
+    r.push(p1);
+  } else if (between(z0, p0.z, p1.z) &&
+             between(z1, p0.z, p1.z)) {
+    r.push(intersect(z0, p0, p1));
+    r.push(intersect(z1, p0, p1));
+  }
+  return r;
+}
 
 
-function get_red_plane(v1, v2, v3) {
+function sweep_square(square, n=64) {
+  let [a, b, c, d] = square.sort(
+      function(x, y) {return x.z-y.z;});
+
+  let zinc = (d.z-a.z)/n;
+
+  let polygons = [];
+  for (let z = a.z-zinc/2; z < d.z+zinc/2; z += zinc) {
+    let [z0, z1] = [z, z+zinc];
+    let poly = [];
+    poly.push(...sweep([z0, z1], [a, b]));
+    poly.push(...sweep([z0, z1], [b, d]));
+    poly.push(...sweep([z1, z0], [d, c]));
+    poly.push(...sweep([z1, z0], [c, a]));
+    poly.color = 'grey';
+    poly.opacity_factor = 0.5;
+    polygons.push(poly);
+  }
+  return polygons;
+}
+
+
+function get_square_plane(v1, v2, v3) {
+  let len = Math.max(axis_len, lib.norm(v1), lib.norm(v2), lib.norm(v3));
   let n = lib.normalize(cross_product(v1, v2));
   let v1_ = lib.normalize(v1);
-  let a = lib.times(v1_, axis_len);
+  let a = lib.times(v1_, len);
   let b = lib.times(a, -1);
-  let c = lib.times(cross_product(v1_, n), axis_len);
+  let c = lib.times(cross_product(v1_, n), len);
   let d = lib.times(c, -1);
-
-  let red_plane = [a, c, b, d];
-  red_plane.color = 'grey';
-  red_plane.opacity = 0.3;
-  return red_plane;
+  return [a, c, b, d];
 }
 
 

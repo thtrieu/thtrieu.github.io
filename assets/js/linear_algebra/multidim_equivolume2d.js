@@ -139,23 +139,22 @@ function plot(scatter, axis, polys_original, tt){
       min_x = Math.min(0, v1.x, v2.x);
   let max_v = (v1.x == max_x)? v1 : (v2.x > 0)? v2 : o,
       min_v = (v1.x == min_x)? v1 : (v2.x < 0)? v2 : o;
-  let red_line = [min_v, max_v];
-  red_line.text = '';
-  red_line.color = 'grey';
-  red_line.stroke_width = 4;
-  red_line.opacity = 0.0;
+  let v_line = [min_v, max_v];
+  v_line.text = '';
+  v_line.color = 'grey';
+  v_line.stroke_width = 4;
+  v_line.opacity = 0.0;
   if (abs_det(v1, v2) < 1e-2) {
-    red_line.opacity = 0.3;
+    v_line.opacity = 0.3;
   }
-  lib.plot_lines([red_line], tt, 'red_line');
+  lib.plot_lines([v_line], tt, 'v_line');
 
-
-  let red_plane = [[o, o, o]];
-  red_plane.opacity = 0.0;
+  let v_plane = [o, o, o];
+  v_plane.opacity = 0.0;
   lib._plot_polygons({
-      data: [red_plane], 
+      data: [v_plane], 
       tt: tt, 
-      name: 'red_plane'
+      name: 'v_plane'
   });
 
   plot_v_perspective(polys, v1, v2, v3, axis2, tt);
