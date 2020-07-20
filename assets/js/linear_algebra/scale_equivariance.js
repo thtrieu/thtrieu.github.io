@@ -56,6 +56,24 @@ function plot(scatter, tt){
     z: 0,
   });
 
+  texts.push({
+    text: Math.abs(point_A.x-point_B.x).toFixed(1) + 'm',
+    x: (point_A.x+point_B.x)/2,
+    y: point_A.y-5/scale,
+    z: 0,
+    text_anchor: 'middle',
+    text_color: 0
+  });
+
+  texts.push({
+    text: Math.abs(point_C.x-point_D.x).toFixed(1) + 'm',
+    x: (point_C.x+point_D.x)/2,
+    y: point_C.y-5/scale,
+    z: 0,
+    text_anchor: 'middle',
+    text_color: 0
+  });
+
 
   let reflect_points = [],
       point_A1 = {
@@ -80,6 +98,26 @@ function plot(scatter, tt){
       };
   
   reflect_points.push(point_A1, point_B1, point_C1, point_D1);
+
+
+  texts.push({
+    text: Math.abs(point_A1.x-point_B1.x).toFixed(1) + 'm',
+    x: (point_A1.x+point_B1.x)/2,
+    y: point_A1.y-5/scale,
+    z: 0,
+    text_anchor: 'middle',
+    text_color: 0
+  });
+
+  texts.push({
+    text: Math.abs(point_C1.x-point_D1.x).toFixed(1) + 'm',
+    x: (point_C1.x+point_D1.x)/2,
+    y: point_C1.y-5/scale,
+    z: 0,
+    text_anchor: 'middle',
+    text_color: 0
+  });
+
 
   for (i = 0; i < reflect_points.length; i++) {
     if (reflect_points[i].x < - 4.5) {
@@ -109,7 +147,7 @@ function plot(scatter, tt){
   }
 
   lib.plot_lines(lines, tt, 'lines');
-  lib.plot_texts(texts, tt, 'text_in_ruler');
+  lib.plot_texts(texts, tt, 'annotation_texts');
   lib.plot_points(reflect_points, tt,
                   null,  null, null,
                   'reflect_points');
@@ -160,8 +198,9 @@ function init(tt){
       text: 'x',
       x: -4.85, y: 0, text_color: 'grey'
     },{
-      text: 'y',
-      x: -4.85, y: 1., text_color: 'grey'
+      text: '\u03b1x',
+      x: -4.85, y: 1., text_color: 'grey',
+      text_anchor: 'middle'
   }])
 
   lib.plot_texts(rulers_texts, 0, 'rulers_texts');

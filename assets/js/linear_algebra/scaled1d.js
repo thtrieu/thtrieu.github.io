@@ -160,8 +160,9 @@ function init(tt){
       text: 'x',
       x: -4.85, y: 0, text_color: 'grey'
     },{
-      text: 'y',
-      x: -4.85, y: 1., text_color: 'grey'
+      text: '\u03b1x',
+      x: -4.85, y: 1., text_color: 'grey',
+      text_anchor: 'middle'
   }])
 
   lib.plot_texts(rulers_texts, 0, 'rulers_texts');
