@@ -124,8 +124,10 @@ function plot(scatter, axis, polys, tt){
 
   let v_plane = [[o, o, o, o]];
   if (abs_det(v1, v2, v3) < 1e-2) {
-    square = get_square_plane(v1, v2, v3);
-    v_plane = sweep_square(square);
+    let e1 = lib.normalize(
+        lib.project_v_v1v2(axis[0][1], v1, v2));
+    v_plane = lib.get_square_plane(
+        v1, v2, v3, axis_len, e1);
   }
   lib._plot_polygons({
       data: v_plane,
@@ -135,85 +137,6 @@ function plot(scatter, axis, polys, tt){
 
   plot_v_perspective(polys, v1, v2, v3, axis2, tt);
   lib.sort();
-}
-
-
-function cross_product(v1, v2) {
-  return {
-    x: v1.y*v2.z - v1.z*v2.y,
-    y: v1.z*v2.x - v1.x*v2.z,
-    z: v1.x*v2.y - v1.y*v2.x
-  };
-}
-
-
-function between(z, z1, z2) {
-  return ((z1 <= z && z < z2) ||
-          (z1 >= z && z > z2));
-}
-
-
-function intersect(z, p0, p1) {
-  let t = (z - p0.z) / (p1.z - p0.z);
-  return {
-    x: p0.x + (p1.x - p0.x) * t,
-    y: p0.y + (p1.y - p0.y) * t,
-    z: z
-  };
-}
-
-
-function sweep(band, segment) {
-  let [z0, z1] = band,
-      [p0, p1] = segment;
-
-  let r = [];
-  if (between(p0.z, z0, z1)) {
-    r.push(p0);
-    r.push(intersect(z1, p0, p1));
-  } else if (between(p1.z, z0, z1)) {
-    r.push(intersect(z0, p0, p1));
-    r.push(p1);
-  } else if (between(z0, p0.z, p1.z) &&
-             between(z1, p0.z, p1.z)) {
-    r.push(intersect(z0, p0, p1));
-    r.push(intersect(z1, p0, p1));
-  }
-  return r;
-}
-
-
-function sweep_square(square, n=64) {
-  let [a, b, c, d] = square.sort(
-      function(x, y) {return x.z-y.z;});
-
-  let zinc = (d.z-a.z)/n;
-
-  let polygons = [];
-  for (let z = a.z-zinc/2; z < d.z+zinc/2; z += zinc) {
-    let [z0, z1] = [z, z+zinc];
-    let poly = [];
-    poly.push(...sweep([z0, z1], [a, b]));
-    poly.push(...sweep([z0, z1], [b, d]));
-    poly.push(...sweep([z1, z0], [d, c]));
-    poly.push(...sweep([z1, z0], [c, a]));
-    poly.color = 'grey';
-    poly.opacity_factor = 0.5;
-    polygons.push(poly);
-  }
-  return polygons;
-}
-
-
-function get_square_plane(v1, v2, v3) {
-  let len = Math.max(axis_len, lib.norm(v1), lib.norm(v2), lib.norm(v3));
-  let n = lib.normalize(cross_product(v1, v2));
-  let v1_ = lib.normalize(v1);
-  let a = lib.times(v1_, len);
-  let b = lib.times(a, -1);
-  let c = lib.times(cross_product(v1_, n), len);
-  let d = lib.times(c, -1);
-  return [a, c, b, d];
 }
 
 
@@ -417,24 +340,6 @@ function dragged_polygon(d, i){
 }
 
 
-function project(r, r1, r2) {
-  let e1 = lib.normalize(r1),
-      e2 = lib.normalize( // norm(r2 - e1 * e1Tr2)
-          lib.add([
-              r2,
-              lib.times(e1, -lib.dot_product(e1, r2))
-          ]));
-  let d = lib.add([
-    lib.times(e1, lib.dot_product(e1, r)),
-    lib.times(e2, lib.dot_product(e2, r))
-  ]);
-  let p = lib.cp_item(r);
-  p.x = d.x;
-  p.y = d.y;
-  p.z = d.z;
-  return p;
-}
-
 
 function dragged_point(d, i){
   if (!drag_on_left) {
@@ -456,7 +361,7 @@ function dragged_point(d, i){
         let r1 = scatter[(i+1)%3],
             r2 = scatter[(i+2)%3];
 
-        p = project(r, r1, r2);
+        p = lib.project_v_v1v2(r, r1, r2);
         if (lib.distance(r, p) < 0.1) {
           r = p;
         }

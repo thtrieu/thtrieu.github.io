@@ -110,10 +110,23 @@ function plot_v_perspective(us, v1, v2, v3, axis3d, tt) {
     }
     us_.push(u_);
   })
+
   lib._plot_points({data: us_,
                     tt: tt, 
                     with_origin: origin2, 
                     name: 'us_'});
+
+  let [u_1, u_2, u_3] = us_;
+  let e1 = lib.normalize(
+      lib.project_v_v1v2(basis.x, u_1, u_2));
+  u_plane = lib.get_square_plane(
+      u_1, u_2, u_3, axis_len, e1);
+  lib._plot_polygons({
+      data: u_plane,
+      tt: 0,
+      name: 'u_plane',
+      with_origin: origin2
+  });
 }
 
 
