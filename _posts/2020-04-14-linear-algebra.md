@@ -761,7 +761,7 @@ Here we have just turned 3-dimensional vectors into 2-dimensional vectors. This 
 Yep!
 
 <center class='js'>
-<svg width="630" height="280" id="svg_transform_2d3d"></svg>
+<svg width="630" height="300" id="svg_transform_2d3d"></svg>
 <br/>
 Try dragging $u_1$, $u_2$, $u_3$, $v_1$, $v_2$, $v_3$ the whole space, or click 
 <button id='init_transform_2d3d'>reset</button>.
@@ -775,9 +775,11 @@ draw_on_svg('transform_2d3d',
 
 Although, the resulting vectors will still be restricted on a 2-D surface embedded in 3-D space. We'll explore the tools to show that this is always the case, and to precisely identify this surface given $V$ very soon!
 
-*Is there an underlying characteristic that makes all these transformations done by dot-product, different to other types of transformations?*
+*Is there an underlying characteristic that makes all these transformations -done by dot product- different to other types of transformations?*
 
-We can start studying the question by first looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers $\alpha x = y$. Let's look at how different line segments change in terms of their lengths.
+We can start studying the question by first looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers $\alpha x = y$. Let's look at how two equal line segments change under this transformation:
+
+<!-- different line segments change in terms of their lengths.
 
 <center class='js'>
   <br/>
@@ -796,7 +798,7 @@ draw_on_svg('scaled1d',
 
 *Their lengths got scaled up/down by the same factor $\alpha$, regardless of position and size.*
 
-That's right. Equivalently speaking, any two segments equal in length **before** a transformation will still be equal in length **after** the transformation. 
+That's right. Equivalently speaking, any two segments equal in length **before** a transformation will still be equal in length **after** the transformation.  -->
 
 <center class='js'>
   <br/>
@@ -804,8 +806,6 @@ That's right. Equivalently speaking, any two segments equal in length **before**
 <br/>
 Try dragging $\alpha$, or points on the $x$ ruler, or click 
 <button id='init_scale_equivariance'>reset</button>.
-<br/>
-Notice the blue and green segments are always equal on $x$ and $y$ number lines.
 </center>
 
 <script src="/assets/js/linear_algebra/scale_equivariance.js"></script>
@@ -814,18 +814,15 @@ draw_on_svg('scale_equivariance',
             scale_equivariance);
 </script>
 
+*They are equal both before and after.*
+
 This property translates to higher dimensions as well. If two chunks of space are equal before a matrix-vector multiplication, they are also equal after said multiplication:
 
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_multidim_equivolume'> <div class='slider'></div></label>
   <br/>
-<svg width="630" height="280" id="svg_multidim_equivolume"></svg>
-<br/>
-Try dragging the boxes, $v_1$, $v_2$, $v_3$, the whole space, or click 
-<button id='init_multidim_equivolume'>reset</button>.
-<br/> 
-Notice the two boxes are equal in area/volume both before and after transformation.
+<svg width="630" height="300" id="svg_multidim_equivolume"></svg>
 <br/> 
 When does the resulting boxes got squashed to zero in area/volume?
 </center>
@@ -838,9 +835,9 @@ draw_on_svg('multidim_equivolume',
             multidim_equivolume);
 </script>
 
-*Nice, but why do we need this second description?*
+*That's surprising!*
 
-Note that this description is not only equivalent, but also more general. It is applicable for transformations between different number of dimensions as well:
+Note that this description is also quite general. It is applicable for transformations between different number of dimensions as well:
 
 <center class='js'>
 <svg width="630" height="280" id="svg_equivolume_3d2d"></svg>
@@ -862,9 +859,9 @@ In these cases, however, it is meaningless to compare the volume of the original
 
 That's the right question! Volume contraction or expansion is one of the main concern to Linear Algebra. How much contraction/expansion tells us many things: whether the transformation flips the space around, or whether it is undo-able, etc. 
 
-In the 1-dimensional case $\alpha x = y$, the answer is simply $\alpha$. If $\alpha < 0$, the space is flipped, if $\alpha = 0$, the transformation is impossible to be undone, i.e. it is impossible to find $x$ given $y = \alpha x = 0$. 
+In the 1-dimensional case $\alpha x = y$, the answer is simply $\alpha$. 
 
-*In N-dimensional space, however, how do we get such "$\alpha$" factor from an N-by-N matrix?*
+*Right. If $\alpha < 0$, the number line is flipped. If $\alpha = 0$, it is impossible to find $x$ given $\alpha x=0$. In N-dimensional space, however, how do we get such "$\alpha$" factor from an N-by-N matrix?*
 
 We can do so by first setting the original box to have a volume of $1$, then compute the volume of the resulting box after transformation. In other words, given $V$, find $\alpha$:
 
