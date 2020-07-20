@@ -1030,14 +1030,12 @@ function text_matrix_to_list(coord_texts, coord, size=14,
     for (i = 1; i < size_of_space; i++) {
       rows_list.push((h_row + between_rows));
     }
-    // rows_list.push(h_row);
   };
   
   if (numb_of_vector > 1) {
     for (i = 1; i < numb_of_vector; i++) {
     cols_list.push(w_col + between_cols);
     }
-    // cols_list.push(w_col);
   };
 
   for (i = 0; i < size_of_space; i++) {
