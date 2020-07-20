@@ -252,6 +252,13 @@ function get_txt_opacity(d) {
   return r;
 }
 
+
+function get_text_anchor(d) {
+  if (d.hasOwnProperty('text_anchor')) {
+    return d.text_anchor;
+  }
+}
+
 function get_opacity(d) {
   r = 1.0;
   if (d.hasOwnProperty('opacity')) {
@@ -471,6 +478,7 @@ function _plot_lines({data,
       .duration(get_duration(tt))
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
+      .style('text-anchor', get_text_anchor)
       .attr('font-family', get_font_family)
       .attr('x', function(d){ return d.text_position.x+3; })
       .attr('y', function(d){ return d.text_position.y-3; })
@@ -513,9 +521,10 @@ function _plot_points({data,
                        drag_start_fn=null,
                        drag_end_fn=null,
                        dblclick_fn=null,
+                       mouseover_fn=null,
+                       mouseout_fn=null,
                        name='point',
                        with_origin=null,
-
                       }={}){
   add_keys(name, data);
 
@@ -526,8 +535,12 @@ function _plot_points({data,
                           .on('drag', drag_point_fn)
                           .on('start', drag_start_fn)
                           .on('end', drag_end_fn))
-                  .on('dblclick', function(d, i) {dblclick_fn(i);});
-
+                  .on('dblclick', function(d, i) {
+                    if (dblclick_fn) dblclick_fn(d, i);})
+                  .on('mouseover', function(d, i) {
+                    if (mouseover_fn) mouseover_fn(d, i);})
+                  .on('mouseout', function(d, i) {
+                    if (mouseout_fn) mouseout_fn(i);});
   points
     .enter()
     .append('circle')
@@ -569,6 +582,7 @@ function _plot_points({data,
       })
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
+      .style('text-anchor', get_text_anchor)
       .attr('font-family', get_font_family)
       .attr('x', function(d){ return project(d, with_origin).x; })
       .attr('y', function(d){ return project(d, with_origin).y+3; })
@@ -585,6 +599,8 @@ function _plot_polygons({data,
                          drag_start_fn=null,
                          drag_end_fn=null,
                          dblclick_fn=null,
+                         mouseover_fn=null,
+                         mouseout_fn=null,
                          name='polygon',
                          with_origin=null,
                         }={}){
@@ -597,7 +613,12 @@ function _plot_polygons({data,
                          .on('drag', drag_poly_fn)
                          .on('start', drag_start_fn)
                          .on('end', drag_end_fn))
-                 .on('dblclick', function(d, i) {dblclick_fn(i);});
+                 .on('dblclick', function(d, i) {
+                    if (dblclick_fn) dblclick_fn(d, i);})
+                 .on('mouseover', function(d, i) {
+                    if (mouseover_fn) mouseover_fn(d, i);})
+                 .on('mouseout', function(d, i) {
+                    if (mouseout_fn) mouseout_fn(i);});
 
   polys
     .enter()
@@ -658,6 +679,7 @@ function _plot_texts({data,
       .delay(get_delay(delay))
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
+      .style('text-anchor', get_text_anchor)
       .attr('font-family', get_font_family)
       .attr('x', function(d){ return project(d, with_origin).x; })
       .attr('y', function(d){ return project(d, with_origin).y; })
