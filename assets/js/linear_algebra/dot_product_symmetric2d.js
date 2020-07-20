@@ -12,7 +12,7 @@ let origin = [150, 140],
     unit = axis_len/10,
     svg = null,
     lib = null,
-    position_state = 0;
+    position_state = 1;
 
 let differ = 0.09,
     text_above_matrix = 0.4,

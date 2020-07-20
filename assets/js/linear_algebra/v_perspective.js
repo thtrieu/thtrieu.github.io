@@ -61,7 +61,7 @@ function plot(scatter, axis, tt){
   ]
   uTvv_line.color = 0;
   uTvv_line.centroid_z = 1000;
-  uTvv_line.text = 'u\u1d40v = ' + uTv.toFixed(3);
+  uTvv_line.text = 'v\u1d40u = ' + uTv.toFixed(3);
   uTvv_line.text_color = 0;
   uTvv_line.font_size = 14;
   uTvv_line.text_opacity = 1.0;
@@ -163,7 +163,7 @@ function plot_v_perspective(uTv, tt){
               z: 0,
               font_size: 14,
               text_opacity: 1.0});
-  texts.push({text: '= u\u1d40v',
+  texts.push({text: '= v\u1d40u',
               x: uTv-0.2,
               y: -0.5,
               z: 0,
