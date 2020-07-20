@@ -96,7 +96,7 @@ function plot_v_perspective(us, v1, v2, v3, axis2d, tt) {
   us.forEach(function(u, i) {
     u_ = transform(u, basis, v1, v2, v3);
     u_.color = u.color;
-    u_.text = 'u\''
+    u_.text = 'Vu'
     if (i == 0) { 
       u_.text += '\u2081';
     } else if (i == 1) { 

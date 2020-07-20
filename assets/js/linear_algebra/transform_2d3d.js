@@ -100,7 +100,7 @@ function plot_v_perspective(us, v1, v2, v3, axis3d, tt) {
   us.forEach(function(u, i) {
     u_ = transform(u, basis, v1, v2, v3);
     u_.color = u.color;
-    u_.text = 'u\''
+    u_.text = 'Vu'
     if (i == 0) { 
       u_.text += '\u2081';
     } else if (i == 1) { 
@@ -123,7 +123,6 @@ function plot_v_perspective(us, v1, v2, v3, axis3d, tt) {
       u_1, u_2, u_3, axis_len, e1);
   lib._plot_polygons({
       data: u_plane,
-      tt: tt,
       name: 'u_plane',
       with_origin: origin2,
       drag_point_fn: dragged,
