@@ -12,8 +12,8 @@ let origin = [300, 75],
     lib = null,
     spacing = 1.,
     c1 = 0,
-    c2 = 3,
-    c0 = 'grey';
+    c2 = 1,
+    c0 = 2;
 
 
 function select_svg(svg_id) {
@@ -54,7 +54,6 @@ function plot(scatter, tt){
     x: scaler_point.x - 0.05,
     y: scaler_point.y - 0.1,
     z: 0,
-    text_color: c0
   });
 
 

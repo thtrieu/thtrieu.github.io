@@ -11,9 +11,9 @@ let origin = [300, 75],
     svg = null,
     lib = null,
     spacing = 1.,
-    c1 = 0,
-    c2 = 3,
-    c0 = 'grey';
+    c1 = 1,
+    c2 = 1,
+    c0 = 2;
 
 
 function select_svg(svg_id) {
@@ -54,7 +54,6 @@ function plot(scatter, tt){
     x: scaler_point.x - 0.05,
     y: scaler_point.y - 0.1,
     z: 0,
-    text_color: c0
   });
 
 
@@ -106,7 +105,7 @@ function plot(scatter, tt){
 
   lines.push(lineAB, lineCD, lineAB1, lineCD1);
   for (i = 0; i < lines.length; i++) {
-    lines[i].stroke_width = 3;
+    lines[i].stroke_width = 5;
   }
 
   lib.plot_lines(lines, tt, 'lines');
