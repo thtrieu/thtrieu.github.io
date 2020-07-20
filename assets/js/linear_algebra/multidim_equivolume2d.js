@@ -239,7 +239,7 @@ function init(tt){
     y: 1, 
     z: 0.,
     centroid_z: 100,
-    color: 19,
+    color: 3,
   })
 
   let w = 0.95;

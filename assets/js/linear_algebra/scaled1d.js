@@ -13,7 +13,7 @@ let origin = [300, 75],
     spacing = 1.,
     c1 = 0,
     c2 = 1,
-    c0 = 2;
+    c0 = 'grey';
 
 
 function select_svg(svg_id) {

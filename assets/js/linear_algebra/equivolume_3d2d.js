@@ -144,19 +144,19 @@ function init(tt){
       x: 1,
       y: 0, 
       z: 0, 
-      color: 3,
+      color: 'grey',
   }),
       v2 = lib.normalize({
       x: 0, 
       y: 1, 
       z: 0, 
-      color: 19,
+      color: 'grey',
   }),
       v3 = lib.normalize({
       x: 0, 
       y: 0,  
       z: 1,
-      color: 9,
+      color: 'grey',
       opacity: 0.0,
       text_opacity: 0.0,
   });

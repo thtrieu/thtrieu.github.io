@@ -872,7 +872,6 @@ We can do so by first setting the original box to have a volume of $1$, then com
 <br/>
 Try dragging the boxes, $v_1$, $v_2$, $v_3$, the whole space, or click 
 <button id='init_find_det'>reset</button>.
-<br/> The question here is, how do we find $\alpha$ given the matrix $V$?
 </center>
 
 <script src="/assets/js/linear_algebra/find_det2d.js"></script>
