@@ -1,22 +1,21 @@
-let multidim_equivolume2d = (function() {
+let find_det = (function() {
 
 let origin = [150, 140], 
   origin2 = [450, 140],
   scale = 40, 
-  scatter = [],
-  axis = [], 
+  scatter = [], 
+  axis = [],
   polys = [],
   expectedScatter = [],
   expectedAxis = [],
   expectedPolys = [],
-  startAngleX = Math.PI,
-  startAngleY = 0.,
-  startAngleZ = 0.,
+  startAngleX = Math.PI/8 * 2.65,
+  startAngleY = -Math.PI/8,
+  startAngleZ = Math.PI/8 * 0.6,
   axis_len = 3,
   unit = axis_len/10,
   svg = null,
-  lib = null,
-  show_proj = false;
+  lib = null;
 
 
 function select_svg(svg_id) {
@@ -26,7 +25,7 @@ function select_svg(svg_id) {
     svg,
     origin, 
     scale,
-    is_2d=true);
+    is_2d=false);
 
   svg = svg.call(d3.drag()
            .on('drag', dragged)
@@ -36,9 +35,13 @@ function select_svg(svg_id) {
 }
 
 
-function abs_det(v1, v2) {
-  return Math.abs(v1.x * v2.y - v1.y * v2.x);
+function abs_det(v1, v2, v3) {
+  let A = v2.y * v3.z - v2.z * v3.y,
+      B = - (v2.x * v3.z - v2.z * v3.x),
+      C =  v2.x * v3.y - v2.y * v3.x;
+  return Math.abs(v1.x * A + v1.y * B + v1.z * C);
 }
+
 
 
 function text_of(polygon, text) {
@@ -60,44 +63,32 @@ function text_of(polygon, text) {
 
   r.text = text;
   r.font_size_factor = 0.9;
+  r.text_color = 0;
   r.x /= corner_count;
   r.x -= 17/scale;
   r.y /= corner_count;
-  r.text_color = 0;
   return r;
 }
 
 
-function plot(scatter, axis, polys_original, tt){
-  let polys = [];
-  for (let i = 0; i < 12; ++i) {
-    let p = polys_original[Math.floor(i/6)];
-    let p_ = lib.cp_list(p);
-    p_.centroid_z = -100;
-    p_.color = p.color;
-    if (![0, 6].includes(i)) {
-      p_.opacity = 0.0;
-      p_.centroid_z -= 100;
-    }
-    polys.push(p_);
-  }
+function plot(scatter, axis, polys, tt){
+  polys.forEach(function(d, i) {
+    d.opacity_factor = 0.5 + Math.floor((i % 6)/2)/7.;
+  })
   lib._plot_polygons({
       data: polys,
       drag_poly_fn: dragged_polygon,
       drag_start_fn: drag_start,
       drag_end_fn: drag_end,
       tt: tt
-  })
+  });
 
-  let poly1 = [polys[0]],
-      poly2 = [polys[6]];
+  let poly1 = polys.slice(0, 6);
 
-  let text1 = text_of(poly1, '1.0m\u00b2'),
-      text2 = text_of(poly2, '1.0m\u00b2');
+  let text1 = text_of(poly1, '1.0m\u00b3');
 
-  lib.plot_texts([text1, text2], tt);
+  lib.plot_texts([text1], tt);
 
-  // Copy axis into two copies.
   let axis1 = lib.cp_list(axis),
       axis2 = lib.cp_list(axis);
   lib.plot_lines(axis1, tt, 'axis');
@@ -106,17 +97,8 @@ function plot(scatter, axis, polys_original, tt){
   scatter.forEach(function(d){
     points.push(Object.assign({}, d));
   });
-
-  points.push({
-    x: 0,
-    y: 0,
-    z: 1,
-    opacity: 0,
-    color: 9
-  });
-  
-
   let [v1, v2, v3] = points;
+
   points.forEach(function(p, i){
     if (i == 0) {
       p.text = 'v\u2081';
@@ -124,39 +106,12 @@ function plot(scatter, axis, polys_original, tt){
       p.text = 'v\u2082';
     } else if (i == 2) {
       p.text = 'v\u2083';
-      p.text_opacity = 0.0;
     }
   })
-
   lib.plot_points(points, tt,
                   drag_point_fn=dragged_point,
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
-
-
-  let o = {x: 0, y: 0, z: 0};
-  let max_x = Math.max(0, v1.x, v2.x),
-      min_x = Math.min(0, v1.x, v2.x);
-  let max_v = (v1.x == max_x)? v1 : (v2.x > 0)? v2 : o,
-      min_v = (v1.x == min_x)? v1 : (v2.x < 0)? v2 : o;
-  let v_line = [min_v, max_v];
-  v_line.text = '';
-  v_line.color = 'grey';
-  v_line.stroke_width = 4;
-  v_line.opacity = 0.0;
-  if (abs_det(v1, v2) < 1e-2) {
-    v_line.opacity = 0.3;
-  }
-  lib.plot_lines([v_line], tt, 'v_line');
-
-  let v_plane = [o, o, o];
-  v_plane.opacity = 0.0;
-  lib._plot_polygons({
-      data: [v_plane], 
-      tt: tt, 
-      name: 'v_plane'
-  });
-
   plot_v_perspective(polys, v1, v2, v3, axis2, tt);
   lib.sort();
 }
@@ -165,11 +120,12 @@ function plot(scatter, axis, polys_original, tt){
 function transform(u, basis, v1, v2, v3) {
   let uTv1 = lib.dot_product(u, v1),
       uTv2 = lib.dot_product(u, v2),
-      uTv3 = 1.0;
+      uTv3 = lib.dot_product(u, v3);
 
   let components = [
       lib.times(basis.x, uTv1),
       lib.times(basis.y, uTv2),
+      lib.times(basis.z, uTv3),
   ]
   let r = lib.add(components);
   return r;
@@ -194,28 +150,25 @@ function plot_v_perspective(polys, v1, v2, v3, axis2, tt) {
   polys.forEach(function(p, i) {
     let p_ = p.map(function(u){return transform(u, basis, v1, v2, v3);});
     p_.color = p.color;
-    p_.opacity = p.opacity;
-    p_.centroid_z = -100;
+    p_.opacity_factor = p.opacity_factor;
     polys_.push(p_);
   })
-
   lib._plot_polygons({data: polys_,
                       tt: tt, 
                       with_origin: origin2, 
                       name: 'polygons2'});
-  let poly1 = polys_.slice(0, 6),
-      poly2 = polys_.slice(6, 12);
+  let poly1 = polys_.slice(0, 6);
 
-  let d = abs_det(v1, v2).toFixed(1);
-  let text1 = text_of(poly1, d+'m\u00b2'),
-      text2 = text_of(poly2, d+'m\u00b2');
+  let d = '\u03b1 ';
+  let text1 = text_of(poly1, d+'m\u00b3');
 
-  lib.plot_texts([text1, text2], tt, 'text2', origin2);
+  lib.plot_texts([text1], tt, 'text2', origin2);
 }
 
 
 function shift(poly, v) {
   return poly.reduce(function(sum, d) {
+    // shift poly 1 by `shift`.
     sum.push(lib.add([d, v]));
     return sum;
   }, []);
@@ -226,33 +179,65 @@ function init(tt){
   axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
   scatter = [];
 
-  scatter.push({
-    x: 1,
-    y: 0, 
-    z: 0.,
-    centroid_z: 100,
-    color: 3,
+  let v1 = lib.normalize({
+      x: 1,
+      y: 0, 
+      z: 0, 
+      color: 3,
+  }),
+      v2 = lib.normalize({
+      x: 0, 
+      y: 1, 
+      z: 0, 
+      color: 19,
+  }),
+      v3 = lib.normalize({
+      x: 0, 
+      y: 0,  
+      z: 1,
+      color: 9,
+  });
+
+  scatter = [v1, v2, v3];
+
+
+  alpha = startAngleX;
+  beta = startAngleY;
+
+
+  let w = 0.9;
+  let shift_v = {x: 2*w, y: -2*w, z: 0.5*w};
+  let poly1 = [
+      [{x: 0, y: 0, z: 0}, 
+      {x: w, y: 0, z: 0}, 
+      {x: w, y: w, z: 0}, 
+      {x: 0, y: w, z: 0}],
+      [{x: 0, y: 0, z: w}, 
+      {x: w, y: 0, z: w}, 
+      {x: w, y: w, z: w}, 
+      {x: 0, y: w, z: w}],
+      [{x: 0, z: 0, y: 0}, 
+      {x: w, z: 0, y: 0}, 
+      {x: w, z: w, y: 0}, 
+      {x: 0, z: w, y: 0}],
+      [{x: 0, z: 0, y: w}, 
+      {x: w, z: 0, y: w}, 
+      {x: w, z: w, y: w}, 
+      {x: 0, z: w, y: w}],
+      [{z: 0, y: 0, x: 0}, 
+      {z: w, y: 0, x: 0}, 
+      {z: w, y: w, x: 0}, 
+      {z: 0, y: w, x: 0}],
+      [{z: 0, y: 0, x: w}, 
+      {z: w, y: 0, x: w}, 
+      {z: w, y: w, x: w}, 
+      {z: 0, y: w, x: w}],
+  ];
+
+  polys = poly1;
+  polys.forEach(function(d) {
+    d.color = 1;
   })
-
-  scatter.push({
-    x: 0,
-    y: 1, 
-    z: 0.,
-    centroid_z: 100,
-    color: 19,
-  })
-
-  let w = 0.95;
-  let poly1 = [{x: 0, y: 0, z: 0}, 
-               {x: w, y: 0, z: 0}, 
-               {x: w, y: w, z: 0}, 
-               {x: 0, y: w, z: 0}];
-  let poly2 = lib.rotate_polygon(poly1, 0, 0, 0);
-  poly2 = shift(poly2, {x: 2*w, y: 1.5*w, z: 0.0});
-  poly1.color = 1;
-  poly2.color = 1;
-
-  polys = [poly1, poly2];
 
   scatter = lib.rotate_points(scatter, startAngleX, startAngleY, startAngleZ);
   axis = lib.rotate_lines(axis, startAngleX, startAngleY, startAngleZ);
@@ -265,28 +250,29 @@ function init(tt){
 
 
 let drag_on_left = true;
-
 let mouse_start = null;
 
 
 function drag_start(){
   mouse_start = lib.get_mouse_position();
-  if (mouse_start.x < 300) {
+  if (lib.get_mouse_position().x < 300) {
     drag_on_left = true;
-    lib.drag_start2d();
+    lib.drag_start();
   } else {
     drag_on_left = false;
-    lib.drag_start2d(origin2);
+    lib.drag_start(origin2);
   }
 }
 
+
 function dragged(){
-  angle_z = lib.get_drag_angle_2d(drag_on_left ? origin : origin2);
+  let [angle_x, angle_y] = lib.get_drag_angles(
+      drag_on_left ? origin : origin2);
 
-  expectedScatter = lib.rotate_points(scatter, 0, 0, angle_z);
-  expectedAxis = lib.rotate_lines(axis, 0, 0, angle_z);
-  expectedPolys = lib.rotate_polygons(polys, 0, 0, angle_z);
-
+  expectedScatter = lib.rotate_points(scatter, angle_x, angle_y);
+  expectedAxis = lib.rotate_lines(axis, angle_x, angle_y);
+  expectedPolys = lib.rotate_polygons(polys, angle_x, angle_y);
+  
   plot(expectedScatter, 
        expectedAxis,
        expectedPolys,
@@ -295,6 +281,7 @@ function dragged(){
 
 
 function dragged_polygon(d, i){
+
   let new_mouse = lib.get_mouse_position();
   let diff = {x: (new_mouse.x - mouse_start.x)/scale,
               y: (new_mouse.y - mouse_start.y)/scale,
@@ -303,10 +290,11 @@ function dragged_polygon(d, i){
   expectedScatter = scatter;
   expectedPolys = [];
   polys.forEach(function(d, j){
-      if (j == Math.floor(i/6)) {
+      if (Math.floor(j/6) == Math.floor(i/6)) {
         let r = shift(d, diff);
         r.color = d.color;
         expectedPolys.push(r);
+        // expectedPolys.push(lib.rotate_polygon(d, angle_x, angle_y));
       } else {
         expectedPolys.push(d);
       }
@@ -320,23 +308,22 @@ function dragged_polygon(d, i){
 }
 
 
-
 function dragged_point(d, i){
+  if (!drag_on_left) {
+    return;
+  }
+
+  let new_mouse = lib.get_mouse_position();
+  let diff = {x: (new_mouse.x - mouse_start.x)/scale,
+              y: (new_mouse.y - mouse_start.y)/scale,
+              z: 0};
+
   expectedScatter = [];
   scatter.forEach(function(d, j){
       if (j == i) {
-        let r = lib.update_point_position_from_mouse(d);
-        r.x = Math.min(r.x, (300-origin[0])/scale);
-        if (i == 0) {
-          r_ = scatter[1];
-        } else {
-          r_ = scatter[0];
-        }
-        if (abs_det(r, r_) < 8e-2) {
-          let p = lib.dot_product(r, r_)/lib.norm2(r_);
-          r.x = r_.x * p;
-          r.y = r_.y * p;
-        }
+        let r = lib.cp_item(d);
+        r.x += diff.x;
+        r.y += diff.y;
         expectedScatter.push(r);
       } else {
         expectedScatter.push(d);
@@ -345,8 +332,8 @@ function dragged_point(d, i){
   expectedAxis = axis;
   expectedPolys = polys;
 
-  plot(expectedScatter, 
-       expectedAxis,
+  plot(expectedScatter,
+       expectedAxis, 
        expectedPolys,
        0);
 }

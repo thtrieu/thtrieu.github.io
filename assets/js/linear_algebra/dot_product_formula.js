@@ -84,7 +84,7 @@ function plot(scatter, axis, tt){
   ]
   uTvv_line.color = 0
   uTvv_line.centroid_z = 1000;
-  uTvv_line.text = 'u\u1d40v = ' + uTv.toFixed(3);
+  uTvv_line.text = 'v\u1d40u = ' + uTv.toFixed(3);
   uTvv_line.text_color = 0;
   uTvv_line.font_size = 14;
   uTvv_line.text_opacity = 1.0;
@@ -167,7 +167,7 @@ function plot(scatter, axis, tt){
                   {x: start_coord_x + col_unit * 2.65,
                    y: end_matrix_y + row_unit * 2/5,
                    color: 0}],
-      uTv_texts = [{text: 'u\u1d40v =',
+      uTv_texts = [{text: 'v\u1d40u =',
                     x: start_coord_x - col_unit,
                     y: end_matrix_y + row_unit * 1.25,
                     text_color: 0, key: 'uTv_text'},

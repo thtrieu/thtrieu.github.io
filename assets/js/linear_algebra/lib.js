@@ -62,37 +62,37 @@ function init_axis(axis_len=13) {
 
 function _create_axis_float(
     axis, name, ord, axis_len=2, unit=0.2) {
-  d3.range(0, axis_len, unit).forEach(
-      function(d){
-        let text = '';
-        if (d == axis_len-unit) {
-          text = name
-        }
-        let p1 = [0, 0, 0],
-            p2 = [0, 0, 0];
-        p1[ord] = d;
-        p2[ord] = d+unit;
-        let segment = [
-          {x: p1[0], y:p1[1], z:p1[2]},
-          {x: p2[0], y:p2[1], z:p2[2]}
-        ]
-        if (is_2d && ord == 2) {
-          text = '';
-          segment.opacity = 0.0;
-          segment.text_opacity = 0.0;
-        }
-        axis.push(segment); 
-        if (text == '') {
-          return;
-        }
-        if (d == axis_len-unit) {
-          segment[1].text = text;
-        }
-        else {
-          segment[0].text = text
-        }
-      }
-  );
+  // d3.range(0, axis_len, unit).forEach(
+  for (let i = 0; i < axis_len/unit; i++) { 
+    let d = i * unit;                          
+    let text = '';
+    if (i == axis_len/unit - 1) {
+      text = name
+    }
+    let p1 = [0, 0, 0],
+        p2 = [0, 0, 0];
+    p1[ord] = d;
+    p2[ord] = d+unit;
+    let segment = [
+      {x: p1[0], y:p1[1], z:p1[2]},
+      {x: p2[0], y:p2[1], z:p2[2]}
+    ]
+    if (is_2d && ord == 2) {
+      text = '';
+      segment.opacity = 0.0;
+      segment.text_opacity = 0.0;
+    }
+    axis.push(segment); 
+    if (text == '') {
+      continue;
+    }
+    if (i == axis_len/unit - 1) {
+      segment[1].text = text;
+    }
+    else {
+      segment[0].text = text
+    }
+  };
 }
 
 function init_float_axis(axis_len=2.0, unit=0.2) {
@@ -250,6 +250,13 @@ function get_txt_opacity(d) {
     r *= d.text_opacity_factor;
   }
   return r;
+}
+
+
+function get_text_anchor(d) {
+  if (d.hasOwnProperty('text_anchor')) {
+    return d.text_anchor;
+  }
 }
 
 function get_opacity(d) {
@@ -471,6 +478,7 @@ function _plot_lines({data,
       .duration(get_duration(tt))
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
+      .style('text-anchor', get_text_anchor)
       .attr('font-family', get_font_family)
       .attr('x', function(d){ return d.text_position.x+3; })
       .attr('y', function(d){ return d.text_position.y-3; })
@@ -513,9 +521,10 @@ function _plot_points({data,
                        drag_start_fn=null,
                        drag_end_fn=null,
                        dblclick_fn=null,
+                       mouseover_fn=null,
+                       mouseout_fn=null,
                        name='point',
                        with_origin=null,
-
                       }={}){
   add_keys(name, data);
 
@@ -526,8 +535,12 @@ function _plot_points({data,
                           .on('drag', drag_point_fn)
                           .on('start', drag_start_fn)
                           .on('end', drag_end_fn))
-                  .on('dblclick', function(d, i) {dblclick_fn(i);});
-
+                  .on('dblclick', function(d, i) {
+                    if (dblclick_fn) dblclick_fn(d, i);})
+                  .on('mouseover', function(d, i) {
+                    if (mouseover_fn) mouseover_fn(d, i);})
+                  .on('mouseout', function(d, i) {
+                    if (mouseout_fn) mouseout_fn(i);});
   points
     .enter()
     .append('circle')
@@ -569,6 +582,7 @@ function _plot_points({data,
       })
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
+      .style('text-anchor', get_text_anchor)
       .attr('font-family', get_font_family)
       .attr('x', function(d){ return project(d, with_origin).x; })
       .attr('y', function(d){ return project(d, with_origin).y+3; })
@@ -585,6 +599,8 @@ function _plot_polygons({data,
                          drag_start_fn=null,
                          drag_end_fn=null,
                          dblclick_fn=null,
+                         mouseover_fn=null,
+                         mouseout_fn=null,
                          name='polygon',
                          with_origin=null,
                         }={}){
@@ -597,7 +613,12 @@ function _plot_polygons({data,
                          .on('drag', drag_poly_fn)
                          .on('start', drag_start_fn)
                          .on('end', drag_end_fn))
-                 .on('dblclick', function(d, i) {dblclick_fn(i);});
+                 .on('dblclick', function(d, i) {
+                    if (dblclick_fn) dblclick_fn(d, i);})
+                 .on('mouseover', function(d, i) {
+                    if (mouseover_fn) mouseover_fn(d, i);})
+                 .on('mouseout', function(d, i) {
+                    if (mouseout_fn) mouseout_fn(i);});
 
   polys
     .enter()
@@ -658,6 +679,7 @@ function _plot_texts({data,
       .delay(get_delay(delay))
       .style('font-size', get_txt_size)
       .style('fill', get_txt_color)
+      .style('text-anchor', get_text_anchor)
       .attr('font-family', get_font_family)
       .attr('x', function(d){ return project(d, with_origin).x; })
       .attr('y', function(d){ return project(d, with_origin).y; })
@@ -1148,6 +1170,108 @@ function wait(time) {
 }
 
 
+function cross_product(v1, v2) {
+  return {
+    x: v1.y*v2.z - v1.z*v2.y,
+    y: v1.z*v2.x - v1.x*v2.z,
+    z: v1.x*v2.y - v1.y*v2.x
+  };
+}
+
+
+function between(z, z1, z2) {
+  return ((z1 <= z && z < z2) ||
+          (z1 >= z && z > z2));
+}
+
+
+function intersect(z, p0, p1) {
+  let t = (z - p0.z) / (p1.z - p0.z);
+  return {
+    x: p0.x + (p1.x - p0.x) * t,
+    y: p0.y + (p1.y - p0.y) * t,
+    z: z
+  };
+}
+
+
+function sweep(band, segment) {
+  let [z0, z1] = band,
+      [p0, p1] = segment;
+
+  let r = [];
+  if (between(p0.z, z0, z1)) {
+    r.push(p0);
+    r.push(intersect(z1, p0, p1));
+  } else if (between(p1.z, z0, z1)) {
+    r.push(intersect(z0, p0, p1));
+    r.push(p1);
+  } else if (between(z0, p0.z, p1.z) &&
+             between(z1, p0.z, p1.z)) {
+    r.push(intersect(z0, p0, p1));
+    r.push(intersect(z1, p0, p1));
+  }
+  return r;
+}
+
+
+function sweep_square(square, n=64) {
+  let [a, b, c, d] = square.sort(
+      function(x, y) {return x.z-y.z;});
+
+  let zinc = (d.z-a.z)/n;
+
+  let polygons = [];
+  for (let z = a.z-zinc/2; z < d.z+zinc/2; z += zinc) {
+    let [z0, z1] = [z, z+zinc];
+    let poly = [];
+    poly.push(...sweep([z0, z1], [a, b]));
+    poly.push(...sweep([z0, z1], [b, d]));
+    poly.push(...sweep([z1, z0], [d, c]));
+    poly.push(...sweep([z1, z0], [c, a]));
+    poly.color = 'grey';
+    poly.opacity_factor = 0.5;
+    polygons.push(poly);
+  }
+  return polygons;
+}
+
+
+function get_square_plane(v1, v2, v3, axis_len, e1) {
+  let len = Math.max(
+      axis_len, 
+      norm(v1) * Math.sqrt(2), 
+      norm(v2) * Math.sqrt(2), 
+      norm(v3) * Math.sqrt(2));
+  let n = normalize(cross_product(v1, v2));
+  let a = times(e1, len);
+  let b = times(a, -1);
+  let c = times(cross_product(e1, n), len);
+  let d = times(c, -1);
+  return sweep_square([a, b, c, d]);
+}
+
+
+function project_v_v1v2(v, v1, v2) {
+  let e1 = normalize(v1),
+      e2 = normalize( // norm(v2 - e1 * e1Tv2)
+          add([
+              v2,
+              times(e1, -dot_product(e1, v2))
+          ]));
+  let d = add([
+    times(e1, dot_product(e1, v)),
+    times(e2, dot_product(e2, v))
+  ]);
+  let p = cp_item(v);
+  p.x = d.x;
+  p.y = d.y;
+  p.z = d.z;
+  return p;
+}
+
+
+
 return {
   set_ranges: set_ranges,
   sort: sort,
@@ -1196,6 +1320,8 @@ return {
   cp_item: cp_item,
   create_circle_lines: create_circle_lines,
   wait: wait,
+  get_square_plane: get_square_plane,
+  project_v_v1v2: project_v_v1v2
 }
 
 };

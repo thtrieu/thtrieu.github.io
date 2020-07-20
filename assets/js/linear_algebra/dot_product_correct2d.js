@@ -96,7 +96,7 @@ function plot(scatter, axis, tt){
       {x: 0, y: 0, z: 0},
       uTvv
   ];
-  uTvv_line.text = 'u\u1d40v';
+  uTvv_line.text = 'v\u1d40u';
   uTvv_line.text_color = 0;
   uTvv_line.font_size = 15;
   uTvv_line.stroke_width = 2.0

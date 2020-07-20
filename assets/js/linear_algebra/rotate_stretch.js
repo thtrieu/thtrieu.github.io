@@ -440,8 +440,9 @@ async function init_rotate(tt, old_axis, ax, ay, az, n=15) {
 }
 
 
-async function dblclick(i, n=20) { 
+async function dblclick(d, i) { 
   drag_lock = true;
+  let n = 20;
   let [ax, ay, az] = get_angles_from_default(axis, i);
   let [dax, day, daz] = [-ax/n, -ay/n, -az/n];
   for (let i = 1; i <= n; i++) {

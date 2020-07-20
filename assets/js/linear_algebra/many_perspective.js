@@ -134,7 +134,7 @@ function plot_v_perspective(u, v, y, line_color, v_name, tt, name){
                 font_size: 12,
                 text_opacity: 1.0});
   }
-  texts.push({text: 'u\u1d40' + v_name,
+  texts.push({text: v_name + '\u1d40u',
               x: uTv-0.28,
               y: y-0.2,
               z: 0,

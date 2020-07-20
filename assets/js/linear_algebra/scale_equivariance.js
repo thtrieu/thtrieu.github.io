@@ -11,9 +11,9 @@ let origin = [300, 75],
     svg = null,
     lib = null,
     spacing = 1.,
-    c1 = 0,
-    c2 = 3,
-    c0 = 'grey';
+    c1 = 1,
+    c2 = 1,
+    c0 = 2;
 
 
 function select_svg(svg_id) {
@@ -54,7 +54,24 @@ function plot(scatter, tt){
     x: scaler_point.x - 0.05,
     y: scaler_point.y - 0.1,
     z: 0,
-    text_color: c0
+  });
+
+  texts.push({
+    text: Math.abs(point_A.x-point_B.x).toFixed(1) + 'm',
+    x: (point_A.x+point_B.x)/2,
+    y: point_A.y-5/scale,
+    z: 0,
+    text_anchor: 'middle',
+    text_color: 0
+  });
+
+  texts.push({
+    text: Math.abs(point_C.x-point_D.x).toFixed(1) + 'm',
+    x: (point_C.x+point_D.x)/2,
+    y: point_C.y-5/scale,
+    z: 0,
+    text_anchor: 'middle',
+    text_color: 0
   });
 
 
@@ -82,6 +99,26 @@ function plot(scatter, tt){
   
   reflect_points.push(point_A1, point_B1, point_C1, point_D1);
 
+
+  texts.push({
+    text: Math.abs(point_A1.x-point_B1.x).toFixed(1) + 'm',
+    x: (point_A1.x+point_B1.x)/2,
+    y: point_A1.y-5/scale,
+    z: 0,
+    text_anchor: 'middle',
+    text_color: 0
+  });
+
+  texts.push({
+    text: Math.abs(point_C1.x-point_D1.x).toFixed(1) + 'm',
+    x: (point_C1.x+point_D1.x)/2,
+    y: point_C1.y-5/scale,
+    z: 0,
+    text_anchor: 'middle',
+    text_color: 0
+  });
+
+
   for (i = 0; i < reflect_points.length; i++) {
     if (reflect_points[i].x < - 4.5) {
       reflect_points[i].x = -4.5;
@@ -106,11 +143,11 @@ function plot(scatter, tt){
 
   lines.push(lineAB, lineCD, lineAB1, lineCD1);
   for (i = 0; i < lines.length; i++) {
-    lines[i].stroke_width = 3;
+    lines[i].stroke_width = 5;
   }
 
   lib.plot_lines(lines, tt, 'lines');
-  lib.plot_texts(texts, tt, 'text_in_ruler');
+  lib.plot_texts(texts, tt, 'annotation_texts');
   lib.plot_points(reflect_points, tt,
                   null,  null, null,
                   'reflect_points');
@@ -161,8 +198,9 @@ function init(tt){
       text: 'x',
       x: -4.85, y: 0, text_color: 'grey'
     },{
-      text: 'y',
-      x: -4.85, y: 1., text_color: 'grey'
+      text: '\u03b1x',
+      x: -4.85, y: 1., text_color: 'grey',
+      text_anchor: 'middle'
   }])
 
   lib.plot_texts(rulers_texts, 0, 'rulers_texts');

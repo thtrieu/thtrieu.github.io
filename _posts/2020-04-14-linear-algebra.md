@@ -370,9 +370,9 @@ draw_on_svg('dot_product_symmetric',
 
 </script>
 
-*The illustration says projection of $u$ and $v$ onto each other isn't symmetric, although the colliding diagram is. So what's wrong?*
+*But here, the illustration says projection of $u$ and $v$ onto each other isn't symmetric, although the colliding diagram is. So what's wrong?*
 
-You caught the right hint! This is because "Projection of $u$ onto $v$" is only a half of the interpretation of dot product. It is only correct when length of $v$ (denoted $\|v\|$) is 1 - which is what I set it to be so far. The correct formula 
+You caught the flaw in my explanation! This is because "Projection of $u$ onto $v$" is only half the picture of dot product. It is correct only when length of $v$ (denoted $\|v\|$) is 1 - which is what I set it to be so far. The correct formula 
 here takes into account $|v|$ as well:
 
 $$v^Tu = \left|v\right| \times \textrm{Projection of}\ u\ \textrm{onto}\ v$$
@@ -465,7 +465,7 @@ An example of Translation.
 
 <script src="/assets/js/linear_algebra/translation_perspective.js"></script>
 
-*Okay, let me try to connect the dots here. So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=u^T v$, is the number that represents the caption text?*
+*Okay, let me try to connect the dots here. So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=v^T u$, is the number that represents the caption text?*
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_cat_text'> <div class='slider'></div></label>
@@ -495,7 +495,7 @@ That is the spirit! Although realistically, a single number isn't the best way t
 
 Further, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Prof. Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm that runs at the heart of the search engine itself. 
 
-*Wow, I would have never imagined such simple ideas are so central to so many powerful tech!*
+*That's surprising, such simple ideas are central to so many powerful tech!*
 
 <center><b>4. The coordinate system</b></center>
 
@@ -675,7 +675,7 @@ It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 
 
 *Okay, but what if the set $ \\{ v_1, v_2, v_3 \\} $ is not orthonormal?*
 
-You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result $u'$ looks like $u$, except rotated by an angle. Let's extend this a bit by considering a simple case where the set $ \\{ v_1, v_2, v_3 \\} $ is only "ortho" but not "normal". This time, we can see that the transformation can be broken down to (1) rotating and then (2) stretching on each axis individually, according to the length of $ v_1, v_2, v_3 $:
+You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result $u'$ looks like $u$, except rotated by an angle. Let's extend this a bit by considering a simple case where the set $ \\{ v_1, v_2, v_3 \\} $ is only "ortho" but not "normal": 
 
 
 <center class='js'>
@@ -697,6 +697,9 @@ draw_on_svg('rotate_stretch',
             rotate_stretch2d,
             rotate_stretch);
 </script>
+
+This time, we can see that the transformation from $u$ to $u'$ is equivalent to two steps: **(1) rotating**, just like previously done, ignoring the lengths of $v$'s,
+and then **(2) stretching** on each axis individually, according to the length of $ v_1, v_2, v_3 $.
 
 
 *That makes sense. Are you suggesting rotating and stretching are the two building blocks of all transformation done by dot-products?*
@@ -745,38 +748,39 @@ draw_on_svg('matrix_vector_multiply',
 
 $$Vu = u'$$
 
+Compactly written, $Vu = u'$.
 
 And so, the meaning of matrix-vector multiplication is really just projecting a vector onto the matrix rows. Let's go ahead and simultaneously project a bunch of vectors $ \\{ u_1, u_2, u_3, u_4 \\} $ onto the same set $ \\{ v_1, v_2, v_3 \\} $:
 
-<!-- <center class='js'>
-  <label class='switch'> <input type='checkbox' id='switch_dot_product_collide'> <div class='slider'></div></label>
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_matrices_multiply'> <div class='slider'></div></label>
   <br/>
-<svg width="600" height="280" id="svg_dot_product_collide"></svg>
+<svg width="600" height="280" id="svg_matrices_multiply"></svg>
 <br/>
 Try dragging vector $u$, $v$, the whole space. Click
-<button id='init_dot_product_collide'>reset</button> or <button id='but_dot_product_collide_compute'>compute $u^Tv$</button>.
+<button id='init_matrices_multiply'>reset</button> or <button id='but_matrices_multiply_compute'>compute $u^Tv$</button>.
 </center>
 
-<script src="/assets/js/linear_algebra/dot_product_collide2d.js"></script>
-<script src="/assets/js/linear_algebra/dot_product_collide.js"></script>
+<script src="/assets/js/linear_algebra/matrices_multiply2d.js"></script>
+<script src="/assets/js/linear_algebra/matrices_multiply.js"></script>
 <script>
 
-d3.selectAll('#but_dot_product_collide_compute')
+d3.selectAll('#but_matrices_multiply_compute')
   .on('click', function(){
-      let is_3d = d3.selectAll('#switch_dot_product_collide').node().checked;
+      let is_3d = d3.selectAll('#switch_matrices_multiply').node().checked;
       if (is_3d) {
-        dot_product_collide.compute();
+        matrices_multiply.compute();
       } else {
-        dot_product_collide2d.compute(); 
+        matrices_multiply2d.compute(); 
       }
   });
 
-draw_on_svg('dot_product_collide',
-            dot_product_collide2d,
-            dot_product_collide);
+draw_on_svg('matrices_multiply',
+            matrices_multiply2d,
+            matrices_multiply);
 
 </script>
- -->
+
 And there it is, we reinvent the matrix-matrix multiplication!
 
 $$VU = U'$$
@@ -785,15 +789,46 @@ $$VU = U'$$
 
 Exactly. With matrix multiplication, we now have the power to look at vectors from many different perspectives. So far we have been transforming vectors in 3 dimensional space into another 3 dimensional space. But that does not have to always be the case. Let's try something else:
 
-Here we have just turned a 3-dimensional vectors into a 2-dimensional vector.
+<center class='js'>
+<svg width="630" height="280" id="svg_transform_3d2d"></svg>
+<br/>
+Try dragging $u_1$, $u_2$, $u_3$, $v_1$, $v_2$, the whole space, or click 
+<button id='init_transform_3d2d'>reset</button>.
+</center>
 
-*So we have just discarded some information from $u$ by turning a list of 3 numbers into a list of 2 numbers right? I wonder if, in a reversed manner, we can add more information?*
+<script src="/assets/js/linear_algebra/transform_3d2d.js"></script>
+<script>
+draw_on_svg('transform_3d2d',
+            transform_3d2d);
+</script>
 
-Of course, we can certainly do so by projecting $u$, living in 2 dimensional space, onto a set of three vectors $v_1, v_2, v_3$:
 
-*That looks cool! Although, now I'm seeing many different cases arise from matrix-vector multiplication. Is there an underlying characteristic that makes them different to other types of transformations?*
+Here we have just turned 3-dimensional vectors into 2-dimensional vectors. This is done by using only $v_1$ and $v_2$ to project $u$ onto.
 
-We can start studying the question by first looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers $\alpha x = y$. Let's look at how different line segments change in terms of their lengths.
+*In a reversed manner, if we use 3 vectors $v$ in 2-D spaces, we will be able to achieve 2D to 3D transformation right?*
+
+Yep!
+
+<center class='js'>
+<svg width="630" height="300" id="svg_transform_2d3d"></svg>
+<br/>
+Try dragging $u_1$, $u_2$, $u_3$, $v_1$, $v_2$, $v_3$ the whole space, or click 
+<button id='init_transform_2d3d'>reset</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/transform_2d3d.js"></script>
+<script>
+draw_on_svg('transform_2d3d',
+            transform_2d3d);
+</script>
+
+Although, the resulting vectors will still be restricted on a 2-D surface embedded in 3-D space. We'll explore the tools to show that this is always the case, and to precisely identify this surface given $V$ very soon!
+
+*Is there an underlying characteristic that makes all these transformations -done by dot product- different to other types of transformations?*
+
+We can start studying the question by first looking at the one-dimensional case. In this case, matrix-vector multiplication is simply multiplying two numbers $\alpha x = y$. Let's look at how two equal line segments change under this transformation:
+
+<!-- different line segments change in terms of their lengths.
 
 <center class='js'>
   <br/>
@@ -812,7 +847,7 @@ draw_on_svg('scaled1d',
 
 *Their lengths got scaled up/down by the same factor $\alpha$, regardless of position and size.*
 
-That's right. Equivalently speaking, any two segments equal in length **before** a transformation will still be equal in length **after** the transformation. 
+That's right. Equivalently speaking, any two segments equal in length **before** a transformation will still be equal in length **after** the transformation.  -->
 
 <center class='js'>
   <br/>
@@ -820,8 +855,6 @@ That's right. Equivalently speaking, any two segments equal in length **before**
 <br/>
 Try dragging $\alpha$, or points on the $x$ ruler, or click 
 <button id='init_scale_equivariance'>reset</button>.
-<br/>
-Notice the blue and green segments are always equal on $x$ and $y$ number lines.
 </center>
 
 <script src="/assets/js/linear_algebra/scale_equivariance.js"></script>
@@ -830,18 +863,15 @@ draw_on_svg('scale_equivariance',
             scale_equivariance);
 </script>
 
+*They are equal both before and after.*
+
 This property translates to higher dimensions as well. If two chunks of space are equal before a matrix-vector multiplication, they are also equal after said multiplication:
 
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_multidim_equivolume'> <div class='slider'></div></label>
   <br/>
-<svg width="630" height="280" id="svg_multidim_equivolume"></svg>
-<br/>
-Try dragging the boxes, $v_1$, $v_2$, $v_3$, the whole space, or click 
-<button id='init_multidim_equivolume'>reset</button>.
-<br/> 
-Notice the two boxes are equal in area/volume both before and after transformation.
+<svg width="630" height="300" id="svg_multidim_equivolume"></svg>
 <br/> 
 When does the resulting boxes got squashed to zero in area/volume?
 </center>
@@ -854,9 +884,9 @@ draw_on_svg('multidim_equivolume',
             multidim_equivolume);
 </script>
 
-*Oh that's an interesting way to describe it!*
+*That's surprising!*
 
-Note that this description is not only equivalent, but also more general. It is applicable for transformations between different number of dimensions as well:
+Note that this description is also quite general. It is applicable for transformations between different number of dimensions as well:
 
 <center class='js'>
 <svg width="630" height="280" id="svg_equivolume_3d2d"></svg>
@@ -876,8 +906,32 @@ In these cases, however, it is meaningless to compare the volume of the original
 
 *Still, for transformations between spaces of the same dimension - when this comparison is meaningful, a question arises: How much bigger or smaller does the space get?*
 
-That's the right question! Volume contraction or expansion is one of the main concern to Linear Algebra. In the 1-dimensional case $\alpha x = y$, this factor is simply $\alpha$. 
+That's the right question! Volume contraction or expansion is one of the main concern to Linear Algebra. How much contraction/expansion tells us many things: whether the transformation flips the space around, or whether it is undo-able, etc. 
 
-*In N-dimensional space, however, how do we get such factor from an N-by-N matrix?*
+In the 1-dimensional case $\alpha x = y$, the answer is simply $\alpha$. 
 
-We can do so by first setting the original box to have a volume of $1$, then compute the volume of the resulting box after transformation. We have not discussed, however, exactly how to do the second step. The keyword for our answer here is *Determinant of $V$*. But first let's take a break here? We'll come back with many more interesting findings.
+*Right. If $\alpha < 0$, the number line is flipped. If $\alpha = 0$, it is impossible to find $x$ given $\alpha x=0$. In N-dimensional space, however, how do we get such "$\alpha$" factor from an N-by-N matrix?*
+
+We can do so by first setting the original box to have a volume of $1$, then compute the volume of the resulting box after transformation. In other words, given $V$, find $\alpha$:
+
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_find_det'> <div class='slider'></div></label>
+  <br/>
+<svg width="630" height="280" id="svg_find_det"></svg>
+<br/>
+Try dragging the boxes, $v_1$, $v_2$, $v_3$, the whole space, or click 
+<button id='init_find_det'>reset</button>.
+<br/> The question here is, how do we find $\alpha$ given the matrix $V$?
+</center>
+
+<script src="/assets/js/linear_algebra/find_det2d.js"></script>
+<script src="/assets/js/linear_algebra/find_det.js"></script>
+<script>
+draw_on_svg('find_det',
+            find_det2d,
+            find_det);
+</script>
+
+*Then when $\alpha < 0$, the space is flipped, when $\alpha = 0$, the transformation is not invertible?*
+
+Exactly. We have not discussed, however, exactly how to do the second step. The keyword for our answer here is *Determinant of $V$*. But first let's take a break here? We'll come back with many more interesting findings.

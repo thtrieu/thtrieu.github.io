@@ -2,7 +2,7 @@ let multidim_equivolume = (function() {
 
 let origin = [150, 140], 
   origin2 = [450, 140],
-  scale = 60, 
+  scale = 40, 
   scatter = [], 
   axis = [],
   polys = [],
@@ -12,7 +12,7 @@ let origin = [150, 140],
   startAngleX = Math.PI/8 * 2.65,
   startAngleY = -Math.PI/8,
   startAngleZ = Math.PI/8 * 0.6,
-  axis_len = 2,
+  axis_len = 3,
   unit = axis_len/10,
   svg = null,
   lib = null;
@@ -43,9 +43,10 @@ function abs_det(v1, v2, v3) {
 }
 
 
+
 function text_of(polygon, text) {
-  let r = {x:1000, 
-           y:1000, 
+  let r = {x:0, 
+           y:0, 
            z:-1000};
   let corner_count = 0;
 
@@ -54,14 +55,18 @@ function text_of(polygon, text) {
     for (let j = 0; j < face.length; j++) {
       let corner = face[j];
       corner_count += 1;
-      r.x = Math.min(r.x, corner.x);
-      r.y = Math.min(r.y, corner.y);
+      r.x += corner.x;
+      r.y += corner.y;
       r.z = Math.max(r.z, corner.z);
     }
   }
 
   r.text = text;
   r.font_size_factor = 0.9;
+  r.text_color = 0;
+  r.x /= corner_count;
+  r.x -= 17/scale;
+  r.y /= corner_count;
   return r;
 }
 
@@ -109,6 +114,30 @@ function plot(scatter, axis, polys, tt){
                   drag_point_fn=dragged_point,
                   drag_start_fn=drag_start,
                   drag_end_fn=drag_end);
+
+
+  let o = {x: 0, y: 0, z: 0};
+  let v_line = [o, o];
+  v_line.opacity = 0.0;
+  lib.plot_lines([v_line], tt, 'v_line');
+
+
+  let v_plane = [[o, o, o, o]];
+  if (abs_det(v1, v2, v3) < 1e-2) {
+    let e1 = lib.normalize(
+        lib.project_v_v1v2(axis[0][1], v1, v2));
+    v_plane = lib.get_square_plane(
+        v1, v2, v3, axis_len, e1);
+  }
+  lib._plot_polygons({
+      data: v_plane,
+      tt: 0,
+      name: 'v_plane',
+      drag_point_fn: dragged,
+      drag_start_fn: drag_start,
+      drag_end_fn: drag_end
+  });
+
   plot_v_perspective(polys, v1, v2, v3, axis2, tt);
   lib.sort();
 }
@@ -204,7 +233,7 @@ function init(tt){
   beta = startAngleY;
 
 
-  let w = 0.5;
+  let w = 0.9;
   let shift_v = {x: 2*w, y: -2*w, z: 0.5*w};
   let poly1 = [
       [{x: 0, y: 0, z: 0}, 
@@ -314,6 +343,7 @@ function dragged_polygon(d, i){
 }
 
 
+
 function dragged_point(d, i){
   if (!drag_on_left) {
     return;
@@ -330,6 +360,14 @@ function dragged_point(d, i){
         let r = lib.cp_item(d);
         r.x += diff.x;
         r.y += diff.y;
+
+        let r1 = scatter[(i+1)%3],
+            r2 = scatter[(i+2)%3];
+
+        p = lib.project_v_v1v2(r, r1, r2);
+        if (lib.distance(r, p) < 0.1) {
+          r = p;
+        }
         expectedScatter.push(r);
       } else {
         expectedScatter.push(d);

@@ -67,7 +67,7 @@ function plot(scatter, axis, tt){
   ]
   uTvv_line.color = 0;
   uTvv_line.centroid_z = 1000;
-  uTvv_line.text = 'u\u1d40v';
+  uTvv_line.text = 'v\u1d40u';
   uTvv_line.text_color = 0;
   uTvv_line.font_size = 14;
   uTvv_line.text_opacity = 1.0;
