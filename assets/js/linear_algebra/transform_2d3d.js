@@ -123,7 +123,7 @@ function plot_v_perspective(us, v1, v2, v3, axis3d, tt) {
       u_1, u_2, u_3, axis_len, e1);
   lib._plot_polygons({
       data: u_plane,
-      tt: 0,
+      tt: tt,
       name: 'u_plane',
       with_origin: origin2
   });
@@ -159,12 +159,12 @@ function init(tt){
       z: 0, 
       color: 'grey',
   }),
-      v3 = lib.normalize({
-      x: -1./Math.sqrt(2), 
-      y: -1./Math.sqrt(2),  
+      v3 = {
+      x: 0, 
+      y: 0,  
       z: 0,
       color: 'grey',
-  });
+  };
 
   scatter = [v1, v2, v3];
 
