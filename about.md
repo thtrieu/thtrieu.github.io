@@ -5,7 +5,11 @@ sub: yet another human roaming the earth
 ---
 
 
-Storytelling and interactive visualizations.
+
+<p>&nbsp;</p><p></p>
+
+
+Interactive storytelling with minimal distraction.
 
 
 <p>&nbsp;</p><p></p>
