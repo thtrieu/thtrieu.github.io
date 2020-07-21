@@ -206,17 +206,16 @@ function init(tt){
 
   scatter = [u, v0, v1, v2];
 
-  expectedScatter = lib.rotate_points(
+  scatter = lib.rotate_points(
       scatter, startAngleX, startAngleY, startAngleZ);
-  expectedAxis = lib.rotate_lines(
+  axis = lib.rotate_lines(
       axis, startAngleX, startAngleY, startAngleZ);
 
   uTvv_opacity = 0;
 
-  plot(expectedScatter, 
-       expectedAxis, 
+  plot(scatter, 
+       axis, 
        tt);
-  drag_end();
 };
 
 
@@ -224,7 +223,7 @@ let drag_on_left = true;
 
 
 function drag_start(){
-  lib.drag_start();
+  lib.drag_start2d();
   if (lib.get_mouse_position().x < 400) {
     drag_on_left = true;
   } else {
@@ -257,14 +256,15 @@ function dragged_point(i){
   scatter.forEach(function(d, j){
       if (j == i) {
         r = lib.shift_point_accord_to_mouse(d);
-        if (r.x > 3) {
-          r.x = 3;
+        if (r.x*scale+origin[0] > 300) {
+          r.x = (300-origin[0])/scale;
         }
         expectedScatter.push(r);
       } else {
         expectedScatter.push(d);
       }
   });
+  expectedAxis = axis;
 
   plot(expectedScatter, 
        expectedAxis, 
@@ -272,9 +272,6 @@ function dragged_point(i){
 }
 
 function drag_end(){
-  if (!drag_on_left) {
-    return;
-  }
   scatter = expectedScatter;
   axis = expectedAxis;
 }

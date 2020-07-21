@@ -295,7 +295,7 @@ let drag_on_left = true;
 
 
 function drag_start(){
-  lib.drag_start();
+  lib.drag_start2d();
   if (lib.get_mouse_position().x < 400) {
     drag_on_left = true;
   } else {
