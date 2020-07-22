@@ -9,7 +9,9 @@ sub: yet another human roaming the earth
 <p>&nbsp;</p><p></p>
 
 
-Interactive storytelling with minimal distraction.
+<center>
+Interactive storytelling
+</center>
 
 
 <p>&nbsp;</p><p></p>
