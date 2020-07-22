@@ -243,7 +243,7 @@ function plot(scatter, axis, tt){
     })
   }
 
-  texts_result.push(dot_product_for3d);
+  texts_result.push(...dot_product_for3d);
 
   lib.plot_texts(texts_result, 0, 'texts_result');
   lib.plot_lines(lines_result, 0, 'lines_result');
