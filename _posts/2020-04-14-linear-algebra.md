@@ -1,5 +1,5 @@
 ---
-title: Interactive Visualizations of Linear Algebra - Part 1
+title: Interactive Visualizations of Linear Algebra
 ---
 
 
@@ -9,11 +9,12 @@ Sunday morning's breezes. Quy nhon, a quiet small town by the ocean. In a busy c
 
 *"Linear Algebra?"* - said *Italica*, a student in Design who recently acquired an appetite for pretty illustrations of Math concepts.
 
-"Yes. Linear Algebra, is a story about vectors." - Regan, a Machine Learning engineer, sipping her favourite coffee with condensed milk.
+"Yes. Linear Algebra is a story about vectors." - Regan, a Machine Learning engineer, sipping her favourite coffee with condensed milk.
 
 *"I like stories. How does this one start?"*
 
-<center><b>1. Vectors</b></center>
+
+## Vectors
 
 
 <style type="text/css">
@@ -133,7 +134,7 @@ input:checked + .slider.show:after
 
 </style>
 
-With the main character: vectors. Let's actually see them. Here is a bunch of vectors.
+With the main character - vectors. Let's actually see them:
 
 <center class='js'>
 <svg width="300" height="250" id="svg_point_cloud"></svg>
@@ -152,9 +153,9 @@ d3.selectAll('#but_point_cloud')
 
 *OK, so I assume each dot is a vector?*
 
-Yeah, more precisely, each vector is a point living in *space*. The space here can be 2-, 3-, or N- dimensional. To locate the vectors, we attach a coordinate system. Here are examples of coordinate systems in 2-dimensional and 3-dimensional spaces:
+Yeah, more precisely, each vector is a point living in *space*. The space here can be 2-, 3-, or N- dimensional. To locate the vectors, we attach a coordinate system:
 
-<center class='js'>
+<!-- <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_point_coord_lines'> <div class='slider'></div></label>
   <br/>
 <svg width="600" height="280" id="svg_point_coord_lines"></svg>
@@ -167,6 +168,28 @@ Drag or <button id='init_point_coord_lines'>shuffle</button>
 <script src="/assets/js/linear_algebra/point_coord_lines.js">
 </script>
 
+<script>
+
+draw_on_svg('point_coord_lines',
+            point_coord_lines2d,
+            point_coord_lines)
+</script>
+
+*Do the coordinate axes here acting like rulers on a map?*
+
+Yes! By measuring distance in different directions, this set of rulers (which we named $x, y,$ and $z$) can assign any point living in space a location as you suggested. The location here is a list of numbers, each is the measurement read from one ruler: -->
+
+<center class='js'>
+  <label class='switch'> <input type='checkbox' id='switch_point_location'> <div class='slider'></div></label>
+  <br/>
+<svg width="600" height="280" id="svg_point_location"></svg>
+<br/>
+Rotate the space, drag individual point, or click
+<button id='init_point_location'>shuffle</button>.
+</center>
+
+<script src="/assets/js/linear_algebra/point_location.js"></script>
+<script src="/assets/js/linear_algebra/point_location2d.js"></script>
 <script>
 function draw_on_svg(svg_id, fn_2d, fn_3d=null) {
   let is_3d = false,
@@ -199,43 +222,20 @@ function draw_on_svg(svg_id, fn_2d, fn_3d=null) {
     })
 }
 
-draw_on_svg('point_coord_lines',
-            point_coord_lines2d,
-            point_coord_lines)
-</script>
-
-*Do the coordinate axes here acting like rulers on a map?*
-
-Yes! By measuring distance in different directions, this set of rulers (which we named $x, y,$ and $z$) can assign any point living in space a location as you suggested. The location here is a list of numbers, each is the measurement read from one ruler:
-
-<center class='js'>
-  <label class='switch'> <input type='checkbox' id='switch_point_location'> <div class='slider'></div></label>
-  <br/>
-<svg width="600" height="280" id="svg_point_location"></svg>
-<br/>
-Rotate the space, drag individual point, or click
-<button id='init_point_location'>shuffle</button>.
-</center>
-
-<script src="/assets/js/linear_algebra/point_location.js"></script>
-<script src="/assets/js/linear_algebra/point_location2d.js"></script>
-<script>
 draw_on_svg(
     'point_location',
     point_location2d, 
     point_location);
 </script>
 
-*Is this why sometimes people refer to a list of numbers as a "vector"?*
+*Is this why sometimes people refer to a list of numbers $[x, y]$ as a "vector"?*
 
-Exactly. People also refer to a vector as an arrow pointing from the origin to the location. This arrow, the point living in a space, or the list of numbers are essentially three sides of the same coin. They are 3 different ways to refer to the same thing that we call "vector".
+Exactly. People also refer to a vector as an arrow pointing from the origin to the location. This arrow, the point living in a space, or the list of numbers are essentially 3 sides of the same coin. They are 3 different ways to refer to the same thing that we call "vector".
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_point_arrow_location'> <div class='slider'></div></label>
   <br/>
 <svg width="600" height="280" id="svg_point_arrow_location"></svg>
-<br/>
-Here we use round-headed arrows and simplify the coordinates by assuming the order $x\rightarrow y\rightarrow z$.
 <br/>
 Rotate the space, move individual point, or click
 <button id='init_point_arrow_location'>shuffle</button>.
@@ -243,13 +243,14 @@ Rotate the space, move individual point, or click
 
 <script src="/assets/js/linear_algebra/point_arrow_location2d.js"></script>
 <script src="/assets/js/linear_algebra/point_arrow_location.js"></script>
+
 <script>
 draw_on_svg('point_arrow_location',
             point_arrow_location2d,
             point_arrow_location)
 </script>
 
-<center><b>2. Dot Product as Projection</b></center>
+## Dot Product as Projection
 
 *Right, so now what does a vector do?*
 
@@ -404,7 +405,7 @@ So dot product not only projects $u$ onto $v$'s direction, it also scales the re
 
 That's the right way to think about it :) The dot product here is simply the projection times a fixed constant (length of $v$). So to compare the projection of $u_1$ and $u_2$ onto $v$, we can just compare $u_1^Tv$ and $u_2^Tv$. -->
 
-<center><b>3. Changing in persepective</b></center>
+## Changing in persepective
 
 *Okay, that makes sense. But why do we care about projections of vectors onto each other anyway?*
 
@@ -497,7 +498,7 @@ Further, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.m
 
 *That's surprising, such simple ideas are central to so many powerful tech!*
 
-<center><b>4. The coordinate system</b></center>
+## The coordinate system
 
 I know right? :) For now, let's get back on track to our main discussion. Reducing $u$, living in a multi-dimensional space, to a single number $v^Tu$ is useful, but we want more. What people do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
 
@@ -671,7 +672,7 @@ That is right. We call such transformations with a very familiar and intuitive n
 
 It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 \\} $ has to have a length of $1$ and any pair of them must be perpendicular - which is what the illustration is set up to be. People call such sets "orthonormal": "ortho" stands for orthogonal and "normal" stands for length of $1$.
 
-<center><b>5. Matrix multiplication</b></center>
+## Matrix multiplication
 
 *Okay, but what if the set $ \\{ v_1, v_2, v_3 \\} $ is not orthonormal?*
 
@@ -754,8 +755,6 @@ draw_on_svg('matrix_vector_multiply',
 </script>
 
 
-$$Vu = u'$$
-
 Compactly written, $Vu = u'$.
 
 And so, the meaning of matrix-vector multiplication is really just projecting a vector onto the matrix rows. Let's go ahead and simultaneously project a bunch of vectors $ \\{ u_1, u_2, u_3, u_4 \\} $ onto the same set $ \\{ v_1, v_2, v_3 \\} $:
@@ -789,9 +788,7 @@ draw_on_svg('matrices_multiply',
 
 
 
-And there it is, we reinvent the matrix-matrix multiplication!
-
-$$VU = U'$$
+And there it is, we reinvent the matrix-matrix multiplication: $VU = U'$.
 
 *Ah, that's very neat. So multiplying matrices is essentially looking at a bunch of vectors from a new perspective?*
 
