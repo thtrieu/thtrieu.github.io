@@ -3,6 +3,8 @@ let general_transform = (function() {
 let origin = [150, 140], 
     origin2 = [480, 140],
     scale = 100, 
+    sphere_shadow = null,
+    u_sphere = null,
     scatter = [],
     cloud = [],
     axis = [], 
@@ -74,12 +76,6 @@ function plot(scatter, grid, axis, tt){
 
   let [u, v1, v2, v3] = points;
 
-  // A constant:
-  let circle_shadow = lib.create_circle_lines(radius);
-  circle_shadow.forEach(function(d) {
-    d.color = 1;
-  })
-  lib.plot_lines(circle_shadow, tt, 'circle_shadow');
   
   let inverse_matrix = multiply_matrices(
           inverse_3by3_matrix(v1, v2, v3), 
@@ -101,17 +97,26 @@ function plot(scatter, grid, axis, tt){
              z: inverse_matrix[2][2]
   };
 
-  let map = circle_to_ellipse_shadow_map(v01, v02, v03);
+  let transform = circle_to_ellipse_shadow_map(
+      v01, v02, v03, radius);
 
   let ellipse_shadow = [];
-  circle_shadow.forEach(function(d, i) {
-    let seg = [map.map(d[0]), 
-               map.map(d[1])];
-    seg.color = 1;
+  sphere_shadow.forEach(function(d, i) {
+    let seg = [transform.map(d[0]), 
+               transform.map(d[1])];
+    seg.color = 'grey';
+    seg.stroke_width_factor = 1.2;
+    seg.opacity_factor = 0.9;
     ellipse_shadow.push(seg);
   })
   lib.plot_lines(ellipse_shadow, tt, 'ellipse_shadow', 
                  null, null, null, origin2);
+  
+  lib._plot_polygons({
+      data: transform.surface_polygons,
+      name: 'ellipse_surface',
+      with_origin: origin2
+  })
 
   points.forEach(function(p, i){
     let txt = lib.norm(p).toFixed(2);
@@ -239,62 +244,6 @@ function sphere_grid(radius, n=2) {
 }
 
 
-function inv_up_triangle(m) {
-  let [[a, b], [o, c]] = m;
-  return [
-      [1/a, -b/a/c],
-      [0, 1/c]
-  ];
-}
-
-function cholesky_U(m) {
-  let [[a, b], [b_copy, c]] = m;
-  return [
-      [Math.sqrt(a), b/Math.sqrt(a)],
-      [0, Math.sqrt(c - b*b/a)]
-  ];
-}
-
-
-function schur_2_3(v1, v2, v3) {
-  let k = v1.z*v1.z + v2.z*v2.z + v3.z*v3.z;
-  let l = [
-      v1.x*v1.z + v2.x*v2.z + v3.x*v3.z,
-      v1.y*v1.z + v2.y*v2.z + v3.y*v3.z,
-  ];
-  let S = [
-    [v1.x*v1.x + v2.x*v2.x + v3.x*v3.x - l[0]*l[0]/k, 
-     v1.x*v1.y + v2.x*v2.y + v3.x*v3.y - l[0]*l[1]/k],
-    [v1.y*v1.x + v2.y*v2.x + v3.y*v3.x - l[1]*l[0]/k, 
-     v1.y*v1.y + v2.y*v2.y + v3.y*v3.y - l[1]*l[1]/k]
-  ];
-  return {
-    S: S,
-    k: k,
-    l: l,
-  };
-}
-
-
-function circle_to_ellipse_shadow_map(v01, v02, v03) {
-  let schur = schur_2_3(v01, v02, v03);
-  let U = cholesky_U(schur.S);
-  let w = inv_up_triangle(U);
-
-  function map(v) {
-    let r = Object.assign({}, v);
-    r.x = w[0][0] * v.x + w[0][1] * v.y;
-    r.y = w[1][0] * v.x + w[1][1] * v.y;
-    r.z = -(schur.l[0] * r.x + 
-            schur.l[1] * r.y) / schur.k;
-    return r;
-  }
-
-  return {
-    map: function(v) {return map(v);},
-  };
-}
-
 function multiply_matrices(m1, m2) {
   let result_matrix = [];
 
@@ -375,6 +324,24 @@ function init(tt){
   scatter = lib.rotate_points(scatter, startAngleX, startAngleY, startAngleZ);
   grid = lib.rotate_lines(grid, startAngleX, startAngleY, startAngleZ);
   axis = lib.rotate_lines(axis, startAngleX, startAngleY, startAngleZ);
+
+  // u sphere & its shadow is a constant.
+  sphere_shadow = lib.create_circle_lines(radius*0.99);
+  sphere_shadow.forEach(function(d) {
+    d.color = 'grey';
+  });
+  u_sphere = circle_to_ellipse_shadow_map(
+      {x: 1, y: 0, z: 0},
+      {x: 0, y: 1, z: 0},
+      {x: 0, y: 0, z: 1},
+      radius);
+
+  lib._plot_lines({data: sphere_shadow, tt: tt,
+                   name: 'circle_shadow'});
+  lib._plot_polygons({
+      data: u_sphere.surface_polygons,
+      name: 'u_sphere'
+  });
 
   plot(scatter,
        grid,

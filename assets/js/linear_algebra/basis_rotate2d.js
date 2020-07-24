@@ -314,6 +314,16 @@ function init(tt){
   alpha = startAngleX;
   beta = startAngleY;
 
+  lib._plot_polygons({
+      data: [[u, u, u]],
+      name: 'u_sphere'
+  });
+  lib._plot_polygons({
+      data: [[u, u, u]],
+      name: 'ellipse_surface',
+      with_origin: origin2
+  });
+
   scatter = lib.rotate_points(scatter, alpha, beta, startAngleZ);
   axis = lib.rotate_lines(axis, alpha, beta, startAngleZ);
   plot(scatter,

@@ -84,7 +84,8 @@ function plot(scatter, axis, tt){
 
   let circle_shadow = lib.create_circle_lines(lib.norm(u));
   circle_shadow.forEach(function(d) {
-    d.color = 1;
+    d.color = 'grey';
+    d.opacity_factor = 0.8;
   })
 
   let ellipse_shadow = [];
@@ -283,6 +284,17 @@ function init(tt){
 
   scatter = lib.rotate_points(scatter, alpha, beta, startAngleZ);
   axis = lib.rotate_lines(axis, alpha, beta, startAngleZ);
+
+  lib._plot_polygons({
+      data: [[u, u, u]],
+      name: 'u_sphere'
+  });
+  lib._plot_polygons({
+      data: [[u, u, u]],
+      name: 'ellipse_surface',
+      with_origin: origin2
+  });
+
   plot(scatter,
        axis,
        tt);

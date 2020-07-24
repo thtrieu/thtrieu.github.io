@@ -3,6 +3,8 @@ let rotate_stretch = (function() {
 let origin = [150, 140], 
     origin2 = [480, 140],
     scale = 100, 
+    sphere_shadow = null,
+    u_sphere = null,
     scatter = [],
     cloud = [],
     axis = [], 
@@ -49,6 +51,7 @@ function round_to(x, n, tol=0.02) {
 }
 
 
+
 function plot(scatter, grid, axis, tt, delay=0){
   lib._plot_lines({data: grid, 
                    tt: tt, 
@@ -78,24 +81,24 @@ function plot(scatter, grid, axis, tt, delay=0){
 
   let [u, v1, v2, v3] = points;
 
-  // A constant:
-  let circle_shadow = lib.create_circle_lines(radius);
-  circle_shadow.forEach(function(d) {
-    d.color = 1;
-  })
-  lib._plot_lines({data: circle_shadow, tt: tt, 
-                   delay: delay, name: 'circle_shadow'});
-
-  let map = circle_to_ellipse_shadow_map(
+  let transform = circle_to_ellipse_shadow_map(
       lib.times(basis.ex, 1./lib.norm(v1)),
       lib.times(basis.ey, 1./lib.norm(v2)),
-      lib.times(basis.ez, 1./lib.norm(v3)));
+      lib.times(basis.ez, 1./lib.norm(v3)),
+      radius);
+  lib._plot_polygons({
+      data: transform.surface_polygons,
+      name: 'ellipse_surface',
+      with_origin: origin2
+  })
 
   let ellipse_shadow = [];
-  circle_shadow.forEach(function(d, i) {
-    let seg = [map.map(d[0]), 
-               map.map(d[1])];
-    seg.color = 1;
+  sphere_shadow.forEach(function(d, i) {
+    let seg = [transform.map(d[0]), 
+               transform.map(d[1])];
+    seg.color = 'grey';
+    seg.stroke_width_factor = 1.2;
+    seg.opacity_factor = 0.9;
     ellipse_shadow.push(seg);
   })
   lib._plot_lines({data: ellipse_shadow, 
@@ -160,8 +163,9 @@ function compute_transformation(u, v1, v2, v3, basis) {
 function compute_transformation_grid(grid, v1, v2, v3, basis) {
   let lines = [];
   grid.forEach(function(d) {
-    lines.push([compute_transformation(d[0], v1, v2, v3, basis),
-                compute_transformation(d[1], v1, v2, v3, basis)]);
+    let l = [compute_transformation(d[0], v1, v2, v3, basis),
+             compute_transformation(d[1], v1, v2, v3, basis)];
+    lines.push(l);
   })
   return lines;
 }
@@ -243,93 +247,6 @@ function inv_up_triangle(m) {
   ];
 }
 
-function cholesky_U(m) {
-  let [[a, b], [b_copy, c]] = m;
-  return [
-      [Math.sqrt(a), b/Math.sqrt(a)],
-      [0, Math.sqrt(c - b*b/a)]
-  ];
-}
-
-
-function schur_2_3(v1, v2, v3) {
-  let k = v1.z*v1.z+v2.z*v2.z+v3.z*v3.z;
-  let l = [
-      v1.x*v1.z + v2.x*v2.z + v3.x*v3.z,
-      v1.y*v1.z + v2.y*v2.z + v3.y*v3.z,
-  ];
-  let S = [
-    [v1.x*v1.x+v2.x*v2.x+v3.x*v3.x - l[0]*l[0]/k, 
-     v1.x*v1.y+v2.x*v2.y+v3.x*v3.y - l[0]*l[1]/k],
-    [v1.y*v1.x+v2.y*v2.x+v3.y*v3.x - l[1]*l[0]/k, 
-     v1.y*v1.y+v2.y*v2.y+v3.y*v3.y - l[1]*l[1]/k]
-  ];
-  return {
-    S: S,
-    k: k,
-    l: l,
-  };
-}
-
-
-function circle_to_ellipse_shadow_map(v01, v02, v03) {
-  let schur = schur_2_3(v01, v02, v03);
-  let U = cholesky_U(schur.S);
-  let w = inv_up_triangle(U);
-
-  function map(v) {
-    let r = Object.assign({}, v);
-    r.x = w[0][0] * v.x + w[0][1] * v.y;
-    r.y = w[1][0] * v.x + w[1][1] * v.y;
-    r.z = -(schur.l[0] * r.x + 
-            schur.l[1] * r.y) / schur.k;
-    return r;
-  }
-
-  return {
-    map: function(v) {return map(v);},
-  };
-}
-
-
-function default_data() {
-  let axis0 = lib.init_float_axis(axis_len=axis_len, unit=unit);
-  let scatter0 = [];
-
-  let u = {
-      x: radius + 1/scale,
-      y: 0.,
-      z: 0.,
-  }
-  let grid0 = sphere_grid(radius);
-
-  u = lib.rotate_point(u, Math.PI/8, -Math.PI/4.5, Math.PI/8);
-  grid = lib.rotate_lines(grid, Math.PI/8, -Math.PI/4.5, Math.PI/8);
-  
-  u.color = 4;
-  let v1 = {
-      x: 1.0,
-      y: 0.0, 
-      z: 0.0, 
-      color: 0,
-  },
-      v2 = {
-      x: 0.0, 
-      y: 1.0, 
-      z: 0.0, 
-      color: 3,
-  },
-      v3 = {
-      x: 0.0, 
-      y: 0.0,  
-      z: 1.0,  
-      color: 9,
-  };
-
-  scatter0 = [u, v1, v2, v3];
-  return {axis: axis0, scatter: scatter0, grid: grid0};
-}
-
 
 function init(tt, previous_data){
 
@@ -379,6 +296,24 @@ function init(tt, previous_data){
   } else {
     old_axis = previous_data.axis;
   }
+
+  // u sphere & its shadow is a constant.
+  sphere_shadow = lib.create_circle_lines(radius*0.99);
+  sphere_shadow.forEach(function(d) {
+    d.color = 'grey';
+  });
+  u_sphere = circle_to_ellipse_shadow_map(
+      {x: 1, y: 0, z: 0},
+      {x: 0, y: 1, z: 0},
+      {x: 0, y: 0, z: 1},
+      radius);
+
+  lib._plot_lines({data: sphere_shadow, tt: tt,
+                   name: 'circle_shadow'});
+  lib._plot_polygons({
+      data: u_sphere.surface_polygons,
+      name: 'u_sphere'
+  });
 
   init_rotate(
       tt,

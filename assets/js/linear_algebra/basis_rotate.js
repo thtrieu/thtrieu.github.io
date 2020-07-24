@@ -2,7 +2,7 @@ let basis_rotate = (function() {
 
 let origin = [150, 140], 
   origin2 = [450, 140],
-  scale = 120, 
+  scale = 100, 
   scatter = [],
   cloud = [],
   axis = [], 
@@ -16,6 +16,7 @@ let origin = [150, 140],
   startAngleZ = Math.PI/8 * 0.6,
   axis_len = 1.2,
   unit = axis_len/10,
+  radius = 0.5;
   svg = null,
   lib = null,
   show_proj = true;
@@ -256,11 +257,11 @@ function init(tt){
   scatter = [];
 
   let u = {
-      x: 0.35,
+      x: radius,
       y: 0.,
       z: 0.,
   }
-  grid = sphere_grid(0.34);
+  grid = sphere_grid(radius);
 
   u = lib.rotate_point(u, startAngleX, 2*startAngleY, 2*startAngleZ);
   grid = lib.rotate_lines(grid, startAngleX, 2*startAngleY, 2*startAngleZ);
@@ -294,13 +295,31 @@ function init(tt){
 
   static_circle = {
     x: 0, y: 0, z: 0,
-    r: 0.34 * scale,
+    r: radius * scale * 0.99,
     color: 'none',
     stroke_color: 'grey',
     centroid_z: -1000
   };
   lib.plot_points([static_circle], tt, null, null, null, 'cloud');
   lib.plot_points([static_circle], tt, null, null, null, 'cloud2', origin2);
+  
+  // u sphere & its shadow is a constant.
+  u_sphere = circle_to_ellipse_shadow_map(
+      {x: 1, y: 0, z: 0},
+      {x: 0, y: 1, z: 0},
+      {x: 0, y: 0, z: 1},
+      radius);
+
+  lib._plot_polygons({
+      data: u_sphere.surface_polygons,
+      name: 'u_sphere'
+  });
+  lib._plot_polygons({
+      data: u_sphere.surface_polygons,
+      name: 'ellipse_surface',
+      with_origin: origin2
+  });
+
 
   plot(scatter,
        grid,
