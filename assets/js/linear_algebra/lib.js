@@ -1104,7 +1104,7 @@ function create_circle_points(radius, n=32) {
 }
 
 
-function create_circle_lines(radius, n=40) {
+function create_circle_lines(radius, n=32) {
   let points = create_circle_points(radius, n);
   let lines = [];
   for (let j = 0; j < points.length-1; j++) {
