@@ -315,12 +315,21 @@ function init(tt, previous_data){
       name: 'u_sphere'
   });
 
-  init_rotate(
-      tt,
-      old_axis, 
-      startAngleX, 
-      startAngleY, 
-      startAngleZ);
+  // init_rotate(
+  //     tt,
+  //     old_axis, 
+  //     startAngleX, 
+  //     startAngleY, 
+  //     startAngleZ);
+
+
+  scatter = lib.rotate_points(scatter, startAngleX, startAngleY, startAngleZ);
+  grid = lib.rotate_lines(grid, startAngleX, startAngleY, startAngleZ);
+  axis = lib.rotate_lines(axis, startAngleX, startAngleY, startAngleZ);
+  plot(scatter,
+       grid,
+       axis,
+       time);
 }
 
 
