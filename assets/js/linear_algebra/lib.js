@@ -713,7 +713,8 @@ function plot_images(data, tt, name='image', with_origin=null){
                         y: d.y,
                         z: d.z};
       })
-      .transition().duration(get_duration(tt))
+      .transition()
+      .duration(get_duration(tt))
       .style('font-size', get_txt_size)
       .attr('x', function(d){ return project(d, with_origin).x; })
       .attr('y', function(d){ return project(d, with_origin).y; })
@@ -1087,7 +1088,7 @@ function text_matrix_to_list(coord_texts, coord, size=14,
 };
 
 
-function create_circle_lines(radius, n=40) {
+function create_circle_points(radius, n=32) {
   let points = [];
   let a = Math.PI * 2 / n;
   for (let i = 1; i <= n; i++) {
@@ -1099,6 +1100,12 @@ function create_circle_lines(radius, n=40) {
         centroid_z: -1000,
     });
   }
+  return points;
+}
+
+
+function create_circle_lines(radius, n=40) {
+  let points = create_circle_points(radius, n);
   let lines = [];
   for (let j = 0; j < points.length-1; j++) {
     lines.push([points[j], 
@@ -1317,6 +1324,7 @@ return {
   cp_list: cp_list,
   cp_item: cp_item,
   create_circle_lines: create_circle_lines,
+  create_circle_points: create_circle_points,
   wait: wait,
   get_square_plane: get_square_plane,
   project_v_v1v2: project_v_v1v2
