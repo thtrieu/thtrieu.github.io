@@ -71,7 +71,6 @@ function create_ring(p1, p2, z_range) {
 
   if (x <= 0.5) {
     x *= 2*x;
-    x = 0.5 - (0.5 - x)*0.9;
   } else {
     let y = 1-x;
     y *= 2*y;
