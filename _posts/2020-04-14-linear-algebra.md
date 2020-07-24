@@ -712,7 +712,7 @@ and then **(2) stretching** the space along each axis individually, according to
 
 *That makes sense. Are you suggesting rotating and stretching are the two building blocks of all transformations done by dot-products, not just ortho(normal) ones?*
 
-That's a very quick jump ahead, but totally accurate :) In fact, rotation and stretching are not only two, but **the only two** building blocks. We'll soon see how this is the case, but first let's take it slow and enjoy ourselves some nice visualizations. This time, the set $ \\{ v_1, v_2, v_3 \\} $  is allowed to be neither "ortho" nor "normal" as you suggested:
+That's a very quick jump ahead, but totally accurate :) We'll soon see how this is the case, but first let's take it slow and enjoy ourselves some nice visualizations. This time, the set $ \\{ v_1, v_2, v_3 \\} $  is allowed to be neither "ortho" nor "normal" as you suggested:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_general_transform'> <div class='slider'></div></label>
@@ -815,11 +815,11 @@ draw_on_svg('transform_3d2d',
 </script>
 
 
-Here we have just turned 3-dimensional vectors into 2-dimensional vectors. This is done by using only $v_1$ and $v_2$ to project $u$ onto.
+Here we have just turned 3-dimensional vectors into 2-dimensional vectors. This is done by using only $v_1$ and $v_2$ to project $u$ onto, i.e., the matrix $V$ now has 2 rows and 3 collumns.
 
 *In a reversed manner, if we use 3 vectors $v$ in 2-D spaces, we will be able to achieve 2D to 3D transformation right?*
 
-Yep!
+Yes, with $V$ of size $3$ rows $\times$ $2$ columns, denoted $V \in \mathbb{R}^{3\times 2}$:
 
 <center class='js'>
 <svg width="630" height="300" id="svg_transform_2d3d"></svg>
@@ -834,7 +834,7 @@ draw_on_svg('transform_2d3d',
             transform_2d3d);
 </script>
 
-Although, the resulting vectors will still be restricted on a 2-D surface embedded in 3-D space. We'll explore the tools to show that this is always the case, and to precisely identify this surface given $V$ very soon!
+Although, the resulting vectors will still be restricted on a 2-D surface embedded in 3-D space. We'll soon see how this is always the case very soon!
 
 *Is there an underlying characteristic that makes all these transformations -done by dot product- different to other types of transformations?*
 
@@ -896,9 +896,9 @@ draw_on_svg('multidim_equivolume',
             multidim_equivolume);
 </script>
 
-*That's surprising! It seems the resulting boxes got squashed to zero when the $v$ vectors in 2-D are all on a line (or in 3-D, $v$'s are all on a surface).*
+*That's surprising! It seems the resulting boxes got squashed to zero when the $v$ vectors in 2-D lies on the same line (or in 3-D, $v$'s are all on the same surface).*
 
-Correct! Again, we'll come to show how this is the case very soon. Note that this description is also quite general. It is applicable for transformations between different number of dimensions as well:
+Correct! Again, we'll come to show how this is the case very soon. Note that this description is also quite general. It is applicable for transformations between different number of dimensions as well. For example, from equal boxes in 3-D we obtain equal polygons in 2-D:
 
 <center class='js'>
 <svg width="630" height="280" id="svg_equivolume_3d2d"></svg>
