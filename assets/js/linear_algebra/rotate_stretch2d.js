@@ -296,7 +296,6 @@ function init(tt, data=null){
        tt);
 }
 
-
 function hide(objs, op=0.0) {
   let r = [];
   objs.forEach(function(d) {
