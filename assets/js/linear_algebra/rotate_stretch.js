@@ -250,11 +250,11 @@ function inv_up_triangle(m) {
 
 function init(tt, previous_data){
 
-  tt = 750;
-  if (previous_data == null && axis.length > 0) {
-    previous_data = {scatter: scatter, axis: axis};
-    tt = 0;
-  }
+  // tt = 750;
+  // if (previous_data == null && axis.length > 0) {
+  //   previous_data = {scatter: scatter, axis: axis};
+  //   tt = 0;
+  // }
 
   axis = lib.init_float_axis(axis_len=axis_len, unit=unit);
   scatter = [];
@@ -329,7 +329,7 @@ function init(tt, previous_data){
   plot(scatter,
        grid,
        axis,
-       time);
+       tt);
 }
 
 
