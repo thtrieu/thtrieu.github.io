@@ -1,5 +1,5 @@
 ---
-title: Interactive Visualizations of Linear Algebra
+title: Linear Algebra
 ---
 
 
@@ -276,9 +276,9 @@ draw_on_svg('dot_product_project',
             dot_product_project)
 </script>
 
-*Length cannot be negative, how come in the illustration above $v^Tu$ is sometimes negative? And why don't we just call it "projection"?*
+*It seems a negative projection indicate $u$ and $v$ are roughly opposite in direction? And why don't we just call it "projection" instead of "dot product"?*
 
-You are right, a negative dot-product carries more information than just the length of projection. Which is, $u$ and $v$ are roughly opposite in direction. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between $u$ and $v$ and then add them up!
+That's right. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between $u$ and $v$ and then add them up!
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_dot_product_formula'> <div class='slider'></div></label>
@@ -435,7 +435,7 @@ draw_on_svg('v_perspective',
 
 *So $u$ in $v$'s view is just one number and not a vector?*
 
-Yes it is just one number. However, a single number is still a vector: it is in fact a 1-dimensional vector! And so, dot product achieves 1-dimensional change of perspective: $u$ living in an arbitrary number of dimension is reduced into a 1-dimensional vector in $v$'s coordinate system.
+Yes it is just one number. However, a single number is still a vector: a 1-dimensional vector! And so, dot product achieves 1-dimensional change of perspective.
 
 *Okay, from the above visualization, I can see why projecting to change view makes sense: the projection is larger when $u$ is more aligned to $v$, and shrinks to $0$ when the two are not aligned at all (perpendicular).*
 
@@ -608,7 +608,7 @@ d3.selectAll('#show_hide_proj_basis')
 
 *It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system: they are measuring $u$ in three perpendicular directions that coincide with the three coordinate axes.*
 
-Nice observation! In fact with this observation, there is no longer need for coordinate systems. Instead, think of space as being "measured" by this set of vectors through dot products.
+Nice observation! With this observation, there is no longer need for coordinate systems. Instead, think of space as being "measured" by this set of vectors through dot products:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_basis_measure'> <div class='slider'></div></label>
@@ -640,12 +640,15 @@ d3.selectAll('#show_hide_proj_measure')
       }
   });
 </script>
-
+<!-- 
 And so, there is no intrinsic coordinate to any vector, only its location relative to others. This simplified the whole picture because now there is coordinate system no more!
 
 *In other words: this set of $v$ vectors and dot product are what give any vector living in space a coordinate?*
 
-Yes, be aware that there can be many such sets besides $\\{[1, 0, 0], [0, 1, 0], [0, 0, 1]\\}$. For example, rotating this set by any angle and we will obtain another valid set acting as coordinate system:
+Yes,
+ -->
+
+Be aware that there can be many such sets besides $\\{[1, 0, 0], [0, 1, 0], [0, 0, 1]\\}$. For example, rotating this set by any angle and we will obtain another valid set acting as coordinate system. This time, $u'$ is no longer $u$ but something else:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_basis_rotate'> <div class='slider'></div></label>
@@ -679,6 +682,7 @@ It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 
 You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result $u'$ looks like $u$, except rotated by an angle. Let's extend this a bit by considering a simple case where the set $ \\{ v_1, v_2, v_3 \\} $ is only "ortho" but not "normal": 
 
 
+
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_rotate_stretch'> <div class='slider'></div></label>
   <br/>
@@ -692,6 +696,9 @@ Double-clicking any of the 3 axes in $u'$ space to hide them before trying to ro
 </center>
 
 <script src="/assets/js/linear_algebra/rotate_stretch2d.js"></script>
+
+<script src="/assets/js/linear_algebra/ellipse_lib.js"></script>
+
 <script src="/assets/js/linear_algebra/rotate_stretch.js"></script>
 <script>
 draw_on_svg('rotate_stretch',
@@ -700,10 +707,10 @@ draw_on_svg('rotate_stretch',
 </script>
 
 This time, we can see that the transformation from $u$ to $u'$ is equivalent to two steps: **(1) rotating**, just like previously done, ignoring the lengths of $v$'s,
-and then **(2) stretching** on each axis individually, according to the length of $ v_1, v_2, v_3 $.
+and then **(2) stretching** the space along each axis individually, according to the length of $ v_1, v_2, v_3 $.
 
 
-*That makes sense. Are you suggesting rotating and stretching are the two building blocks of all transformation done by dot-products?*
+*That makes sense. Are you suggesting rotating and stretching are the two building blocks of all transformations done by dot-products, not just ortho(normal) ones?*
 
 That's a very quick jump ahead, but totally accurate :) In fact, rotation and stretching are not only two, but **the only two** building blocks. We'll soon see how this is the case, but first let's take it slow and enjoy ourselves some nice visualizations. This time, the set $ \\{ v_1, v_2, v_3 \\} $  is allowed to be neither "ortho" nor "normal" as you suggested:
 
@@ -792,7 +799,7 @@ And there it is, we reinvent the matrix-matrix multiplication: $VU = U'$.
 
 *Ah, that's very neat. So multiplying matrices is essentially looking at a bunch of vectors from a new perspective?*
 
-Exactly. With matrix multiplication, we now have the power to look at vectors from many different perspectives. So far we have been transforming vectors in 3 dimensional space into another 3 dimensional space. But that does not have to always be the case. Let's try something else:
+Exactly. With matrix multiplication, we now have the power to look at vectors from many different perspectives. So far we have been transforming vectors in 3 dimensional space into another 3 dimensional space (and 2 to 2). Let's try something else:
 
 <center class='js'>
 <svg width="630" height="280" id="svg_transform_3d2d"></svg>
@@ -889,9 +896,9 @@ draw_on_svg('multidim_equivolume',
             multidim_equivolume);
 </script>
 
-*That's surprising!*
+*That's surprising! It seems the resulting boxes got squashed to zero when the $v$ vectors in 2-D are all on a line (or in 3-D, $v$'s are all on a surface).*
 
-Note that this description is also quite general. It is applicable for transformations between different number of dimensions as well:
+Correct! Again, we'll come to show how this is the case very soon. Note that this description is also quite general. It is applicable for transformations between different number of dimensions as well:
 
 <center class='js'>
 <svg width="630" height="280" id="svg_equivolume_3d2d"></svg>
@@ -939,4 +946,4 @@ draw_on_svg('find_det',
 
 *Then when $\alpha < 0$, the space is flipped, when $\alpha = 0$, the transformation is not invertible?*
 
-Exactly. We have not discussed, however, exactly how to do the second step. The keyword for our answer here is *Determinant of $V$*. But first let's take a break here? We'll come back with many more interesting findings.
+Exactly. We have not discussed, however, exactly how to find $\alpha$. The keyword for our answer here is *Determinant of $V$*. But first let's take a break here? We'll come back with many more interesting findings.
