@@ -733,7 +733,7 @@ draw_on_svg('general_transform',
 </script>
 
 
-Notation wise, if we stack $ \\{ v_1, v_2, v_3 \\} $ horizontally into a rectangle of numbers that we called the matrix $A$, we have just invented the matrix-vector multiplication using the "colliding" diagram:
+Notation wise, if we stack $ \\{ v_1, v_2, v_3 \\} $ horizontally into a rectangle of numbers that we called the matrix $V$, we have just invented the matrix-vector multiplication using the "colliding" diagram:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_matrix_vector_multiply'> <div class='slider'></div></label>
