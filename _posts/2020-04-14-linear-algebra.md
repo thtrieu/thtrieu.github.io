@@ -332,11 +332,11 @@ draw_on_svg('dot_product_collide',
 </script>
 
 
-*Looks like this diagram explains the notation $v^Tu$ very well: $u^T$ is $u$ lying down, while $v$ is standing, and $v^Tu$ is the collision of $u^T$ and $v$.*
+*Looks like this diagram explains the notation $v^Tu$ very well: $v^T$ is $v$ lying down, while $u$ is standing, and $v^Tu$ is the collision of $v^T$ and $u$.*
 
 That's exactly what it is :) The $^T$ operation here is called "transpose". Transposing flips the vector so it lies down. This diagram will become very helpful later on, so hang on to that for a little while.
 
-*So since this operation is symmetric between $u$ and $v$, it should give the same result as projecting v onto u, i.e. $v^Tu = v^Tu$, right?*
+*So since this operation is symmetric between $u$ and $v$, it should give the same result as projecting v onto u, i.e. $v^Tu = u^Tv$, right?*
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_dot_product_symmetric'> <div class='slider'></div></label>
