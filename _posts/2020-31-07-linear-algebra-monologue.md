@@ -9,7 +9,7 @@ title: Linear Algebra Monologue
 Sunday morning's breezes. Quy nhon, a quiet small town by the ocean.
 When I was lazily sipping my favourite coffee, I noticed a group of high school students discussing some Linear Algebra stuff, maybe their homework. At that second, my mind was instantly push back to my highschool life, and definitely, these Algebra stuff.
 
-I later then figure out that Linear Algebra is actually a story about one thing: "vector".
+Later then, I figure out that Linear Algebra is actually a story about one thing: "vector".
 
 So, let me tell you that story, in hope that there're maybe some helps in case you find yourself in the same situation as mine.
 
