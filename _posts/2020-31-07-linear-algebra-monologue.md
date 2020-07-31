@@ -6,14 +6,21 @@ title: Linear Algebra Monologue
 
 <script src="/assets/js/linear_algebra/lib.js"></script>
 
-Sunday morning's breezes. Quy nhon, a quiet small town by the ocean. In a busy coffee shop, two regular coffee buddies are chatting away on fun ideas. 
+Sunday morning's breezes. Quy nhon, a quiet small town by the ocean.
+When I was lazily sipping my favourite coffee, I noticed a group of high school students discussing some Linear Algebra stuff, maybe their homework. At that second, my mind was instantly push back to my highschool life, and definitely, these Algebra stuff.
+
+I later then figure out that Linear Algebra is actually a story about one thing: "vector".
+
+So, let me tell you that story, in hope that there're maybe some helps in case you find yourself in the same situation as mine.
+
+<!-- In a busy coffee shop, two regular coffee buddies are chatting away on fun ideas. 
 
 *"Linear Algebra?"* - said *Italica*, a student in Design who recently acquired an appetite for pretty illustrations of Math concepts.
 
 "Yes. Linear Algebra is a story about vectors." - Regan, a Machine Learning engineer, sipping her favourite coffee with condensed milk.
 
 *"I like stories. How does this one start?"*
-
+ -->
 
 ## Vectors
 
@@ -152,9 +159,10 @@ d3.selectAll('#but_point_cloud')
 </script>
 
 
-*OK, so I assume each dot is a vector?*
-
-Yeah, more precisely, each vector is a point living in *space*. The space here can be 2-, 3-, or N- dimensional. To locate the vectors, we attach a coordinate system:
+<!-- *OK, so I assume each dot is a vector?*
+ -->
+<!-- Yeah, more  -->
+Precisely, each vector is a point living in *space*. The space here can be 2-, 3-, or N- dimensional. To locate the vectors, we attach a coordinate system:
 
 <!-- <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_point_coord_lines'> <div class='slider'></div></label>
@@ -229,9 +237,10 @@ draw_on_svg(
     point_location);
 </script>
 
-*Is this why sometimes people refer to a list of numbers $[x, y]$ as a "vector"?*
-
-Exactly. People also refer to a vector as an arrow pointing from the origin to the location. This arrow, the point living in a space, or the list of numbers are essentially 3 sides of the same coin. They are 3 different ways to refer to the same thing that we call "vector".
+<!-- *Is this why sometimes people refer to a list of numbers $[x, y]$ as a "vector"?* -->
+This is why sometimes people refer to a list of numbers $[x, y]$ as a "vector"! 
+<!-- Exactly. -->
+People also refer to a vector as an arrow pointing from the origin to the location. This arrow, the point living in a space, or the list of numbers are essentially 3 sides of the same coin. They are 3 different ways to refer to the same thing that we call "vector".
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_point_arrow_location'> <div class='slider'></div></label>
@@ -253,7 +262,8 @@ draw_on_svg('point_arrow_location',
 
 ## Dot Product as Projection
 
-*Right, so now what does a vector do?*
+<!-- *Right, so now what does a vector do?* -->
+*So now what does a vector do?*
 
 A vector itself does not do much. You start to have fun when there is more than one :) Dot product between two vectors is a simple and important concept. Below, you can see the dot product of two vectors $u$ and $v$, denoted $v^Tu$, is the **length of the projection** of $u$ onto $v$.
 
@@ -277,9 +287,11 @@ draw_on_svg('dot_product_project',
             dot_product_project)
 </script>
 
-*It seems a negative projection indicate $u$ and $v$ are roughly opposite in direction? And why don't we just call it "projection" instead of "dot product"?*
+<!-- *It seems a negative projection indicate $u$ and $v$ are roughly opposite in direction? And why don't we just call it "projection" instead of "dot product"?* -->
+*Obviously a negative projection indicate $u$ and $v$ are roughly opposite in direction. Then why don't we just call it "projection" instead of "dot product"?*
 
-That's right. The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between $u$ and $v$ and then add them up!
+<!-- That's right. -->
+The name "dot product" here stands for a very simple formula for this signed-projection. That is, we should take the product of corresponding coordinates between $u$ and $v$ and then add them up!
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_dot_product_formula'> <div class='slider'></div></label>
@@ -298,8 +310,8 @@ draw_on_svg('dot_product_formula',
             dot_product_formula)
 </script>
 
-*Oh, that's surprisingly simple!*
-
+<!-- *Oh, that's surprisingly simple!* -->
+That's surprisingly simple, right?
 Indeed it is. Let's look at a very useful diagram for this formula. It represents the formula by showing $u$ and $v$ colliding into a single number (their dot product $v^Tu$).
 
 <center class='js'>
@@ -332,11 +344,14 @@ draw_on_svg('dot_product_collide',
 </script>
 
 
-*Looks like this diagram explains the notation $v^Tu$ very well: $v^T$ is $v$ lying down, while $u$ is standing, and $v^Tu$ is the collision of $v^T$ and $u$.*
+*<!-- Looks like this diagram explains the notation $v^Tu$ very well: --> 
+What this diagram explains here is simply just: $v^T$ is $v$ lying down, while $u$ is standing, and $v^Tu$ is the collision of $v^T$ and $u$.*
 
-That's exactly what it is :) The $^T$ operation here is called "transpose". Transposing flips the vector so it lies down. This diagram will become very helpful later on, so hang on to that for a little while.
+<!-- That's exactly what it is :) -->
+The $^T$ operation here is called "transpose". Transposing flips the vector so it lies down. This diagram will become very helpful later on, so hang on to that for a little while.
 
-*So since this operation is symmetric between $u$ and $v$, it should give the same result as projecting v onto u, i.e. $v^Tu = u^Tv$, right?*
+<!-- *So since this operation is symmetric between $u$ and $v$, it should give the same result as projecting v onto u, i.e. $v^Tu = u^Tv$, right?* -->
+*Since this operation is symmetric between $u$ and $v$, it should give the same result as projecting v onto u, i.e. $v^Tu = u^Tv$.*
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_dot_product_symmetric'> <div class='slider'></div></label>
@@ -374,7 +389,8 @@ draw_on_svg('dot_product_symmetric',
 
 *But here, the illustration says projection of $u$ and $v$ onto each other isn't symmetric, although the colliding diagram is. So what's wrong?*
 
-You caught the flaw in my explanation! This is because "Projection of $u$ onto $v$" is only half the picture of dot product. It is correct only when length of $v$ (denoted $\|v\|$) is 1 - which is what I set it to be so far. The correct formula 
+If that's what you're wondering about, you caught the flaw in my explanation!
+This is because "Projection of $u$ onto $v$" is only half the picture of dot product. It is correct only when length of $v$ (denoted $\|v\|$) is 1 - which is what I set it to be so far. The correct formula 
 here takes into account $|v|$ as well:
 
 $$v^Tu = \left|v\right| \times \textrm{Projection of}\ u\ \textrm{onto}\ v$$
@@ -408,9 +424,11 @@ That's the right way to think about it :) The dot product here is simply the pro
 
 ## Changing in persepective
 
-*Okay, that makes sense. But why do we care about projections of vectors onto each other anyway?*
+<!-- *Okay, that makes sense. But why do we care about projections of vectors onto each other anyway?* -->
+*Let say that makes sense to you all. Then why do we care about projections of vectors onto each other anyway?*
 
-That's a good question. One of the understanding here is that projecting $u$ onto $v$ is essentially applying a **change in perspective**.
+<!-- That's a good question. -->
+One of the understanding here is that projecting $u$ onto $v$ is essentially applying a **change in perspective**.
 
 In the current space and coordinate system, $u$ is a vector of certain location. The question is, what does $u$ look like in *another space and/or coordinate system?* In particular, how does $u$ look like from $v$'s perspective? One answer is that in $v$'s view, $u'=v^Tu$ is what $u$ looks like:
 
@@ -436,9 +454,11 @@ draw_on_svg('v_perspective',
 
 *So $u$ in $v$'s view is just one number and not a vector?*
 
-Yes it is just one number. However, a single number is still a vector: a 1-dimensional vector! And so, dot product achieves 1-dimensional change of perspective.
+<!-- Yes -->
+It is<!--  just one number -->. However, a single number is still a vector: a 1-dimensional vector! And so, dot product achieves 1-dimensional change of perspective.
 
-*Okay, from the above visualization, I can see why projecting to change view makes sense: the projection is larger when $u$ is more aligned to $v$, and shrinks to $0$ when the two are not aligned at all (perpendicular).*
+<!-- *Okay, from the above visualization, I can see why projecting to change view makes sense: the projection is larger when $u$ is more aligned to $v$, and shrinks to $0$ when the two are not aligned at all (perpendicular).* -->
+*From the above visualization, you may see why projecting to change view makes sense: the projection is larger when $u$ is more aligned to $v$, and shrinks to $0$ when the two are not aligned at all (perpendicular).*
 
 Bingo. **Changing in perspective** is the recurring theme in Linear Algebra. Much of Linear Algebra is concerned with studying how a certain object of interest (represented by a point) looks like under different perspectives (different spaces and coordinate systems).
 
@@ -455,9 +475,11 @@ An example of Image Captioning.
 
 <script src="/assets/js/linear_algebra/cat_text_perspective.js"></script>
 
-*So this is how Facebook AI put captions on the photos uploaded to the site?*
-
-Yep. Take Google Translate as another example. Linear Algebra is used to represent the changes of perspective that turn one sentence in one language to another.
+*<!-- So this is  -->
+Have you ever think about how Facebook AI put captions on the photos uploaded to the site?*
+This is the answer.
+<!-- Yep. -->
+Take Google Translate as another example. Linear Algebra is used to represent the changes of perspective that turn one sentence in one language to another.
 
 <center class='js'>
 <svg width="630" height="150" id="svg_translation_perspective"></svg>
@@ -467,7 +489,8 @@ An example of Translation.
 
 <script src="/assets/js/linear_algebra/translation_perspective.js"></script>
 
-*Okay, let me try to connect the dots here. So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=v^T u$, is the number that represents the caption text?*
+<!-- *Okay, let me try to connect the dots here. -->
+*So we should first somehow represent the photo as a vector $u$, then we try to find $v$ such that $u$ in $v$'s view, $u'=v^T u$, is the number that represents the caption text*
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_cat_text'> <div class='slider'></div></label>
@@ -489,7 +512,8 @@ draw_on_svg('cat_text',
             cat_text);
 </script>
 
-That is the spirit! Although realistically, a single number isn't the best way to represent texts, but we'll come to that soon. The devil is really in the detail: How do we represent photo/text as vectors? How do we figure out the appropriate $v$? And so on :)
+That is the spirit!
+Although realistically, a single number isn't the best way to represent texts, but we'll come to that soon. The devil is really in the detail: How do we represent photo/text as vectors? How do we figure out the appropriate $v$? And so on :)
 
 <!-- Consider writing this tutorial. All the visualizations of 3D spaces done here will be displayed on a screen, a 2D surface. This requires a perspective change between the two spaces. The code that I wrote for the visualizations must therefore handle this change using Linear Algebra. More broadly, computer games in 3D or softwares that involve 3D manipulation rely heavily on this specific change to display stuff on 2D screens. -->
 
@@ -497,11 +521,13 @@ That is the spirit! Although realistically, a single number isn't the best way t
 
 Further, reach for Chapter 10 of [Introduction to Linear Algebra](https://math.mit.edu/~gs/linearalgebra/) from Prof. Gilbert Strang. You'll find there a diverse list of Linear Algebra applications, from Graph Theory to Cryptography, Economics, and the Google's PageRank algorithm that runs at the heart of the search engine itself. 
 
-*That's surprising, such simple ideas are central to so many powerful tech!*
+*These simple ideas are central to so many powerful tech!
+That's surprising, right?*
 
 ## The coordinate system
 
-I know right? :) For now, let's get back on track to our main discussion. Reducing $u$, living in a multi-dimensional space, to a single number $v^Tu$ is useful, but we want more. What people do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
+<!-- I know right? :) -->
+For now, let's get back on track to our main discussion. Reducing $u$, living in a multi-dimensional space, to a single number $v^Tu$ is useful, but we want more. What people do is instead projecting $u$ on many different $v$'s and obtain many different views at once.
 
 
 <center class='js'>
@@ -523,7 +549,7 @@ draw_on_svg('many_perspective',
             many_perspective);
 </script>
 
-*So we are just essentially getting many numbers at once right?*
+*So we are just essentially getting many numbers at once <!-- right -->?*
 
 Right, but there's more to it than that. Let's say we project $u$ onto three vectors $ \\{ v_1, v_2, v_3 \\} $, and thereby obtaining a list of numbers $[v^Tu_1, v^Tu_2, v^Tu_3]$. This list of numbers is itself a vector $u'$ as well:
 
@@ -568,10 +594,12 @@ d3.selectAll('#show_hide_proj')
 
 Absolutely. Setting aside what we really mean by "correlation", this set of vectors needs to be pair-wise perpendicular for the views to not correlate. For example, -->
 
-*Interesting. This is like using the 3 number lines that represents the world view of $v_1, v_2,$ and $v_3$ as the three coordinate axes of the new space.*
+<!-- *Interesting. -->
+*This is like using the 3 number lines that represents the world view of $v_1, v_2,$ and $v_3$ as the three coordinate axes of the new space.*
 
-
-Exactly! So now, using $v_1, v_2, v_3$ and the dot product, we achieved the multi-dimensional change in perspective from one vector $u$, to another $u'$ in another space and coordinate.
+<!-- Exactly! -->
+<!-- So -->
+Now, using $v_1, v_2, v_3$ and the dot product, we achieved the multi-dimensional change in perspective from one vector $u$, to another $u'$ in another space and coordinate.
 
 Let's take a fun example. Let $v_1 = [1, 0, 0]$, $v_2 = [0, 1, 0]$, and $v_3 = [0, 0, 1]$. In this case, projecting $u$ on $ \\{ v_1, v_2, v_3 \\} $ will, surprise surprise, give you back $u$ itself.
 
@@ -607,9 +635,11 @@ d3.selectAll('#show_hide_proj_basis')
   });
 </script>
 
-*It looks like $v_1, v_2, v_3$ as defined above is acting as the coordinate system: they are measuring $u$ in three perpendicular directions that coincide with the three coordinate axes.*
+*Does it look like to you that $v_1, v_2, v_3$ as defined above is acting as the coordinate system: they are measuring $u$ in three perpendicular directions that coincide with the three coordinate axes?*
 
-Nice observation! With this observation, there is no longer need for coordinate systems. Instead, think of space as being "measured" by this set of vectors through dot products:
+<!-- Nice observation! -->
+It actually is.
+With this observation, there is no longer need for coordinate systems. Instead, think of space as being "measured" by this set of vectors through dot products:
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_basis_measure'> <div class='slider'></div></label>
@@ -670,9 +700,10 @@ draw_on_svg('basis_rotate',
             basis_rotate);
 </script>
 
-*It looks like $u'$ is moving around in the same sphere that also contains $u$?*
-
-That is right. We call such transformations with a very familiar and intuitive name: Rotation. 
+<!-- *It looks like $u'$ is moving around in the same sphere that also contains $u$?* -->
+*You may notice that it looks like $u'$ is moving around in the same sphere that also contains $u$.*
+That is right.
+We call such transformations with a very familiar and intuitive name: Rotation. 
 
 It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 \\} $ has to have a length of $1$ and any pair of them must be perpendicular - which is what the illustration is set up to be. People call such sets "orthonormal": "ortho" stands for orthogonal and "normal" stands for length of $1$.
 
@@ -680,8 +711,7 @@ It can be shown that for rotation to happen, each vector in $ \\{ v_1, v_2, v_3 
 
 *Okay, but what if the set $ \\{ v_1, v_2, v_3 \\} $ is not orthonormal?*
 
-You have just asked *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result $u'$ looks like $u$, except rotated by an angle. Let's extend this a bit by considering a simple case where the set $ \\{ v_1, v_2, v_3 \\} $ is only "ortho" but not "normal": 
-
+<!-- You have just asked --> Oh, that generally is *The Question* of Linear Algebra. Earlier we see that if $ \\{ v_1, v_2, v_3 \\} $ is orthonormal, the result $u'$ looks like $u$, except rotated by an angle. Let's extend this a bit by considering a simple case where the set $ \\{ v_1, v_2, v_3 \\} $ is only "ortho" but not "normal": 
 
 
 <center class='js'>
@@ -711,9 +741,12 @@ This time, we can see that the transformation from $u$ to $u'$ is equivalent to 
 and then **(2) stretching** the space along each axis individually, according to the length of $ v_1, v_2, v_3 $.
 
 
-*That makes sense. Are you suggesting rotating and stretching are the two building blocks of all transformations done by dot-products, not just ortho(normal) ones?*
+*And by that, I am suggesting rotating and stretching are the two building blocks of all transformations done by dot-products, not just ortho(normal) ones*
 
-That's a very quick jump ahead, but totally accurate :) We'll soon see how this is the case, but first let's take it slow and enjoy ourselves some nice visualizations. This time, the set $ \\{ v_1, v_2, v_3 \\} $  is allowed to be neither "ortho" nor "normal" as you suggested:
+That's maybe a very quick jump ahead, but <!-- totally accurate :) --><!-- W -->we'll soon see how this is the case.
+<!-- , but first  -->
+For now, let's take it slow and enjoy ourselves some nice visualizations. This time, the set $ \\{ v_1, v_2, v_3 \\} $  is allowed to be neither "ortho" nor "normal"
+<!-- as you suggested: -->
 
 <center class='js'>
   <label class='switch'> <input type='checkbox' id='switch_general_transform'> <div class='slider'></div></label>
@@ -796,9 +829,10 @@ draw_on_svg('matrices_multiply',
 
 
 
-And there it is, we reinvent the matrix-matrix multiplication: $VU = U'$.
+<!-- And t  -->There it is, we reinvent the matrix-matrix multiplication: $VU = U'$.
 
-*Ah, that's very neat. So multiplying matrices is essentially looking at a bunch of vectors from a new perspective?*
+<!-- *Ah, that's very neat.*  -->
+*And so multiplying matrices is essentially looking at a bunch of vectors from a new perspective?*
 
 Exactly. With matrix multiplication, we now have the power to look at vectors from many different perspectives. So far we have been transforming vectors in 3 dimensional space into another 3 dimensional space (and 2 to 2). Let's try something else:
 
@@ -818,9 +852,9 @@ draw_on_svg('transform_3d2d',
 
 Here we have just turned 3-dimensional vectors into 2-dimensional vectors. This is done by using only $v_1$ and $v_2$ to project $u$ onto, i.e., the matrix $V$ now has 2 rows and 3 collumns.
 
-*In a reversed manner, if we use 3 vectors $v$ in 2-D spaces, we will be able to achieve 2D to 3D transformation right?*
+*In a reversed manner, if we use 3 vectors $v$ in 2-D spaces, will we be able to achieve 2D to 3D transformation <!-- right -->?*
 
-Yes, with $V$ of size $3$ rows $\times$ $2$ columns, denoted $V \in \mathbb{R}^{3\times 2}$:
+Definitely yes, with $V$ of size $3$ rows $\times$ $2$ columns, denoted $V \in \mathbb{R}^{3\times 2}$:
 
 <center class='js'>
 <svg width="630" height="300" id="svg_transform_2d3d"></svg>
@@ -897,9 +931,11 @@ draw_on_svg('multidim_equivolume',
             multidim_equivolume);
 </script>
 
-*That's surprising! It seems the resulting boxes got squashed to zero when the $v$ vectors in 2-D lies on the same line (or in 3-D, $v$'s are all on the same surface).*
+*In addition, the resulting boxes got squashed to zero when the $v$ vectors in 2-D lies on the same line (or in 3-D, $v$'s are all on the same surface).
+You do not see that coming, right? <!-- It seems  -->*
 
-Correct! Again, we'll come to show how this is the case very soon. Note that this description is also quite general. It is applicable for transformations between different number of dimensions as well. For example, from equal boxes in 3-D we obtain equal polygons in 2-D:
+<!-- Correct! -->
+Again, we'll come to show how this is the case very soon. Note that this description is also quite general. It is applicable for transformations between different number of dimensions as well. For example, from equal boxes in 3-D we obtain equal polygons in 2-D:
 
 <center class='js'>
 <svg width="630" height="280" id="svg_equivolume_3d2d"></svg>
@@ -923,7 +959,8 @@ That's the right question! Volume contraction or expansion is one of the main co
 
 In the 1-dimensional case $\alpha x = y$, the answer is simply $\alpha$. 
 
-*Right. If $\alpha < 0$, the number line is flipped. If $\alpha = 0$, it is impossible to find $x$ given $\alpha x=0$. In N-dimensional space, however, how do we get such "$\alpha$" factor from an N-by-N matrix?*
+*<!-- Right. --> If $\alpha < 0$, the number line is flipped. If $\alpha = 0$, it is impossible to find $x$ given $\alpha x=0$.
+In N-dimensional space, however, how do we get such "$\alpha$" factor from an N-by-N matrix?*
 
 We can do so by first setting the original box to have a volume of $1$, then compute the volume of the resulting box after transformation. In other words, given $V$, find $\alpha$:
 
@@ -945,6 +982,7 @@ draw_on_svg('find_det',
             find_det);
 </script>
 
-*Then when $\alpha < 0$, the space is flipped, when $\alpha = 0$, the transformation is not invertible?*
+*Then when $\alpha < 0$, the space is flipped, when $\alpha = 0$, the transformation is not invertible*
 
-Exactly. We have not discussed, however, exactly how to find $\alpha$. The keyword for our answer here is *Determinant of $V$*. But first let's take a break here? We'll come back with many more interesting findings.
+<!-- Exactly. -->
+We have not discussed, however, exactly how to find $\alpha$. The keyword for our answer here is *Determinant of $V$*. But first let's take a break here? We'll come back with many more interesting findings.
