@@ -20,7 +20,7 @@ Looking at a child’s birth and onwards, life inevitably seems to be a progress
 
 But looking at the infinity before and after life. Life is a precious tiny sparkle, within which I am gifted with the ability to do something and feel something, instead of nothing.
 
-That’s why parents think their children should be thankful to be born, and children sometimes resent their parents for giving them life, because each is standing on a different vantage point.
+That’s why parents think their children should be thankful to be born, and children sometimes resent their parents for giving them life, because each is standing on their own vantage point.
 
 
 ## **The countdown to death**
@@ -29,7 +29,7 @@ Everyday I wake up, death is yet another day closer.
 
 There might be at most 80 functional years in my life. If one day is counted in one second, there is around 8 hours of countdown to death.
 
-Considering I can't even remember what happened last Thursday, such countdown speed seems to be almost happening in real-time.
+Considering I can't even remember what happened last Thursday, such countdown seems to be almost in real-time!
 
 And death is coming … no matter what. 
 
