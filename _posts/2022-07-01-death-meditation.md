@@ -4,7 +4,7 @@ visible: false
 tag: essay
 ---
 
-**The cosmic perspective** 
+## **The cosmic perspective** 
 
 In the vast universe that is 14 billion years old, a tiny clump of matter, for complex reasons beyond comprehension, comes together and is endowed with the gift of consciousness.
 
@@ -14,7 +14,7 @@ I am here only temporarily. Before I quickly dissolve back into nothingness.
 
 Then after that there will be an eternity without me.
 
-**The human vantage points**
+## **The human vantage points**
 
 Looking at a child’s birth and onwards, life inevitably seems to be a progression towards death.
 
@@ -23,7 +23,7 @@ But looking at the infinity before and after life. Life is a precious tiny spark
 That’s why parents think their children should be thankful to be born, and children sometimes resent their parents for giving them life, because each is standing on a different vantage point.
 
 
-**The countdown to death**
+## **The countdown to death**
 
 Everyday I wake up, death is yet another day closer. 
 
@@ -33,7 +33,7 @@ Considering I can't even remember what happened last Thursday, such countdown sp
 
 And death is coming … no matter what. 
 
-**Death animated life**
+## **The awareness of death animated life**
 
 But, thanks to death, life is worth acting on.
 
@@ -43,9 +43,9 @@ There is no particular “something to do” though. There is no recipe, no inst
 
 Religious texts written a few thousand years ago aimed to bring structure to human’s agricultural life, are now fading into irrelevance. The more humankind understands their universe, the less structure and constraints they find there is to their own lives.
 
-And so the countdown to death is imbued with its first challenge: to bring value and meaning to *your own* life, to make *your own* sparkle of life worth its while. To be human is to be challenged by this.
+And so the countdown to death is imbued with a challenge: to bring value and meaning to *your own* life, to make *your own* sparkle of life worth its while. To be human is to be challenged by this.
 
-**Biochemistry distracts us from death**
+## **Distractions from the awareness of death**
 
 The 8 hours countdown took quite a bit of time to warm up and cool down as well. To realize the truth written in this essay, it took me 25 years. So that’s 2.5 hours gone.
 
@@ -55,16 +55,18 @@ Sleep took away one third of my time, then there is disease and illness, time to
 
 The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of and manipulating my biochemistry. I have now lost count of the many long streaks of dopamine binge that unfortunately stole away months of my life. Years even? Those empty days are forever gone.
 
-Animals are subjected to this too. Hormonal bursts are what drive them. There is no plan nor urgency in their action. Their whole life is a distraction from death.
+## **Human and animals**
 
-Many humans ended up no more than mere animals their entire life. Most humans become more humanly as they get older, when Death becomes more tangible. Yet ironically it is around this time that so much time has been wasted, and regrets set in.
+Animals are dictated by their biochemistry too. Hormonal bursts are what drive them. There is no plan nor urgency in their action. Their whole life is a distraction from death.
 
-The tiny sparkle of life runs out quick. And people, including myself, are constantly distracted from this fundamental fact. Biochemistry reigns me in its cuff, and so I, just like an animal, fear and dread, crave and hide, mindlessly serving the meaningless impulse of my biological programming.
+Many humans ended up no more than mere animals their entire life. Most humans become more humanly as they get older, when death becomes noticably tangible. Yet ironically it is around this time that so much time has been wasted, and regrets set in.
+
+The tiny sparkle of life runs out quick. And people, including myself, are constantly distracted from this fundamental fact. Biochemistry reigns me in its cuff, and so I, just like an animal, fear and dread, crave and hide, mindlessly serving the meaningless impulse of my biological programming. To be human is to have a way out.
 
 **Escaping the biochemistry traps**
 
 
-There are occasional moments of clarity, where my human thoughts prevail, and the awareness of death gets a hold of my attention. Meditation prolonged this, and writing this thought down cements it further. To act in the presence of such awareness is to be human.
+There are occasional moments of clarity, where my human thoughts prevail, and the awareness of death gets a hold of my attention. Meditation prolonged this, and writing this thought down cements it further. 
 
 In those moments of clarity, it is most beneficial to realize that escaping my biochemistry is impossible, while taming and wielding it to my own advantage is possible. Years of biochemistry research are available. To wield such knowledge is the power of human.
 
