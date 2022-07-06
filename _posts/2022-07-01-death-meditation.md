@@ -67,7 +67,7 @@ I have now lost count of the many long streaks of dopamine binge that had unfort
 
 Animals are dictated by their biochemistry too. Hormonal bursts are what drive them. There is no plan nor urgency in their action. Their whole life is a distraction from death.
 
-Many humans ended up no more than mere animals their entire life. Most humans become more humanly as they get older, when death becomes noticably tangible. Yet ironically it is around this time that so much time has been wasted, and regrets set in.
+Many humans ended up no more than mere animals their entire life. Most humans become more humanly as they get older, as death becomes noticably tangible. Yet ironically it is around this time that so much time has been wasted, and regrets set in.
 
 The tiny sparkle of life runs out quick. And people, including myself, are constantly distracted from this fundamental awareness. To be human is to have a way out of such distraction.
 
