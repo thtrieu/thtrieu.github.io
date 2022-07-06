@@ -84,7 +84,9 @@ In those moments of clarity, I also realize that escaping my biochemistry is imp
 
 ## **Meaning of life**
 
-What is the meaning of life? There is none. Each of us who care enough made one up and ran away with it. 
+What is the meaning of life? There is likely none. 
+
+Each of us who care enough made one up and ran away with it. 
 
 We have been doing so throughout the history of humankind, and will be doing so until our ascension to anotherkind.
 
