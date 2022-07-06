@@ -14,6 +14,7 @@ I am here only temporarily. Before I quickly dissolve back into nothingness.
 
 Then after that there will be an eternity without me.
 
+
 ## **The human vantage points**
 
 Looking at a child’s birth and onwards, life inevitably seems to be a progression towards death.
@@ -33,6 +34,7 @@ Considering I can't even remember what happened last Thursday, such countdown se
 
 And death is coming … no matter what. 
 
+
 ## **The awareness of death animated life**
 
 But, thanks to death, life is worth acting on.
@@ -44,6 +46,7 @@ There is no particular “something to do” though. There is no recipe, no inst
 Religious texts written a few thousand years ago aimed to bring structure to human’s agricultural life, are now fading into irrelevance. The more humankind understands their universe, the less structure and constraints they find there is to their own lives.
 
 And so the countdown to death is imbued with a challenge: to make *your own* sparkle of life worth its while. To be human is to be challenged by this.
+
 
 ## **Distractions from the awareness of death**
 
@@ -57,6 +60,7 @@ The modern world is full of such distractions. Today, social media is the number
 
 I have now lost count of the many long streaks of dopamine binge that had unfortunately stole away months of my life. Years even? Those empty days are forever gone.
 
+
 ## **Human and animals**
 
 Animals are dictated by their biochemistry too. Hormonal bursts are what drive them. There is no plan nor urgency in their action. Their whole life is a distraction from death.
@@ -65,14 +69,16 @@ Many humans ended up no more than mere animals their entire life. Most humans be
 
 The tiny sparkle of life runs out quick. And people, including myself, are constantly distracted from this fundamental awareness. To be human is to have a way out of such distraction.
 
-# **Escaping the biochemistry traps**
+
+## **Escaping the biochemistry traps**
 
 
 There are occasional moments of clarity, where my human thoughts prevail, and the awareness of death gets a hold of my attention. Meditation prolonged this, and writing this thought down cements it further. 
 
 In those moments of clarity, it is most beneficial to realize that escaping my biochemistry is impossible, while taming and wielding it to my own advantage is possible. Years of biochemistry research are available. To wield such knowledge is the power of human.
 
-# **Meaning of life**
+
+## **Meaning of life**
 
 What is the meaning of life? There is none. We made it up and went with it. We have been doing it throughout the history of humankind, and will be doing it until humankind ascends to its next plane of existence, if there is any.
 
