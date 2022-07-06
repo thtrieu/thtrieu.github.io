@@ -8,7 +8,7 @@ TL;DR: Death is coming and thus your action brings meaning to life. Your biochem
 
 ## **The cosmic perspective** 
 
-In the vast universe that is 14 billion years old, a tiny clump of matter comes together and therein hosts a spark of consciousness.
+In the vast universe that is 14 billion years old, a tiny clump of matter comes together and therein sparks a gleam of consciousness.
 
 That is me. I am the clump of matter.
 
@@ -21,7 +21,7 @@ After that there will be an eternity - again.
 
 Looking at a child’s birth and onwards, life inevitably seems to be a progression towards death.
 
-But looking at the infinite darkness before and after life, life is a precious tiny sparkle, within which I am gifted the ability to do something and feel something, instead of nothing.
+But looking at the infinite darkness before and after life, life is a chance, within which I am gifted the ability to do something and feel something, instead of nothing.
 
 That’s why parents think their children should be thankful to be born, and children sometimes resent their parents for giving them life, as each is standing on their own vantage point.
 
