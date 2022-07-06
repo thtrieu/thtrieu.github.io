@@ -4,7 +4,7 @@ visible: false
 tag: essay
 ---
 
-TL;DR: Your life is finite and you are the one who brings meaning to it. Your biochemistry will distract you from this mission. To be human is to be aware of and act on these two facts.
+TL;DR: Your life is finite and thus your action brings meaning to life. Your biochemistry will distract you from this mission. To be human is to be aware of these and act accordingly.
 
 ## **The cosmic perspective** 
 
