@@ -54,9 +54,11 @@ The 8 hours countdown took quite a bit of time to warm up and cool down as well.
 
 The remaining time is also subjected to multiple time sinks I cannot escape.
 
-Sleep took away one third of my time, then there is disease and illness, time to commute, time to fall in and out of love. The remaining part is also plagued with subconscious biological urges that constantly suck away time, distracting me from my reality of an inevitable death.
+Sleep took away one third of my time, then there is disease and illness, time to commute, time to fall in and out of love. 
 
-The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of my biochemistry and manipulate my life for the worse. 
+The remaining part is plagued with subconscious biological urges that constantly suck away time, distracting me from the reality of an inevitable death. 
+
+The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of my biochemistry and poisoned by thoughts to that of a drunk and addicted pseudo human. 
 
 I have now lost count of the many long streaks of dopamine binge that had unfortunately stole away months of my life. Years even? Those empty days are forever gone.
 
@@ -75,11 +77,11 @@ The tiny sparkle of life runs out quick. And people, including myself, are const
 
 There are occasional moments of clarity, where my human thoughts prevail, and the awareness of death gets a hold of my attention. Meditation prolonged this, and writing this thought down cements it further. 
 
-In those moments of clarity, it is most beneficial to realize that escaping my biochemistry is impossible, while taming and wielding it to my own advantage is possible. Years of biochemistry research are available. To wield such knowledge is the power of human.
+In those moments of clarity, I also realize that escaping my biochemistry is impossible, while taming and wielding it to my own advantage is becoming easier. Years of neuro-biochemistry research yielded such possibilities. And to wield such knowledge is the power of human.
 
 
 ## **Meaning of life**
 
-What is the meaning of life? There is none. We made it up and went with it. We have been doing it throughout the history of humankind, and will be doing it until humankind ascends to its next plane of existence, if there is any.
+What is the meaning of life? There is none. We made it up and went with it. We have been doing so throughout the history of humankind, and will be doing so until our ascencion to the next plane of existence, if there is any.
 
-Until then, I wish you and me both: the constant awareness of our certain death, a clarity of mind to reign and tame the animal within, and a meaningful life lived to our own accord.
+Until then, I wish you and me both: the constant awareness of our death, a clarity of mind to reign and tame our animals within, and a meaningful life lived to our own accord.
