@@ -4,6 +4,8 @@ visible: false
 tag: essay
 ---
 
+TL;DR: Your life is finite, you are the one who brings meaning to it. Your biochemistry and your animal self will distract you from this mission. To be human is to be aware and act on these two facts.
+
 ## **The cosmic perspective** 
 
 In the vast universe that is 14 billion years old, a tiny clump of matter, for complex reasons beyond comprehension, comes together and is endowed with the gift of consciousness.
