@@ -8,7 +8,7 @@ TL;DR: Your life is finite and thus your action brings meaning to life. Your bio
 
 ## **The cosmic perspective** 
 
-In the vast universe that is 14 billion years old, a tiny clump of matter, for complex reasons beyond comprehension, comes together and is endowed with the gift of consciousness.
+In the vast universe that is 14 billion years old, a tiny clump of matter comes together and is endowed with the gift of consciousness, for a short while.
 
 That is me. I am the clump of matter.
 
@@ -21,7 +21,7 @@ Then after that there will be an eternity without me.
 
 Looking at a child’s birth and onwards, life inevitably seems to be a progression towards death.
 
-But looking at the infinity before and after life. Life is a precious tiny sparkle, within which I am gifted with the ability to do something and feel something, instead of nothing.
+But looking at the infinite darkness before and after life, life is a precious tiny sparkle, within which I am gifted with the ability to do something and feel something, instead of nothing.
 
 That’s why parents think their children should be thankful to be born, and children sometimes resent their parents for giving them life, because each is standing on their own vantage point.
 
@@ -34,20 +34,18 @@ There might be at most 80 functional years in my life. If one day is counted in 
 
 Considering I can't even remember what happened last Thursday, such countdown seems to be almost in real-time!
 
-And death is coming … no matter what. 
+And death is coming no matter what. 
 
 
-## **The awareness of death animated life**
+## **The awareness of death brings meaning to life**
 
-But, thanks to death, life is worth acting on.
+For as long as immortality is unsolved, thanks to death, life is worth acting on.
 
-There is now a sense of Finality, and Finality begs the question - what should I do with my life? Because beyond death, the question is stale forever.
+There is no destined “something to do” though. There is no recipe, no instructions written anywhere. 
 
-There is no particular “something to do” though. There is no recipe, no instructions written anywhere. 
+Religious texts written a few thousand years ago aimed to bring structure to the agricultural life, are now fading into irrelevance. The more humankind understands their universe, the less structure and constraints they find there is to their own lives.
 
-Religious texts written a few thousand years ago aimed to bring structure to human’s agricultural life, are now fading into irrelevance. The more humankind understands their universe, the less structure and constraints they find there is to their own lives.
-
-And so the countdown to death is imbued with a challenge: to make *your own* sparkle of life worth its while. To be human is to be challenged by this.
+And so the countdown to death is imbued with a challenge: to make the most bang for *your own* sparkle of life. To be human is to be challenged by this.
 
 
 ## **Distractions from the awareness of death**
@@ -56,13 +54,13 @@ The 8 hours countdown took quite a bit of time to warm up and cool down as well.
 
 The remaining time is also subjected to multiple time sinks I cannot escape.
 
-Sleep took away one third of my time, then there is disease and illness, time to commute, time to fall in and out of love. 
+Sleep took away one third of my time, then there is disease and illness, time to commute, time to fall in and out of love. All those I do not regret.
 
-The remaining part is plagued with subconscious biological urges that constantly suck away time, distracting me from the reality of an inevitable death. 
+The remaining part, however, is plagued with subconscious biological urges that constantly strip away valuable time, distracting me from the reality of an inevitable death. 
 
-The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of my biochemistry and poisoned my thoughts to that of a drunk and addicted human. 
+The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of my biochemistry and poisoned my thoughts to that of a drunk and addicted animal. 
 
-I have now lost count of the many long streaks of dopamine binge that had unfortunately stole away months of my life. Years even? Those empty days are forever gone.
+I have now lost count of the long streaks of dopamine binge that had unfortunately stole away months of my life. Years even? Those empty days are forever gone.
 
 
 ## **Human and animals**
