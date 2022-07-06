@@ -8,7 +8,7 @@ TL;DR: Your life is finite and thus your action brings meaning to life. Your bio
 
 ## **The cosmic perspective** 
 
-In the vast universe that is 14 billion years old, a tiny clump of matter comes together and is endowed with the gift of consciousness, for a short while.
+In the vast universe that is 14 billion years old, a tiny clump of matter comes together and is endowed with the gift of consciousness.
 
 That is me. I am the clump of matter.
 
@@ -60,7 +60,7 @@ The remaining part, however, is plagued with subconscious biological urges that 
 
 The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of my biochemistry and poisoned my thoughts to that of a drunk and addicted animal. 
 
-I have now lost count of the long streaks of dopamine binge that had unfortunately stole away months of my life. Years even? Those empty days are forever gone.
+I have now lost count of the long streaks of dopamine binge that I had unfortunately spent months of my life on. Years even? Those meaningless hours are forever gone.
 
 
 ## **Human and animals**
@@ -77,11 +77,11 @@ The tiny sparkle of life runs out quick. And people, including myself, are const
 
 There are occasional moments of clarity, where my human thoughts prevail, and the awareness of death gets a hold of my attention. Meditation prolonged this, and writing this thought down cements it further. 
 
-In those moments of clarity, I also realize that escaping my biochemistry is impossible, while taming and wielding it to my own advantage is becoming easier. Years of neuro-biochemistry research yielded such possibilities. And to wield such knowledge is the power of human.
+In those moments of clarity, I also realize that escaping my biochemistry is impossible, while taming and wielding it to my own advantage is possible. Years of neuro-biochemistry research provided such tools. And to wield tools is the power of human.
 
 
 ## **Meaning of life**
 
-What is the meaning of life? There is none. We made it up and went with it. We have been doing so throughout the history of humankind, and will be doing so until our ascencion to the next plane of existence, if there is any.
+What is the meaning of life? There is none. We made it up and ran away with it. We have been doing so throughout the history of humankind, and will be doing so until our ascension to anotherkind.
 
 Until then, I wish you and me both: the constant awareness of our death, a clarity of mind to reign and tame our animals within, and a meaningful life lived to our own accord.
