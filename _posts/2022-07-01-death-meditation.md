@@ -43,7 +43,7 @@ There is no particular “something to do” though. There is no recipe, no inst
 
 Religious texts written a few thousand years ago aimed to bring structure to human’s agricultural life, are now fading into irrelevance. The more humankind understands their universe, the less structure and constraints they find there is to their own lives.
 
-And so the countdown to death is imbued with a challenge: to bring value and meaning to *your own* life, to make *your own* sparkle of life worth its while. To be human is to be challenged by this.
+And so the countdown to death is imbued with a challenge: to make *your own* sparkle of life worth its while. To be human is to be challenged by this.
 
 ## **Distractions from the awareness of death**
 
@@ -53,7 +53,9 @@ The remaining time is also subjected to multiple time sinks I cannot escape.
 
 Sleep took away one third of my time, then there is disease and illness, time to commute, time to fall in and out of love. The remaining part is also plagued with subconscious biological urges that constantly suck away time, distracting me from my reality of an inevitable death.
 
-The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of and manipulating my biochemistry. I have now lost count of the many long streaks of dopamine binge that unfortunately stole away months of my life. Years even? Those empty days are forever gone.
+The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of my biochemistry and manipulate my life for the worse. 
+
+I have now lost count of the many long streaks of dopamine binge that had unfortunately stole away months of my life. Years even? Those empty days are forever gone.
 
 ## **Human and animals**
 
@@ -61,16 +63,16 @@ Animals are dictated by their biochemistry too. Hormonal bursts are what drive t
 
 Many humans ended up no more than mere animals their entire life. Most humans become more humanly as they get older, when death becomes noticably tangible. Yet ironically it is around this time that so much time has been wasted, and regrets set in.
 
-The tiny sparkle of life runs out quick. And people, including myself, are constantly distracted from this fundamental fact. Biochemistry reigns me in its cuff, and so I, just like an animal, fear and dread, crave and hide, mindlessly serving the meaningless impulse of my biological programming. To be human is to have a way out.
+The tiny sparkle of life runs out quick. And people, including myself, are constantly distracted from this fundamental awareness. To be human is to have a way out of such distraction.
 
-**Escaping the biochemistry traps**
+# **Escaping the biochemistry traps**
 
 
 There are occasional moments of clarity, where my human thoughts prevail, and the awareness of death gets a hold of my attention. Meditation prolonged this, and writing this thought down cements it further. 
 
 In those moments of clarity, it is most beneficial to realize that escaping my biochemistry is impossible, while taming and wielding it to my own advantage is possible. Years of biochemistry research are available. To wield such knowledge is the power of human.
 
-**Meaning of life**
+# **Meaning of life**
 
 What is the meaning of life? There is none. We made it up and went with it. We have been doing it throughout the history of humankind, and will be doing it until humankind ascends to its next plane of existence, if there is any.
 
