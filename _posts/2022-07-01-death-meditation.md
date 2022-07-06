@@ -58,7 +58,7 @@ Sleep took away one third of my time, then there is disease and illness, time to
 
 The remaining part is plagued with subconscious biological urges that constantly suck away time, distracting me from the reality of an inevitable death. 
 
-The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of my biochemistry and poisoned by thoughts to that of a drunk and addicted pseudo human. 
+The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of my biochemistry and poisoned by thoughts to that of a drunk and addicted human. 
 
 I have now lost count of the many long streaks of dopamine binge that had unfortunately stole away months of my life. Years even? Those empty days are forever gone.
 
