@@ -54,7 +54,7 @@ The remaining time is also subjected to multiple time sinks I cannot escape.
 
 Sleep took away one third of my life, then there is disease and illness, time to commute, time to fall in and out of love. All those I do not regret.
 
-The remaining part, however, is plagued with distractions away from the awareness of death. 
+The remaining part, however, is plagued with distractions against the awareness of death. 
 
 The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of our biochemistry and reducing our lives to that of mindless automatons. 
 
