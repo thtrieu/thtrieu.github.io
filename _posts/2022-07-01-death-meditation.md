@@ -45,11 +45,11 @@ There is no destined mission though. There is no recipe, no instructions written
 
 Religious texts written a few thousand years ago brought structure to the agricultural life, are now slowly fading into irrelevance. The more humankind understands their universe, the less structure and constraints they find there is to live their own lives.
 
-And so the countdown to death is imbued with a challenge: to make the most out of *my own* existence. 
+And so the countdown to death is imbued with a challenge: to make the most out of *your own* existence. 
 
-What do I make the most out of? That's another discussion. For now, it is sufficient to say it is whatever I deemed to be valuable. 
+What do you make the most out of? That's another discussion. For now, it is sufficient to say it is whatever you deemed to be valuable. 
 
-Regardless, all valuable things take time, and without the awareness of death and the urgency that comes with it, we are doomed to waste our lives.
+All valuable things take time, and without the awareness of death and the urgency that comes with it, we are doomed to waste our lives.
 
 
 ## **Distractions from the awareness of death**
