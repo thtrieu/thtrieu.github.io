@@ -58,7 +58,7 @@ The remaining part, however, is plagued with distractions away from the awarenes
 
 The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of our biochemistry and reducing our lives to that of mindless automatons. 
 
-Dopamine binges stole away months of my life. Years even? Those empty hours are forever gone.
+Dopamine binges stole away months of my life. Years even? I will never know. Those empty hours are no longer part of my life, they are gone.
 
 
 ## **Human and animals**
