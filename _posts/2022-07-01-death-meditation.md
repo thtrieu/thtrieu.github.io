@@ -41,13 +41,9 @@ And death is coming no matter what.
 
 For as long as immortality is unsolved, thanks to death, life is worth acting on.
 
-There is no destined mission though. There is no recipe, no instructions written anywhere. 
+There is no destined mission though. There is no recipe, no instructions written anywhere. Religious texts written a few thousand years ago brought structure to the agricultural life, are now slowly fading into irrelevance. The more humankind understands their universe, the less structure and constraints they find there is to live their own lives.
 
-Religious texts written a few thousand years ago brought structure to the agricultural life, are now slowly fading into irrelevance. The more humankind understands their universe, the less structure and constraints they find there is to live their own lives.
-
-And so the countdown to death is imbued with a challenge: to make the most out of *your own* existence. 
-
-What do you make the most out of? That's another discussion. For now, it is sufficient to say it is whatever you deemed to be valuable. 
+And so the countdown to death is imbued with a challenge: to make the most out of *your own* existence. What do you make the most out of? That's another discussion. For now, it is sufficient to say it is whatever you deem to be valuable. 
 
 All valuable things take time, and without the awareness of death and the urgency that comes with it, we are doomed to waste our lives.
 
@@ -60,11 +56,11 @@ The remaining time is also subjected to multiple time sinks I cannot escape.
 
 Sleep took away one third of my time, then there is disease and illness, time to commute, time to fall in and out of love. All those I do not regret.
 
-The remaining part, however, is plagued with distractions from the reality of an inevitable death. 
+The remaining part, however, is plagued with distractions away from the awareness of death. 
 
-The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of my biochemistry and poisoned my thoughts to that of a drunk and addict. 
+The modern world is full of such distractions. Today, social media is the number one culprit, taking advantage of our biochemistry to reduce our lives to that of mindless automatons. 
 
-Dopamine binges I have lost count of stole away months of my life. Years even? Those meaningless hours are forever gone.
+Dopamine binges stole away months of my life. Years even? Those meaningless hours are forever gone.
 
 
 ## **Human and animals**
