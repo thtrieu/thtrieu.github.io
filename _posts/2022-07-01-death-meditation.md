@@ -75,9 +75,11 @@ The tiny sparkle of life runs out quick. And people, including myself, are const
 
 There are occasional moments of clarity, where my human thoughts prevail, and the awareness of death gets a hold of my attention. 
 
-Meditation prolonged this, and writing this down makes it crystal clear. I hope through publishing this online, the awareness takes root and spreads amongst its readers.
+Meditation prolonged this, and writing this down makes it crystal clear. I hope through publishing this online, the awareness takes root and spreads amongst its readers too.
 
-In those moments of clarity, I also realize that escaping my biochemistry is impossible, while taming and wielding it to my own advantage is possible. Years of neuro-biochemistry research provided such tools. And to wield tools is the power of human.
+In those moments of clarity, I also realize that escaping my biochemistry is impossible, while taming and wielding it to my own advantage is possible, though not trivial. 
+
+Fortunately, a modern human have unprecedented power to do so. Years of neuro-biochemistry research provided knowledge and tools. And to wield tools is the power of human.
 
 
 ## **Meaning of life**
