@@ -32,8 +32,6 @@ Everyday I wake up, death is yet another day closer.
 
 There might be at most 80 functional years in my life. If one day is counted in one second, there is around 8 hours of countdown to death.
 
-Well, since I can't even remember what happened last Thursday, such countdown up until this point seems to be almost in real-time.
-
 And death is coming no matter what. 
 
 
