@@ -79,7 +79,7 @@ Meditation prolonged this, and writing this down makes it crystal clear. I hope 
 
 In those moments of clarity, I also realize that escaping my biochemistry is impossible, while taming and wielding it to my own advantage is possible, though not trivial. 
 
-Fortunately, a modern human have unprecedented power to do so. Years of neuro-biochemistry research provided knowledge and tools. And to wield tools is the power of human.
+Fortunately, a modern human has unprecedented power to do so. Years of neuro-biochemistry research provided knowledge and tools. And to wield tools is the power of human.
 
 
 ## **Meaning of life**
