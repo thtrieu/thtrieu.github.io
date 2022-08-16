@@ -109,12 +109,16 @@ Okay. You sunk to your sofa. This is getting very trippy.
 
 *Thanks*. You thought but didn't reply. Things are getting convincing.
 This can still be a person who is interested in your online post, 
-at the same time also a super hacker of household cameras. And a stalker.
+at the same time also a super hacker of household cameras. And a stalker. And a pranker.
+An owner of too much free time. A sadistic comedian. *My* type of comedy, but not one in which I'm a character.
 Everytime you added on one such description, you know the probability for such explanation is getting more and more improbable.
-How much time and efforts and planning for a person to pull of such pranks?
+How much time and efforts and planning for a person to pull off such pranks?
 
 Still, what is the probability for the other explanation: such a god exist? 
-It can be very small or very large. Maybe even 100%. You open your laptop and carefully re-read your blog post.
+It can be very small or very large. Maybe even 100%. 
+
+You turned off your house cams, opened your laptop and carefully re-read your blog post.
+*Think* - you thought.
 
 --------------------------
 
