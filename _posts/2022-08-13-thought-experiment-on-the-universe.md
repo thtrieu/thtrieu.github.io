@@ -31,7 +31,7 @@ Has your bank account been hacked? Why don't scammers just steal the money silen
 Right, they're stuck somewhere and need to pry for more info. *At least the suckers could've wait until 9AM*. 
 You guessed social engineering is what's up.
 
-"scam fuck off", you texted back while looking up the bank credit card contact.
+"scam fuck off", you texted back while hurrily looking up the bank credit card contact.
 
 Texts flooded in. You've never seen scammers going this far. *Move on to your next victim*, you think, *I'm broke, why so eager?*
 
@@ -50,7 +50,7 @@ What you did yesterday. The day before that. Number of eggs in your fridge (beca
 
 "I'm not a scammer. I'm \*the\* GOD. think."
 
-You blocked the number. Run to the bathroom and washed your face. 
+You blocked the number. Ran to the bathroom and splashed your face. 
 *I'm fully awake, this is not a dream.*
 
 You carefully examine the details of your face. wrinkles and pores are in the right places. Detailed and fairly realistic.
