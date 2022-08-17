@@ -112,35 +112,41 @@ Okay. You sunk to your sofa. This is getting very trippy.
 This can still be a person who is interested in your online post, 
 at the same time also a super hacker of household cameras. And a stalker. And a pranker.
 An owner of too much free time. A sadistic comedian.
-Each you added on one such description, you know the things are getting more and more improbable.
+
+Each time you added on one such description, the prankster became more and more improbable.
 How much time and efforts and planning for a person to pull off such pranks? Must be a team.
 
-Still, what is the probability for the other explanation: such a god exist? 
+Still, what is the probability for the other explanation: *that* god exist? 
 Can be any number between 0 and 1. Maybe even 100%, you are a believer. You said it yourself online.
 
 Still, you don't like the God explanation at this very moment, so you'll push the prankster's explanation.
-The person still sound very confident. Their bag of tricks aren't running out?
-This is an adversarial game overwhelmingly in your favor. The burden of proof is on them.
+Until the "getting coffee" message. The person still sound very confident. Their bag of tricks aren't running out?
 
+*I need a coffee myself*. You went to the kitchen.
+
+The smell of coffee calm your nerves.
+This is an adversarial game overwhelmingly in your favor. The burden of proof is on them.
 Wait. Maybe they are just wasting your time? 
 
 Oh! Maybe they are distracting you from your normal routine while their scammers are busy working on their stuff.
 
-Yes! You not going about your normal routine is exactly what they want. Gotcha. Suckers.
+Yes! Not going about your normal routine is exactly what they want. Gotcha. Suckers.
 Today is the first weekend. *What is my normal routine?* You're just going to binge Youtube. 
 You do have plans to obsessively revise your blog post -- even though no one ever read it.
 
 Those are very innocuous things. But what else otherwise?
 
 Ok. Commit. You are going to do just that. Opened your laptop. Checked the youtube feed. No mood for binging now.
-Then you opened the blog post. No, You'll check your bank activity first. All clear. You locked all the accounts. 
+Then you opened the blog post. No, You'll check your bank activity first ...
 
-A text message.
+All clear. You locked all the accounts. 
+
+A text message came in.
 
 "See? I am not a scammer. I know your card info all along (************) but did not use it."
 "If I wanted to distract you, could have just left you sleeping instead."
 
-*Damn it! They anticipated me verifying my bank activity? They proved their point even further.*
+*Damn it! They anticipated me checking bank activity? They proved their point even further.*
 
 *What am I missing?* Right. They know what you are doing, so you shuffled around the house and unplugged the security cams.
 
@@ -177,31 +183,32 @@ Moreover, you are neither an easy nor worthy target."
 "Just do it. Remember to commit before texting, make a call if that's what you prefer."
 
 .. *Okay. The ultimate test. What's so special about 5-digits? Some mathematical tricks?*
+
 *There is absolutely no way. Alright, let's make this quick, my ultimate test is, suprise suprise! A 6-digit number: 172533.* 
-You typed into the phone "Committed. Make a gue.." and a new text comes in before you even finished.
+You typed into the phone "Committed. What is your gue.." and a new text comes in before you even finished.
 
 "That's 172533."
 
-You hear a high pitch ring behind your ears. Your heart skipped a beat.
+You heard a high pitch ring behind your ears. Your heart skipped a beat.
 That's when you know you are absolutely shocked and terrified. 
 As if a ghost has just appeared in front of your eyes.
 
 The panick starts to set in. You know you aren't going to rationalize this away .. no more. The evidence is now too many.
 
-*Calm down. This is it. It's not a dream. They got you. Whatever this thing claimed to be, it has to be crazy advanced science.*
+*Calm down. This is it. It's not a dream. They got you. Whatever this thing claimed to be, it has to be crazy advanced tech.*
 
-*How did the person do it? Think of it.. they did predicted the future before... by rerunning the universe.*
+*How did the person do it? Think of it.. they did predicted the future once before ... by running to conversation again.*
 
-*So they simply went back and had this same conversation all over? No, the seeding is at Big Bang. So they fast forwarded 14 billion years all over.*
+*So they simply went back and had this same conversation all over? No, the seeding might be at Big Bang. So they fast forwarded 14 billion years all over.*
+
+*What kind of computers can do that?*
 
 You started to feel an immense sadness. Yes, you have long rationally came to terms with determinism, that all your thoughts and actions are determined.
 All is governed by physical laws. The universe might be chaotic and hard to predict, but setting things over and everything will unfolds the same way.
-Yet, this is the first time you've actually experienced such philosophical predictions. Cold, hard reality cuts deep and it hurts. 
-And even this train of thoughts will repeat if the person reboot your universe once more. 
+Yet, this is the first time you've actually experienced such philosophical predictions first-hand. Cold, hard reality cuts deep and it hurts. 
+And even this train of thoughts will repeat if the person decided to reboot your universe once more. 
 
-By rebooting, they truly have the immense power to know both the past *and* the future.
-
-No time to wilt now. You have to press on. What is the purpose of this sudden first contact?
+No time to wilt now. You have to press on. First off, what is the purpose of this sudden contact?
 
 *Now is the time to find out.*
 
