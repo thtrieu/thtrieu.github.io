@@ -4,7 +4,7 @@ visible: false
 tag: essay
 ---
 
-One day you woke up to the ringing of your phone. 
+Morning. You woke up to the ringing of your phone. 
 
 Person on the other side told you your unniverse has just been created an hour ago.
 
@@ -16,7 +16,7 @@ Messages appeared on the phone.
 
 Person told you your name, your age, your address.
 
-Now you are fully awake and slightly panicked, what did you got yourself into? 
+Now you are fully awake and slightly panicked, what have you got yourself into? 
 
 You've kept yourself reasonably clean and protected online.
 
@@ -60,23 +60,21 @@ You're a nerd. You followed the protocol to verify a lucid dream. You've been pr
 You got a bad feeling in the back of your mind. Maybe this is it. The person is really *that* God?
 *Ridiculous. A simpler explanation is always preferred.*
 
-Another text chain.
+Another text chain from another number:
 
 "I thought you'll accept this easier given what you ranted online last week, 
 "Sorry that I'm not very realistic in my expectations. Ask away."
 
-Okay. *Someone read my blog post, and decided to unleash a prank on me*, you thought.
+Okay. *Someone read my blog post, got unproportionally inspired, and decided to unleash a prank on me*, you thought.
 *Although that can be somewhat disappointing*. 
 *No*, you corrected yourself, you would prefer this to be indeed a prank.
 You pray for it to be one of your asshole friends. Or even a very skilled hacker.
 
-"Okay I'll game. Tell me what I am thinking?"
+"Okay I'll game. Tell me what number I am thinking of?"
 
 "Don't know. Thoughts aren't recorded anywhere. Besides, we are in a real-time conversation now."
 
-You snickered. *I thought you're god?* 
-
-"But you know my fridge?"
+You snickered. *I thought you're god?* "But you know my fridge?"
 
 "That's recorded in your house cam."
 
@@ -119,10 +117,47 @@ It can be very small or very large. Maybe even 100%, you are a believer. You sai
 
 Still, you don't like the God explanation at this very moment, so you'll push the prankster's explanation.
 The person still sound very confident. Their bag of tricks aren't running out?
-This is an adversarial game overwhelmingly in my favor. Very improbable. What am I missing?
+This is an adversarial game overwhelmingly in your favor. The burden of proof is on them.
+Maybe they are wasting your time? Oh! Maybe they are distracting you from your normal routine, scratching your head on this puzzle,
+while their scammers are busy working on their stuff.
 
-You turned off your house cams, opened your laptop and carefully re-read your blog post.
-*Think* - you thought.
+Yes! You not going about your normal routine is exactly what they want. Gotcha. Suckers.
+Today is the first weekend. What is your normal routine? You're just going to binge Youtube. 
+You do have plans to obsessively revise your blog post -- even though no one ever read it.
+
+Then you are going to do just that. Opened your laptop. Check the youtube feed. Then you open the blog post.
+No, You'll check your bank activity. All clear. You locked all the cards. 
+
+A text message.
+
+"See? I am not a scammer. I know your card info all along (************) but did not use it"
+*Damn it! They anticipated me verifying my bank activity. They proved their point even further.*
+
+"I don't have a lot of time though. The key to your project is the seeding sequence."
+"I could have told you this earlier, but it never worked out, you've always invariably lost your mind."
+*They know about my project. Of course they do. But seeding sequence? That's just outrageous.*
+
+*What am I missing?* Right. They know what you are doing, so you turned off the house cam.
+*But what if this is exactly what they want me to do? To go online and binge and do nothing?*
+You started to get very frustrated. How many level of reverse-anticipation is going on here?
+
+"I know you are frustrated. Nothing is going to happen to your money at least. Right?"
+*Right, I've locked all my cards. Oh shit. All they want me to do is to sign in my bank account!*
+*There must be a keylogger installed on my PC. Now they know my password god damn it!*
+
+"I know your bank account, yes. I also know a bunch of others. You don't have much money."
+"I could have spent your money all along, but I didn't. I am still here. If I am a scammer, why would I risk hanging around chatting nonsense like this?"
+"That is just more footprints. Scammers don't work like that. They are busy, their hit rate is very low. You are certainly not a worthy target."
+
+*Okay, that make sense. Let me call 911 first*. 
+
+"Calm down, I am indeed the god you talk about in your blog post. Or should I say, the creator?"
+
+"The discoverer." - *because such god have no say in how the universe unfolds after its creation.*
+
+"Right, that one. But I am now actively creating its future, correct?"
+
+... "Correct." - You resigned. Weekend is indeed for entertainment.
 
 --------------------------
 
