@@ -230,7 +230,11 @@ You called the number.
 
 "Japanese?"
 
-"No. "
+"No. I'm from another world, not just an alternate history of Earth. A legit different civilization."
+
+"Aliens?"
+
+"Aliens, outside of your space and time."
 
 --------------------------
 
