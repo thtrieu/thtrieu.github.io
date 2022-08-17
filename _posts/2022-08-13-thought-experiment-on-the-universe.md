@@ -98,10 +98,10 @@ Obscure historical events first recorded by a camera?
 You panicked again. This person either read minds, or is extremely smart and have studied my way of thinking fairly extensively.
 A stalker? Someone who find sadistic pleasure in toturing overthinking nerds like myself? 
 
-"I thought you cannot read mind?" *why are you hiding your power ... god? I thought there is no malicious intent here*
+"I thought you cannot read mind?" *why are you lying? What trickery is this?*
 
-"No, I cannot read minds still. Except we already did this last time. 
-In the previous creation of your universe, you asked me exactly this."
+"No, I cannot read minds still. I know because we already did this last time.
+In the previous creation of your universe, you asked for exactly that."
 
 Okay. You sunk to your sofa. This is getting very trippy. 
 
@@ -145,7 +145,7 @@ You started to get very frustrated. How many level of reverse-anticipation is go
 "I know you are frustrated. Nothing is going to happen to your money at least. Right?"
 
 *Right, I've locked all my cards. Oh shit. All they want me to do is to sign in my bank account!*
-*There must be a keylogger installed on my PC. Now they know my password god damn it!*
+*There must be a keylogger installed on my PC. Now they might already know my password god damn it!*
 
 "I know your password since forever. But you set up 2-step verification so it shouldn't matter."
 
