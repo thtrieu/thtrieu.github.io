@@ -12,6 +12,8 @@ Person is happy that her EM wave has finally tethered to your own universe.
 
 WTF? Whatever. "Nô spéak Englịsh" you said and hang up.
 
+You checked the time. Too early. Back to sleep.
+
 Messages appeared on the phone.
 
 Person told you your name, your age, your address.
@@ -130,26 +132,30 @@ No, You'll check your bank activity. All clear. You locked all the cards.
 
 A text message.
 
-"See? I am not a scammer. I know your card info all along (************) but did not use it"
+"See? I am not a scammer. I know your card info all along (************) but did not use it."
+"If I want to distract you, could have just left you sleep instead."
+
 *Damn it! They anticipated me verifying my bank activity. They proved their point even further.*
 
-"I don't have a lot of time though. The key to your project is the seeding sequence."
-"I could have told you this earlier, but it never worked out, you've always invariably lost your mind."
-*They know about my project. Of course they do. But seeding sequence? That's just outrageous.*
-
 *What am I missing?* Right. They know what you are doing, so you turned off the house cam.
+
 *But what if this is exactly what they want me to do? To go online and binge and do nothing?*
 You started to get very frustrated. How many level of reverse-anticipation is going on here?
 
 "I know you are frustrated. Nothing is going to happen to your money at least. Right?"
+
 *Right, I've locked all my cards. Oh shit. All they want me to do is to sign in my bank account!*
 *There must be a keylogger installed on my PC. Now they know my password god damn it!*
 
-"I know your bank account, yes. I also know a bunch of others. You don't have much money."
-"I could have spent your money all along, but I didn't. I am still here. If I am a scammer, why would I risk hanging around chatting nonsense like this?"
-"That is just more footprints. Scammers don't work like that. They are busy, their hit rate is very low. You are certainly not a worthy target."
+"I know your password since forever. But you set up 2-step verification so it shouldn't matter.
 
-*Okay, that make sense. Let me call 911 first*. 
+*Right, my phone is here. They aren't going to do anything without it.*
+
+"Think. If I am a scammer, why would I risk hanging around chatting nonsense like this?"
+"That is just more footprints. Scammers don't work like that. They are busy, their hit rate is very low. They move on. 
+Moreover, you are certainly not a worthy target."
+
+*Okay, that make sense...* 
 
 "Calm down, I am indeed the god you talk about in your blog post. Or should I say, the creator?"
 
