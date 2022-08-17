@@ -128,7 +128,7 @@ Today is the first weekend. What is your normal routine? You're just going to bi
 You do have plans to obsessively revise your blog post -- even though no one ever read it.
 
 Then you are going to do just that. Opened your laptop. Check the youtube feed. Then you open the blog post.
-No, You'll check your bank activity. All clear. You locked all the cards. 
+No, You'll check your bank activity first. All clear. You locked all the cards. 
 
 A text message.
 
@@ -147,7 +147,7 @@ You started to get very frustrated. How many level of reverse-anticipation is go
 *Right, I've locked all my cards. Oh shit. All they want me to do is to sign in my bank account!*
 *There must be a keylogger installed on my PC. Now they know my password god damn it!*
 
-"I know your password since forever. But you set up 2-step verification so it shouldn't matter.
+"I know your password since forever. But you set up 2-step verification so it shouldn't matter."
 
 *Right, my phone is here. They aren't going to do anything without it.*
 
@@ -157,13 +157,13 @@ Moreover, you are certainly not a worthy target."
 
 *Okay, that make sense...* 
 
-"Calm down, I am indeed the god you talk about in your blog post. Or should I say, the creator?"
+"Calm down, I am indeed the god you talked about in your blog post. Or should I say, the creator?"
 
-"The discoverer." - *because such god have no say in how the universe unfolds after its creation.*
+"The discoverer." - You broke your own silence. *because such god have no say in how the universe unfolds after its creation.*
 
 "Right, that one. But I am now actively creating its future, correct?"
 
-... "Correct." - You resigned. Weekend is indeed for entertainment.
+... "Correct." - You resigned. This is something new. Your curiosity got the better of you.
 
 --------------------------
 
