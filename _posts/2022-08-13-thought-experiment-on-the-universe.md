@@ -81,7 +81,7 @@ You snickered. *I thought you're god?* "But you know my eggs?"
 
 "That's recorded in your house security cam."
 
-Okay, I see. God here claimed to have access to all things everything recorded anywhere anytime?
+Okay, I see. Goddess here claimed to have access to all things everything recorded anywhere anytime?
 
 "Then you're simply a hacker."
 
@@ -108,7 +108,7 @@ Okay. You sunk to your sofa. This is getting very trippy.
 
 "Let that sink in, I'll go get a cup of coffee." - the next text bubble read.
 
-*Thanks*. You thought but didn't reply. *Things are getting convincing*.
+*Thanks*. You thought but didn't reply. *Why does this sound convincing? What am I missing?*.
 This can still be a person who is interested in your online post, 
 at the same time also a super hacker of household cameras. And a stalker. And a pranker.
 An owner of too much free time. A sadistic comedian.
