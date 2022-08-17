@@ -26,7 +26,7 @@ You know phishing when you saw one. You're not your mom.
 
 Personal info is only known by your bank and employer.
 
-Has your bank account been hacked? Why don't scammers just silently stole the money?
+Has your bank account been hacked? Why don't scammers just steal the money silently?
 
 Right, they're stuck somewhere and need to pry for more info. *At least the suckers could've wait until 9AM*. 
 You guessed social engineering is what's up.
