@@ -10,7 +10,7 @@ Person on the other side told you your universe has just been created few hours 
 
 Person is happy that her EM wave has finally tethered.
 
-WTF? Whatever. "Nô spéak Englịsh" you said and hang up.
+WTF? Whatever. "Nô spéak Englịsh" you said and hung up.
 
 You checked the time. Too early. Back to sleep.
 
@@ -18,7 +18,7 @@ Messages appeared on the phone.
 
 Person told you your name, your age, your address.
 
-Now you are fully awake and slightly panicked, what have you got yourself into? 
+Now you are awake and slightly panicked, what have you got yourself into? 
 
 You've kept yourself reasonably clean and protected online.
 
@@ -26,16 +26,16 @@ You know phishing when you saw one. You're not your mom.
 
 Personal info is only known by your bank and employer.
 
-Has your bank account been hacked? Why don't they just silently spend the money?
+Has your bank account been hacked? Why don't scammers just silently stole the money?
 
 Right, they're stuck somewhere and need to pry for more info. *At least the suckers could've wait until 9AM*. 
-Social engineering is going on.
+You guessed social engineering is what's up.
 
 "scam fuck off", you texted back while looking up the bank credit card contact.
 
 Texts flooded in. You've never seen scammers going this far. *Move on to your next victim*, you think, *I'm broke, why so eager?*
 
-In the text bubles, person told you your life story: 
+The text bubbles told your life story:
 
 Born and raised to a Vietnamese middle class family, in a peaceful coastal village, moved to a bigger city for college. 
 Moved to the U.S. for work and then for study.
@@ -43,7 +43,7 @@ Moved to the U.S. for work and then for study.
 This is getting out of hand. Still, those are pretty generic and can possibly be guessed based on my legal name. 
 But this is still hitting a bit too close to home. 
 
-You almost stopped yourself scrolling to the next text bubbles:
+You almost stopped yourself scrolling to see what's next:
 
 Your parents name, your first home address, second one, then the third one. Your siblings, your partner.
 What you did yesterday. The day before that. Number of eggs in your fridge (because you counted them). Then,
@@ -60,8 +60,8 @@ The bug in your code is now freshly loaded in your mind and no, you still cannot
 
 You followed the protocol to break a lucid dream. You've been prepared for this day alright.
 
-*Who can this be? Not funny at all.* Their knowledge of you is just too intimate. 
-You got a bad feeling in the back of your mind. Maybe this is it. The person is really \*that\* god?
+*Who can this be? Not funny at all.* Their knowledge of you is too intimate. 
+You got a bad feeling in the back of your mind. Maybe this is it. The person is really \*that\* *thing*?
 *Ridiculous. A simpler explanation is always preferred.*
 
 Another text chain from another number:
@@ -79,16 +79,16 @@ You pray for it to be one of your asshole friends. Or even a very skilled hacker
 
 You snickered. *I thought you're god?* "But you know my eggs?"
 
-"That's recorded in your house cam."
+"That's recorded in your house security cam."
 
-Okay, I see. God here claimed to know all things everything recorded anywhere anytime?
+Okay, I see. God here claimed to have access to all things everything recorded anywhere anytime?
 
 "Then you're simply a hacker."
 
-"Functionally yes, hacking into the world I created."
+"Functionally yes, hacking into the world that *I* created."
 
-Okay. What would distinguish such God from a mere contemporary super hacker?
-Obscure historical events first recorded by a camera?
+Okay. What would distinguish such God from a contemporary super hacker?
+Maybe the hacker won't know random obscure historical events first recorded by a camera?
 
 "By the way that won't work"
 
@@ -102,7 +102,7 @@ A stalker? Someone who find sadistic pleasure in toturing overthinking nerds lik
 "I thought you cannot read mind?"
 
 "Correct, I cannot read minds. I know because we already did this last time.
-In the previous creation of your universe, you asked for exactly that."
+In the previous creation of your universe, you asked for exactly that: the first ever recorded photos."
 
 Okay. You sunk to your sofa. This is getting very trippy. 
 
@@ -127,7 +127,7 @@ Wait. Maybe they are just wasting your time?
 Oh! Maybe they are distracting you from your normal routine while their scammers are busy working on their stuff.
 
 Yes! You not going about your normal routine is exactly what they want. Gotcha. Suckers.
-Today is the first weekend. *What is your normal routine?* You're just going to binge Youtube. 
+Today is the first weekend. *What is my normal routine?* You're just going to binge Youtube. 
 You do have plans to obsessively revise your blog post -- even though no one ever read it.
 
 Those are very innocuous things. But what else otherwise?
@@ -142,33 +142,88 @@ A text message.
 
 *Damn it! They anticipated me verifying my bank activity? They proved their point even further.*
 
-*What am I missing?* Right. They know what you are doing, so you shuffled around house and unplug the security cams.
+*What am I missing?* Right. They know what you are doing, so you shuffled around the house and unplugged the security cams.
 
-*But what if this is exactly what they want me to do? To go online and binge and do nothing?*
+*But what if this is exactly what they want me to do? To go online and unplug my cctv?*
 You started to get very frustrated. How many levels of *I know that you know that I know that you know...* is going on here?
 
 "I know you are frustrated. Nothing is going to happen to your money at least. Right?"
 
-*Right, I've locked all my cards. Oh shit. All they wanted me to do is to simply sign in my bank account on the PC!*
-*I walked right in their trap. There must be a keylogger. Now they might already know my password god damn it!*
+*Right, I've locked all my cards. Oh shit. All they wanted me to do is signing in my bank account on the PC!*
+*I walked right in their trap. There must be a keylogger!*
 
-"I know your password since forever. But you set up 2-step verification so it shouldn't matter."
+"I know your password. Two years ago you changed it from (*******) to (*******). But there is a 2-step verification so it shouldn't matter."
 
 *Right, my phone is here. They aren't going to do anything without it.*
 
 "Think. If I am a scammer, why would I risk hanging around chatting nonsense like this?"
-"That is just more footprints. Scammers don't work like that. They are busy, their hit rate is very low. They move on. 
+"That is just leaving more footprints. Scammers don't work like that. They are busy, their hit rate is very low. They move on. 
 Moreover, you are neither an easy nor worthy target."
 
 *Okay, that make sense...* 
 
-"Look, I am indeed the god you talked about in your blog post. Or should I say, the creator?"
+"Look, I am the god you talked about in your blog post. Or should I say, the creator?"
 
 "The discoverer." - You broke your own silence. *because such god have no say in how the universe unfolds after its creation.*
 
 "Right, that one. But I am now actively creating its future, correct?"
 
 ... "Correct." - You resigned. This is something new. Your curiosity got the better of you.
+
+"Actually, I've got an idea. I am now going to guess your 5-digit number. Is that your ultimate test?"
+
+"what now?" - *I'm so so lost!*
+
+"Just do it. Remember to commit before texting, make a call if that's what you prefer."
+
+.. *Okay. The ultimate test. What's so special about 5-digits? Some mathematical tricks?*
+*There is absolutely no way. Alright, let's make this quick, my ultimate test is, suprise suprise! A 6-digit number: 172533.* 
+You typed into the phone "Committed. Make a gue.." and a new text comes in before you even finished.
+
+"That's 172533."
+
+You hear a high pitch ring behind your ears. Your heart skipped a beat.
+That's when you know you are absolutely shocked and terrified. 
+As if a ghost has just appeared in front of your eyes.
+
+The panick starts to set in. You know you aren't going to rationalize this away .. no more. The evidence is now too many.
+
+*Calm down. This is it. It's not a dream. They got you. Whatever this thing claimed to be, it has to be crazy advanced science.*
+
+*How did the person do it? Think of it.. they did predicted the future before... by rerunning the universe.*
+
+*So they simply went back and had this same conversation all over? No, the seeding is at Big Bang. So they fast forwarded 14 billion years all over.*
+
+You started to feel an immense sadness. Yes, you have long rationally came to terms with determinism, that all your thoughts and actions are determined.
+All is governed by physical laws. The universe might be chaotic and hard to predict, but setting things over and everything will unfolds the same way.
+Yet, this is the first time you've actually experienced such philosophical predictions. Cold, hard reality cuts deep and it hurts. 
+And even this train of thoughts will repeat if the person reboot your universe once more. 
+
+By rebooting, they truly have the immense power to know both the past *and* the future.
+
+No time to wilt now. You have to press on. What is the purpose of this sudden first contact?
+
+*Now is the time to find out.*
+
+You called the number.
+
+"So M, you're a believer now?"
+
+"I'm scared."
+
+"I'm friendly and I need your help."
+
+"And I'm not calling you god, or creator, or whatever."
+
+"I don't like that either. I could have avoided that word, but too bad that's what we used last time and I have to follow the script..."
+
+"I know I know. Makes sense... So you got a name?"
+
+"Akira"
+
+"Japanese?"
+
+"No. "
 
 --------------------------
 
