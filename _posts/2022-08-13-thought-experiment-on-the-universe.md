@@ -40,7 +40,7 @@ The text bubbles told your life story:
 Born and raised to a Vietnamese middle class family, in a peaceful coastal village, moved to a bigger city for college. 
 Moved to the U.S. for work and then for study.
 
-This is getting out of hand. Still, those are pretty generic and can possibly be guessed based on my legal name. 
+This is getting out of hand. Still, those are pretty generic and can possibly be guessed based on your legal name. 
 But this is still hitting a bit too close to home. 
 
 You almost stopped yourself scrolling to see what's next:
